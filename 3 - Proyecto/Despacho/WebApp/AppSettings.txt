@@ -1,0 +1,6 @@
+﻿<appSettings>
+	<add key="Server" value="DAVID-PC\SQL2012"/>
+	<add key="DB" value="Despacho"/>
+	<add key="User" value="sa"/>
+	<add key="Password" value="tontera"/>
+</appSettings>
