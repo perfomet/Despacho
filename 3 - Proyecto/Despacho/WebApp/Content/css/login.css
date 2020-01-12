@@ -1,0 +1,77 @@
+﻿.fondo-login {
+    background-color: #085A87;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.imagen-camion {
+    background-image: url('/Content/img/Camión con Cajas.svg');
+    width: 60%;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-self: end;
+    transform: rotateY(180deg);
+}
+
+.form-login {
+    display: flex;
+    align-self: center;
+    width: 40%;
+    justify-content: center;
+}
+
+.form-login-body {
+    width: 300px;
+    height: 400px;
+    background: white;
+    border-radius: 10px;
+}
+
+    .form-login-body img {
+        width: 80%;
+        margin: 10% 10% 0 10%;
+    }
+
+    .form-login-body .div-usuario {
+        width: 80%;
+        margin: 10% 10% 0 10%;
+        background: rgba(11, 104, 128, 0.3);
+        border: none;
+        border-bottom: 3px solid #0B6880;
+        height: 50px;
+        padding: 5px;
+        display: flex;
+    }
+
+        .form-login-body .div-usuario i {
+            width: 32px;
+            height: 32px;
+            margin: 3px;
+        }
+
+        .form-login-body .div-usuario div {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 5px;
+        }
+
+            .form-login-body .div-usuario div label {
+                font-size: 1rem;
+                margin: 0;
+            }
+
+            .form-login-body .div-usuario div #usuario {
+                width: auto;
+                font-size: 1.5rem;
+                background: none;
+                border: none;
+            }
+
+    .form-login-body #clave {
+        display: none;
+    }
