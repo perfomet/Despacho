@@ -58,11 +58,13 @@
             display: flex;
             flex-direction: column;
             margin-left: 5px;
+            color: #0B6880;
         }
 
             .form-login-body .div-usuario div label {
                 font-size: 1rem;
                 margin: 0;
+                color: #17A680;
             }
 
             .form-login-body .div-usuario div #usuario {
@@ -72,6 +74,103 @@
                 border: none;
             }
 
-    .form-login-body #clave {
+    .form-login-body .div-clave {
+        width: 80%;
+        margin: 5px 10% 0 10%;
+        background: rgba(11, 104, 128, 0.3);
+        border: none;
+        border-bottom: 3px solid #0B6880;
+        height: 50px;
+        padding: 5px;
+        display: flex;
         display: none;
+    }
+
+        .form-login-body .div-clave i {
+            width: 32px;
+            height: 32px;
+            margin: 3px;
+        }
+
+        .form-login-body .div-clave div {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 5px;
+            color: #0B6880;
+        }
+
+            .form-login-body .div-clave div label {
+                font-size: 1rem;
+                margin: 0;
+                color: #17A680;
+            }
+
+            .form-login-body .div-clave div #clave {
+                width: auto;
+                font-size: 1.5rem;
+                background: none;
+                border: none;
+            }
+
+.div-continuar {
+    display: flex;
+    justify-content: center;
+    margin: 10% 10% 0 10%;
+}
+
+    .div-continuar #continuar {
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        height: 32px;
+        background-color: #085A87;
+        color: white;
+    }
+
+.div-ingresar {
+    display: none;
+    justify-content: center;
+    margin: 10% 10% 0 10%;
+}
+
+    .div-ingresar #volver {
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        height: 32px;
+        background-color: #0B6880;
+        color: white;
+        margin-right: 5px;
+    }
+
+    .div-ingresar #ingresar {
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        height: 32px;
+        background-color: #085A87;
+        color: white;
+        margin-left: 5px;
+    }
+
+.div-usuario-ok {
+    margin: 10% 10% 0 10%;
+    display: none;
+    justify-content: left;
+    padding: 5px;
+    border: 2px solid #17A680;
+    border-radius: 5px;
+    align-items: center;
+}
+
+    .div-usuario-ok i {
+        height: 32px;
+        width: 32px;
+    }
+
+    .div-usuario-ok label {
+        font-size: 1.5rem;
+        margin: 0 0 0 5px;
+        color: #0B6880;
     }

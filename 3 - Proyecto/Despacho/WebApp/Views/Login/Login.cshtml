@@ -6,15 +6,99 @@
     <div class="imagen-camion"></div>
     <div class="form-login">
         <div class="form-login-body">
-            <img src="~/Content/img/logo.svg"/>
+            <img src="~/Content/img/logo.svg" />
             <div class="div-usuario">
-                <i class="fa fa-user"></i>
+                <i class="fas fa-user"></i>
                 <div>
                     <label>Usuario</label>
-                    <input id="usuario" name="usuario" type="text" placeholder="Usuario" />
+                    <input id="usuario" name="usuario" type="text" placeholder="Ingrese su usuario" />
                 </div>
             </div>
-            <input id="clave" name="clave" type="password" placeholder="Clave" />
+            <div class="div-continuar">
+                <button type="button" id="continuar">CONTINUAR</button>
+            </div>
+            <div class="div-usuario-ok">
+                <i class="fas fa-user-circle"></i>
+                <label class="usuario-ok">Nombre Usuario</label>
+            </div>
+            <div class="div-clave">
+                <i class="fas fa-user-alt"></i>
+                <div>
+                    <label>Clave</label>
+                    <input id="clave" name="clave" type="password" placeholder="Ingrese su clave" />
+                </div>
+            </div>
+            <div class="div-ingresar">
+                <button type="button" id="volver">VOLVER</button>
+                <button type="button" id="ingresar">INGRESAR</button>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(() => {
+        if (localStorage.getItem('ingresado') == "true") location.href = '/Home';
+
+        let usuario = localStorage.getItem('usuario');
+        if (usuario) usuario = JSON.parse(usuario);
+
+        $('#continuar').click(() => {
+            let user = $('#usuario').val();
+
+            $.post('/Login/ObtenerUsuario', { usuario: user }, function (data) {
+                if (data.Username == user) {
+                    localStorage.setItem('usuario', JSON.stringify(data));
+
+                    let nombre = data.Nombres + ' ' + data.ApellidoPaterno;
+                    if (data.ApellidoMaterno) nombre += ' ' + data.ApellidoMaterno;
+
+                    $('.usuario-ok').html(nombre);
+
+                    $('.div-clave').css('display', 'flex');
+                    $('.div-ingresar').css('display', 'flex');
+                    $('.div-usuario-ok').css('display', 'flex');
+                    $('.div-continuar').hide();
+                    $('.div-usuario').hide();
+                } else {
+                    alert('Usuario no encontrado');
+                }
+            });
+        });
+
+        $('#volver').click(() => {
+            localStorage.removeItem('usuario');
+
+            $('.div-clave').hide();
+            $('.div-ingresar').hide();
+            $('.div-usuario-ok').hide()
+            $('.div-continuar').css('display', 'flex');
+            $('.div-usuario').css('display', 'flex');
+        });
+
+        $('#ingresar').click(() => {
+            usuario = localStorage.getItem('usuario');
+            if (usuario) usuario = JSON.parse(usuario);
+
+            $.post('/Login/Ingresar', { usuario: usuario.Username, clave: $('#clave').val() }, function (data) {
+                if (data.exito == true) {
+                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                    localStorage.setItem('ingresado', true);
+
+                    location.href = '/Home';
+                } else {
+                    alert('Clave incorrecta.');
+                }
+            });
+        });
+
+        if (usuario) {
+            $('#usuario').val(usuario.Username);
+            let nombre = usuario.Nombres + ' ' + usuario.ApellidoPaterno;
+            if (usuario.ApellidoMaterno) nombre += ' ' + usuario.ApellidoMaterno;
+
+            $('.usuario-ok').html(nombre);
+            $('#continuar').click();
+        }
+    });
+</script>

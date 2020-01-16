@@ -7,8 +7,4 @@
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Modelo\" />
-  </ItemGroup>
 </Project>

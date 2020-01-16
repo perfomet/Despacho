@@ -8,7 +8,6 @@ namespace Despacho.Controllers
     {
         public ActionResult Index()
         {
-            DataTable tabla = Usuario.ObtenerUsuarios();
             return View();
         }
 

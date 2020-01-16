@@ -22,12 +22,18 @@ namespace Despacho
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Content/js/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                      "~/Content/js/jquery-3.4.1.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.css",
                       "~/Content/css/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/css/login").Include(
                       "~/Content/css/login.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css/fontawasome").Include(
+                      "~/Content/librerias/fontawesome-free-5.12.0/css/fontawasome.css"));
         }
     }
 }
