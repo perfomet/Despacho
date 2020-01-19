@@ -206,47 +206,7 @@ INSERT INTO TipoDocumento (TipoDocumentoId, Descripcion) VALUES (3, 'Guía Despa
 
 SET IDENTITY_INSERT TipoDocumento OFF
 
-CREATE TABLE SolicitudDespacho (
-	SolicitudDespachoId	INT PRIMARY KEY IDENTITY (1001, 1),
-	TipoSolicitudId INT NOT NULL FOREIGN KEY REFERENCES TipoSolicitud (TipoSolicitudId),
-	FechaSolicitud DATETIME NOT NULL,
-	FechaRecepcion DATETIME NOT NULL,
-	Denominacion VARCHAR(255) NOT NULL,
-	Material VARCHAR(50) NOT NULL,
-	Marca VARCHAR(50) NOT NULL,
-	BodegaOrigen VARCHAR(10) NOT NULL,
-	EstadoEquipoId INT NOT NULL FOREIGN KEY REFERENCES EstadoEquipo (EstadoEquipoId),
-	ClasificacionId INT NOT NULL FOREIGN KEY REFERENCES Clasificacion (ClasificacionId),
-	NumeroCliente VARCHAR(50) NOT NULL,
-	NombreCliente VARCHAR(255) NOT NULL,
-	DireccionCliente VARCHAR(255) NOT NULL,
-	--ComunaId INT NOT NULL FOREIGN KEY REFERENCES Comuna (ComunaId), -- ESTA ES LA COLUMNA CORRECTA DE COMUNA PERO SE HABILITARÁ CUANDO TENGAMOS LA TABLA EN EL SCRIPT
-	Comuna VARCHAR(100) NOT NULL,
-	NumeroTelefonoContacto VARCHAR(15) NULL,
-	RUT VARCHAR(12) NOT NULL,
-	Proyecto VARCHAR(100) NOT NULL,
-	PrioridadId INT NOT NULL FOREIGN KEY REFERENCES Prioridad (PrioridadId),
-	UnidadNegocioId INT NOT NULL FOREIGN KEY REFERENCES UnidadNegocio (UnidadNegocioId),
-	GerenciaId INT NOT NULL FOREIGN KEY REFERENCES Gerencia (GerenciaId),
-	ObservacionAof VARCHAR(MAX) NULL,
-	NumeroPlaca	INT NOT NULL,
-	FechaDespacho DATETIME NOT NULL,
-	PatenteCamion VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES Camion (Patente),
-	LlamadaDiaAnterior BIT NOT NULL,
-	ComentariosLlamada VARCHAR(MAX) NULL,
-	EnlaceId INT NOT NULL FOREIGN KEY REFERENCES Enlace (EnlaceId),
-	NumeroDocumento	INT NOT NULL,
-	NumeroEntrega INT NOT NULL,
-	FechaEntregaDocumento DATETIME NOT NULL,
-	FechaRecepcionDocumento	DATETIME NOT NULL,
-	Folio INT NOT NULL,
-	TipoDocumentoId INT NOT NULL FOREIGN KEY REFERENCES TipoDocumento (TipoDocumentoId),
-	Concrecion BIT NULL,
-	NombreConcrecion VARCHAR(255) NULL,
-	RUTConcrecion VARCHAR(12) NULL,
-	MotivoNoConcrecion VARCHAR(MAX) NULL,
-	RetiroReal INT NULL
-)
+
 CREATE TABLE [Codificador_Region](
 	[IdRegion] [int] IDENTITY(1,1) NOT NULL,
 	[Region] [nvarchar](100) NULL,
@@ -714,6 +674,45 @@ INSERT INTO [Codificador_Comuna] ([idregion], [idprovincia], [comuna]) VALUES  (
 INSERT INTO [Codificador_Comuna] ([idregion], [idprovincia], [comuna]) VALUES  (16,56,'SAN FABIÁN')
 INSERT INTO [Codificador_Comuna] ([idregion], [idprovincia], [comuna]) VALUES  (16,56,'SAN NICOLÁS')
 
-
+CREATE TABLE SolicitudDespacho (
+	SolicitudDespachoId	INT PRIMARY KEY IDENTITY (1001, 1),
+	TipoSolicitudId INT NOT NULL FOREIGN KEY REFERENCES TipoSolicitud (TipoSolicitudId),
+	FechaSolicitud DATETIME NOT NULL,
+	FechaRecepcion DATETIME NOT NULL,
+	Denominacion VARCHAR(255) NOT NULL,
+	Material VARCHAR(50) NOT NULL,
+	Marca VARCHAR(50) NOT NULL,
+	BodegaOrigen VARCHAR(10) NOT NULL,
+	EstadoEquipoId INT NOT NULL FOREIGN KEY REFERENCES EstadoEquipo (EstadoEquipoId),
+	ClasificacionId INT NOT NULL FOREIGN KEY REFERENCES Clasificacion (ClasificacionId),
+	NumeroCliente VARCHAR(50) NOT NULL,
+	NombreCliente VARCHAR(255) NOT NULL,
+	DireccionCliente VARCHAR(255) NOT NULL,
+	IdComuna INT NOT NULL FOREIGN KEY REFERENCES Codificador_Comuna (idcomuna), -- ESTA ES LA COLUMNA CORRECTA DE COMUNA PERO SE HABILITARÁ CUANDO TENGAMOS LA TABLA EN EL SCRIPT
+	NumeroTelefonoContacto VARCHAR(15) NULL,
+	RUT VARCHAR(12) NOT NULL,
+	Proyecto VARCHAR(100) NOT NULL,
+	PrioridadId INT NOT NULL FOREIGN KEY REFERENCES Prioridad (PrioridadId),
+	UnidadNegocioId INT NOT NULL FOREIGN KEY REFERENCES UnidadNegocio (UnidadNegocioId),
+	GerenciaId INT NOT NULL FOREIGN KEY REFERENCES Gerencia (GerenciaId),
+	ObservacionAof VARCHAR(MAX) NULL,
+	NumeroPlaca	INT NOT NULL,
+	FechaDespacho DATETIME NOT NULL,
+	PatenteCamion VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES Camion (Patente),
+	LlamadaDiaAnterior BIT NOT NULL,
+	ComentariosLlamada VARCHAR(MAX) NULL,
+	EnlaceId INT NOT NULL FOREIGN KEY REFERENCES Enlace (EnlaceId),
+	NumeroDocumento	INT NOT NULL,
+	NumeroEntrega INT NOT NULL,
+	FechaEntregaDocumento DATETIME NOT NULL,
+	FechaRecepcionDocumento	DATETIME NOT NULL,
+	Folio INT NOT NULL,
+	TipoDocumentoId INT NOT NULL FOREIGN KEY REFERENCES TipoDocumento (TipoDocumentoId),
+	Concrecion BIT NULL,
+	NombreConcrecion VARCHAR(255) NULL,
+	RUTConcrecion VARCHAR(12) NULL,
+	MotivoNoConcrecion VARCHAR(MAX) NULL,
+	RetiroReal INT NULL
+)
 
 
