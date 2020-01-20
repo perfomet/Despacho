@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "/Views/Shared/_LoginLayout.cshtml";
     ViewBag.Title = "Login";
 }
 
@@ -38,17 +39,17 @@
 
 <script>
     $(() => {
-        if (localStorage.getItem('ingresado') == "true") location.href = '/Home';
+        if ("@Session["logueado"]" == "True") location.href = '/Home/Index';
 
         let usuario = localStorage.getItem('usuario');
-        if (usuario) usuario = JSON.parse(usuario);
+        if (usuario) usuario = JSON.parse(atob(usuario));
 
         $('#continuar').click(() => {
             let user = $('#usuario').val();
 
             $.post('/Login/ObtenerUsuario', { usuario: user }, function (data) {
                 if (data.Username == user) {
-                    localStorage.setItem('usuario', JSON.stringify(data));
+                    localStorage.setItem('usuario', btoa(JSON.stringify(data)));
 
                     let nombre = data.Nombres + ' ' + data.ApellidoPaterno;
                     if (data.ApellidoMaterno) nombre += ' ' + data.ApellidoMaterno;
@@ -78,14 +79,13 @@
 
         $('#ingresar').click(() => {
             usuario = localStorage.getItem('usuario');
-            if (usuario) usuario = JSON.parse(usuario);
+            if (usuario) usuario = JSON.parse(atob(usuario));
 
             $.post('/Login/Ingresar', { usuario: usuario.Username, clave: $('#clave').val() }, function (data) {
                 if (data.exito == true) {
-                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                    localStorage.setItem('ingresado', true);
+                    localStorage.setItem('usuario', btoa(JSON.stringify(data.usuario)));
 
-                    location.href = '/Home';
+                    location.href = '/Home/Index';
                 } else {
                     alert('Clave incorrecta.');
                 }
