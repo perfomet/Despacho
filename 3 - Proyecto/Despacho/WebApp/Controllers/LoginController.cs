@@ -27,11 +27,20 @@ namespace Despacho.Controllers
             {
                 if (user.Password.Equals(clave))
                 {
+                    Session["logueado"] = true;
+                    Session["usuario"] = user;
                     return Json(new { exito = true, usuario = user });
                 }
             }
 
             return Json(new { exito = false });
+        }
+
+        public ActionResult Salir()
+        {
+            Session.Remove("logueado");
+            Session.Remove("usuario");
+            return View("Login");
         }
     }
 }

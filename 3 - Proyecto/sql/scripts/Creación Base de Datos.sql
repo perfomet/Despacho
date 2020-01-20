@@ -55,7 +55,7 @@ CREATE TABLE Usuario (
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId) 
 VALUES (1, 'dperdigon', '123', 'David', 'Perdigón', 'García', 'davidperdigon.g@gmail.com', NULL)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId)  
-VALUES (1, 'fbalmaceda', '123', 'Fancisco', 'Balmaseda', 'Neyra', 'francisco.vivacuba@gmail.com', NULL)
+VALUES (1, 'fbalmaseda', '123', 'Fancisco', 'Balmaseda', 'Neyra', 'francisco.vivacuba@gmail.com', NULL)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId)  
 VALUES (2, 'administrador', '123', 'Usuario', 'Administrador', NULL, 'pruebas@prueba.cl', NULL)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId)  

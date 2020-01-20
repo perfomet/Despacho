@@ -15,17 +15,21 @@ namespace Datos.Modelo
         public string Nombres { get; set; }
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
+        public string NombreCompleto { get { return Nombres + " " + ApellidoPaterno + (ApellidoMaterno == null ? "" : " " + ApellidoMaterno); } }
         public string Email { get; set; }
         public int PerfilId { get; set; }
         public int? ClienteId { get; set; }
 
-        public Perfil Perfil { 
-            get {
+        public Perfil Perfil
+        {
+            get
+            {
                 return new Perfil();
-            } 
-            set { 
-                Perfil = value; 
-            } 
+            }
+            set
+            {
+                Perfil = value;
+            }
         }
 
         public Cliente Cliente
@@ -50,7 +54,7 @@ namespace Datos.Modelo
             this.ApellidoMaterno = fila[5].ToString();
             this.Email = fila[6].ToString();
             this.PerfilId = int.Parse(fila[7].ToString());
-            if(fila[8] != null && !fila[8].ToString().Equals("")) this.ClienteId = int.Parse(fila[8].ToString());
+            if (fila[8] != null && !fila[8].ToString().Equals("")) this.ClienteId = int.Parse(fila[8].ToString());
         }
     }
 }
