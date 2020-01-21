@@ -141,15 +141,18 @@
   <ItemGroup>
     <None Include="AppSettings.config" />
     <Content Include="AppSettings.txt" />
-    <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\externos\bootstrap-theme.css" />
+    <Content Include="Content\css\externos\bootstrap-theme.min.css" />
+    <Content Include="Content\css\externos\bootstrap.css" />
+    <Content Include="Content\css\externos\bootstrap.min.css" />
     <Content Include="Content\css\login.css" />
     <Content Include="Content\img\Camión con Cajas.svg" />
     <Content Include="Content\img\logo-invertido.png" />
     <Content Include="Content\img\logo-mimet.svg" />
     <Content Include="Content\img\logo.svg" />
+    <Content Include="Content\js\Cliente.js" />
+    <Content Include="Content\js\General.js" />
+    <Content Include="Content\js\Login.js" />
     <Content Include="Content\librerias\fontawesome\css\all.css" />
     <Content Include="Content\librerias\fontawesome\css\all.min.css" />
     <Content Include="Content\librerias\fontawesome\css\brands.css" />
@@ -2421,23 +2424,24 @@
     <Content Include="Content\librerias\metronic\snippets\pages\user\login-4.html" />
     <Content Include="Content\librerias\metronic\snippets\pages\user\login-5.html" />
     <Content Include="Content\librerias\metronic\snippets\pages\user\login-6.html" />
+    <Content Include="Content\librerias\XLS\jszip.js" />
+    <Content Include="Content\librerias\XLS\xlsx.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\css\Site.css" />
-    <Content Include="Content\js\bootstrap.js" />
-    <Content Include="Content\js\bootstrap.min.js" />
-    <None Include="Content\js\jquery-3.4.1.intellisense.js" />
-    <Content Include="Content\js\jquery-3.4.1.js" />
-    <Content Include="Content\js\jquery-3.4.1.min.js" />
-    <Content Include="Content\js\jquery-3.4.1.slim.js" />
-    <Content Include="Content\js\jquery-3.4.1.slim.min.js" />
-    <None Include="Content\js\jquery.validate-vsdoc.js" />
-    <Content Include="Content\js\jquery.validate.js" />
-    <Content Include="Content\js\jquery.validate.min.js" />
-    <Content Include="Content\js\jquery.validate.unobtrusive.js" />
-    <Content Include="Content\js\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Content\js\modernizr-2.8.3.js" />
+    <Content Include="Content\js\externos\bootstrap.js" />
+    <Content Include="Content\js\externos\bootstrap.min.js" />
+    <None Include="Content\js\externos\jquery-3.4.1.intellisense.js" />
+    <Content Include="Content\js\externos\jquery-3.4.1.js" />
+    <Content Include="Content\js\externos\jquery-3.4.1.min.js" />
+    <Content Include="Content\js\externos\jquery-3.4.1.slim.js" />
+    <Content Include="Content\js\externos\jquery-3.4.1.slim.min.js" />
+    <None Include="Content\js\externos\jquery.validate-vsdoc.js" />
+    <Content Include="Content\js\externos\jquery.validate.js" />
+    <Content Include="Content\js\externos\jquery.validate.min.js" />
+    <Content Include="Content\js\externos\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\js\externos\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\js\externos\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2452,9 +2456,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
-    <Content Include="Views\Cliente\Cliente.cshtml" />
-    <Content Include="Views\Cliente\UnidadNegocio.cshtml" />
-    <Content Include="Views\Cliente\Gerencia.cshtml" />
+    <Content Include="Views\Cliente\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2478,10 +2480,10 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\css\bootstrap.min.css.map" />
-    <Content Include="Content\css\bootstrap.css.map" />
-    <Content Include="Content\css\bootstrap-theme.min.css.map" />
-    <Content Include="Content\css\bootstrap-theme.css.map" />
+    <Content Include="Content\css\externos\bootstrap.min.css.map" />
+    <Content Include="Content\css\externos\bootstrap.css.map" />
+    <Content Include="Content\css\externos\bootstrap-theme.min.css.map" />
+    <Content Include="Content\css\externos\bootstrap-theme.css.map" />
     <Content Include="Content\librerias\fontawesome\less\brands.less" />
     <Content Include="Content\librerias\fontawesome\less\fontawesome.less" />
     <Content Include="Content\librerias\fontawesome\less\regular.less" />
@@ -2566,8 +2568,8 @@
     <Content Include="Content\librerias\metronic\assets\vendors\base\fonts\summernote\summernote.ttf" />
     <Content Include="Content\librerias\metronic\assets\vendors\base\fonts\summernote\summernote.woff" />
     <None Include="packages.config" />
-    <Content Include="Content\js\jquery-3.4.1.slim.min.map" />
-    <Content Include="Content\js\jquery-3.4.1.min.map" />
+    <Content Include="Content\js\externos\jquery-3.4.1.slim.min.map" />
+    <Content Include="Content\js\externos\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Datos\Datos.csproj">
