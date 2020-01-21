@@ -22,26 +22,14 @@ namespace Datos.Modelo
 
         public Perfil Perfil
         {
-            get
-            {
-                return new Perfil();
-            }
-            set
-            {
-                Perfil = value;
-            }
+            get { return new Perfil(); }
+            set { Perfil = value; }
         }
 
         public Cliente Cliente
         {
-            get
-            {
-                return new Cliente();
-            }
-            set
-            {
-                Cliente = value;
-            }
+            get { return Datos.Cliente.ObtenerCliente(ClienteId.GetValueOrDefault()); }
+            set { Cliente = value; }
         }
 
         public void FromDataRow(DataRow fila)
