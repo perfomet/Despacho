@@ -42,7 +42,7 @@ namespace Datos.Datos
         public static bool Crear(Modelo.Cliente cliente)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("INSERT INTO Cliente VALUES ('{0}', '{1}')", cliente.Nombre, cliente.Rut);
+            builder.AppendFormat("INSERT INTO Cliente VALUES ('{0}', '{1}')", cliente.Nombre, cliente.Rut, cliente.VRUT);
 
             return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
         }
@@ -50,7 +50,7 @@ namespace Datos.Datos
         public static bool Modificar(Modelo.Cliente cliente)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("UPDATE Cliente SET Nombre = '{0}', RUT = '{1}' WHERE ClienteId = {2}", cliente.Nombre, cliente.Rut, cliente.ClienteId);
+            builder.AppendFormat("UPDATE Cliente SET Nombre = '{0}', RUT = '{1}' WHERE ClienteId = {2}", cliente.Nombre, cliente.Rut, cliente.VRUT, cliente.ClienteId);
 
             return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
         }

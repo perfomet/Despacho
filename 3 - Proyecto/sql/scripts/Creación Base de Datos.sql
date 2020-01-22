@@ -19,12 +19,13 @@ GO
 CREATE TABLE Cliente (
 	ClienteId INT PRIMARY KEY IDENTITY(2001, 1),
 	Nombre VARCHAR(255) NOT NULL,
-	RUT VARCHAR(12) NOT NULL
+	RUT VARCHAR(11) NOT NULL,
+	VRUT VARCHAR(1)
 )
 
 SET IDENTITY_INSERT Cliente ON
 
-INSERT INTO Cliente (ClienteId, Nombre, RUT) VALUES (1, 'Cliente de pruebas', '11111111-1')
+INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT) VALUES (1, 'Cliente de pruebas', '11111111','1')
 
 SET IDENTITY_INSERT Cliente OFF
 
@@ -58,7 +59,7 @@ CREATE TABLE Usuario (
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId) 
 VALUES (1, 'dperdigon', '123', 'David', 'Perdigón', 'García', 'davidperdigon.g@gmail.com', NULL)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId)  
-VALUES (1, 'fbalmaceda', '123', 'Fancisco', 'Balmaseda', 'Neyra', 'francisco.vivacuba@gmail.com', NULL)
+VALUES (1, 'fbalmaseda', '123', 'Fancisco', 'Balmaseda', 'Neyra', 'francisco.vivacuba@gmail.com', NULL)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId)  
 VALUES (2, 'administrador', '123', 'Usuario', 'Administrador', NULL, 'pruebas@prueba.cl', NULL)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId)  
@@ -686,6 +687,7 @@ CREATE TABLE SolicitudDespacho (
 	Concrecion BIT NULL,
 	NombreConcrecion VARCHAR(255) NULL,
 	RUTConcrecion VARCHAR(12) NULL,
+	VRUTConcrecion VARCHAR(1) NULL,
 	MotivoNoConcrecion VARCHAR(MAX) NULL,
 	RetiroReal INT NULL
 )
