@@ -18,15 +18,15 @@ namespace Datos.Datos
 		}
 		public static string Verirut(string nrut, int dedonde)
 		{
-			object totsum = null;
-			object rutvariant = null;
+			object totsum;
+			object rutvariant;
 			object temp = null;
 
-			int idif = 0;
-			int sconst = 432765432;
+			int idif;
+			int sconst;
 			object[] digito = new object[10];
 			int tope = 9;
-			int idigital = 0;
+			int idigital;
 			int t = 0;
 			int r = 0;
 			string resultado = null;
@@ -37,6 +37,7 @@ namespace Datos.Datos
 			switch (dedonde)
 			{
 				case schile:
+					//sconst = 432765432;
 					{
 						if ((Strings.InStr(rutvariant.ToString(), "-") > 0))
 							rutvariant = Strings.Left(rutvariant.ToString(), Strings.InStr(rutvariant.ToString(), "-") - 1);
@@ -85,6 +86,7 @@ namespace Datos.Datos
 				{
 					case schile:
 						{
+
 							if ((Information.IsDBNull(rutvariant) | (rutvariant.ToString() == "")))
 								return null;
 							else if (Information.IsDBNull(rutvariant.ToString().Length))
@@ -149,7 +151,13 @@ namespace Datos.Datos
 								{
 									totsum = Convert.ToInt32(rutvariant.ToString().Substring(i, 1)) * Convert.ToInt32(sconst.ToString().Substring(i, 1));
 									if ((Convert.ToInt32(totsum) > 9))
+									{ 
 										totsum = Convert.ToInt32(totsum) - 10 + 1;
+									}
+									else
+									{
+
+									}
 									t = t + Convert.ToInt32(totsum);
 								}
 								resultado = Convert.ToString((10 - (t % 10)) % 10);

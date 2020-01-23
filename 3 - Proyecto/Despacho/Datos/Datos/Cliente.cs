@@ -30,7 +30,7 @@ namespace Datos.Datos
         {
             Modelo.Cliente cliente = new Modelo.Cliente();
 
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Cliente WHERE ClienteId = '" + clienteId + "'");
+            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Cliente WHERE ClienteId = '" + clienteId.ToString() + "'");
 
             if (dataTable.Rows.Count > 0)
             {
