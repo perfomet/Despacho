@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Datos\Camion.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
   </ItemGroup>
 </Project>

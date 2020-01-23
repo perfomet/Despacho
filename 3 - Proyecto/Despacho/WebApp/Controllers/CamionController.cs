@@ -62,7 +62,7 @@ namespace Despacho.Controllers
         [HttpPost]
     public JsonResult Listar(string id)
     {
-      if ((id == "")
+      if (id == "")
       {
         return Json(Datos.Datos.Camion.ObtenerCamiones());
       }
