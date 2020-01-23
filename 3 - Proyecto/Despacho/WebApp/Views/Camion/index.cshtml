@@ -1,0 +1,42 @@
+﻿@model Datos.Modelo.Camion
+
+@{
+    ViewBag.Title = "Camión";
+}
+
+<h2>index</h2>
+
+<div>
+    <h4>Camión</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Patente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpresaTransporteId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpresaTransporteId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
