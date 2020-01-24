@@ -27,7 +27,7 @@
                     { field: "ClienteId", title: "#", width: 50, selector: !1, textAlign: "center" },
                     { field: "Nombre", title: "Nombre", responsive: { visible: "lg" } },
                     { field: "Rut", title: "Rut", responsive: { visible: "lg" } },
-                    { field: "VRUT", title: "dígito", responsive: { visible: "lg" } }
+                    { field: "VRut", title: "dígito", responsive: { visible: "lg" } }
                 ]
             });
         });

@@ -15,7 +15,7 @@ namespace Despacho.Controllers
         }
 
         // GET: Camion/Details/5
-        public ActionResult Details(string patente)
+        public ActionResult Details(int id)
         {
             return View();
         }
@@ -23,52 +23,78 @@ namespace Despacho.Controllers
         // GET: Camion/Create
         public ActionResult Create()
         {
-          return View("/Camion/Modificar", new Datos.Modelo.Camion());
+            return View();
         }
 
-    // POST: Camion/Create
-    [HttpPost]
-    public ActionResult Create(Datos.Modelo.Camion camion)
-    {
-      bool exito = Datos.Datos.Camion.Crear(camion);
-
-      return Json(new { exito = exito });
-    }
-        // GET: Camion/Edit/5
-        public ActionResult Edit(string id)
+        // POST: Camion/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
         {
-          Datos.Modelo.Camion camion = Datos.Datos.Camion.ObtenerCamion(id);
-          return View("/Camion/Modificar", camion);
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Camion/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
         }
 
         // POST: Camion/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Datos.Modelo.Camion camion)
+        public ActionResult Edit(int id, FormCollection collection)
         {
-          bool exito = Datos.Datos.Camion.Modificar(camion);
+            try
+            {
+                // TODO: Add update logic here
 
-          return Json(new { exito = exito });
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Camion/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
-          bool exito = Datos.Datos.Modelo.Camion.Eliminar(id);
-
-          return Json(new { exito = exito });
+            return View();
         }
 
         // POST: Camion/Delete/5
         [HttpPost]
-    public JsonResult Listar(string id)
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public JsonResult Listar(string patente)
     {
-      if (id == "")
+      if (patente == "")
       {
         return Json(Datos.Datos.Camion.ObtenerCamiones());
       }
       else
       {
-        return Json(Datos.Datos.Camion.ObtenerCamion(id));
+        return Json(Datos.Datos.Camion.ObtenerCamion(patente));
+        
       }
     }
   }

@@ -5,11 +5,9 @@ using System.Text;
 
 namespace Datos.Datos
 {
-	public class Cliente
+    public class Cliente
     {
-		
-
-		public static List<Modelo.Cliente> ObtenerClientes()
+        public static List<Modelo.Cliente> ObtenerClientes()
         {
             DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Cliente");
             List<Modelo.Cliente> clientes = new List<Modelo.Cliente>();
@@ -43,21 +41,20 @@ namespace Datos.Datos
 
         public static bool Crear(Modelo.Cliente cliente)
         {
-          StringBuilder builder = new StringBuilder();
-					cliente.VRUT = Internos.Verirut(cliente.Rut, Internos.schile);
-					builder.AppendFormat("INSERT INTO Cliente VALUES ('{0}', '{1}')", cliente.Nombre, cliente.Rut, cliente.VRUT);
+            StringBuilder builder = new StringBuilder();
+            cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
+            builder.AppendFormat("INSERT INTO Cliente VALUES ('{0}', '{1}')", cliente.Nombre, cliente.Rut, cliente.VRut);
 
-          return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
+            return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
         }
 
         public static bool Modificar(Modelo.Cliente cliente)
         {
-          StringBuilder builder = new StringBuilder();
-
-					cliente.VRUT = Internos.Verirut(cliente.Rut, Internos.schile);
-          builder.AppendFormat("UPDATE Cliente SET Nombre = '{0}', RUT = '{1}' WHERE ClienteId = {2}", cliente.Nombre, cliente.Rut, cliente.VRUT, cliente.ClienteId);
-
-          return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
+            StringBuilder builder = new StringBuilder();
+            cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
+            builder.AppendFormat("UPDATE Cliente SET Nombre = '{0}', RUT = '{1}' WHERE ClienteId = {2}", cliente.Nombre, cliente.Rut, cliente.VRut, cliente.ClienteId);
+      
+            return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
         }
 
         public static bool Eliminar(int clienteId)

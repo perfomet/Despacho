@@ -153,6 +153,7 @@
     <Content Include="Content\img\logo.svg" />
     <Content Include="Content\js\Cliente.js" />
     <Content Include="Content\js\General.js" />
+    <Content Include="Content\js\Camion.js" />
     <Content Include="Content\js\Login.js" />
     <Content Include="Content\librerias\fontawesome\css\all.css" />
     <Content Include="Content\librerias\fontawesome\css\all.min.css" />
@@ -2458,7 +2459,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
-    <Content Include="Views\Camion\index.cshtml" />
+    <Content Include="Views\Camion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2476,8 +2477,6 @@
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\EstadoEquipos\" />
-    <Folder Include="Views\TipoSolicitud\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

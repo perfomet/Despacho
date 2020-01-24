@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Datos.Datos
 {
-	class Camion
+	public class Camion
 	{
     public static List<Modelo.Camion> ObtenerCamiones()
     {
