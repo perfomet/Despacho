@@ -23,12 +23,13 @@
         search: {
           input: $("#buscarCamion")
         },
-        columns: [
-          { field: "Patente", title: "Patente", width: 50, selector: !1, textAlign: "center" },
-          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-          { field: "EmpresaTransporteId", title: "Empresa Transporte", responsive: { visible: "lg" } }
-         
-        ]
+        columns:
+          [
+            { field: "patente", title: "Patente", width: 50, selector: !1, textAlign: "center" },
+            { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
+            { field: "empresatransporte", title: "Empresa Transporte", responsive: { visible: "lg" } },
+            { field: "espropia", title: "Propia", responsive: { visible: "lg" } }
+          ]
       });
     });
   };

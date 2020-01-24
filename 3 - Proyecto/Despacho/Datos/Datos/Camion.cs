@@ -10,9 +10,13 @@ namespace Datos.Datos
 {
 	public class Camion
 	{
+    static string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia";
+    static string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
+    static string WHERESentence = "";
+    static string SQLSentence=SELECTSentence + FROMSentence + WHERESentence;
     public static List<Modelo.Camion> ObtenerCamiones()
     {
-      DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Camion");
+      DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
       List<Modelo.Camion> camiones = new List<Modelo.Camion>();
 
       foreach (DataRow fila in dataTable.Rows)
@@ -28,9 +32,9 @@ namespace Datos.Datos
     public static Modelo.Camion ObtenerCamion(string Patente)
     {
       Modelo.Camion camion = new Modelo.Camion();
-
-      DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Camion WHERE Patente LIKE '" + Patente +"'");
-
+      WHERESentence= " WHERE (patente LIKE '" + Patente + "')";
+      SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+      DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
       if (dataTable.Rows.Count > 0)
       {
         DataRow fila = dataTable.Rows[0];
@@ -43,7 +47,7 @@ namespace Datos.Datos
     {
       StringBuilder builder = new StringBuilder();
       
-      builder.AppendFormat("INSERT INTO Camion VALUES ('{0}', '{1}', '{2}')", camion.Patente, camion.Descripcion, camion.EmpresaTransporteId);
+      builder.AppendFormat("INSERT INTO Camion VALUES ('{0}', '{1}', '{2}')", camion.patente, camion.descripcion, camion.empresatransporte, camion.espropia);
 
       return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
     }
@@ -52,7 +56,7 @@ namespace Datos.Datos
     {
       StringBuilder builder = new StringBuilder();
       
-      builder.AppendFormat("UPDATE Cliente SET Patente = '{0}', Descripcion = '{1}',  EmpresaTransporteId = {2} WHERE Patente LIKE '" + camion.Patente + "'", camion.Patente, camion.Descripcion, camion.EmpresaTransporteId);
+      builder.AppendFormat("UPDATE Camion SET patente = '{0}', Descripcion = '{1}',  EmpresaTransporteId = {2} WHERE Patente LIKE '" + camion.patente + "'", camion.patente, camion.descripcion, camion.empresatransporte);
 
       return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
     }

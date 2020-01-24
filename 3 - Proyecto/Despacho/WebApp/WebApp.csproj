@@ -134,6 +134,8 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TipoDocumentoController.cs" />
+    <Compile Include="Controllers\TipoSolicitudController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,6 +144,7 @@
   <ItemGroup>
     <None Include="AppSettings.config" />
     <Content Include="AppSettings.txt" />
+    <Content Include="Content\Consultas\Grandiosa.txt" />
     <Content Include="Content\css\externos\bootstrap-theme.css" />
     <Content Include="Content\css\externos\bootstrap-theme.min.css" />
     <Content Include="Content\css\externos\bootstrap.css" />
@@ -154,6 +157,8 @@
     <Content Include="Content\js\Cliente.js" />
     <Content Include="Content\js\General.js" />
     <Content Include="Content\js\Camion.js" />
+    <Content Include="Content\js\TipoDocumento.js" />
+    <Content Include="Content\js\TipoSolicitud.js" />
     <Content Include="Content\js\Login.js" />
     <Content Include="Content\librerias\fontawesome\css\all.css" />
     <Content Include="Content\librerias\fontawesome\css\all.min.css" />
@@ -2460,6 +2465,7 @@
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
     <Content Include="Views\Camion\Index.cshtml" />
+    <Content Include="Views\TipoSolicitud\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2477,6 +2483,7 @@
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\TipoDocumento\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

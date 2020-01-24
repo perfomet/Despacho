@@ -8,7 +8,10 @@ namespace Datos.Datos
     {
         public static List<Modelo.Comuna> ObtenerComunas()
         {
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Comuna");
+          string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna";
+          string FROMSentence = " FROM Comuna";
+      string SQLSentence = SELECTSentence + FROMSentence;
+            DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
             List<Modelo.Comuna> comunas = new List<Modelo.Comuna>();
 
             foreach (DataRow fila in dataTable.Rows)
@@ -36,8 +39,11 @@ namespace Datos.Datos
                     tipoFiltro = "RegionId";
                     break;
             }
-
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Comuna WHERE " + tipoFiltro + " = " + id);
+            string SELECTSentence= "SELECT ComunaId, RegionId, ProvinciaId, Comuna";
+            string FROMSentence = " FROM Comuna";
+            string WHERESentence = " WHERE " + tipoFiltro + " = " + id.ToString();
+            string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+            DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
             List<Modelo.Comuna> comunas = new List<Modelo.Comuna>();
 
             foreach (DataRow fila in dataTable.Rows)
@@ -54,17 +60,19 @@ namespace Datos.Datos
 
         public static Modelo.Comuna ObtenerComuna(int comunaId)
         {
-            Modelo.Comuna comuna = new Modelo.Comuna();
+          Modelo.Comuna comuna = new Modelo.Comuna();
+          string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna";
+          string FROMSentence = " FROM Comuna";
+          string WHERESentence = " WHERE ComunaId = " + comunaId.ToString();
+          string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+          DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Comuna WHERE ComunaId = " + comunaId);
-
-            if (dataTable.Rows.Count > 0)
-            {
-                DataRow fila = dataTable.Rows[0];
-                comuna.FromDataRow(fila);
-            }
-
-            return comuna;
+          if (dataTable.Rows.Count > 0)
+          {
+              DataRow fila = dataTable.Rows[0];
+              comuna.FromDataRow(fila);
+          }
+          return comuna;
         }
     }
 

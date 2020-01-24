@@ -6,95 +6,64 @@ using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
-    public class CamionController : Controller
+  public class CamionController : Controller
+  {
+    public ActionResult Index()
     {
-        // GET: Camion
-        public ActionResult Index()
-        {
-            return View();
-        }
+      return View();
+    }
 
-        // GET: Camion/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Camion/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Camion/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Camion/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Camion/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Camion/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Camion/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        public JsonResult Listar(string patente)
+    public ActionResult Details(int id)
     {
-      if (patente == "")
+      return View();
+    }
+
+    public ActionResult Create()
+    {
+      return View("/Camiones/Modificar", new Datos.Modelo.Camion());
+    }
+
+    [HttpPost]
+    public ActionResult Create(Datos.Modelo.Camion camion)
+    {
+      bool exito = Datos.Datos.Camion.Crear(camion);
+
+      return Json(new { exito = exito });
+    }
+
+    public ActionResult Edit(string id)
+    {
+      Datos.Modelo.Camion camion = Datos.Datos.Camion.ObtenerCamion(id);
+
+      return View("/Camion/Modificar", camion);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Datos.Modelo.Camion camion)
+    {
+      bool exito = Datos.Datos.Camion.Modificar(camion);
+
+      return Json(new { exito = exito });
+    }
+
+    [HttpPost]
+    public JsonResult Delete(string id)
+    {
+      bool exito = Datos.Datos.Camion.Eliminar(id);
+
+      return Json(new { exito = exito });
+    }
+
+    [HttpPost]
+    public JsonResult Listar(string patentecamion)
+    {
+      if (patentecamion == "")
       {
         return Json(Datos.Datos.Camion.ObtenerCamiones());
       }
       else
       {
-        return Json(Datos.Datos.Camion.ObtenerCamion(patente));
-        
+        return Json(Datos.Datos.Camion.ObtenerCamion(patentecamion));
       }
     }
   }

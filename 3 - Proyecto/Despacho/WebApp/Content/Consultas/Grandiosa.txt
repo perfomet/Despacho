@@ -1,0 +1,23 @@
+﻿SELECT        TipoSolicitud.Descripcion, TipoSolicitud.Observaciones, SolicitudDespacho.SolicitudDespachoId, SolicitudDespacho.FechaSolicitud, SolicitudDespacho.FechaRecepcion, SolicitudDespacho.Denominacion, 
+                         SolicitudDespacho.Material, SolicitudDespacho.Marca, SolicitudDespacho.BodegaOrigen, EstadoEquipo.Descripcion AS EstadoEquipo, Clasificacion.Cantidad, Clasificacion.UnidadMedidaId, Cliente.Nombre, Cliente.RUT, 
+                         Cliente.VRUT, SolicitudDespacho.NumeroCliente, SolicitudDespacho.NombreCliente, SolicitudDespacho.DireccionCliente, Comuna.Comuna, Region.Region, Provincia.Provincia, SolicitudDespacho.NumeroTelefonoContacto, 
+                         SolicitudDespacho.RUT AS RUTSOlicitaDespacho, SolicitudDespacho.Proyecto, Prioridad.Descripcion AS Prioridad, UnidadNegocio.Descripcion AS UnidadNegocio, Gerencia.Descripcion AS Gerencia, 
+                         SolicitudDespacho.ObservacionAof, SolicitudDespacho.NumeroPlaca, SolicitudDespacho.FechaDespacho, Camion.Patente, Camion.Descripcion AS DescribeCamion, EmpresaTransporte.Nombre AS NombreEmpresaTransporte, 
+                         EmpresaTransporte.EsPropia, SolicitudDespacho.LlamadaDiaAnterior, SolicitudDespacho.ComentariosLlamada, Enlace.Descripcion AS Enlace, SolicitudDespacho.NumeroDocumento, SolicitudDespacho.NumeroEntrega, 
+                         SolicitudDespacho.FechaEntregaDocumento, SolicitudDespacho.FechaRecepcionDocumento, SolicitudDespacho.Folio, TipoDocumento.Descripcion AS TipoDocumento, SolicitudDespacho.Concrecion, 
+                         SolicitudDespacho.NombreConcrecion, SolicitudDespacho.RUTConcrecion, SolicitudDespacho.VRUTConcrecion, SolicitudDespacho.MotivoNoConcrecion, SolicitudDespacho.RetiroReal
+FROM            SolicitudDespacho INNER JOIN
+                         TipoSolicitud ON SolicitudDespacho.TipoSolicitudId = TipoSolicitud.TipoSolicitudId INNER JOIN
+                         Comuna ON SolicitudDespacho.ComunaId = Comuna.ComunaId INNER JOIN
+                         Prioridad ON SolicitudDespacho.PrioridadId = Prioridad.PrioridadId INNER JOIN
+                         UnidadNegocio ON SolicitudDespacho.UnidadNegocioId = UnidadNegocio.UnidadNegocioId INNER JOIN
+                         Gerencia ON SolicitudDespacho.GerenciaId = Gerencia.GerenciaId INNER JOIN
+                         Camion ON SolicitudDespacho.PatenteCamion = Camion.Patente INNER JOIN
+                         Enlace ON SolicitudDespacho.EnlaceId = Enlace.EnlaceId INNER JOIN
+                         TipoDocumento ON SolicitudDespacho.TipoDocumentoId = TipoDocumento.TipoDocumentoId INNER JOIN
+                         EstadoEquipo ON SolicitudDespacho.EstadoEquipoId = EstadoEquipo.EstadoEquipoId INNER JOIN
+                         Clasificacion ON SolicitudDespacho.ClasificacionId = Clasificacion.ClasificacionId INNER JOIN
+                         Cliente ON UnidadNegocio.ClienteId = Cliente.ClienteId AND Gerencia.ClienteId = Cliente.ClienteId INNER JOIN
+                         Region ON Comuna.RegionId = Region.RegionId INNER JOIN
+                         Provincia ON Comuna.ProvinciaId = Provincia.ProvinciaId AND Region.RegionId = Provincia.RegionId INNER JOIN
+                         EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId
