@@ -21,28 +21,28 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/Cliente/Modificar", new Datos.Modelo.Cliente());
+      return View("/TipoDocumento/Modificar", new Datos.Modelo.TipoDocumento());
     }
 
     [HttpPost]
-    public ActionResult Create(Datos.Modelo.Cliente cliente)
+    public ActionResult Create(Datos.Modelo.TipoDocumento tipodocumento)
     {
-      bool exito = Datos.Datos.Cliente.Crear(cliente);
+      bool exito = Datos.Datos.TipoDocumento.Crear(tipodocumento);
 
       return Json(new { exito = exito });
     }
 
     public ActionResult Edit(int id)
     {
-      Datos.Modelo.Cliente cliente = Datos.Datos.Cliente.ObtenerCliente(id);
+      Datos.Modelo.TipoDocumento tipodocumento = Datos.Datos.TipoDocumento.ObtenerTipoDocumento(id);
 
-      return View("/Cliente/Modificar", cliente);
+      return View("/TipoDocumento/Modificar", tipodocumento);
     }
 
     [HttpPost]
-    public ActionResult Edit(Datos.Modelo.Cliente cliente)
+    public ActionResult Edit(Datos.Modelo.TipoDocumento tipodocumento)
     {
-      bool exito = Datos.Datos.Cliente.Modificar(cliente);
+      bool exito = Datos.Datos.TipoDocumento.Modificar(tipodocumento);
 
       return Json(new { exito = exito });
     }

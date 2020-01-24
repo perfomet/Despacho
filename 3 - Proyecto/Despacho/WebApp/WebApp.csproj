@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CamionController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\EstadoEquipoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
@@ -157,6 +158,7 @@
     <Content Include="Content\js\Cliente.js" />
     <Content Include="Content\js\General.js" />
     <Content Include="Content\js\Camion.js" />
+    <Content Include="Content\js\EstadoEquipo.js" />
     <Content Include="Content\js\TipoDocumento.js" />
     <Content Include="Content\js\TipoSolicitud.js" />
     <Content Include="Content\js\Login.js" />
@@ -2483,6 +2485,7 @@
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\EstadoEquipo\" />
     <Folder Include="Views\TipoDocumento\" />
   </ItemGroup>
   <ItemGroup>
