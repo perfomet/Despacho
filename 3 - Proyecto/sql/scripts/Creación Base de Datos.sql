@@ -25,7 +25,7 @@ CREATE TABLE Cliente (
 
 SET IDENTITY_INSERT Cliente ON
 
-INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT) VALUES (1, 'Cliente de pruebas', '11111111','1')
+INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT) VALUES (2001, 'Cliente de pruebas', '11111111','1')
 
 SET IDENTITY_INSERT Cliente OFF
 
@@ -172,9 +172,9 @@ CREATE TABLE UnidadNegocio (
 
 SET IDENTITY_INSERT UnidadNegocio ON
 
-INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId) VALUES (1, 'Zona Sur', 1)
-INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId) VALUES (2, 'Zona Norte', 1)
-INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId) VALUES (3, 'Zona Oriente', 1)
+INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId) VALUES (1, 'Zona Sur', 2001)
+INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId) VALUES (2, 'Zona Norte', 2001)
+INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId) VALUES (3, 'Zona Oriente', 2001)
 
 SET IDENTITY_INSERT UnidadNegocio OFF 
 
@@ -187,8 +187,8 @@ CREATE TABLE Gerencia (
 
 SET IDENTITY_INSERT Gerencia ON
 
-INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId) VALUES (1, 'Frío', 1)
-INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId) VALUES (2, 'Calor', 1)
+INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId) VALUES (1, 'Frío', 2001)
+INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId) VALUES (2, 'Calor', 2001)
 
 SET IDENTITY_INSERT Gerencia OFF
 
@@ -691,3 +691,41 @@ CREATE TABLE SolicitudDespacho (
 	MotivoNoConcrecion VARCHAR(MAX) NULL,
 	RetiroReal INT NULL
 )
+
+-- Se genera una carga masiva por cada archivo cargado
+CREATE TABLE CargaMasiva (
+	CargaMasivaId INT PRIMARY KEY IDENTITY(1001, 1),
+	UsuarioId INT NOT NULL FOREIGN KEY REFERENCES Usuario (UsuarioId),
+	FechaHora DATETIME NOT NULL
+)
+
+-- Se genera un detalle de carga masiva por cada cliente en el archivo
+CREATE TABLE CargaMasivaDetalle (
+	CargaMasivaDetalleId INT PRIMARY KEY IDENTITY(1, 1),
+	CargaMasivaId INT NOT NULL FOREIGN KEY REFERENCES CargaMasiva (CargaMasivaId),
+	TipoSolicitud VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla TipoSolicitud
+	FechaSolicitud VARCHAR(20) NOT NULL,
+	FechaRecepcion VARCHAR(20) NOT NULL,
+	BodegaOrigen VARCHAR(100) NOT NULL,
+	EstadoEquipo VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla EstadoEquipo
+	Clasificacion VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Clasificacion
+	NumeroCliente VARCHAR(20) NOT NULL,
+	NombreCliente VARCHAR(100) NOT NULL,
+	DireccionCliente VARCHAR(255) NOT NULL,
+	Comuna VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
+	TelefonoContacto VARCHAR(15) NOT NULL,
+	Rut VARCHAR(12) NOT NULL,
+	Proyecto VARCHAR(100) NOT NULL, 
+	Prioridad VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Prioridad
+	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
+	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
+	ObservacionAof VARCHAR(MAX) NOT NULL
+)
+
+-- Se crea un detalle de producto por cada numero de placa distinto en el archivo
+CREATE TABLE CargaMasivaDetalleProducto (
+	CargaMasivaDetalleId INT NOT NULL FOREIGN KEY REFERENCES CargaMasivaDetalle (CargaMasivaDetalleId),
+	NumeroPlaca VARCHAR(20) NOT NULL, -- Enlaza por numero a tabla de Existencias
+	UNIQUE (CargaMasivaDetalleId, NumeroPlaca)
+)
+

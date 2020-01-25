@@ -69,11 +69,8 @@ namespace Despacho
 			bundles.Add(new ScriptBundle("~/bundles/cliente")
 					.Include("~/Content/js/Cliente.js"));
 
-			bundles.Add(new StyleBundle("~/Content/less/general")
-					.Include("~/Content/css/general.less"));
-
-			bundles.Add(new StyleBundle("~/Content/less/login")
-					.Include("~/Content/css/login.less"));
+			bundles.Add(new ScriptBundle("~/bundles/cargaMasiva")
+					.Include("~/Content/js/CargaMasiva.js"));
 
 			#endregion
 		}

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 
 namespace Datos.Modelo
 {
-	public class Camion
+	public class Camion : Base.ModeloBase
 	{
 		public string patente { get; set; }
 		public string descripcion { get; set; }
 		public string empresatransporte { get; set; }
-		public string espropia{ get; set; }
+		public string espropia { get; set; }
 
 		public void FromDataRow(DataRow fila)
 		{

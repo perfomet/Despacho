@@ -4,55 +4,55 @@ using System.Data;
 
 namespace Datos.Datos
 {
-    public class Provincia
-    {
-        public static List<Modelo.Provincia> ObtenerProvincias()
-        {
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Provincia");
-            List<Modelo.Provincia> provincias = new List<Modelo.Provincia>();
+	public class Provincia
+	{
+		public static List<Modelo.Provincia> ObtenerProvincias()
+		{
+			DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Provincia");
+			List<Modelo.Provincia> provincias = new List<Modelo.Provincia>();
 
-            foreach (DataRow fila in dataTable.Rows)
-            {
-                Modelo.Provincia provincia = new Modelo.Provincia();
+			foreach (DataRow fila in dataTable.Rows)
+			{
+				Modelo.Provincia provincia = new Modelo.Provincia();
 
-                provincia.FromDataRow(fila);
+				provincia.FromDataRow(fila);
 
-                provincias.Add(provincia);
-            }
+				provincias.Add(provincia);
+			}
 
-            return provincias;
-        }
+			return provincias;
+		}
 
-        public static List<Modelo.Provincia> ObtenerProvincias(int regionId)
-        {
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Provincia WHERE RegionId = " + regionId);
-            List<Modelo.Provincia> provincias = new List<Modelo.Provincia>();
+		public static List<Modelo.Provincia> ObtenerProvincias(int regionId)
+		{
+			DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Provincia WHERE RegionId = " + regionId);
+			List<Modelo.Provincia> provincias = new List<Modelo.Provincia>();
 
-            foreach (DataRow fila in dataTable.Rows)
-            {
-                Modelo.Provincia provincia = new Modelo.Provincia();
+			foreach (DataRow fila in dataTable.Rows)
+			{
+				Modelo.Provincia provincia = new Modelo.Provincia();
 
-                provincia.FromDataRow(fila);
+				provincia.FromDataRow(fila);
 
-                provincias.Add(provincia);
-            }
+				provincias.Add(provincia);
+			}
 
-            return provincias;
-        }
+			return provincias;
+		}
 
-        public static Modelo.Provincia ObtenerProvincia(int provinciaId)
-        {
-            Modelo.Provincia provincia = new Modelo.Provincia();
+		public static Modelo.Provincia ObtenerProvincia(int provinciaId)
+		{
+			Modelo.Provincia provincia = new Modelo.Provincia();
 
-            DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Provincia WHERE ProvinciaId = " + provinciaId);
+			DataTable dataTable = DataBase.ExecuteReader("SELECT * FROM Provincia WHERE ProvinciaId = " + provinciaId);
 
-            if (dataTable.Rows.Count > 0)
-            {
-                DataRow fila = dataTable.Rows[0];
-                provincia.FromDataRow(fila);
-            }
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				provincia.FromDataRow(fila);
+			}
 
-            return provincia;
-        }
-    }
+			return provincia;
+		}
+	}
 }

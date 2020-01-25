@@ -1,9 +1,5 @@
-﻿using System;
-using Microsoft.VisualBasic;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.VisualBasic;
+using System;
 
 namespace Datos.Datos
 {
@@ -151,7 +147,7 @@ namespace Datos.Datos
 								{
 									totsum = Convert.ToInt32(rutvariant.ToString().Substring(i, 1)) * Convert.ToInt32(sconst.ToString().Substring(i, 1));
 									if ((Convert.ToInt32(totsum) > 9))
-									{ 
+									{
 										totsum = Convert.ToInt32(totsum) - 10 + 1;
 									}
 									else

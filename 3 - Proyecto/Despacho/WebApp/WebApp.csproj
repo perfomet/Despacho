@@ -153,7 +153,11 @@
     <Content Include="Content\css\externos\bootstrap-theme.min.css" />
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
+    <Content Include="Content\js\CargaMasiva.js" />
     <Content Include="Content\less\general.less" />
+    <Content Include="Content\less\home.less" />
+    <Content Include="Content\less\cargaMasiva.less" />
+    <Content Include="Content\less\cliente.less" />
     <None Include="Content\less\login.less" />
     <Content Include="Content\img\Camión con Cajas.svg" />
     <Content Include="Content\img\logo-invertido.png" />

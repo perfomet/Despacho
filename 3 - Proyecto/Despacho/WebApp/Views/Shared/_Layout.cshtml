@@ -100,13 +100,13 @@
 													<span class="m-menu__link-text">Crear Solicitud</span>
 												</a>
 											</li>
-											<li class="m-menu__item " aria-haspopup="true">
+											<li class="m-menu__item" aria-haspopup="true">
 												<a href="/CargaMasiva/Index" class="m-menu__link ">
 													<i class="m-menu__link-icon flaticon-cogwheel-2"></i>
 													<span class="m-menu__link-text">Cargar Masivamente</span>
 												</a>
 											</li>
-											<li class="m-menu__item " aria-haspopup="true">
+											<li class="m-menu__item" aria-haspopup="true">
 												<a href="/Existencia/Index" class="m-menu__link ">
 													<i class="m-menu__link-icon flaticon-search-1"></i>
 													<span class="m-menu__link-text">Consultar Existencias</span>
@@ -286,13 +286,13 @@
 				<!-- BEGIN: Aside Menu -->
 				<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500" style="position: relative;">
 					<ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow">
-						<li class="m-menu__item  m-menu__item--active" aria-haspopup="true"><a href="/Home/Index" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">Inicio</span></a></li>
+						<li class="m-menu__item  @(ViewBag.Pagina == 0 ? "m-menu__item--active" : "")" aria-haspopup="true"><a href="/Home/Index" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">Inicio</span></a></li>
 						<br />
 						<li class="m-menu__section m-menu__section--first">
 							<h4 class="m-menu__section-text">Solicitudes</h4>
 							<i class="m-menu__section-icon flaticon-more-v2"></i>
 						</li>
-						<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+						<li class="m-menu__item @(ViewBag.Pagina == 1 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
 							<a href="/Solicitud/Index" class="m-menu__link ">
 								<span class="m-menu__item-here"></span>
 								<i class="m-menu__link-icon flaticon-business" style="color: #868aa8"></i>
@@ -306,7 +306,7 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+						<li class="m-menu__item @(ViewBag.Pagina == 2 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
 							<a href="/CargaMasiva/Index" class="m-menu__link ">
 								<span class="m-menu__item-here"></span>
 								<i class="m-menu__link-icon flaticon-file" style="color: #868aa8"></i>
@@ -317,7 +317,7 @@
 							<h4 class="m-menu__section-text">Existencias</h4>
 							<i class="m-menu__section-icon flaticon-more-v2"></i>
 						</li>
-						<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+						<li class="m-menu__item @(ViewBag.Pagina == 3 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
 							<a href="/Existencia/Index" class="m-menu__link ">
 								<span class="m-menu__item-here"></span>
 								<i class="m-menu__link-icon flaticon-search-1" style="color: #868aa8"></i>

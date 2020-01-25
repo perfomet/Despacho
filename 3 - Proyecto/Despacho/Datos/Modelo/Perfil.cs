@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace Datos.Modelo
 {
-    public class Perfil
-    {
-    }
+	public class Perfil : Base.ModeloBase
+	{
+		public void FromDataRow(DataRow fila)
+		{
+			throw new System.NotImplementedException();
+		}
+	}
 }
