@@ -1,25 +1,39 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css/fontawesome")
-    @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/css/login")
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+	@Styles.Render("~/Content/css/fontawesome")
+	@Styles.Render("~/Content/css")
+
+	@RenderSection("Less", required: false)
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" data-env="development"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+	<script>
+		WebFont.load(
+			{
+				google: { "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+				active: function () {
+					sessionStorage.fonts = true;
+				}
+			});
+	</script>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/modernizr")
+	@Scripts.Render("~/bundles/general")
+	<script>
+        var logueado = '@Session["logueado"]';
+	</script>
+	@RenderSection("Scripts", required: false)
 </head>
 <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/general")
-    @RenderSection("scripts", required: false)
+	@RenderBody()
 
-    <script>
-        var logueado = '@Session["logueado"]';
-    </script>
-
-    @RenderBody()
+	<script>less.watch();</script>
 </body>
 </html>

@@ -153,7 +153,8 @@
     <Content Include="Content\css\externos\bootstrap-theme.min.css" />
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
-    <Content Include="Content\css\login.css" />
+    <Content Include="Content\less\general.less" />
+    <None Include="Content\less\login.less" />
     <Content Include="Content\img\Camión con Cajas.svg" />
     <Content Include="Content\img\logo-invertido.png" />
     <Content Include="Content\img\logo-mimet.svg" />
