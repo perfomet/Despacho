@@ -2,7 +2,7 @@
 
 namespace Despacho.Controllers
 {
-	public class ClienteController : Controller
+	public class SolicitudController : Controller
 	{
 		public ActionResult Index()
 		{
@@ -16,7 +16,7 @@ namespace Despacho.Controllers
 
 		public ActionResult Create()
 		{
-			return View("/Cliente/Modificar", new Datos.Modelo.Cliente());
+			return View("/Solicitud/Modificar", new { });
 		}
 
 		[HttpPost]
@@ -31,7 +31,7 @@ namespace Despacho.Controllers
 		{
 			Datos.Modelo.Cliente cliente = Datos.Datos.Cliente.ObtenerCliente(id);
 
-			return View("/Cliente/Modificar", cliente);
+			return View("/Solicitud/Modificar", cliente);
 		}
 
 		[HttpPost]
