@@ -44,8 +44,10 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Camion camion)
 		{
 			StringBuilder builder = new StringBuilder();
-
-			builder.AppendFormat("INSERT INTO Camion VALUES ('{0}', '{1}', '{2}')", camion.patente, camion.descripcion, camion.empresatransporte);
+			string INSERTSentence = "INSERT INTO Camion";
+			string VALUESSentence = " VALUES ('{0}', '{1}', '{2}')";
+			string SQLSentence = INSERTSentence + VALUESSentence;
+			builder.AppendFormat(SQLSentence, camion.patente, camion.descripcion, camion.empresatransporte);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -59,10 +61,14 @@ namespace Datos.Datos
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool Eliminar(string patente)
+		public static bool Eliminar(string id)
 		{
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat("DELETE FROM Camion WHERE Patente LIKE '{0}'", patente);
+			string DELETESentence = "DELETE";
+			FROMSentence = " FROM Camion";
+			WHERESentence = " WHERE Patente LIKE '{0}'";
+			SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			builder.AppendFormat(SQLSentence, id);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
