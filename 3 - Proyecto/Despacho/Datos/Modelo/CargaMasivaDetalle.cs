@@ -37,6 +37,7 @@ namespace Datos.Modelo
 
 		public void FromDataRow(DataRow fila)
 		{
+			//CAMBIO DE PRUEBA
 			this.CargaMasivaDetalleId = int.Parse(fila[0].ToString());
 			this.CargaMasivaId = int.Parse(fila[1].ToString());
 			this.TipoSolicitud = fila[2].ToString();
