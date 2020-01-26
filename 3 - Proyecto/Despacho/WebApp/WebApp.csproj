@@ -140,6 +140,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
     <Compile Include="Controllers\TipoSolicitudController.cs" />
+    <Compile Include="Controllers\UnidadNegocioController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,6 +156,7 @@
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
     <Content Include="Content\js\CargaMasiva.js" />
+    <Content Include="Content\js\UnidadNegocio.js" />
     <Content Include="Content\js\Usuario.js" />
     <Content Include="Content\less\general.less" />
     <Content Include="Content\less\home.less" />
@@ -2500,6 +2502,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\EstadoEquipo\" />
     <Folder Include="Views\TipoDocumento\" />
+    <Folder Include="Views\UnidadNegocio\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
