@@ -13,7 +13,7 @@ namespace Datos.Datos
 		public static List<Modelo.EstadoEquipo> ObtenerEstadosEquipos()
 		{
 			string SELECTSentence = "SELECT *";
-			string FROMSentence = " FROM Cliente";
+			string FROMSentence = " FROM EstadoEquipo";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -28,12 +28,11 @@ namespace Datos.Datos
 
 			return estadoequipos;
 		}
-		public static Modelo.EstadoEquipo ObtenerEstadoEquipo(int estadoequipoId)
+		public static Modelo.EstadoEquipo ObtenerEstadoEquipo(int Id)
 		{
-
 			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM EstadoEquipo";
-			string WHERESentence = " WHERE EstadoEquipoId = '" + estadoequipoId.ToString() + "'";
+			string WHERESentence = " WHERE EstadoEquipoId = '" + Id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.EstadoEquipo estadoequipo = new Modelo.EstadoEquipo();

@@ -156,6 +156,7 @@
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
     <Content Include="Content\js\CargaMasiva.js" />
+    <Content Include="Content\js\UnidadMedida.js" />
     <Content Include="Content\js\UnidadNegocio.js" />
     <Content Include="Content\js\Usuario.js" />
     <Content Include="Content\less\general.less" />
@@ -2483,6 +2484,7 @@
     <Content Include="Views\CargaMasiva\Index.cshtml" />
     <Content Include="Views\Solicitud\Index.cshtml" />
     <Content Include="Views\Existencia\Index.cshtml" />
+    <Content Include="Views\EstadoEquipo\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2500,7 +2502,6 @@
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\EstadoEquipo\" />
     <Folder Include="Views\TipoDocumento\" />
     <Folder Include="Views\UnidadNegocio\" />
     <Folder Include="Views\Usuario\" />

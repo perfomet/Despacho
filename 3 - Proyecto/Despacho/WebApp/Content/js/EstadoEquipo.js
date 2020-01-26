@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    $.post("/EstadoEquipo/Listar", { patente: 0 }, function (estadosequipos) {
-      $(".m_datatable").mDatatable({
+    $.post("/EstadoEquipo/Listar", { estadoequipoId: 0 }, function (estadosequipos) {
+      $("#listaEstadoEquipos").mDatatable({
         data: {
           type: "local",
           source: estadosequipos,

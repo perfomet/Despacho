@@ -7,11 +7,8 @@ namespace Datos.Datos
 {
 	public class Camion
 	{
-		static string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia";
-		static string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
-		static string WHERESentence = "";
-		static string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-
+		
+		
 		public static List<Modelo.Camion> ObtenerCamiones()
 		{
 			string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia";
@@ -34,9 +31,12 @@ namespace Datos.Datos
 
 		public static Modelo.Camion ObtenerCamion(string Patente)
 		{
+			string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia";
+			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
+			
+			string WHERESentence = " WHERE (patente LIKE '" + Patente + "')";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			Modelo.Camion camion = new Modelo.Camion();
-			WHERESentence = " WHERE (patente LIKE '" + Patente + "')";
-			SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			if (dataTable.Rows.Count > 0)
 			{
@@ -60,8 +60,11 @@ namespace Datos.Datos
 		public static bool Modificar(Modelo.Camion camion)
 		{
 			StringBuilder builder = new StringBuilder();
-
-			builder.AppendFormat("UPDATE Camion SET patente = '{0}', Descripcion = '{1}',  EmpresaTransporteId = {2} WHERE Patente LIKE '{0}'", camion.patente, camion.descripcion, camion.empresatransporte);
+			string UPDATESentence = "UPDATE Camion";
+			string SETSentence = " SET patente = '{0}', Descripcion = '{1}',  EmpresaTransporteId = {2}";
+			string WHERESentence = " WHERE Patente LIKE '{0}'";
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
+			builder.AppendFormat(SQLSentence  , camion.patente, camion.descripcion, camion.empresatransporte);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -70,9 +73,9 @@ namespace Datos.Datos
 		{
 			StringBuilder builder = new StringBuilder();
 			string DELETESentence = "DELETE";
-			FROMSentence = " FROM Camion";
-			WHERESentence = " WHERE Patente LIKE '{0}'";
-			SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			string FROMSentence = " FROM Camion";
+			string WHERESentence = " WHERE Patente LIKE '{0}'";
+			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
 			builder.AppendFormat(SQLSentence, id);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
