@@ -6,7 +6,7 @@
 
     let InitElementos = function () {
         $.post("/Cliente/Listar", { clienteId: 0 }, function (clientes) {
-            $(".m_datatable").mDatatable({
+            $("#listaClientes").mDatatable({
                 data: {
                     type: "local",
                     source: clientes,

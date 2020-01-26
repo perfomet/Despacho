@@ -14,6 +14,11 @@ namespace Datos.Datos
 
 		public static List<Modelo.Camion> ObtenerCamiones()
 		{
+			string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia";
+			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
+			string WHERESentence = "";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Camion> camiones = new List<Modelo.Camion>();
 
