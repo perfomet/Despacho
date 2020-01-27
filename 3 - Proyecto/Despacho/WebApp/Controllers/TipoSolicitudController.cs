@@ -34,7 +34,7 @@ namespace Despacho.Controllers
 
       public ActionResult Edit(int id)
       {
-        Datos.Modelo.TipoSolicitud solicitud = Datos.Datos.TipoSolicitud.ObtenerSolicitud(id);
+        Datos.Modelo.TipoSolicitud solicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id);
 
         return View("/TipoSolicitud/Modificar", solicitud);
       }
@@ -60,11 +60,11 @@ namespace Despacho.Controllers
       {
         if (tiposolicitudId > 0)
         {
-          return Json(Datos.Datos.TipoSolicitud.ObtenerSolicitud(tiposolicitudId));
+          return Json(Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(tiposolicitudId));
         }
         else
         {
-          return Json(Datos.Datos.Cliente.ObtenerClientes());
+          return Json(Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes());
         }
       }
     }

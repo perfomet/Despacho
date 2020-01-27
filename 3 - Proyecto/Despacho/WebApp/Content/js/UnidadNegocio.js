@@ -40,5 +40,5 @@
 }();
 
 $(() => {
-  Cliente.init();
+  UnidadNegocio.init();
 });

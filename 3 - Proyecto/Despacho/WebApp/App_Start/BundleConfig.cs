@@ -74,9 +74,7 @@ namespace Despacho
 
 			bundles.Add(new ScriptBundle("~/bundles/camion")
 					.Include("~/Content/js/Camion.js"));
-
 			
-
 			bundles.Add(new ScriptBundle("~/bundles/empresatransporte")
 					.Include("~/Content/js/EmpresaTransporte.js"));
 

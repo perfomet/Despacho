@@ -26,7 +26,7 @@ namespace Datos.Datos
 			return tipossolicitudes;
 		}
 
-		public static Modelo.TipoSolicitud ObtenerSolicitud(int tiposolicitudId)
+		public static Modelo.TipoSolicitud ObtenerTipoSolicitud(int tiposolicitudId)
 		{
 
 			string SELECTSentence = "SELECT *";
