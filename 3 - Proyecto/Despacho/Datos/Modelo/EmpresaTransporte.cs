@@ -1,0 +1,19 @@
+﻿using System.Data;
+
+namespace Datos.Modelo
+{
+	public class EmpresaTransporte: Base.ModeloBase
+	{
+		public int EmpresaTransporteId { get; set; }
+		public string Nombre { get; set; }
+		public int EsPropia { get; set; }
+		
+		public void FromDataRow(DataRow fila)
+		{
+			this.EmpresaTransporteId = int.Parse(fila[0].ToString());
+			this.Nombre = fila[1].ToString();
+			this.EsPropia = int.Parse(fila[2].ToString());
+			
+		}
+	}
+}
