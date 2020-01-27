@@ -27,12 +27,12 @@ namespace Datos.Datos
 			return clientes;
 		}
 
-		public static Modelo.Cliente ObtenerCliente(int clienteId)
+		public static Modelo.Cliente ObtenerCliente(int Id)
 		{
 
 			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM Cliente";
-			string WHERESentence = " WHERE ClienteId = '" + clienteId.ToString() + "'";
+			string WHERESentence = " WHERE ClienteId = '" + Id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Cliente cliente = new Modelo.Cliente();

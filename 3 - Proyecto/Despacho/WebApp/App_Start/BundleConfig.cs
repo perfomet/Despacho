@@ -72,6 +72,35 @@ namespace Despacho
 			bundles.Add(new ScriptBundle("~/bundles/cargaMasiva")
 					.Include("~/Content/js/CargaMasiva.js"));
 
+			bundles.Add(new ScriptBundle("~/bundles/camion")
+					.Include("~/Content/js/Camion.js"));
+
+			
+
+			bundles.Add(new ScriptBundle("~/bundles/empresatransporte")
+					.Include("~/Content/js/EmpresaTransporte.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/estadoequipo")
+					.Include("~/Content/js/EstadoEquipo.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/tipodocumento")
+					.Include("~/Content/js/TipoDocumento.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/estadoequipo")
+					.Include("~/Content/js/EstadoEquipo.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/tiposolicitud")
+					.Include("~/Content/js/TipoSolicitud.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/unidadmedida")
+					.Include("~/Content/js/UnidadMedida.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/unidadnegocio")
+					.Include("~/Content/js/UnidadNegocio.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/usuario")
+					.Include("~/Content/js/Usuario.js"));
+
 			#endregion
 		}
 	}

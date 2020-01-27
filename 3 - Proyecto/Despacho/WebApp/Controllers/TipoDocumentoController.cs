@@ -56,11 +56,11 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult Listar(int tipodocumentoId)
+    public JsonResult Listar(int Id)
     {
-      if (tipodocumentoId > 0)
+      if (Id > 0)
       {
-        return Json(Datos.Datos.TipoDocumento.ObtenerTipoDocumento(tipodocumentoId));
+        return Json(Datos.Datos.TipoDocumento.ObtenerTipoDocumento(Id));
       }
       else
       {

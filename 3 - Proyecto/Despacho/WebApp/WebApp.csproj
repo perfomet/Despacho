@@ -132,6 +132,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CamionController.cs" />
     <Compile Include="Controllers\CargaMasivaController.cs" />
+    <Compile Include="Controllers\EmpresaTransporteController.cs" />
+    <Compile Include="Controllers\GerenciaController.cs" />
     <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Controllers\ExistenciaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
@@ -156,6 +158,8 @@
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
     <Content Include="Content\js\CargaMasiva.js" />
+    <Content Include="Content\js\EmpresaTransporte.js" />
+    <Content Include="Content\js\Gerencia.js" />
     <Content Include="Content\js\UnidadMedida.js" />
     <Content Include="Content\js\UnidadNegocio.js" />
     <Content Include="Content\js\Usuario.js" />
@@ -163,6 +167,8 @@
     <Content Include="Content\less\home.less" />
     <Content Include="Content\less\cargaMasiva.less" />
     <Content Include="Content\less\cliente.less" />
+    <Content Include="Content\less\estadoequipo.less" />
+    <Content Include="Content\less\gerencia.less" />
     <None Include="Content\less\login.less" />
     <Content Include="Content\img\Camión con Cajas.svg" />
     <Content Include="Content\img\logo-invertido.png" />
@@ -2484,7 +2490,10 @@
     <Content Include="Views\CargaMasiva\Index.cshtml" />
     <Content Include="Views\Solicitud\Index.cshtml" />
     <Content Include="Views\Existencia\Index.cshtml" />
-    <Content Include="Views\EstadoEquipo\index.cshtml" />
+    <Content Include="Views\EstadoEquipo\Index.cshtml" />
+    <Content Include="Views\EmpresaTransporte\Index.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\TipoDocumento\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2502,9 +2511,7 @@
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\TipoDocumento\" />
     <Folder Include="Views\UnidadNegocio\" />
-    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
@@ -2598,6 +2605,13 @@
     <Content Include="Content\librerias\metronic\assets\vendors\base\fonts\summernote\summernote.eot" />
     <Content Include="Content\librerias\metronic\assets\vendors\base\fonts\summernote\summernote.ttf" />
     <Content Include="Content\librerias\metronic\assets\vendors\base\fonts\summernote\summernote.woff" />
+    <Content Include="Content\less\usuarios.less" />
+    <Content Include="Content\less\tipodocumento.less" />
+    <Content Include="Content\less\camion.less" />
+    <Content Include="Content\less\empresatransporte.less" />
+    <Content Include="Content\less\unidadmedida.less" />
+    <Content Include="Content\less\unidadnegocio.less" />
+    <Content Include="Content\less\tiposolicitud.less" />
     <None Include="packages.config" />
     <Content Include="Content\js\externos\jquery-3.4.1.slim.min.map" />
     <Content Include="Content\js\externos\jquery-3.4.1.min.map" />

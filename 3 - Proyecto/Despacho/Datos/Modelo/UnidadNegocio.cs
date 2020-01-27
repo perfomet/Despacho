@@ -2,7 +2,7 @@
 
 namespace Datos.Modelo
 {
-	public class UnidadNegocio
+	public class UnidadNegocio : Base.ModeloBase
 	{
 		public int UnidadNegocioId { get; set; }
 		public string Descripcion { get; set; }

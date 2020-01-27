@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    $.post("/Usuario/Listar", { clienteId: 0 }, function (usuarios) {
-      $(".m_datatable").mDatatable({
+    $.post("/Usuario/Listar", { usuarioId: 0 }, function (usuarios) {
+      $("listaUsuarios").mDatatable({
         data: {
           type: "local",
           source: usuarios,
