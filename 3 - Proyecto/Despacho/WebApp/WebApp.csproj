@@ -2495,6 +2495,8 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\TipoDocumento\Index.cshtml" />
     <Content Include="Views\Gerencia.cshtml" />
+    <Content Include="Views\Gerencia\Index.cshtml" />
+    <Content Include="Views\UnidadNegocio\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2512,7 +2514,6 @@
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\UnidadNegocio\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

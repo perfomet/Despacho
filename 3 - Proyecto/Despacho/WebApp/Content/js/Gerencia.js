@@ -5,7 +5,7 @@
   };
 
   let InitElementos = function () {
-    $.post("/Gerencia/Listar", { gerenciaId: 0 }, function (gerencias) {
+    $.post("/Gerencia/Listar", { Id: 0 }, function (gerencias) {
       $("#listagerencias").mDatatable({
         data: {
           type: "local",

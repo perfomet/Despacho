@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    $.post("/UnidadNegocio/Listar", { unidadnegocioId: 0 }, function (unidadnegocio) {
-      $(".m_datatable").mDatatable({
+    $.post("/UnidadNegocio/Listar", { Id: 0 }, function (unidadnegocio) {
+      $("#listaunidadesdenegocio").mDatatable({
         data: {
           type: "local",
           source: unidadnegocio,
