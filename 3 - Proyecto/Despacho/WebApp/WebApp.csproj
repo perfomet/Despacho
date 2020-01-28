@@ -134,6 +134,7 @@
     <Compile Include="Controllers\CargaMasivaController.cs" />
     <Compile Include="Controllers\EmpresaTransporteController.cs" />
     <Compile Include="Controllers\GerenciaController.cs" />
+    <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\SolicitudController.cs" />
     <Compile Include="Controllers\ExistenciaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
@@ -160,6 +161,7 @@
     <Content Include="Content\js\CargaMasiva.js" />
     <Content Include="Content\js\EmpresaTransporte.js" />
     <Content Include="Content\js\Gerencia.js" />
+    <Content Include="Content\js\Perfil.js" />
     <Content Include="Content\js\UnidadMedida.js" />
     <Content Include="Content\js\UnidadNegocio.js" />
     <Content Include="Content\js\Usuario.js" />
@@ -2497,6 +2499,7 @@
     <Content Include="Views\Gerencia.cshtml" />
     <Content Include="Views\Gerencia\Index.cshtml" />
     <Content Include="Views\UnidadNegocio\Index.cshtml" />
+    <Content Include="Views\Perfil\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2614,6 +2617,7 @@
     <Content Include="Content\less\unidadmedida.less" />
     <Content Include="Content\less\unidadnegocio.less" />
     <Content Include="Content\less\tiposolicitud.less" />
+    <Content Include="Content\less\perfil.less" />
     <None Include="packages.config" />
     <Content Include="Content\js\externos\jquery-3.4.1.slim.min.map" />
     <Content Include="Content\js\externos\jquery-3.4.1.min.map" />

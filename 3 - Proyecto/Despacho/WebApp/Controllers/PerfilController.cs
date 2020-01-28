@@ -2,8 +2,8 @@
 
 namespace Despacho.Controllers
 {
-    public class UsuarioController : Controller
-    {
+  public class PerfilController : Controller
+  {
     public ActionResult Index()
     {
       return View();
@@ -16,29 +16,29 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/Usuarios/Modificar", new Datos.Modelo.Usuario());
+      return View("/Perfil/Modificar", new Datos.Modelo.Perfil());
     }
 
     [HttpPost]
-    public ActionResult Create(Datos.Modelo.Usuario usuario)
+    public ActionResult Create(Datos.Modelo.Perfil perfil)
     {
-      bool exito = Datos.Datos.Usuario.Crear(usuario);
+      bool exito = Datos.Datos.Perfil.Crear(perfil);
 
       return Json(new { exito = exito });
     }
 
-   
+
     public ActionResult Edit(int id)
     {
-      Datos.Modelo.Usuario usuario = Datos.Datos.Usuario.ObtenerUsuario(id);
+      Datos.Modelo.Perfil perfil = Datos.Datos.Perfil.ObtenerPerfil(id);
 
-      return View("/Usuario/Modificar", id);
+      return View("/Perfil/Modificar", id);
     }
 
     [HttpPost]
-    public ActionResult Edit(Datos.Modelo.Usuario usuario)
+    public ActionResult Edit(Datos.Modelo.Perfil perfil)
     {
-      bool exito = Datos.Datos.Usuario.Modificar(usuario);
+      bool exito = Datos.Datos.Perfil.Modificar(perfil);
 
       return Json(new { exito = exito });
     }
@@ -46,7 +46,7 @@ namespace Despacho.Controllers
     [HttpPost]
     public JsonResult Delete(int id)
     {
-      bool exito = Datos.Datos.Usuario.Eliminar(id);
+      bool exito = Datos.Datos.Perfil.Eliminar(id);
 
       return Json(new { exito = exito });
     }
@@ -56,11 +56,11 @@ namespace Despacho.Controllers
     {
       if (id == 0)
       {
-        return Json(Datos.Datos.Usuario.ObtenerUsuarios());
+        return Json(Datos.Datos.Perfil.ObtenerPerfiles());
       }
       else
       {
-        return Json(Datos.Datos.Usuario.ObtenerUsuario(id));
+        return Json(Datos.Datos.Perfil.ObtenerPerfil(id));
       }
     }
   }
