@@ -33,6 +33,7 @@
           { field: "Email", title: "Email", responsive: { visible: "lg" } },
           { field: "PerfilId", title: "Perfil", responsive: { visible: "lg" } },
           { field: "ClienteId", title: "Cliente", responsive: { visible: "lg" } }
+           
         ]
       });
     });
