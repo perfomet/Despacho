@@ -1,12 +1,12 @@
-﻿let Usuario = function () {
+﻿let Perfil = function () {
 
   let Init = function () {
     InitElementos();
   };
 
   let InitElementos = function () {
-    $.post("/Usuario/Listar", { id: 0 }, function (perfiles) {
-      $("#listaPerfiles").mDatatable({
+    $.post("/Perfil/Listar", { id: 0 }, function (perfiles) {
+      $("#listaperfiles").mDatatable({
         data: {
           type: "local",
           source: perfiles,
@@ -21,7 +21,7 @@
         sortable: !0,
         pagination: !0,
         search: {
-          input: $("#buscarPerfil")
+          input: $("#buscarperfil")
         },
         columns: [
           { field: "PerfilId", title: "#", width: 50, selector: !1, textAlign: "center" },

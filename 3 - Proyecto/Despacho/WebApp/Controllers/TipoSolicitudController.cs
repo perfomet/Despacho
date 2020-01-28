@@ -56,11 +56,11 @@ namespace Despacho.Controllers
       }
 
       [HttpPost]
-      public JsonResult Listar(int tiposolicitudId)
+      public JsonResult Listar(int id)
       {
-        if (tiposolicitudId > 0)
+        if (id > 0)
         {
-          return Json(Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(tiposolicitudId));
+          return Json(Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id));
         }
         else
         {

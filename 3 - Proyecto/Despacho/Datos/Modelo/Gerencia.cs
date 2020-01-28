@@ -3,7 +3,7 @@
 
 namespace Datos.Modelo
 {
-	public class Gerencia
+	public class Gerencia : Base.ModeloBase
 	{
 		public int GerenciaId { get; set; }
 		public string Descripcion { get; set; }

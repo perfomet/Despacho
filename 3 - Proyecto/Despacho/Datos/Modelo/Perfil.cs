@@ -2,7 +2,7 @@
 
 namespace Datos.Modelo
 {
-	public class Perfil : Base.ModeloBase
+	public class Perfil 
 	{
 		public int PerfilId { get; set; }
 		public string Descripcion { get; set; }
@@ -10,7 +10,7 @@ namespace Datos.Modelo
 		{
 			this.PerfilId = int.Parse(fila[0].ToString());
 			this.Descripcion = fila[1].ToString();
-			throw new System.NotImplementedException();
+			
 		}
 	}
 }

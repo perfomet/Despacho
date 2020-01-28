@@ -1,9 +1,11 @@
 ﻿@{
-  ViewBag.Title = "Estado Equipo";
+  ViewBag.Title = "Despacho - Estado Equipo";
   ViewBag.SeccionTieneTitulo = true;
   ViewBag.TituloSeccion = "Estado Equipo";
 }
-
+@section Less{
+  <link rel="stylesheet/less" type="text/css" href="~/Content/less/estadoequipo.less" />
+}
 @section Scripts{
   <script type="text/javascript" src="~/Content/js/EstadoEquipo.js"></script>
 }
@@ -26,7 +28,7 @@
           <div class="form-group m-form__group row align-items-center">
             <div class="col-md-4">
               <div class="m-input-icon m-input-icon--left">
-                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarEstadoEquipo">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarestadoequipo">
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                   <span><i class="la la-search"></i></span>
                 </span>
@@ -47,7 +49,7 @@
     </div>
     <!--end: Search Form -->
     <!--begin: Datatable -->
-    <div class="m_datatable" id="listaEstadoEquipos"></div>
+    <div class="m_datatable" id="listaestadoequipos"></div>
     <!--end: Datatable -->
   </div>
 </div>

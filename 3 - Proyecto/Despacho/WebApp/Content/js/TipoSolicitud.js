@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    $.post("/TipoSolicitud/Listar", { patente: 0 }, function (solicitudes) {
-      $(".m_datatable").mDatatable({
+    $.post("/TipoSolicitud/Listar", { id: 0 }, function (solicitudes) {
+      $("#listatiposdesolicitudes").mDatatable({
         data: {
           type: "local",
           source: solicitudes,
@@ -21,7 +21,7 @@
         sortable: !0,
         pagination: !0,
         search: {
-          input: $("#buscarSolicitud")
+          input: $("#buscartiposolicitud")
         },
         columns:
           [

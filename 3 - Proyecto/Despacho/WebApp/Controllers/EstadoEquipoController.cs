@@ -55,11 +55,11 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult Listar(int estadoequipoId)
+    public JsonResult Listar(int id)
     {
-      if (estadoequipoId > 0)
+      if (id > 0)
       {
-        return Json(Datos.Datos.EstadoEquipo.ObtenerEstadoEquipo(estadoequipoId));
+        return Json(Datos.Datos.EstadoEquipo.ObtenerEstadoEquipo(id));
       }
       else
       {

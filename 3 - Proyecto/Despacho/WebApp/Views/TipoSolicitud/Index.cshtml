@@ -1,9 +1,16 @@
 ﻿@{
-  ViewBag.Title = "Tipos de Solicitudes";
+  ViewBag.Title = "Despacho - Tipos de Solicitudes";
   ViewBag.SeccionTieneTitulo = true;
   ViewBag.TituloSeccion = "Tipos de Solicitudes";
 }
 
+@section Less{
+  <link rel="stylesheet/less" type="text/css" href="~/Content/less/tiposolicitud.less" />
+}
+
+@section Scripts{
+  <script type="text/javascript" src="~/Content/js/TipoSolicitud.js"></script>
+}
 <div class="m-portlet m-portlet--mobile">
   <div class="m-portlet__head">
     <div class="m-portlet__head-caption">
@@ -22,7 +29,7 @@
           <div class="form-group m-form__group row align-items-center">
             <div class="col-md-4">
               <div class="m-input-icon m-input-icon--left">
-                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarTipoSolicitud">
+                <input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscartiposolicitud">
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                   <span><i class="la la-search"></i></span>
                 </span>
@@ -43,7 +50,7 @@
     </div>
     <!--end: Search Form -->
     <!--begin: Datatable -->
-    <div class="m_datatable" id="local_data"></div>
+    <div class="m_datatable" id="listatiposdesolicitudes"></div>
     <!--end: Datatable -->
   </div>
 </div>

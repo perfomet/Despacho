@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    $.post("/EstadoEquipo/Listar", { estadoequipoId: 0 }, function (estadosequipos) {
-      $("#listaEstadoEquipos").mDatatable({
+    $.post("/EstadoEquipo/Listar", { id: 0 }, function (estadosequipos) {
+      $("#listaestadoequipos").mDatatable({
         data: {
           type: "local",
           source: estadosequipos,
@@ -21,7 +21,7 @@
         sortable: !0,
         pagination: !0,
         search: {
-          input: $("#buscarEstadoEquipo")
+          input: $("#buscarestadoequipo")
         },
         columns:
           [
@@ -40,5 +40,5 @@
 }();
 
 $(() => {
-  TipoDocumento.init();
+  EstadoEquipo.init();
 });

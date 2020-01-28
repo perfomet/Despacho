@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    $.post("/TipoDocumento/Listar", { patente: 0 }, function (tiposdocumentos) {
-      $(".m_datatable").mDatatable({
+    $.post("/TipoDocumento/Listar", { id: 0 }, function (tiposdocumentos) {
+      $("#listatiposdocumentos").mDatatable({
         data: {
           type: "local",
           source: tiposdocumentos,
@@ -21,7 +21,7 @@
         sortable: !0,
         pagination: !0,
         search: {
-          input: $("#buscarTipoDocumento")
+          input: $("#buscartipodocumento")
         },
         columns:
           [
