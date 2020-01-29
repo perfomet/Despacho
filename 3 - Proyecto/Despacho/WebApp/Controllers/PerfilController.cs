@@ -2,7 +2,7 @@
 
 namespace Despacho.Controllers
 {
-  public class PerfilController : Controller
+  public class PrioridadController : Controller
   {
     public ActionResult Index()
     {
@@ -30,7 +30,7 @@ namespace Despacho.Controllers
 
     public ActionResult Edit(int id)
     {
-      Datos.Modelo.Perfil perfil = Datos.Datos.Perfil.ObtenerPerfil(id);
+      Datos.Modelo.Perfil prioridad = Datos.Datos.Perfil.ObtenerPerfil(id);
 
       return View("/Perfil/Modificar", id);
     }

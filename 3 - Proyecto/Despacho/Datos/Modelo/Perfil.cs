@@ -2,7 +2,7 @@
 
 namespace Datos.Modelo
 {
-	public class Perfil 
+	public class Perfil : Base.ModeloBase
 	{
 		public int PerfilId { get; set; }
 		public string Descripcion { get; set; }

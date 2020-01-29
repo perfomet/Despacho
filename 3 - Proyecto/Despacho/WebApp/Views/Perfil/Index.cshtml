@@ -1,15 +1,15 @@
 ﻿@{
-	ViewBag.Title = "Despacho - Roles";
+	ViewBag.Title = "Despacho - Prioridad";
 	ViewBag.SeccionTieneTitulo = true;
-	ViewBag.TituloSeccion = "Roles";
+	ViewBag.TituloSeccion = "Prioridad";
 }
 
 @section Less{
-	<link rel="stylesheet/less" type="text/css" href="~/Content/less/perfil.less" />
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/prioridad.less" />
 }
 
 @section Scripts{
-	<script type="text/javascript" src="~/Content/js/Perfil.js"></script>
+	<script type="text/javascript" src="~/Content/js/Prioridad.js"></script>
 }
 
 <div class="m-portlet m-portlet--mobile">
@@ -30,7 +30,7 @@
 					<div class="form-group m-form__group row align-items-center">
 						<div class="col-md-4">
 							<div class="m-input-icon m-input-icon--left">
-								<input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarperfil">
+								<input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarprioridad">
 								<span class="m-input-icon__icon m-input-icon__icon--left">
 									<span><i class="la la-search"></i></span>
 								</span>
@@ -51,7 +51,7 @@
 		</div>
 		<!--end: Search Form -->
 		<!--begin: Datatable -->
-		<div class="m_datatable" id="listaperfiles"></div>
+		<div class="m_datatable" id="listaprioridades"></div>
 		<!--end: Datatable -->
 	</div>
 </div>
