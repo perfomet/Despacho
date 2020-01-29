@@ -32,7 +32,7 @@ namespace Datos.Datos
 
 			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM Cliente";
-			string WHERESentence = " WHERE ClienteId = '" + Id.ToString() + "'";
+			string WHERESentence = " WHERE ClienteId = " + Id;
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Cliente cliente = new Modelo.Cliente();
@@ -49,34 +49,32 @@ namespace Datos.Datos
 
 		public static bool Crear(Modelo.Cliente cliente)
 		{
-			string INSERTSentence = "INSERT INTO Clientes";
-			string VALUESSentence = " VALUES('{0}', '{1}', '{2}');";
+			string INSERTSentence = "INSERT INTO Cliente";
+			string VALUESSentence = " VALUES('{0}', '{1}', '{2}', '{3}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
-			builder.AppendFormat(SQLSentence, cliente.Nombre, cliente.Rut, cliente.VRut);
+			builder.AppendFormat(SQLSentence, cliente.Nombre, cliente.Rut, cliente.VRut, cliente.Sufijo);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.Cliente cliente)
 		{
 			string UPDATESentence = "UPDATE Cliente";
-			string SETSentence = " SET Nombre = '{1}', RUT = '{2}', VRUT = '{3}'";
+			string SETSentence = " SET Nombre = '{1}', RUT = '{2}', VRUT = '{3}', Sufijo = '{4}'";
 			string WHERESentence = " WHERE ClienteId = {0}";
-			cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cliente.ClienteId, cliente.Nombre, cliente.Rut, cliente.VRut);
+			builder.AppendFormat(SQLSentence, cliente.ClienteId, cliente.Nombre, cliente.Rut, cliente.VRut, cliente.Sufijo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool Eliminar(int clienteId)
+		public static bool EstaActivo(int clienteId)
 		{
-			string DELETESentence = "DELETE";
-			string FROMSentence = " FROM Cliente";
+			string UPDATESentence = "UPDATE Cliente";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
 			string WHERESentence = " WHERE ClienteId = {0}";
-			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, clienteId);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;

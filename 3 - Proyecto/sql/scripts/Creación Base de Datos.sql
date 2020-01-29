@@ -19,13 +19,18 @@ GO
 CREATE TABLE Cliente (
 	ClienteId INT PRIMARY KEY IDENTITY(2001, 1),
 	Nombre VARCHAR(255) NOT NULL,
-	RUT VARCHAR(11) NOT NULL,
-	VRUT VARCHAR(1)
+	RUT VARCHAR(11) NULL,
+	VRUT VARCHAR(1) NULL,
+	Sufijo VARCHAR(10) NOT NULL,
+	EstaActivo BIT NOT NULL
 )
 
 SET IDENTITY_INSERT Cliente ON
 
-INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT) VALUES (2001, 'Cliente de pruebas', '11111111','1')
+INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2001, 'Andina', NULL, NULL, 'AND', 1)
+INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2002, 'Embonor', NULL, NULL, 'EMB', 1)
+INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2003, 'Cerveceria Unidad', NULL, NULL, 'CCU', 1)
+INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2004, 'Soprople', NULL, NULL, 'SOP', 1)
 
 SET IDENTITY_INSERT Cliente OFF
 

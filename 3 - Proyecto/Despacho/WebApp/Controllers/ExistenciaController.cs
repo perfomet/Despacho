@@ -9,57 +9,16 @@ namespace Despacho.Controllers
 			return View();
 		}
 
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
-
-		public ActionResult Create()
-		{
-			return View("/Existencia/Modificar", new { });
-		}
-
 		[HttpPost]
-		public ActionResult Create(Datos.Modelo.Cliente cliente)
+		public JsonResult Listar(string serie)
 		{
-			bool exito = Datos.Datos.Cliente.Crear(cliente);
-
-			return Json(new { exito = exito });
-		}
-
-		public ActionResult Edit(int id)
-		{
-			Datos.Modelo.Cliente cliente = Datos.Datos.Cliente.ObtenerCliente(id);
-
-			return View("/Existencia/Modificar", cliente);
-		}
-
-		[HttpPost]
-		public ActionResult Edit(Datos.Modelo.Cliente cliente)
-		{
-			bool exito = Datos.Datos.Cliente.Modificar(cliente);
-
-			return Json(new { exito = exito });
-		}
-
-		[HttpPost]
-		public JsonResult Delete(int id)
-		{
-			bool exito = Datos.Datos.Cliente.Eliminar(id);
-
-			return Json(new { exito = exito });
-		}
-
-		[HttpPost]
-		public JsonResult Listar(int clienteId)
-		{
-			if (clienteId > 0)
+			if (!serie.Equals(string.Empty))
 			{
-				return Json(Datos.Datos.Cliente.ObtenerCliente(clienteId));
+				return Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
 			}
 			else
 			{
-				return Json(Datos.Datos.Cliente.ObtenerClientes());
+				return Json(Datos.Datos.Existencia.ObtenerExistencias());
 			}
 		}
 	}

@@ -45,7 +45,7 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Delete(int id)
 		{
-			bool exito = Datos.Datos.Cliente.Eliminar(id);
+			bool exito = Datos.Datos.Cliente.EstaActivo(id);
 
 			return Json(new { exito = exito });
 		}

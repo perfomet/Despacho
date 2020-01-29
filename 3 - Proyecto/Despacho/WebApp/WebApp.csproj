@@ -159,6 +159,7 @@
     <Content Include="Content\css\externos\bootstrap-theme.min.css" />
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
+    <Content Include="Content\js\Existencia.js" />
     <Content Include="Content\js\CargaMasiva.js" />
     <Content Include="Content\js\EmpresaTransporte.js" />
     <Content Include="Content\js\Gerencia.js" />
@@ -173,6 +174,7 @@
     <Content Include="Content\less\cliente.less" />
     <Content Include="Content\less\estadoequipo.less" />
     <Content Include="Content\less\gerencia.less" />
+    <Content Include="Content\less\existencia.less" />
     <None Include="Content\less\login.less" />
     <Content Include="Content\img\Camión con Cajas.svg" />
     <Content Include="Content\img\logo-invertido.png" />
@@ -2503,6 +2505,7 @@
     <Content Include="Views\UnidadNegocio\Index.cshtml" />
     <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\Prioridad\Index.cshtml" />
+    <Content Include="Views\Cliente\Cliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

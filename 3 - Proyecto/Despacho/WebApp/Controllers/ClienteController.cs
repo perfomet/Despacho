@@ -16,7 +16,7 @@ namespace Despacho.Controllers
 
 		public ActionResult Create()
 		{
-			return View("/Cliente/Modificar", new Datos.Modelo.Cliente());
+			return View("Cliente", new Datos.Modelo.Cliente());
 		}
 
 		[HttpPost]
@@ -31,7 +31,7 @@ namespace Despacho.Controllers
 		{
 			Datos.Modelo.Cliente cliente = Datos.Datos.Cliente.ObtenerCliente(id);
 
-			return View("/Cliente/Modificar", cliente);
+			return View("Cliente", cliente);
 		}
 
 		[HttpPost]
@@ -43,9 +43,9 @@ namespace Despacho.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult Delete(int id)
+		public JsonResult EstaActivo(int id)
 		{
-			bool exito = Datos.Datos.Cliente.Eliminar(id);
+			bool exito = Datos.Datos.Cliente.EstaActivo(id);
 
 			return Json(new { exito = exito });
 		}
