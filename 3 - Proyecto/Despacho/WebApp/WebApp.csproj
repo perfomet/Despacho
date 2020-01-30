@@ -2492,6 +2492,7 @@
     <Content Include="Content\js\externos\jquery.validate.unobtrusive.js" />
     <Content Include="Content\js\externos\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\js\externos\modernizr-2.8.3.js" />
+    <Content Include="Views\Camion\Camion.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

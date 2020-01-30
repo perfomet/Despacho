@@ -1,0 +1,57 @@
+﻿@model Datos.Modelo.Camion
+@{
+	ViewBag.SeccionTieneTitulo = true;
+
+	if (Model.patente == "")
+	{ 
+		ViewBag.Title = "Despacho - " + Model.descripcion;
+		ViewBag.TituloSeccion = Model.descripcion;
+	}
+	else
+	{
+		ViewBag.Title = "Despacho - Nuevo Camión";
+		ViewBag.TituloSeccion = "Nuevo Camión";
+	}
+	
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/camion.less" />
+}
+
+@section Scripts{
+	<script type="text/javascript" src="~/Content/js/Camion.js"></script>
+}
+
+<div class="m-portlet m-portlet--tab">
+	<!--begin::Form-->
+	<form class="m-form m-form--fit m-form--label-align-right">
+		<div class="m-portlet__body">
+			<input type="hidden" value="@Model.patente" id="id">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Empresa de Transporte</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.empresatransporte" id="empresatransporte" style="width: 50%">
+				</div>
+			</div>
+			
+			
+		</div>
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions">
+				<div class="row">
+					<div class="col-2">
+					</div>
+					<div class="col-10">
+						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+						<a href="/Camion/Index" class="btn btn-secondary">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+

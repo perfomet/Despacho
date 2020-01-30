@@ -5,34 +5,34 @@
   };
 
   let InitElementos = function () {
-    $.post("/Perfil/Listar", { id: 0 }, function (perfiles) {
-      $("#listaperfiles").mDatatable({
-        data: {
-          type: "local",
-          source: perfiles,
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: !1,
-          footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        search: {
-          input: $("#buscarperfil")
-        },
-        columns: [
-          { field: "PerfilId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-          { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
-        ], true, true);
+    if ($("#listaperfiles").length > 0) {
+      cargarTabla("PerfilId", "Perfil", { Id: 0 }, "#listaperfiles", "#buscarprfil", [
+        { field: "PerfilId", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
+        { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
+      ], true, true);
+    }
+
+    $('#btnGuardar').click(function () {
+      let id = $('#id').val();
+      let activo = $('#activo').val();
+      let descripcion = $('#descripcion').val();
+     
+      $.post("/Cliente/" + (id > 0 ? "Edit" : "Create"), {
+        PerfilId: id,
+        Descripcion: descripcion,
+        EstaActivo: activo
+      }, function (data) {
+        if (data.exito) {
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Perfil/Index"; });
+        } else {
+          mensaje("Error", "No se pudo guardar la información", "error");
+        }
       });
     });
   };
 
-  return {
+   return {
     init: function () {
       Init();
     }
