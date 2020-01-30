@@ -8,7 +8,7 @@ namespace Datos.Modelo
 		public int RegionId { get; set; }
 		public int Orden { get; set; }
 		public string Nombre { get; set; }
-
+		public bool EstaActivo { get; set; }
 		public Region Region
 		{
 			get { return new Modelo.Region(); }
@@ -21,6 +21,7 @@ namespace Datos.Modelo
 			this.RegionId = int.Parse(fila[1].ToString());
 			this.Orden = int.Parse(fila[2].ToString());
 			this.Nombre = fila[3].ToString();
+			this.EstaActivo = bool.Parse(fila[4].ToString());
 		}
 	}
 }

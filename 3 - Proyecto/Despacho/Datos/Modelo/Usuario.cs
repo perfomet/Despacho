@@ -14,7 +14,7 @@ namespace Datos.Modelo
 		public string Email { get; set; }
 		public int PerfilId { get; set; }
 		public int? ClienteId { get; set; }
-
+		public bool EstaActivo { get; set; }
 		public Perfil Perfil
 		{
 			get { return new Perfil(); }
@@ -38,6 +38,7 @@ namespace Datos.Modelo
 			this.Email = fila[6].ToString();
 			this.PerfilId = int.Parse(fila[7].ToString());
 			if (fila[8] != null && !fila[8].ToString().Equals("")) this.ClienteId = int.Parse(fila[8].ToString());
+			this.EstaActivo = bool.Parse(fila[9].ToString());
 		}
 	}
 }

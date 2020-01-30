@@ -1,6 +1,7 @@
 ﻿using Datos.DB;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 
 namespace Datos.Datos
 {
@@ -73,6 +74,16 @@ namespace Datos.Datos
 				comuna.FromDataRow(fila);
 			}
 			return comuna;
+		}
+		public static bool EstaActivo(int Id)
+		{
+			string UPDATESentence = "UPDATE Comuna";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE ComunaId = {0}";
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
+			StringBuilder builder = new StringBuilder();
+			builder.AppendFormat(SQLSentence, Id);
+			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 	}
 

@@ -48,14 +48,13 @@ namespace Despacho.Controllers
       }
 
       [HttpPost]
-      public JsonResult Delete(int id)
-      {
-        bool exito = Datos.Datos.TipoSolicitud.Eliminar(id);
+    public JsonResult EstaActivo(int id)
+    {
+      bool exito = Datos.Datos.TipoSolicitud.EstaActivo(id);
 
-        return Json(new { exito = exito });
-      }
-
-      [HttpPost]
+      return Json(new { exito = exito });
+    }
+    [HttpPost]
       public JsonResult Listar(int id)
       {
         if (id > 0)

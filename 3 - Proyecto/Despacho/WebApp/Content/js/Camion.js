@@ -6,7 +6,7 @@
 
     let InitElementos = function () {
         if ($("#listaCamiones").length > 0) {
-            cargarTabla("Patente", "Camion", { patentecamion: "" }, "#listaCamiones", "#buscarCamion", [
+            cargarTabla("Patente", "Camion", { patentecamion: "" }, "#listacamiones", "#buscarcamion", [
                 { field: "Patente", title: "Patente", width: 100, selector: !1, textAlign: "center" },
                 { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
                 { field: "EmpresaTransporte", title: "Empresa Transporte", responsive: { visible: "lg" } },

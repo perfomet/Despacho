@@ -70,14 +70,14 @@ namespace Datos.Datos
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool Eliminar(int tipodocumentoId)
+		public static bool EstaActivo(int Id)
 		{
-			string DELETESentence = "DELETE";
-			string FROMSentence = " FROM TipoDocumento";
+			string UPDATESentence = "UPDATE TipoDocumento";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
 			string WHERESentence = " WHERE TipoDocumentoId = {0}";
-			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, tipodocumentoId);
+			builder.AppendFormat(SQLSentence, Id);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 

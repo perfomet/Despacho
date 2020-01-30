@@ -44,9 +44,9 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult Delete(int id)
+    public JsonResult EstaActivo(int id)
     {
-      bool exito = Datos.Datos.Perfil.Eliminar(id);
+      bool exito = Datos.Datos.Perfil.EstaActivo(id);
 
       return Json(new { exito = exito });
     }

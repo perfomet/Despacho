@@ -1,6 +1,7 @@
 ﻿using Datos.DB;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 
 namespace Datos.Datos
 {
@@ -43,6 +44,16 @@ namespace Datos.Datos
 			}
 
 			return region;
+		}
+		public static bool EstaActivo(int Id)
+		{
+			string UPDATESentence = "UPDATE Region";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE RegionId = {0}";
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
+			StringBuilder builder = new StringBuilder();
+			builder.AppendFormat(SQLSentence, Id);
+			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 	}
 }

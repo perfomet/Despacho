@@ -55,18 +55,7 @@ namespace Datos.Datos
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
-		public static bool Eliminar(int id)
-		{
-			StringBuilder builder = new StringBuilder();
-			string DELETESentence = "DELETE";
-			string FROMSentence = " FROM Usuario";
-			string WHERESentence = " WHERE UsuarioId = {0}";
-			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
-
-			builder.AppendFormat(SQLSentence, id);
-
-			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
-		}
+		
 		public static bool Modificar(Modelo.Usuario usuario)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -95,6 +84,16 @@ namespace Datos.Datos
 			}
 
 			return usuario;
+		}
+		public static bool EstaActivo(int Id)
+		{
+			string UPDATESentence = "UPDATE Usuario";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE UsuarioId = {0}";
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
+			StringBuilder builder = new StringBuilder();
+			builder.AppendFormat(SQLSentence, Id);
+			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 	}
 }

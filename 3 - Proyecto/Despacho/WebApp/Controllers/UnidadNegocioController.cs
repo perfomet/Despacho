@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
@@ -20,7 +16,7 @@ namespace Despacho.Controllers
 
 		public ActionResult Create()
 		{
-			return View("/UnidadNegocio/Modificar", new Datos.Modelo.UnidadNegocio());
+			return View("UnidadNegocio", new Datos.Modelo.UnidadNegocio());
 		}
 
 		[HttpPost]
@@ -34,8 +30,15 @@ namespace Despacho.Controllers
 		public ActionResult Edit(int id)
 		{
 			Datos.Modelo.UnidadNegocio unidadnegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(id);
+			return View("UnidadNegocio", unidadnegocio);
+			
+		}
 
-			return View("/UnidadNegocio/Modificar", unidadnegocio);
+		[HttpPost]
+		public JsonResult EstaActivo(int id)
+		{
+			bool exito = Datos.Datos.UnidadNegocio.EstaActivo(id);
+			return Json(new { exito = exito });
 		}
 
 		[HttpPost]
@@ -46,14 +49,7 @@ namespace Despacho.Controllers
 			return Json(new { exito = exito });
 		}
 
-		[HttpPost]
-		public JsonResult Delete(int Id)
-		{
-			bool exito = Datos.Datos.UnidadNegocio.Eliminar(Id);
-
-			return Json(new { exito = exito });
-		}
-
+		
 		[HttpPost]
 		public JsonResult Listar(int Id)
 		{

@@ -50,35 +50,37 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.UnidadNegocio unidadnegocio)
 		{
 			string INSERTSentence = "INSERT INTO UnidadNegocio";
-			string VALUESSentence = " VALUES('{1}', {2});";
+			string VALUESSentence = " VALUES('{1}', {2}, {3});";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, unidadnegocio.Descripcion, unidadnegocio.ClienteId);
+			builder.AppendFormat(SQLSentence, unidadnegocio.Descripcion, unidadnegocio.ClienteId, unidadnegocio.EstaActivo);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.UnidadNegocio unidadnegocio)
 		{
 			string UPDATESentence = "UPDATE UnidadNegocio";
-			string SETSentence = " SET Descripcion = '{1}', ClienteId = {2}";
+			string SETSentence = " SET Descripcion = '{1}', ClienteId = {2}, EstaActivo = {3}";
 			string WHERESentence = " WHERE UnidadNegocioId = {0}";
 			
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, unidadnegocio.UnidadNegocioId, unidadnegocio.Descripcion, unidadnegocio.ClienteId);
+			builder.AppendFormat(SQLSentence, unidadnegocio.UnidadNegocioId, unidadnegocio.Descripcion, unidadnegocio.ClienteId, unidadnegocio.EstaActivo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool Eliminar(int unidadnegocioId)
+		public static bool EstaActivo(int clienteId)
 		{
-			string DELETESentence = "DELETE";
-			string FROMSentence = " FROM UnidadNegocio";
+			string UPDATESentence = "UPDATE UnidadNegocio";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
 			string WHERESentence = " WHERE UnidadNegocioId = {0}";
-			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, unidadnegocioId);
+			builder.AppendFormat(SQLSentence, clienteId);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
+
+		
 	}
 }

@@ -47,9 +47,9 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult Delete(string patente)
+    public JsonResult EstaActivo(int id)
     {
-      bool exito = Datos.Datos.Camion.Eliminar(patente);
+      bool exito = Datos.Datos.Camion.EstaActivo(id);
 
       return Json(new { exito = exito });
     }

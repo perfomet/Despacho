@@ -60,20 +60,19 @@ namespace Datos.Datos
 			string UPDATESentence = "UPDATE Gerencia";
 			string SETSentence = " SET Descripcion = '{1}', ClienteId = {2}";
 			string WHERESentence = " WHERE GerenciaId = {0}";
-			
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, gerencia.GerenciaId, gerencia.Descripcion, gerencia.ClienteId);
+			builder.AppendFormat(SQLSentence, gerencia.GerenciaId, gerencia.Descripcion, gerencia.ClienteId,gerencia.EstaActivo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool Eliminar(int Id)
+		public static bool EstaActivo(int Id)
 		{
-			string DELETESentence = "DELETE";
-			string FROMSentence = " FROM Gerencia";
+			string UPDATESentence = "UPDATE Gerencia";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
 			string WHERESentence = " WHERE GerenciaId = {0}";
-			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;

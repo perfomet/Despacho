@@ -1,6 +1,7 @@
 ﻿using Datos.DB;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 
 namespace Datos.Datos
 {
@@ -40,6 +41,16 @@ namespace Datos.Datos
 			return provincias;
 		}
 
+		public static bool EstaActivo(int Id)
+		{
+			string UPDATESentence = "UPDATE Provincia";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE ProvinciaId = {0}";
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
+			StringBuilder builder = new StringBuilder();
+			builder.AppendFormat(SQLSentence, Id);
+			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
+		}
 		public static Modelo.Provincia ObtenerProvincia(int provinciaId)
 		{
 			Modelo.Provincia provincia = new Modelo.Provincia();

@@ -69,15 +69,16 @@ namespace Datos.Datos
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool Eliminar(int Id)
+		public static bool EstaActivo(int Id)
 		{
-			string DELETESentence = "DELETE";
-			string FROMSentence = " FROM UnidadMedida";
+			string UPDATESentence = "UPDATE UnidadMedida";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
 			string WHERESentence = " WHERE UnidadMedidaId = {0}";
-			string SQLSentence = DELETESentence + FROMSentence + WHERESentence;
+			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
+		
 	}
 }
