@@ -3,7 +3,7 @@ using System;
 
 namespace Datos.Datos
 {
-	class Internos
+	public static class Internos
 	{
 		public const int sdominicana = 1;
 		public const int schile = 0;
@@ -24,7 +24,7 @@ namespace Datos.Datos
 			int tope = 9;
 			int idigital;
 			int t = 0;
-			int r = 0;
+			int r;
 			string resultado = null;
 			// el Rut está en la tabla como 999.999.999,
 			// ejemplo 13.087.314-6

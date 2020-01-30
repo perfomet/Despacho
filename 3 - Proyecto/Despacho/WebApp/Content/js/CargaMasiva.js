@@ -24,10 +24,12 @@
                     input: $("#buscarCargaMasiva")
                 },
                 columns: [
-                    { field: "ClienteId", title: "#", width: 50, selector: !1, textAlign: "center" },
-                    { field: "Nombre", title: "Nombre", responsive: { visible: "lg" } },
-                    { field: "Rut", title: "Rut", responsive: { visible: "lg" } },
-                    { field: "VRut", title: "dígito", responsive: { visible: "lg" } }
+                  { field: "ClienteId", title: "#", width: 50, selector: !1, textAlign: "center" },
+                  { field: "Nombre", title: "Nombre", responsive: { visible: "lg" } },
+                  { field: "Rut", title: "Rut", responsive: { visible: "lg" } },
+                  { field: "VRut", title: "dígito", responsive: { visible: "lg" } },
+                  { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
+              ], true, true);
                 ]
             });
         });

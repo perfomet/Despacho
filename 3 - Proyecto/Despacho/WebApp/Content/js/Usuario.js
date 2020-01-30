@@ -32,9 +32,10 @@
           { field: "ApellidoMaterno", title: "Segundo Apellido", responsive: { visible: "lg" } },
           { field: "Email", title: "Email", responsive: { visible: "lg" } },
           { field: "PerfilId", title: "Perfil", responsive: { visible: "lg" } },
-          { field: "ClienteId", title: "Cliente", responsive: { visible: "lg" } }
+          { field: "ClienteId", title: "Cliente", responsive: { visible: "lg" } },
+          { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
            
-        ]
+        ], true, true);
       });
     });
   };

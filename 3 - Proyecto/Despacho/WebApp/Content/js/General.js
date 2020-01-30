@@ -89,7 +89,7 @@
                         if (result) {
                             $.post('/' + controlador + '/EstaActivo', { id: id }, function (data) {
                                 if (data.exito) {
-                                    mensaje("Exito", "Desactivado correctamente", "exito", function () { location.reload(); });
+                                    mensaje("Éxito", "Desactivado correctamente", "exito", function () { location.reload(); });
                                 } else {
                                     mensaje("Error", "No se pudo desactivar", "error");
                                 }
@@ -99,7 +99,7 @@
                 } else {
                     $.post('/' + controlador + '/EstaActivo', { id: id }, function (data) {
                         if (data.exito) {
-                            mensaje("Exito", "Desactivado correctamente", "exito", function () { location.reload(); });
+                            mensaje("Éxito", "Activado correctamente", "exito", function () { location.reload(); });
                         } else {
                             mensaje("Error", "No se pudo desactivar", "error");
                         }
