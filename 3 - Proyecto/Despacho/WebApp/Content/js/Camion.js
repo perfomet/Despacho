@@ -15,23 +15,22 @@
             ], true, true);
       }
       $('#btnGuardar').click(function () {
-        let id = $('#id').val();
+        let id = $('#patente').val();
         let activo = $('#activo').val();
-        let nombre = $('#nombre').val();
-        let rut = $('#rut').val();
-        let vrut = $('#vrut').val();
-        let sufijo = $('#sufijo').val();
+        let descripcion = $('#descripcion').val();
+        let empresatransporte = $('#empresatransporte').val();
+        let espropia = $('#espropia').val();
+       
 
-        $.post("/Cliente/" + (id > 0 ? "Edit" : "Create"), {
-          ClienteId: id,
-          Nombre: nombre,
-          Rut: rut,
-          VRut: vrut,
-          Sufijo: sufijo,
+        $.post("/Camion/" + (id > 0 ? "Edit" : "Create"), {
+          patente: id,
+          Descripcion: descripcion,
+          EmpresaTransporte: empresatransporte,
+          Espropia: espropia,
           EstaActivo: activo
         }, function (data) {
           if (data.exito) {
-            mensaje("Exito", "Información guardada correctamente", "exito", function () { location.href = "/Cliente/Index"; });
+            mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Camion/Index"; });
           } else {
             mensaje("Error", "No se pudo guardar la información", "error");
           }
