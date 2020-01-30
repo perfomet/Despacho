@@ -5,33 +5,35 @@
   };
 
   let InitElementos = function () {
-    $.post("/UnidadMedida/Listar", { UnidadMedidaId: 0 }, function (unidadesmedida) {
-      $(".m_datatable").mDatatable({
-        data: {
-          type: "local",
-          source: unidadesmedida,
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: !1,
-          footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        search: {
-          input: $("#buscarUnidadMedida")
-        },
-        columns: [
+    if ($("#listaunidadesmedida").length > 0) {
+      cargarTabla("TipoSolicitudId", "TipoSolicitud", { Id: 0 }, "#listaunidadesmedida", "#buscarunidadmedida",
+        [
           { field: "UnidadMedidaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } }
-         
-        ]
+          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
+          { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
+
+        ], true, true);
+
+    }
+    $('#btnGuardar').click(function () {
+      let id = $('#id').val();
+      let activo = $('#activo').val();
+      let descripcion = $('#descripcion').val();
+      
+      $.post("/UnidadMedida/" + (id > 0 ? "Edit" : "Create"), {
+        UnidadMedidaId: id,
+        Descripcion: descripcion,
+        EstaActivo: activo
+      }, function (data) {
+        if (data.exito) {
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/UnidadMedida/Index"; });
+        } else {
+          mensaje("Error", "No se pudo guardar la información", "error");
+        }
       });
     });
   };
-
+    
   return {
     init: function () {
       Init();

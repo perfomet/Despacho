@@ -23,12 +23,14 @@
         search: {
           input: $("#buscarEmpresaTransporte")
         },
-        columns: [
-          { field: "EmpresaTransporteId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "Nombre", title: "Nombre", responsive: { visible: "lg" } },
-          { field: "EsPropia", title: "Es Propia", responsive: { visible: "lg" } }
-        ]
-      });
+        columns:
+          [
+            { field: "EmpresaTransporteId", title: "#", width: 50, selector: !1, textAlign: "center" },
+            { field: "Nombre", title: "Nombre", responsive: { visible: "lg" } },
+            { field: "EsPropia", title: "Es Propia", responsive: { visible: "lg" } },
+            { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
+          ], true, true);
+          });
     });
   };
 

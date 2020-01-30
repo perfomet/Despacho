@@ -23,11 +23,13 @@
         search: {
           input: $("#buscarUnidadNegocio")
         },
-        columns: [
+        columns:
+         [
           { field: "UnidadNegocioId", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-          { field: "ClienteId", title: "# Cliente", responsive: { visible: "lg" } }
-         ]
+          { field: "ClienteId", title: "# Cliente", responsive: { visible: "lg" } },
+          { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
+        ], true, true);
       });
     });
   };
