@@ -34,8 +34,8 @@ namespace Despacho.Controllers
     public ActionResult Edit(int id)
     {
       Datos.Modelo.EstadoEquipo estadoequipo = Datos.Datos.EstadoEquipo.ObtenerEstadoEquipo(id);
-
-      return View("/EstadoEquipo/Modificar", estadoequipo);
+      return View("EstadoEquipo", estadoequipo);
+      
     }
 
     [HttpPost]
