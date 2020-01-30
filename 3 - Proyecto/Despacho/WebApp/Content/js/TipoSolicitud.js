@@ -5,33 +5,38 @@
   };
 
   let InitElementos = function () {
-    $.post("/TipoSolicitud/Listar", { id: 0 }, function (solicitudes) {
-      $("#listatiposdesolicitudes").mDatatable({
-        data: {
-          type: "local",
-          source: solicitudes,
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: !1,
-          footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        search: {
-          input: $("#buscartiposolicitud")
-        },
-        columns:
-          [
-            { field: "TipoSolicitudId", title: "#", width: 50, selector: !1, textAlign: "center" },
-            { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-            { field: "Observaciones", title: "Observaciones", responsive: { visible: "lg" } }
-          ]
+    if ($("#listatipossolicitudes").length > 0) {
+      cargarTabla("TipoSolicitudId", "TipoSolicitud", { Id: 0 }, "#listatipossolicitudes", "#buscartiposolicitud",
+      [
+        { field: "TipoSolicitudId", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
+        { field: "Observaciones", title: "Observaciones", responsive: { visible: "lg" } },
+        { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
+        ], true, true);
+
+      }
+
+    $('#btnGuardar').click(function () {
+      let id = $('#id').val();
+      let activo = $('#activo').val();
+      let descripcion = $('#descripcion').val();
+      let observaciones = $('#observaciones').val();
+      
+      $.post("/TipoSolicitud/" + (id > 0 ? "Edit" : "Create"), {
+        TipoSolicitudId: id,
+        Descripcion: descripcion,
+        Observaciones: observaciones,
+        EstaActivo: activo
+      }, function (data) {
+        if (data.exito) {
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/TipoSolicitud/Index"; });
+        } else {
+          mensaje("Error", "No se pudo guardar la información", "error");
+        }
       });
     });
   };
+   
 
   return {
     init: function () {
