@@ -48,8 +48,8 @@
                     field: "Acciones", title: "Acciones", responsive: { visible: "lg" }, template: function (e, a, i) {
                         let div = $('<div></div>');
 
-                        let editar = $('<a href="/' + controlador + '/Edit/' + e[identificador] + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="View "><i class="la la-edit"></i></a>');
-                        let activarDesactivar = $('<a href="#" data-activo="' + e.EstaActivo + '" data-id="' + e[identificador] + '" class="activarDesactivar m-portlet__nav-link btn m-btn m-btn--hover-' + (e.EstaActivo == true ? "danger" : "success") + ' m-btn--icon m-btn--icon-only m-btn--pill" title="View "><i class="la la-power-off"></i></a>');
+                        let editar = $('<a href="/' + controlador + '/Edit/' + e[identificador] + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Editar"><i class="la la-edit"></i></a>');
+                        let activarDesactivar = $('<a href="#" data-activo="' + e.EstaActivo + '" data-id="' + e[identificador] + '" class="activarDesactivar m-portlet__nav-link btn m-btn m-btn--hover-' + (e.EstaActivo == true ? "danger" : "success") + ' m-btn--icon m-btn--icon-only m-btn--pill" title="' + (e.EstaActivo == true ? "Desactivar" : "Activar") + '"><i class="la la-power-off"></i></a>');
 
                         if (edita) div.append(editar);
                         if (desactiva) div.append(activarDesactivar);

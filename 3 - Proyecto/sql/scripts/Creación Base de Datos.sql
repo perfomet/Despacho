@@ -18,19 +18,20 @@ GO
 
 CREATE TABLE Cliente (
 	ClienteId INT PRIMARY KEY IDENTITY(2001, 1),
+	Codigo VARCHAR(50) NOT NULL,
 	Nombre VARCHAR(255) NOT NULL,
 	RUT VARCHAR(11) NULL,
 	VRUT VARCHAR(1) NULL,
-	Sufijo VARCHAR(10) NOT NULL,
+	Prefijo VARCHAR(10) NOT NULL,
 	EstaActivo BIT NOT NULL
 )
 
 SET IDENTITY_INSERT Cliente ON
 
-INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2001, 'Andina', NULL, NULL, 'AND', 1)
-INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2002, 'Embonor', NULL, NULL, 'EMB', 1)
-INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2003, 'Cerveceria Unidad', NULL, NULL, 'CCU', 1)
-INSERT INTO Cliente (ClienteId, Nombre, RUT, VRUT, Sufijo, EstaActivo) VALUES (2004, 'Soprople', NULL, NULL, 'SOP', 1)
+INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2001, 'LOG. ANDINA', 'Andina', NULL, NULL, 'AND', 1)
+INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2002, 'LOG.EMBONOR', 'Embonor', NULL, NULL, 'EMB', 1)
+INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2003, 'LOG.MIMET', 'Servimet', NULL, NULL, '', 1)
+INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2004, 'LOG.STA ELENA', 'Soprople', NULL, NULL, 'SOP', 1)
 
 SET IDENTITY_INSERT Cliente OFF
 

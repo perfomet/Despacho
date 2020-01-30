@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -159,6 +161,8 @@
     <Content Include="Content\css\externos\bootstrap-theme.min.css" />
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
+    <Content Include="Content\img\Caja.png" />
+    <Content Include="Content\img\producto.png" />
     <Content Include="Content\js\Existencia.js" />
     <Content Include="Content\js\CargaMasiva.js" />
     <Content Include="Content\js\EmpresaTransporte.js" />
@@ -2458,6 +2462,18 @@
     <Content Include="Content\librerias\metronic\snippets\pages\user\login-4.html" />
     <Content Include="Content\librerias\metronic\snippets\pages\user\login-5.html" />
     <Content Include="Content\librerias\metronic\snippets\pages\user\login-6.html" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\.gitignore" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\dist\phaser-plugin-isometric.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\dist\phaser-plugin-isometric.min.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\Gruntfile.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\Cube.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\Isometric.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\IsoSprite.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\Octree.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\physics\Body.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\physics\World.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\Point3.js" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\src\Projector.js" />
     <Content Include="Content\librerias\XLS\jszip.js" />
     <Content Include="Content\librerias\XLS\xlsx.js" />
     <Content Include="favicon.ico" />
@@ -2625,6 +2641,9 @@
     <Content Include="Content\less\tiposolicitud.less" />
     <Content Include="Content\less\perfil.less" />
     <Content Include="Content\less\prioridad.less" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\LICENSE.md" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\package.json" />
+    <Content Include="Content\librerias\phaser-plugin-isometric\README.md" />
     <None Include="packages.config" />
     <Content Include="Content\js\externos\jquery-3.4.1.slim.min.map" />
     <Content Include="Content\js\externos\jquery-3.4.1.min.map" />
@@ -2635,11 +2654,15 @@
       <Name>Datos</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

@@ -50,23 +50,23 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Cliente cliente)
 		{
 			string INSERTSentence = "INSERT INTO Cliente";
-			cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
-			string VALUESSentence = " VALUES('{0}', '{1}', '{2}', '{3}', 1);";
+			//cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
+			string VALUESSentence = " VALUES('{0}', '{1}', '{2}', '{3}', '{4}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cliente.Nombre, cliente.Rut, cliente.VRut, cliente.Sufijo);
+			builder.AppendFormat(SQLSentence, cliente.Codigo, cliente.Nombre, cliente.Rut, cliente.VRut, cliente.Prefijo);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.Cliente cliente)
 		{
 			string UPDATESentence = "UPDATE Cliente";
-			cliente.VRut= Internos.Verirut(cliente.Rut, Internos.schile);
-			string SETSentence = " SET Nombre = '{1}', RUT = '{2}', VRUT = '{3}', Sufijo = '{4}'";
+			//cliente.VRut = Internos.Verirut(cliente.Rut, Internos.schile);
+			string SETSentence = " SET Codigo = '{1}', Nombre = '{2}', RUT = '{3}', VRUT = '{4}', Prefijo = '{5}'";
 			string WHERESentence = " WHERE ClienteId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cliente.ClienteId, cliente.Nombre, cliente.Rut, cliente.VRut, cliente.Sufijo);
+			builder.AppendFormat(SQLSentence, cliente.ClienteId, cliente.Codigo, cliente.Nombre, cliente.Rut, cliente.VRut, cliente.Prefijo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

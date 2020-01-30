@@ -8,6 +8,7 @@ namespace Datos.Modelo
 		public string Bodega { get; set; }
 		public string NomBodega { get; set; }
 		public string Bin { get; set; }
+		public string Propietario { get; set; }
 		public DateTime FechaAlmacenaje { get; set; }
 		public string CodArt { get; set; }
 		public string Serie { get; set; }
@@ -22,14 +23,15 @@ namespace Datos.Modelo
 			this.Bodega = fila[0].ToString();
 			this.NomBodega = fila[1].ToString();
 			this.Bin = fila[2].ToString();
-			this.FechaAlmacenaje = DateTime.Parse(fila[3].ToString());
-			this.CodArt = fila[4].ToString();
-			this.Serie = fila[5].ToString();
-			this.Placa = fila[6].ToString();
-			this.Modelo = fila[7].ToString();
-			this.Denominacion = fila[8].ToString();
-			this.Marca = fila[9].ToString();
-			this.Referencia = fila[10].ToString();
+			this.Propietario = fila[3].ToString();
+			this.FechaAlmacenaje = DateTime.Parse(fila[4].ToString());
+			this.CodArt = fila[5].ToString();
+			this.Serie = fila[6].ToString();
+			this.Placa = fila[7].ToString();
+			this.Modelo = fila[8].ToString();
+			this.Denominacion = fila[9].ToString();
+			this.Marca = fila[10].ToString();
+			this.Referencia = fila[11].ToString();
 		}
 	}
 }

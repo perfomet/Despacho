@@ -30,6 +30,12 @@
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Código</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Codigo" id="codigo" style="width: 50%">
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Nombre" id="nombre" style="width: 50%">
@@ -43,9 +49,9 @@
 				</div>
 			</div>
 			<div class="form-group m-form__group row">
-				<label for="example-text-input" class="col-2 col-form-label">Sufijo</label>
+				<label for="example-text-input" class="col-2 col-form-label">Prefijo</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Sufijo" id="sufijo" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.Prefijo" id="prefijo" style="width: 50%">
 				</div>
 			</div>
 		</div>
