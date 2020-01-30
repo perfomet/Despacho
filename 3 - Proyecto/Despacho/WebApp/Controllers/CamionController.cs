@@ -20,7 +20,7 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/Camiones/Modificar", new Datos.Modelo.Camion());
+      return View("Camion", new Datos.Modelo.Camion());
     }
 
     [HttpPost]
@@ -35,7 +35,7 @@ namespace Despacho.Controllers
     {
       Datos.Modelo.Camion camion = Datos.Datos.Camion.ObtenerCamion(id);
 
-      return View("/Camion/Modificar", camion);
+      return View("Camion", camion);
     }
 
     [HttpPost]

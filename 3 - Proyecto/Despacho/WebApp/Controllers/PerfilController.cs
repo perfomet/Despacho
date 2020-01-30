@@ -16,7 +16,7 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/Perfil/Modificar", new Datos.Modelo.Perfil());
+      return View("Perfil", new Datos.Modelo.Perfil());
     }
 
     [HttpPost]
@@ -30,9 +30,9 @@ namespace Despacho.Controllers
 
     public ActionResult Edit(int id)
     {
-      Datos.Modelo.Perfil prioridad = Datos.Datos.Perfil.ObtenerPerfil(id);
+      Datos.Modelo.Perfil perfil = Datos.Datos.Perfil.ObtenerPerfil(id);
 
-      return View("/Perfil/Modificar", id);
+      return View("Perfil", perfil);
     }
 
     [HttpPost]

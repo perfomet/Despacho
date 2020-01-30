@@ -50,7 +50,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.UnidadNegocio unidadnegocio)
 		{
 			string INSERTSentence = "INSERT INTO UnidadNegocio";
-			string VALUESSentence = " VALUES('{1}', {2}, {3});";
+			string VALUESSentence = " VALUES('{1}', {2}, {3}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, unidadnegocio.Descripcion, unidadnegocio.ClienteId, unidadnegocio.EstaActivo);

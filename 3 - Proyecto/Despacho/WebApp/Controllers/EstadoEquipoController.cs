@@ -20,7 +20,7 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/EstadoEquipo/Modificar", new Datos.Modelo.EstadoEquipo());
+      return View("EstadoEquipo", new Datos.Modelo.EstadoEquipo());
     }
 
     [HttpPost]

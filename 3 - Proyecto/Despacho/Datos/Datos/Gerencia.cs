@@ -48,7 +48,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Gerencia gerencia)
 		{
 			string INSERTSentence = "INSERT INTO Gerencia";
-			string VALUESSentence = " VALUES('{1}',{2});";
+			string VALUESSentence = " VALUES('{1}',{2}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, gerencia.Descripcion, gerencia.ClienteId);

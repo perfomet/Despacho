@@ -21,7 +21,7 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/TipoDocumento/Modificar", new Datos.Modelo.TipoDocumento());
+      return View("TipoDocumento", new Datos.Modelo.TipoDocumento());
     }
 
     [HttpPost]
@@ -36,7 +36,7 @@ namespace Despacho.Controllers
     {
       Datos.Modelo.TipoDocumento tipodocumento = Datos.Datos.TipoDocumento.ObtenerTipoDocumento(id);
 
-      return View("/TipoDocumento/Modificar", tipodocumento);
+      return View("TipoDocumento", tipodocumento);
     }
 
     [HttpPost]

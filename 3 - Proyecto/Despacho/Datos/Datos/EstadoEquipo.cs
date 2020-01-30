@@ -50,7 +50,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.EstadoEquipo estadoequipo)
 		{
 			string INSERTSentence = "INSERT INTO EstadoEquipo";
-			string VALUESSentence = " VALUES('{1}');";
+			string VALUESSentence = " VALUES('{1}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 

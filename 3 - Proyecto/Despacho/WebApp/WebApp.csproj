@@ -2523,6 +2523,16 @@
     <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\Prioridad\Index.cshtml" />
     <Content Include="Views\Cliente\Cliente.cshtml" />
+    <Content Include="Views\EmpresaTransporte\EmpresaTransporte.cshtml" />
+    <Content Include="Views\EstadoEquipo\EstadoEquipo.cshtml" />
+    <Content Include="Views\Gerencia\Gerencia.cshtml" />
+    <Content Include="Views\Perfil\Perfil.cshtml" />
+    <Content Include="Views\Prioridad\Prioridad.cshtml" />
+    <Content Include="Views\Solicitud\Solicitud.cshtml" />
+    <Content Include="Views\TipoDocumento\TipoDocumento.cshtml" />
+    <Content Include="Views\TipoSolicitud\TipoSolicitud.cshtml" />
+    <Content Include="Views\UnidadNegocio\UnidadNegocio.cshtml" />
+    <Content Include="Views\Usuario\Usuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

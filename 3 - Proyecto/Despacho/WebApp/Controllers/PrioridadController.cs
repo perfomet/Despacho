@@ -16,7 +16,7 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/Prioridad/Modificar", new Datos.Modelo.Prioridad());
+      return View("Prioridad", new Datos.Modelo.Prioridad());
     }
 
     [HttpPost]
@@ -32,7 +32,7 @@ namespace Despacho.Controllers
     {
       Datos.Modelo.Prioridad prioridad = Datos.Datos.Prioridad.ObtenerPrioridad(id);
 
-      return View("/Prioridad/Modificar", id);
+      return View("Prioridad", prioridad);
     }
 
     [HttpPost]

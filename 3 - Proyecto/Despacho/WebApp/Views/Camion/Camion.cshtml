@@ -3,7 +3,7 @@
 	ViewBag.SeccionTieneTitulo = true;
 
 	if (Model.patente == "")
-	{ 
+	{
 		ViewBag.Title = "Despacho - " + Model.descripcion;
 		ViewBag.TituloSeccion = Model.descripcion;
 	}
@@ -12,7 +12,7 @@
 		ViewBag.Title = "Despacho - Nuevo Camión";
 		ViewBag.TituloSeccion = "Nuevo Camión";
 	}
-	
+
 }
 
 @section Less{
@@ -20,7 +20,7 @@
 }
 
 @section Scripts{
-	<script type="text/javascript" src="~/Content/js/Camion.js"></script>
+	@Scripts.Render("~/bundles/camion")
 }
 
 <div class="m-portlet m-portlet--tab">
@@ -36,8 +36,8 @@
 					<input class="form-control m-input" type="text" value="@Model.empresatransporte" id="empresatransporte" style="width: 50%">
 				</div>
 			</div>
-			
-			
+
+
 		</div>
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">

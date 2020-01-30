@@ -16,7 +16,7 @@ namespace Despacho.Controllers
 
     public ActionResult Create()
     {
-      return View("/Usuarios/Modificar", new Datos.Modelo.Usuario());
+      return View("Usuario", new Datos.Modelo.Usuario());
     }
 
     [HttpPost]
@@ -32,7 +32,7 @@ namespace Despacho.Controllers
     {
       Datos.Modelo.Usuario usuario = Datos.Datos.Usuario.ObtenerUsuario(id);
 
-      return View("/Usuario/Modificar", id);
+      return View("Usuario", usuario);
     }
 
     [HttpPost]

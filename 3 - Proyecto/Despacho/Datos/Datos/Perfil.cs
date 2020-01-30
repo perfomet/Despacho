@@ -48,7 +48,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Perfil perfil)
 		{
 			string INSERTSentence = "INSERT INTO Perfil";
-			string VALUESSentence = " VALUES('{1}');";
+			string VALUESSentence = " VALUES('{1}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, perfil.Descripcion, perfil.PerfilId);

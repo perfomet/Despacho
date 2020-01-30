@@ -48,7 +48,7 @@ namespace Datos.Datos
 	public static bool Crear(Modelo.Prioridad prioridad)
 	{
 		string INSERTSentence = "INSERT INTO Prioridad";
-		string VALUESSentence = " VALUES('{1}'});";
+		string VALUESSentence = " VALUES('{1}', 1});";
 		string SQLSentence = INSERTSentence + VALUESSentence;
 		StringBuilder builder = new StringBuilder();
 		builder.AppendFormat(SQLSentence, prioridad.Descripcion);

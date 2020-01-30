@@ -61,7 +61,7 @@ namespace Despacho
 			#region Páginas
 
 			bundles.Add(new ScriptBundle("~/bundles/general")
-								.Include("~/Content/js/General.js"));
+					.Include("~/Content/js/General.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/login")
 					.Include("~/Content/js/Login.js"));

@@ -49,7 +49,7 @@ namespace Datos.Datos
 		{
 			StringBuilder builder = new StringBuilder();
 			string INSERTSentence = "INSERT INTO Usuario";
-			string VALUESSentence = " VALUES ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, {11})";
+			string VALUESSentence = " VALUES ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, {9}, {10}, {11}, 1)";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			builder.AppendFormat(SQLSentence, usuario.UsuarioId , usuario.Username , usuario.Password , usuario.Nombres , usuario.ApellidoPaterno , usuario.ApellidoMaterno, usuario.NombreCompleto , usuario.Email , usuario.PerfilId , usuario.ClienteId , usuario.Perfil , usuario.Cliente);
 

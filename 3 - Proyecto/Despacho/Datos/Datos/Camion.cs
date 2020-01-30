@@ -50,7 +50,7 @@ namespace Datos.Datos
 		{
 			StringBuilder builder = new StringBuilder();
 			string INSERTSentence = "INSERT INTO Camion";
-			string VALUESSentence = " VALUES ('{0}', '{1}', '{2}')";
+			string VALUESSentence = " VALUES ('{0}', '{1}', '{2}', 1)";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			builder.AppendFormat(SQLSentence, camion.patente, camion.descripcion, camion.empresatransporte);
 

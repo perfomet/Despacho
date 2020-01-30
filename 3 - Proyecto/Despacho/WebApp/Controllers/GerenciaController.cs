@@ -16,14 +16,14 @@ namespace Despacho.Controllers
 
 		public ActionResult Create()
 		{
-			return View("/Gerencia/Modificar", new Datos.Modelo.Gerencia());
+			return View("Gerencia", new Datos.Modelo.Gerencia());
 		}
 
 		[HttpPost]
 		public ActionResult Create(Datos.Modelo.Gerencia gerencia)
 		{
 			bool exito = Datos.Datos.Gerencia.Crear(gerencia);
-
+			
 			return Json(new { exito = exito });
 		}
 
@@ -31,7 +31,7 @@ namespace Despacho.Controllers
 		{
 			Datos.Modelo.Gerencia gerencia = Datos.Datos.Gerencia.ObtenerGerencia(id);
 
-			return View("/Gerencia/Modificar", gerencia);
+			return View("Gerencia", gerencia);
 		}
 
 		[HttpPost]
