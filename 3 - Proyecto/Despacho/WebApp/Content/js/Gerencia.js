@@ -6,9 +6,9 @@
 
   let InitElementos = function ()
     {
-    if ($("#listagerencia").length > 0)
+    if ($("#listagerencias").length > 0)
     {
-      cargarTabla("GerenciaId", "Descripcion", { Id: 0 }, "#listagerencias", "#buscargerencia",
+      cargarTabla("GerenciaId", "Gerencia", { Id: 0 }, "#listagerencias", "#buscargerencia",
         [
           { field: "GerenciaId", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
