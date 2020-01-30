@@ -6,7 +6,7 @@
 
   let InitElementos = function () {
     if ($("#listaunidadesmedida").length > 0) {
-      cargarTabla("TipoSolicitudId", "TipoSolicitud", { Id: 0 }, "#listaunidadesmedida", "#buscarunidadmedida",
+      cargarTabla("UnidadMedidaId", "UnidadMedida", { Id: 0 }, "#listaunidadesmedida", "#buscarunidadmedida",
         [
           { field: "UnidadMedidaId", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
