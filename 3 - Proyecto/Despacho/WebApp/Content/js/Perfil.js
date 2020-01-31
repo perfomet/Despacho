@@ -18,7 +18,7 @@
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
      
-      $.post("/Cliente/" + (id > 0 ? "Edit" : "Create"), {
+      $.post("/Perfil/" + (id > 0 ? "Edit" : "Create"), {
         PerfilId: id,
         Descripcion: descripcion,
         EstaActivo: activo
