@@ -55,15 +55,15 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult Listar(string patentecamion)
+    public JsonResult Listar(string patente)
     {
-      if (patentecamion == "")
+      if (patente == "")
       {
         return Json(Datos.Datos.Camion.ObtenerCamiones());
       }
       else
       {
-        return Json(Datos.Datos.Camion.ObtenerCamion(patentecamion));
+        return Json(Datos.Datos.Camion.ObtenerCamion(patente));
       }
     }
   }

@@ -6,11 +6,10 @@
 
     let InitElementos = function () {
         if ($("#listacamiones").length > 0) {
-            cargarTabla("Patente", "Camion", { patentecamion: "" }, "#listacamiones", "#buscarcamion", [
+            cargarTabla("Patente", "Camion", { patente: "" }, "#listacamiones", "#buscarcamion", [
                 { field: "Patente", title: "Patente", width: 100, selector: !1, textAlign: "center" },
                 { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-                { field: "EmpresaTransporte", title: "Empresa Transporte", responsive: { visible: "lg" } },
-                { field: "EsPropia", title: "Propia", responsive: { visible: "lg" }, template: function (e, a, i) { return e.espropia == true ? "Si" : "No"; } },
+                { field: "EmpresaTransporteId", title: "Empresa Transporte", responsive: { visible: "lg" } },
                 { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
             ], true, true);
       }
@@ -18,15 +17,13 @@
         let id = $('#patente').val();
         let activo = $('#activo').val();
         let descripcion = $('#descripcion').val();
-        let empresatransporte = $('#empresatransporte').val();
-        let espropia = $('#espropia').val();
-       
+        let empresatransporteid = $('#empresatransporteid').val();
+            
 
         $.post("/Camion/" + (id > 0 ? "Edit" : "Create"), {
           patente: id,
           Descripcion: descripcion,
-          EmpresaTransporte: empresatransporte,
-          Espropia: espropia,
+          EmpresaTransporteId: empresatransporteid,
           EstaActivo: activo
         }, function (data) {
           if (data.exito) {
