@@ -2,15 +2,15 @@
 @{
 	ViewBag.SeccionTieneTitulo = true;
 
-	if (Model.GerenciaId == 0)
+	if (Model.gerenciaid == 0)
 	{
 		ViewBag.Title = "Despacho - Nueva Gerencia";
 		ViewBag.TituloSeccion = "Nueva Gerencia";
 	}
 	else
 	{
-		ViewBag.Title = "Despacho - " + Model.Descripcion;
-		ViewBag.TituloSeccion = Model.Descripcion;
+		ViewBag.Title = "Despacho - " + Model.descripcion;
+		ViewBag.TituloSeccion = Model.descripcion;
 	}
 }
 
@@ -26,13 +26,13 @@
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.GerenciaId" id="id">
+			<input type="hidden" value="@Model.gerenciaid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.descripcion" id="descripcion" style="width: 50%">
 				</div>
 			</div>
 
@@ -44,7 +44,7 @@
 					</div>
 					<div class="col-10">
 						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-						<a href="/Cliente/Index" class="btn btn-secondary">Volver</a>
+						<a href="/Gerencia/Index" class="btn btn-secondary">Volver</a>
 					</div>
 				</div>
 			</div>

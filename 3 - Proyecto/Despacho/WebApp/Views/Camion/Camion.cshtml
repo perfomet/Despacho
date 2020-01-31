@@ -4,13 +4,13 @@
 
 		if (Model.patente == "")
 		{
-			ViewBag.Title = "Despacho - " + Model.descripcion;
-			ViewBag.TituloSeccion = Model.descripcion;
+			ViewBag.Title = "Despacho - Camión Nuevo";
+			ViewBag.TituloSeccion = " Camión Nuevo";
 		}
 		else
 		{
-			ViewBag.Title = "Despacho - Nuevo Camión";
-			ViewBag.TituloSeccion = "Nuevo Camión";
+			ViewBag.Title = "Despacho - " + Model.descripcion;
+			ViewBag.TituloSeccion = Model.descripcion;
 		}	
 	}
 
@@ -27,7 +27,7 @@
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
 			<input type="hidden" value="@Model.patente" id="id">
-			<input type="hidden" value="@Model.estaactivo" id="activo">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Patente</label>

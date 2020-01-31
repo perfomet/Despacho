@@ -8,7 +8,7 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Gerencia> ObtenerGerencias()
 		{
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Gerencia.EstaActivo";
 			string FROMSentence = " FROM Gerencia";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
@@ -28,9 +28,9 @@ namespace Datos.Datos
 		public static Modelo.Gerencia ObtenerGerencia(int Id)
 		{
 
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Gerencia.EstaActivo";
 			string FROMSentence = " FROM Gerencia";
-			string WHERESentence = " WHERE GerenciaId = '" + Id.ToString() + "'";
+			string WHERESentence = " WHERE Gerencia.GerenciaId = '" + Id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Gerencia gerencia = new Modelo.Gerencia();
@@ -51,18 +51,18 @@ namespace Datos.Datos
 			string VALUESSentence = " VALUES('{1}',{2}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, gerencia.Descripcion, gerencia.ClienteId);
+			builder.AppendFormat(SQLSentence, gerencia.descripcion, gerencia.clienteid);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.Gerencia gerencia)
 		{
 			string UPDATESentence = "UPDATE Gerencia";
-			string SETSentence = " SET Descripcion = '{1}', ClienteId = {2}";
-			string WHERESentence = " WHERE GerenciaId = {0}";
+			string SETSentence = " SET Gerencia.Descripcion = '{1}', Gerencia.ClienteId = {2}";
+			string WHERESentence = " WHERE Gerencia.GerenciaId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, gerencia.GerenciaId, gerencia.Descripcion, gerencia.ClienteId,gerencia.EstaActivo);
+			builder.AppendFormat(SQLSentence, gerencia.gerenciaid, gerencia.descripcion, gerencia.clienteid,gerencia.EstaActivo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -70,8 +70,8 @@ namespace Datos.Datos
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Gerencia";
-			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE GerenciaId = {0}";
+			string SETSentence = " SET Gerencia.EstaActivo = CASE WHEN Gerencia.EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE Gerencia.GerenciaId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);

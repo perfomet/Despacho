@@ -47,7 +47,7 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult EstaActivo(int id)
+    public JsonResult EstaActivo(string id)
     {
       bool exito = Datos.Datos.Camion.EstaActivo(id);
 

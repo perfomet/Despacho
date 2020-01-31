@@ -6,10 +6,10 @@
 
     let InitElementos = function () {
         if ($("#listacamiones").length > 0) {
-            cargarTabla("Patente", "Camion", { patente: "" }, "#listacamiones", "#buscarcamion", [
-                { field: "Patente", title: "Patente", width: 100, selector: !1, textAlign: "center" },
-                { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-                { field: "EmpresaTransporteId", title: "Empresa Transporte", responsive: { visible: "lg" } },
+            cargarTabla("patente", "Camion", { patente: "" }, "#listacamiones", "#buscarcamion", [
+                { field: "patente", title: "Patente", width: 100, selector: !1, textAlign: "center" },
+                { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
+                { field: "empresatransporteid", title: "Empresa Transporte", responsive: { visible: "lg" } },
                 { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
             ], true, true);
       }

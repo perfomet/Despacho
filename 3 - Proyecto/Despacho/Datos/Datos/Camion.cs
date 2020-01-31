@@ -11,7 +11,7 @@ namespace Datos.Datos
 		
 		public static List<Modelo.Camion> ObtenerCamiones()
 		{
-			string SELECTSentence = "SELECT Camion.Patente, Camion.Descripcion, EmpresaTransporteId, Camion.EstaActivo";
+			string SELECTSentence = "SELECT Camion.Patente AS Patente, Camion.Descripcion AS Descripcion, Camion.EmpresaTransporteId AS EmpresaTransporteId, Camion.EstaActivo AS EstaActivo";
 			string FROMSentence = " FROM Camion";
 			string WHERESentence = "";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
@@ -52,7 +52,7 @@ namespace Datos.Datos
 			string INSERTSentence = "INSERT INTO Camion";
 			string VALUESSentence = " VALUES ('{0}', '{1}', '{2}', 1)";
 			string SQLSentence = INSERTSentence + VALUESSentence;
-			builder.AppendFormat(SQLSentence, camion.patente, camion.descripcion, camion.empresatransporteid, camion.estaactivo);
+			builder.AppendFormat(SQLSentence, camion.patente, camion.descripcion, camion.empresatransporteid, camion.EstaActivo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -69,11 +69,11 @@ namespace Datos.Datos
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
-		public static bool EstaActivo(int Id)
+		public static bool EstaActivo(string Id)
 		{
 			string UPDATESentence = "UPDATE Camion";
 			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE CamionId = {0}";
+			string WHERESentence = " WHERE patente LIKE '{0}'";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);

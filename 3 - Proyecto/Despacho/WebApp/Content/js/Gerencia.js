@@ -8,11 +8,11 @@
     {
     if ($("#listagerencias").length > 0)
     {
-      cargarTabla("GerenciaId", "Gerencia", { Id: 0 }, "#listagerencias", "#buscargerencia",
+      cargarTabla("gerenciaid", "Gerencia", { Id: 0 }, "#listagerencias", "#buscargerencia",
         [
-          { field: "GerenciaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-          { field: "ClienteId", title: "# Cliente", responsive: { visible: "lg" } },
+          { field: "gerenciaid", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
+          { field: "clienteid", title: "# Cliente", responsive: { visible: "lg" } },
           { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
         ], true, true);
 
@@ -24,9 +24,9 @@
       let clienteid = $('#clienteid').val();
       
       $.post("/Gerencia/" + (id > 0 ? "Edit" : "Create"), {
-        GerenciaId: id,
-        Descripcion: descripcion,
-        ClienteId: clienteid,
+        gerenciaid: id,
+        descripcion: descripcion,
+        clienteid: clienteid,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
