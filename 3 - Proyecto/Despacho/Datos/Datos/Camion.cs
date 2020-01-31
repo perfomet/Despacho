@@ -11,7 +11,7 @@ namespace Datos.Datos
 		
 		public static List<Modelo.Camion> ObtenerCamiones()
 		{
-			string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia, Camion.EstaActivo AS EstaActivo";
+			string SELECTSentence = "SELECT Camion.Patente AS Patente, Camion.Descripcion AS Descripcion, EmpresaTransporte.Nombre AS EmpresaTransporte, EmpresaTransporte.EsPropia AS EsPropia, Camion.EstaActivo AS EstaActivo";
 			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
 			string WHERESentence = "";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
@@ -31,10 +31,10 @@ namespace Datos.Datos
 
 		public static Modelo.Camion ObtenerCamion(string Patente)
 		{
-			string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia, Camion.EsTaActivo AS EstaActivo";
+			string SELECTSentence = "SELECT Camion.Patente AS Patente, Camion.Descripcion AS Descripcion, EmpresaTransporte.Nombre AS EmpresaTransporte, EmpresaTransporte.EsPropia AS EsPropia, Camion.EsTaActivo AS EstaActivo";
 			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
 			
-			string WHERESentence = " WHERE (patente LIKE '" + Patente + "')";
+			string WHERESentence = " WHERE (Camion.Patente LIKE '" + Patente + "')";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			Modelo.Camion camion = new Modelo.Camion();
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
