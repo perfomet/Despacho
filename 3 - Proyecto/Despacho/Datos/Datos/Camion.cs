@@ -17,16 +17,16 @@ namespace Datos.Datos
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.Camion> camiones = new List<Modelo.Camion>();
+			List<Modelo.Camion> listacamiones = new List<Modelo.Camion>();
 
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.Camion camion = new Modelo.Camion();
 				camion.FromDataRow(fila);
-				camiones.Add(camion);
+				listacamiones.Add(camion);
 			}
 
-			return camiones;
+			return listacamiones;
 		}
 
 		public static Modelo.Camion ObtenerCamion(string Patente)
