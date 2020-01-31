@@ -7,25 +7,26 @@ namespace Datos.Datos
 {
 	public class Camion
 	{
-				
+		
+		
 		public static List<Modelo.Camion> ObtenerCamiones()
 		{
-			string SELECTSentence = "SELECT Camion.Patente AS patente, Camion.Descripcion AS descripcion, EmpresaTransporte.Nombre AS empresatransporte, EmpresaTransporte.EsPropia AS espropia, Camion.EstaActivo AS estaactivo";
+			string SELECTSentence = "SELECT Camion.Patente AS Patente, Camion.Descripcion AS Descripcion, EmpresaTransporte.Nombre AS EmpresaTransporte, EmpresaTransporte.EsPropia AS EsPropia, Camion.EstaActivo AS EstaActivo";
 			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
 			string WHERESentence = "";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.Camion> camiones = new List<Modelo.Camion>();
+			List<Modelo.Camion> listacamiones = new List<Modelo.Camion>();
 
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.Camion camion = new Modelo.Camion();
 				camion.FromDataRow(fila);
-				camiones.Add(camion);
+				listacamiones.Add(camion);
 			}
 
-			return camiones;
+			return listacamiones;
 		}
 
 		public static Modelo.Camion ObtenerCamion(string Patente)
