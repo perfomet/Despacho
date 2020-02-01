@@ -30,10 +30,39 @@
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
-				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
+				<label for="example-text-input" class="col-2 col-form-label">Usuario</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Username" id="Nombre Usuario" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.Username" id="username" style="width: 50%">
 				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Contraseña</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Password" id="password" style="width: 50%">
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Contraseña</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Nombres" id="nombres" style="width: 50%">
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Apellido Paterno</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.ApellidoPaterno" id="apellidopaterno" style="width: 50%">
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Apellido Materno</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.ApellidoMaterno" id="apellidomaterno" style="width: 50%">
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Email</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Email" id="email" style="width: 50%">
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Rol</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.PerfilId" id="perfilid" style="width: 50%">
+				</div>
+				<!--<label for="example-text-input" class="col-2 col-form-label">Cliente</label>
+	<div class="col-10">
+		<input class="form-control m-input" type="text" value="@Model.ClienteId" id="clienteid" style="width: 50%">
+	</div>
+		 -->
 			</div>
 
 		</div>

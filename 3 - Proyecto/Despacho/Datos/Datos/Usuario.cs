@@ -88,8 +88,8 @@ namespace Datos.Datos
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Usuario";
-			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE UsuarioId = {0}";
+			string SETSentence = " SET Usuario.EstaActivo = CASE WHEN Usuario.EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE Usuario.UsuarioId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);
