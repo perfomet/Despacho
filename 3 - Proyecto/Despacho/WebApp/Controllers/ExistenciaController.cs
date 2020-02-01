@@ -12,14 +12,39 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Listar(string serie)
 		{
+			JsonResult result;
+
 			if (!serie.Equals(string.Empty))
 			{
-				return Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
+				result = Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
 			}
 			else
 			{
-				return Json(Datos.Datos.Existencia.ObtenerExistencias());
+				result = Json(Datos.Datos.Existencia.ObtenerExistencias());
 			}
+
+			result.MaxJsonLength = 50000000;
+
+			return result;
+		}
+
+		[HttpPost]
+		public JsonResult ObtenerBodegas(string codigo)
+		{
+			if (codigo.Equals(string.Empty))
+			{
+				return Json(Datos.Datos.Bodega.ObtenerBodegas());
+			}
+			else
+			{
+				return Json(Datos.Datos.Bodega.ObtenerBodega(codigo));
+			}
+		}
+
+		[HttpPost]
+		public JsonResult ObtenerBins(string bodega)
+		{
+			return Json(Datos.Datos.Bin.ObtenerBins(bodega));
 		}
 	}
 }

@@ -2,6 +2,7 @@
 	ViewBag.Title = "Despacho - Existencias";
 	ViewBag.SeccionTieneTitulo = true;
 	ViewBag.TituloSeccion = "Consulta de Existencias";
+	ViewBag.Pagina = 3;
 }
 
 @section Less {
@@ -9,12 +10,63 @@
 }
 
 @section Scripts {
-	<script src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.1.1/phaser.min.js"></script>
-	<script type="text/javascript" src="~/Content/librerias/phaser-plugin-isometric/dist/phaser-plugin-isometric.js"></script>
+	<script src="~/Content/librerias/metronic/assets/themes/default/custom/crud/forms/widgets/select2.js" type="text/javascript"></script>
 	<script type="text/javascript" src="~/Content/js/Existencia.js"></script>
 }
+<div class="m-portlet m-portlet--primary m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true" id="m_portlet_tools_1">
+	<div class="m-portlet__head">
+		<div class="m-portlet__head-caption">
+			<div class="m-portlet__head-title">
+				<span class="m-portlet__head-icon">
+					<i class="flaticon-search-magnifier-interface-symbol"></i>
+				</span>
+				<h3 class="m-portlet__head-text">
+					Filtros
+				</h3>
+			</div>
+		</div>
+		<div class="m-portlet__head-tools">
+			<ul class="m-portlet__nav">
+				<li class="m-portlet__nav-item">
+					<a href="#" id="filtro-filtrar" class="m-portlet__nav-link m-portlet__nav-link--icon">
+						<i class="la la-refresh"></i>
+					</a>
+				</li>
+				<li class="m-portlet__nav-item">
+					<a id="filtro-ocultar" href="#" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+						<i class="la la-angle-down"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="m-portlet__body">
+		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+			<div class="col-xl-6">
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">Bodega</label>
+					<div class="col-lg-4 col-md-9 col-sm-12">
+						<select class="form-control m-select2" id="filtro-bodega" name="filtro-bodega"></select>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6">
+				&nbsp;
+			</div>
+			<div class="col-xl-6">
+				<div class="form-group m-form__group row">
+					<label class="col-form-label col-lg-3 col-sm-12">Bin</label>
+					<div class="col-lg-4 col-md-9 col-sm-12">
+						<select class="form-control m-select2" id="filtro-bin" name="filtro-bin"></select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<div class="m-portlet m-portlet--mobile">
+<!--begin::Portlet-->
+<div class="m-portlet m-portlet--tabs">
 	<div class="m-portlet__head">
 		<div class="m-portlet__head-caption">
 			<div class="m-portlet__head-title">
@@ -23,36 +75,48 @@
 				</h3>
 			</div>
 		</div>
+		<div class="m-portlet__head-tools">
+			<ul class="nav nav-tabs m-tabs-line m-tabs-line--right" role="tablist">
+				<li class="nav-item m-tabs__item">
+					<a class="nav-link m-tabs__link active" data-toggle="tab" href="#seccion-bodega" role="tab">
+						<i class="flaticon-open-box"></i> Bodega
+					</a>
+				</li>
+				<li class="nav-item m-tabs__item">
+					<a class="nav-link m-tabs__link" data-toggle="tab" href="#seccion-lista" role="tab">
+						<i class="flaticon-list-3"></i> Lista
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
-	<div class="m-portlet__body" id="test">
-		<!--begin: Search Form -->
-		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-			<div class="row align-items-center">
-				<div class="col-xl-8 order-2 order-xl-1">
-					<div class="form-group m-form__group row align-items-center">
-						<div class="col-md-4">
-							<div class="m-input-icon m-input-icon--left">
-								<input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarCliente">
-								<span class="m-input-icon__icon m-input-icon__icon--left">
-									<span><i class="la la-search"></i></span>
-								</span>
+	<div class="m-portlet__body">
+		<div class="tab-content">
+			<div class="tab-pane active" id="seccion-bodega" role="tabpanel">
+				<div id="bodega"></div>
+			</div>
+			<div class="tab-pane" id="seccion-lista" role="tabpanel">
+				<!--begin: Search Form -->
+				<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+					<div class="row align-items-center">
+						<div class="col-xl-8 order-2 order-xl-1">
+							<div class="form-group m-form__group row align-items-center">
+								<div class="col-md-4">
+									<div class="m-input-icon m-input-icon--left">
+										<input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarExistencia">
+										<span class="m-input-icon__icon m-input-icon__icon--left">
+											<span><i class="la la-search"></i></span>
+										</span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-					<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-						<span>
-							<i class="flaticon-add"></i>
-							<span>Crear</span>
-						</span>
-					</a>
-					<div class="m-separator m-separator--dashed d-xl-none"></div>
-				</div>
+				<!--end: Search Form -->
+				<div class="m_datatable" id="lista-existencia"></div>
 			</div>
 		</div>
-		<!--end: Search Form -->
 	</div>
 </div>
-
-@Scripts.Render("~/bundles/cliente")
+<!--end::Portlet-->

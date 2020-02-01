@@ -1,17 +1,117 @@
-﻿let Camion = function () {
+﻿let Existencia = function () {
+    let existencias = [];
+    let existenciasAgrupadas = {};
 
     let Init = function () {
-        InitElementos();
+        $('#m_portlet_tools_1 .m-portlet__body').toggle();
+
+        $.post("/Existencia/Listar", { serie: "" }, function (data) {
+            existencias = data;
+            existenciasAgrupadas = AgruparExistencias(data);
+
+            InitElementos();
+        });
     };
 
     let InitElementos = function () {
-        $.post("/Existencia/Listar", { serie: "" }, function (data) {
-            console.log(data);
+        CargarFiltroBodegas();
+        DibujarBodega(existenciasAgrupadas);
+        CargarLista();
+        $('.m-select2').select2();
+        $('#filtro-filtrar').click(function () {
+            Filtrar();
+        });
+    };
+
+    let AgruparExistencias = function (lista) {
+        let agrupado = {};
+
+        lista.forEach((existencia) => {
+            if (!agrupado[existencia.Bin]) agrupado[existencia.Bin] = {};
+            if (!agrupado[existencia.Bin][existencia.Modelo]) agrupado[existencia.Bin][existencia.Modelo] = [];
+            agrupado[existencia.Bin][existencia.Modelo].push(existencia);
         });
 
-        $.post("/Existencia/Listar", { serie: "1766670" }, function (data) {
-            console.log(data);
+        return agrupado;
+    };
+
+    let DibujarBodega = function (existencias) {
+        //console.log(existenciasAgrupadas);
+
+        for (let a in existencias) {
+            //console.log(a + ':');
+            for (let e in existencias[a]) {
+                //console.log(e, existenciasAgrupadas[a][e].length);
+            }
+        }
+    };
+
+    let CargarLista = function () {
+        let tabla = $('#lista-existencia').mDatatable({
+            data: {
+                type: "local",
+                source: existencias,
+                pageSize: 10
+            },
+            layout: {
+                theme: "default",
+                class: "",
+                scroll: !1,
+                footer: !1
+            },
+            sortable: !0,
+            pagination: !0,
+            search: {
+                input: $('#buscarExistencia')
+            },
+            columns: [
+                { field: "Serie", title: "Serie", responsive: { visible: "lg" } },
+                { field: "Placa", title: "Placa", responsive: { visible: "lg" } },
+                { field: "Denominacion", title: "Descripción", responsive: { visible: "lg" } },
+                { field: "Bin", title: "Bin", responsive: { visible: "lg" } },
+                { field: "NomBodega", title: "Bodega", responsive: { visible: "lg" } },
+                { field: "Propietario", title: "Cliente", responsive: { visible: "lg" } },
+                { field: "FechaAlmacenaje", title: "Fecha Almacenaje", responsive: { visible: "lg" }, template: function (e, a, i) { return moment(parseInt(e.FechaAlmacenaje.split('(')[1].split(')')[0])).format("DD/MM/YYYY HH:mm"); } }
+            ]
         });
+
+        console.log(tabla.search.toString());
+    };
+
+    let CargarFiltroBodegas = function () {
+        $.post("/Existencia/ObtenerBodegas", { codigo: "" }, function (bodegas) {
+            $('#filtro-bodega').html('');
+
+            bodegas.forEach((bodega) => {
+                $('#filtro-bodega').append('<option value="' + bodega.Codigo + '">' + bodega.Nombre + '</option>');
+            });
+
+            $('#filtro-bodega').select2({ placeholder: "Seleccione una bodega" });
+
+            CargarFiltroBins(bodegas[0].Codigo);
+
+            $('#filtro-bodega').change(function () {
+                CargarFiltroBins($(this).val());
+            });
+        });
+    };
+
+    let CargarFiltroBins = function (bodega) {
+        $.post("/Existencia/ObtenerBins", { bodega: bodega }, function (bins) {
+            $('#filtro-bin').html('');
+
+            bins.forEach((bin) => {
+                $('#filtro-bin').append('<option value="' + bin.Codigo + '">' + bin.Codigo + '</option>');
+            });
+
+            $('#filtro-bin').select2({ placeholder: "Seleccione una bin" });
+        });
+    };
+
+    let Filtrar = function () {
+        
+
+        DibujarBodega(existenciasAgrupadas);
     };
 
     return {
@@ -22,113 +122,5 @@
 }();
 
 $(() => {
-    Camion.init();
+    Existencia.init();
 });
-
-
-var game = new Phaser.Game(800, 400, Phaser.AUTO, 'test', null, true, false);
-
-var BasicGame = function (game) { };
-
-BasicGame.Boot = function (game) { };
-
-var isoGroup, cursorPos, cursor;
-
-BasicGame.Boot.prototype =
-{
-    preload: function () {
-        game.load.image('tile', '/Content/img/Caja.png');
-
-        game.time.advancedTiming = true;
-
-        // Add and enable the plug-in.
-        game.plugins.add(new Phaser.Plugin.Isometric(game));
-
-        // This is used to set a game canvas-based offset for the 0, 0, 0 isometric coordinate - by default
-        // this point would be at screen coordinates 0, 0 (top left) which is usually undesirable.
-        game.iso.anchor.setTo(0.5, 0.5);
-    },
-    create: function () {
-        // Create a group for our tiles.
-        isoGroup = game.add.group();
-
-        // Let's make a load of tiles on a grid.
-        this.spawnTiles();
-
-        // Provide a 3D position for the cursor
-        cursorPos = new Phaser.Plugin.Isometric.Point3();
-    },
-    update: function () {
-        // Update the cursor position.
-        // It's important to understand that screen-to-isometric projection means you have to specify a z position manually, as this cannot be easily
-        // determined from the 2D pointer position without extra trickery. By default, the z position is 0 if not set.
-        game.iso.unproject(game.input.activePointer.position, cursorPos);
-
-        if (game.input.activePointer.isDown == true) {
-            let t;
-
-            isoGroup.forEach(function (tile) {
-                var inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
-                // If it does, do a little animation and tint change.
-                if (inBounds) {
-                    t = tile;
-                }
-            });
-        }
-
-        let t, inBounds;
-
-        // Loop through all tiles and test to see if the 3D position from above intersects with the automatically generated IsoSprite tile bounds.
-        isoGroup.forEach(function (tile) {
-            inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
-
-            if (inBounds) {
-                t = tile;
-            }
-        });
-
-        // If it does, do a little animation and tint change.
-        if (t && !t.selected) {
-            t.selected = true;
-            t.tint = 0x86bfda;
-            game.add.tween(t);
-        }
-
-        isoGroup.forEach(function (tile) {
-            inBounds = tile.isoBounds.containsXY(cursorPos.x, cursorPos.y);
-            // If not, revert back to how it was.
-            if (tile.selected && !inBounds) {
-                tile.selected = false;
-                tile.tint = 0xffffff;
-                game.add.tween(t);
-            }
-        });
-
-    },
-    spawnTiles: function () {
-        let ancho = 2;
-        let profundidad = 14;
-        let alto = 2;
-        let cantidad = 21;
-        let agregados = 0;
-
-        var tile;
-
-        for (let al = 0; al < alto; al++) {
-            for (let p = 0; p < profundidad; p++) {
-                for (let an = 0; an < ancho; an++) {
-                    if (agregados < cantidad) {
-                        tile = game.add.isoSprite(an * 40, p * 40, al * 40, 'tile', 0, isoGroup);
-                        tile.anchor.set(0.1, 0);
-                        tile.prueba = an + p + al;
-
-                        agregados++;
-                    }
-                }
-            }
-        }
-    }
-};
-
-game.state.add('Boot', BasicGame.Boot);
-game.state.start('Boot');
