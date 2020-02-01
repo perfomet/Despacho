@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		
+		<script type="text/javascript" src="prueba.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#productos').append(CrearBim(2, 2, 8, 100));
+				$('#productos').append(CrearBim(2, 2, 8, 100));
+				$('#productos').append(CrearBim(2, 2, 8, 100));
+			});
+
+			function CrearBim(ancho, alto, profundidad, cantidad){
+				let agregados = 0;
+
+				let bim = $('<div></div>');
+
+				bim.css('width', (32 * ancho) + 'px');
+				bim.css('height', '500px');
+				bim.css('position', 'relative');
+				bim.css('display', 'inline-block');
+				bim.css('margin-left', '96px');
+				//bim.css('background-color', 'gray');
+
+				for(let al = 0; al < alto; al++){
+					for(let p = 0; p < profundidad; p++){
+						for(let an = 0; an < ancho; an++){
+							if(cantidad > agregados){
+								let x = an * 32;
+								let y = (p * 18) + (34 * al);
+								
+								if(p > 0) x += 32 * p;
+
+								if(an > 0) y -= 18 * an;
+																
+								let img = $('<img src="./Caja.svg" data-x="' + x + '" data-y="' + y + '"data-z="' + p + '" style="left: '+ x +'px;bottom: '+ y +'px;z-index: -'+ p +'"/>');
+
+								img.css('left', x + 'px');
+								img.css('bottom', y + 'px');
+								img.css('z-index', (p * -1));
+							
+								bim.append(img);
+
+								agregados++;
+							}
+						}
+					}
+				}
+
+				return bim;
+			}
+		</script>
+		
+		<style>
+			#productos{
+				height: 500px;
+				position: relative;
+				z-index: 1;
+			}
+			
+			#productos img{
+				height: 64px;
+				width: 64px;
+				position: absolute;
+				transform: scaleX(-1);
+				background-color: transparent;
+			}
+			
+			#productos img:hover{
+				background-color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="productos"></div>
+		<div id="screen"> 
+			<canvas id="canvas">HTML5 CANVAS</canvas> 
+			<div id="info"> 
+				<div class="background"></div> 
+					<div class="content"> 
+						<h1>3D Cubes</h1> 
+						<table> 
+							<tr><td class="w">drag</td><td>→ rotate X,Y axis</td></tr> 
+							<tr><td class="w">wheel</td><td>→ rotate Z axis</td></tr> 
+							<tr><td class="w">click</td><td>→ create cube</td></tr> 
+						</table> 
+						<hr> 
+						<input type="checkbox" id="white"><label for="white"> white background</label><br> 
+						<input type="checkbox" id="alpha"><label for="alpha"> transparency</label><br> 
+						<input type="checkbox" id="autor"><label for="autor"> auto rotation</label><br> 
+						<input type="checkbox" id="destroy"><label for="destroy"> destroy cubes</label><br> 
+						<hr> 
+						- <span id="fps" class="w">00</span> FPS<br> 
+						- <span id="npoly" class="w">00</span> Faces<br> 
+						<p align="center"><input type="button" value="RESET" id="reset" class="button"></input><input type="button" value="STOP" id="stopgo" class="button"></input></p> 
+					</div> 
+				</div> 
+			</div> 
+	</body>
+</html>
