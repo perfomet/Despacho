@@ -30,7 +30,7 @@ namespace Datos.Datos
 
 		string SELECTSentence = "SELECT *";
 		string FROMSentence = " FROM Prioridad";
-		string WHERESentence = " WHERE PrioridadId = '" + Id.ToString() + "'";
+		string WHERESentence = " WHERE Prioridad.PrioridadId = '" + Id.ToString() + "'";
 		string ORDERSentence = ";";
 		string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 		Modelo.Prioridad prioridad = new Modelo.Prioridad();
@@ -47,23 +47,23 @@ namespace Datos.Datos
 
 	public static bool Crear(Modelo.Prioridad prioridad)
 	{
-		string INSERTSentence = "INSERT INTO Prioridad";
+		string INSERTSentence = "INSERT INTO Prioridad.Prioridad";
 		string VALUESSentence = " VALUES('{1}', 1});";
 		string SQLSentence = INSERTSentence + VALUESSentence;
 		StringBuilder builder = new StringBuilder();
-		builder.AppendFormat(SQLSentence, prioridad.Descripcion);
+		builder.AppendFormat(SQLSentence, prioridad.descripcion);
 		return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 	}
 
 	public static bool Modificar(Modelo.Prioridad prioridad)
 	{
 		string UPDATESentence = "UPDATE Prioridad";
-		string SETSentence = " SET Descripcion = '{1}'";
-		string WHERESentence = " WHERE PrioridadId = {0}";
+		string SETSentence = " SET Prioridad.Descripcion = '{1}'";
+		string WHERESentence = " WHERE Prioridad.PrioridadId = {0}";
 
 		string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 		StringBuilder builder = new StringBuilder();
-		builder.AppendFormat(SQLSentence, prioridad.PrioridadId, prioridad.Descripcion);
+		builder.AppendFormat(SQLSentence, prioridad.prioridadid, prioridad.descripcion);
 
 		return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 	}
@@ -71,8 +71,8 @@ namespace Datos.Datos
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Prioridad";
-			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE PrioridadId = {0}";
+			string SETSentence = " SET Prioridad.EstaActivo = CASE WHEN Prioridad.EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE Prioridad.PrioridadId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);

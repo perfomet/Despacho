@@ -7,9 +7,9 @@
   let InitElementos = function () {
     let InitElementos = function () {
       if ($("#listaprioridades").length > 0) {
-        cargarTabla("PrioridadId", "Prioridad", { Id: 0 }, "#listaprioridades", "#buscarprioridad", [
-          { field: "PrioridadId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
+        cargarTabla("prioridadid", "Prioridad", { Id: 0 }, "#listaprioridades", "#buscarprioridad", [
+          { field: "prioridadid", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
           { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
         ], true, true);
       }

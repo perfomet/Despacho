@@ -5,10 +5,10 @@
   };
 
   let InitElementos = function () {
-    if ($("#listaestadosequipos").length > 0) {
-      cargarTabla("EstadoEquipoId", "EstadoEquipo", { Id: 0 }, "#listaestadoequipos", "#buscarestadoequipo", [
-        { field: "EstadoEquipoId", title: "#", width: 50, selector: !1, textAlign: "center" },
-        { field: "Descripcion", title: "descripción", responsive: { visible: "lg" } },
+    if ($("#listaestadoequipos").length > 0) {
+      cargarTabla("estadoequipoid", "EstadoEquipo", { Id: 0 }, "#listaestadoequipos", "#buscarestadoequipo", [
+        { field: "estadoequipoid", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
       ], true, true);
     }
@@ -19,8 +19,8 @@
       let nombre = $('#descripcion').val();
       
       $.post("/EstadoEquipo/" + (id > 0 ? "Edit" : "Create"), {
-        EstadoEquipoId: id,
-        Descripcion: descripcion,
+        estadoEquipoId: id,
+        descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {

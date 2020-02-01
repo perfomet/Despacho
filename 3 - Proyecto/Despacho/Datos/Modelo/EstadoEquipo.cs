@@ -4,13 +4,13 @@ namespace Datos.Modelo
 {
 	public class EstadoEquipo : Base.ModeloBase
 	{
-		public int EstadoEquipoId { get; set; }
-		public string Descripcion { get; set; }
+		public int estadoequipoid { get; set; }
+		public string descripcion { get; set; }
 		public bool EstaActivo { get; set; }
 		public void FromDataRow(DataRow fila)
 		{
-			this.EstadoEquipoId = int.Parse(fila[0].ToString());
-			this.Descripcion = fila[1].ToString();
+			this.estadoequipoid = int.Parse(fila[0].ToString());
+			this.descripcion = fila[1].ToString();
 			this.EstaActivo = bool.Parse(fila[2].ToString());
 		}
 	}

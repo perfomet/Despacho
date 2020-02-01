@@ -8,7 +8,7 @@
     {
     if ($("#listagerencias").length > 0)
     {
-      cargarTabla("gerenciaid", "Gerencia", { Id: 0 }, "#listagerencias", "#buscargerencia",
+      cargarTabla("gerenciaid", "Gerencia", { id: 0 }, "#listagerencias", "#buscargerencia",
         [
           { field: "gerenciaid", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
@@ -24,9 +24,9 @@
       let clienteid = $('#clienteid').val();
       
       $.post("/Gerencia/" + (id > 0 ? "Edit" : "Create"), {
-        gerenciaid: id,
-        descripcion: descripcion,
-        clienteid: clienteid,
+        GerenciaId: id,
+        Descripcion: descripcion,
+        ClienteId: clienteid,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {

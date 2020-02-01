@@ -14,7 +14,7 @@ namespace Datos.Modelo
 			this.gerenciaid = int.Parse(fila[0].ToString());
 			this.descripcion = fila[1].ToString();
 			this.clienteid = int.Parse(fila[2].ToString());
-			this.EstaActivo = bool.Parse(fila[4].ToString());
+			this.EstaActivo = bool.Parse(fila[3].ToString());
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.EstadoEquipo> ObtenerEstadosEquipos()
 		{
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT EstadoEquipo.EstadoEquipoId, EstadoEquipo.Descripcion,  EstadoEquipo.EstaActivo";
 			string FROMSentence = " FROM EstadoEquipo";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
@@ -30,9 +30,9 @@ namespace Datos.Datos
 		}
 		public static Modelo.EstadoEquipo ObtenerEstadoEquipo(int Id)
 		{
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT EstadoEquipo.EstadoEquipoId, EstadoEquipo.Descripcion,  EstadoEquipo.EstaActivo";
 			string FROMSentence = " FROM EstadoEquipo";
-			string WHERESentence = " WHERE EstadoEquipoId = '" + Id.ToString() + "'";
+			string WHERESentence = " WHERE EstadoEquipo.EstadoEquipoId = '" + Id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.EstadoEquipo estadoequipo = new Modelo.EstadoEquipo();
@@ -54,19 +54,19 @@ namespace Datos.Datos
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 
-			builder.AppendFormat(SQLSentence, estadoequipo.Descripcion);
+			builder.AppendFormat(SQLSentence, estadoequipo.descripcion);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.EstadoEquipo estadoequipo)
 		{
 			string UPDATESentence = "UPDATE EstadoEquipo";
-			string SETSentence = " SET Descripcion = '{1}'";
-			string WHERESentence = " WHERE EstadoEquipoId = {0}";
+			string SETSentence = " SET EstadoEquipo.Descripcion = '{1}'";
+			string WHERESentence = " WHERE EstadoEquipo.EstadoEquipoId = {0}";
 
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, estadoequipo.EstadoEquipoId, estadoequipo.Descripcion);
+			builder.AppendFormat(SQLSentence, estadoequipo.estadoequipoid, estadoequipo.descripcion);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -74,8 +74,8 @@ namespace Datos.Datos
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE EstadoEquipo";
-			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE EstadoEquipoId = {0}";
+			string SETSentence = " SET EstadoEquipo.EstaActivo = CASE WHEN EstadoEquipo.EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE EstadoEquipo.EstadoEquipoId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);
