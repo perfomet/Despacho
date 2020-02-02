@@ -25,12 +25,12 @@ namespace Datos.Datos
 			return gerencias;
 		}
 
-		public static Modelo.Gerencia ObtenerGerencia(int Id)
+		public static Modelo.Gerencia ObtenerGerencia(int id)
 		{
 
 			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Gerencia.EstaActivo";
 			string FROMSentence = " FROM Gerencia";
-			string WHERESentence = " WHERE Gerencia.GerenciaId = '" + Id.ToString() + "'";
+			string WHERESentence = " WHERE Gerencia.GerenciaId = '" + id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Gerencia gerencia = new Modelo.Gerencia();
@@ -51,7 +51,7 @@ namespace Datos.Datos
 			string VALUESSentence = " VALUES('{1}',{2}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, gerencia.descripcion, gerencia.clienteid);
+			builder.AppendFormat(SQLSentence, gerencia.Descripcion, gerencia.Clienteid);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
@@ -62,7 +62,7 @@ namespace Datos.Datos
 			string WHERESentence = " WHERE Gerencia.GerenciaId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, gerencia.gerenciaid, gerencia.descripcion, gerencia.clienteid,gerencia.EstaActivo);
+			builder.AppendFormat(SQLSentence, gerencia.Gerenciaid, gerencia.Descripcion, gerencia.Clienteid, gerencia.EstaActivo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

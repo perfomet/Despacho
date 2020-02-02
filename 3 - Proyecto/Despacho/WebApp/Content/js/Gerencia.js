@@ -4,29 +4,25 @@
     InitElementos();
   };
 
-  let InitElementos = function ()
-    {
-    if ($("#listagerencias").length > 0)
-    {
-      cargarTabla("gerenciaid", "Gerencia", { id: 0 }, "#listagerencias", "#buscargerencia",
-        [
-          { field: "gerenciaid", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "descripcion", title: "Descripción", responsive: { visible: "lg" } },
-          { field: "clienteid", title: "# Cliente", responsive: { visible: "lg" } },
+  let InitElementos = function () {
+    if ($("#listagerencias").length > 0) {
+      cargarTabla("Gerenciaid", "Gerencia", { Gerenciaid: 0 }, "#listagerencias", "#buscargerencia", [
+          { field: "Gerenciaid", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
+          { field: "Clienteid", title: "# Cliente", responsive: { visible: "lg" } },
           { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
         ], true, true);
-
     }
     $('#btnGuardar').click(function () {
-      let id = $('#id').val();
+      let id = $('#gerenciaid').val();
       let activo = $('#activo').val();
-      let descripcion = $('#descripcion').val();
-      let clienteid = $('#clienteid').val();
+      let Descripcion = $('#descripcion').val();
+      let Clienteid = $('#clienteid').val();
       
       $.post("/Gerencia/" + (id > 0 ? "Edit" : "Create"), {
         GerenciaId: id,
         Descripcion: descripcion,
-        ClienteId: clienteid,
+        Clienteid: clienteid,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
@@ -37,7 +33,6 @@
       });
     });
   };
-
 
   return {
     init: function () {

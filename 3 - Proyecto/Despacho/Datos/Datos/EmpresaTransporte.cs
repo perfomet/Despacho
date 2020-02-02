@@ -9,7 +9,7 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.EmpresaTransporte> ObtenerEmpresasdeTransportes()
 		{
-			string SELECTSentence = "SELECT EmpresaTransporteId, Nombre, EsPropia";
+			string SELECTSentence = "SELECT EmpresaTransporte.EmpresaTransporteId, EmpresaTransporte.Nombre, EmpresaTransporte.EsPropia";
 			string FROMSentence = " FROM EmpresaTransporte";
 			string WHERESentence = "";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
@@ -29,9 +29,9 @@ namespace Datos.Datos
 
 		public static Modelo.EmpresaTransporte ObtenerEmpresaTransporte(int id)
 		{
-			string SELECTSentence = "SELECT EmpresaTransporteId, Nombre, EsPropia";
+			string SELECTSentence = "SELECT EmpresaTransporte.EmpresaTransporteId, EmpresaTransporte.EmpresaTransporte.Nombre, EsPropia";
 			string FROMSentence = " FROM EmpresaTransporte";
-			string WHERESentence = " WHERE (EmpresaTransporteId = " + id.ToString() + ")";
+			string WHERESentence = " WHERE (EmpresaTransporte.EmpresaTransporteId = " + id.ToString() + ")";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			Modelo.EmpresaTransporte empresatransporte = new Modelo.EmpresaTransporte();
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);

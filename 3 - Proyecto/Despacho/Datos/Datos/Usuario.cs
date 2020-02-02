@@ -31,9 +31,9 @@ namespace Datos.Datos
 		public static Modelo.Usuario ObtenerUsuario(string username)
 		{
 			Modelo.Usuario usuario = new Modelo.Usuario();
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Usuario.ClienteId, Usuario.EstaActivo";
 			string FROMSentence = " FROM Usuario";
-			string WHERESentence = " WHERE Username = '" + username + "'";
+			string WHERESentence = " WHERE Usuario.Username = '" + username + "'";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence );
 				
@@ -60,8 +60,8 @@ namespace Datos.Datos
 		{
 			StringBuilder builder = new StringBuilder();
 			string UPDATESentence = "UPDATE Usuario";
-			string SETSentence=" SET UsuarioId = '{0}', Username = '{1}',  Password = {2}, Nombres = {3}, ApellidoPaterno = {4}, ApellidoMaterno = {5}, NombreCompleto = {6}, Email = {7}, PerfilId = {8}, ClienteId = {9}, Perfil = {10}, Cliente = {11}";
-			string WHERESentence=" WHERE UsuarioId = {0}";
+			string SETSentence= " SET Usuario.UsuarioId = '{0}', Username = '{1}',  Password = {2}, Nombres = {3}, ApellidoPaterno = {4}, ApellidoMaterno = {5}, NombreCompleto = {6}, Email = {7}, PerfilId = {8}, ClienteId = {9}, Perfil = {10}, Cliente = {11}";
+			string WHERESentence= " WHERE Usuario.UsuarioId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			builder.AppendFormat(SQLSentence, usuario.UsuarioId, usuario.Username, usuario.Password, usuario.Nombres, usuario.ApellidoPaterno, usuario.ApellidoMaterno, usuario.NombreCompleto , usuario.Email, usuario.PerfilId , usuario.ClienteId , usuario.Perfil, usuario.Cliente);
 
@@ -71,11 +71,15 @@ namespace Datos.Datos
 		public static Modelo.Usuario ObtenerUsuario(int usuarioId)
 		{
 			Modelo.Usuario usuario = new Modelo.Usuario();
-			string SELECTSentence = "SELECT *";
+			//SELECT Usuario.UsuarioId, Usuario.Username AS NombreUsuario, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Usuario.ClienteId, Usuario.EstaActivo, 
+      //                   Perfil.Descripcion, Cliente.Nombre
+			//FROM            Usuario INNER JOIN
+			//									 Perfil ON Usuario.PerfilId = Perfil.PerfilId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId
+			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Usuario.ClienteId, Usuario.EstaActivo";
 			string FROMSentence = " FROM Usuario";
-			string WHERESentence = " WHERE UsuarioId = " + usuarioId;
+			string WHERESentence = " WHERE Usuario.UsuarioId = " + usuarioId.ToString();
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-			DataTable dataTable = DataBase.ExecuteReader(SELECTSentence);
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 
 			if (dataTable.Rows.Count > 0)
 			{

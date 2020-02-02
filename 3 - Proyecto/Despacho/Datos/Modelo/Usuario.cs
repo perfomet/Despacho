@@ -17,7 +17,7 @@ namespace Datos.Modelo
 		public bool EstaActivo { get; set; }
 		public Perfil Perfil
 		{
-			get { return new Perfil(); }
+			get { return Datos.Perfil.ObtenerPerfil(PerfilId); }
 			set { Perfil = value; }
 		}
 

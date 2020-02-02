@@ -2,15 +2,15 @@
 @{
 		ViewBag.SeccionTieneTitulo = true;
 
-		if (Model.patente == "")
+		if (Model.Patente == "")
 		{
 			ViewBag.Title = "Despacho - Camión Nuevo";
 			ViewBag.TituloSeccion = " Camión Nuevo";
 		}
 		else
 		{
-			ViewBag.Title = "Despacho - " + Model.descripcion;
-			ViewBag.TituloSeccion = Model.descripcion;
+			ViewBag.Title = "Despacho - " + Model.Descripcion;
+			ViewBag.TituloSeccion = Model.Descripcion;
 		}	
 	}
 
@@ -26,21 +26,21 @@
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.patente" id="id">
+			<input type="hidden" value="@Model.Patente" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Patente</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.patente" id="patente" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.Patente" id="patente" style="width: 50%">
 				</div>
 				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.descripcion" id="descripcion" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
 				</div>
 				<label for="example-text-input" class="col-2 col-form-label">Empresa de Transporte</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.empresatransporteid" id="empresatransporteid" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.Empresatransporteid" id="empresatransporteid" style="width: 50%">
 				</div>
 
 			</div>

@@ -52,7 +52,7 @@ namespace Datos.Datos
 			string INSERTSentence = "INSERT INTO Camion";
 			string VALUESSentence = " VALUES ('{0}', '{1}', '{2}', 1)";
 			string SQLSentence = INSERTSentence + VALUESSentence;
-			builder.AppendFormat(SQLSentence, camion.patente, camion.descripcion, camion.empresatransporteid, camion.EstaActivo);
+			builder.AppendFormat(SQLSentence, camion.Patente, camion.Descripcion, camion.Empresatransporteid, camion.EstaActivo);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -64,7 +64,7 @@ namespace Datos.Datos
 			string SETSentence = " SET patente = '{0}', Descripcion = '{1}',  EmpresaTransporteId = {2}";
 			string WHERESentence = " WHERE Patente LIKE '{0}'";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
-			builder.AppendFormat(SQLSentence  , camion.patente, camion.descripcion, camion.empresatransporteid);
+			builder.AppendFormat(SQLSentence  , camion.Patente, camion.Descripcion, camion.Empresatransporteid);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
