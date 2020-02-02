@@ -716,47 +716,80 @@ INSERT INTO Comuna (RegionId, ProvinciaId, Comuna, EstaActivo) VALUES  (16,56,'�
 INSERT INTO Comuna (RegionId, ProvinciaId, Comuna, EstaActivo) VALUES  (16,56,'SAN FABIÁN', 1)
 INSERT INTO Comuna (RegionId, ProvinciaId, Comuna, EstaActivo) VALUES  (16,56,'SAN NICOLÁS', 1)
 
+CREATE TABLE EstadoSolicitud (
+	EstadoSolicitudId INT PRIMARY KEY IDENTITY,
+	Descripcion VARCHAR(255) NOT NULL UNIQUE,
+	EstaActivo BIT NOT NULL
+)
+GO
+
+SET IDENTITY_INSERT EstadoSolicitud ON
+GO
+
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (1, 'Solicitud Ingresada', 1) -- CLIENTE
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (2, 'Placas Ingresadas', 1) -- BODEGA
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (3, 'Planificado', 1) -- PLANIFICADOR
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (4, 'Documentado', 1) -- CLIENTE
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (5, 'Concreción', 1) -- BODEGA
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (6, 'Aprobado por Cliente', 1) -- CLIENTE
+
+SET IDENTITY_INSERT EstadoSolicitud OFF 
+GO
+
 CREATE TABLE SolicitudDespacho (
-	SolicitudDespachoId	INT PRIMARY KEY IDENTITY (1001, 1),
+	-- FASE 1 CLIENTE
+	SolicitudDespachoId	INT PRIMARY KEY IDENTITY (10101, 1),
 	TipoSolicitudId INT NOT NULL FOREIGN KEY REFERENCES TipoSolicitud (TipoSolicitudId),
+	EstadoSolicitudId INT NOT NULL FOREIGN KEY REFERENCES EstadoSolicitud (EstadoSolicitudId),
 	FechaSolicitud DATETIME NOT NULL,
 	FechaRecepcion DATETIME NOT NULL,
-	Denominacion VARCHAR(255) NOT NULL,
-	Material VARCHAR(50) NOT NULL,
-	Marca VARCHAR(50) NOT NULL,
 	BodegaOrigen VARCHAR(10) NOT NULL,
-	EstadoEquipoId INT NOT NULL FOREIGN KEY REFERENCES EstadoEquipo (EstadoEquipoId),
-	ClasificacionId INT NOT NULL FOREIGN KEY REFERENCES Clasificacion (ClasificacionId),
 	NumeroCliente VARCHAR(50) NOT NULL,
 	NombreCliente VARCHAR(255) NOT NULL,
 	DireccionCliente VARCHAR(255) NOT NULL,
-	ComunaId INT NOT NULL FOREIGN KEY REFERENCES Comuna (ComunaId),
+	ComunaClienteId INT NOT NULL FOREIGN KEY REFERENCES Comuna (ComunaId),
 	NumeroTelefonoContacto VARCHAR(15) NULL,
-	RUT VARCHAR(12) NOT NULL,
+	RutCliente VARCHAR(8) NOT NULL,
+	VRutCliente CHAR(1) NOT NULL,
 	Proyecto VARCHAR(100) NOT NULL,
 	PrioridadId INT NOT NULL FOREIGN KEY REFERENCES Prioridad (PrioridadId),
 	UnidadNegocioId INT NOT NULL FOREIGN KEY REFERENCES UnidadNegocio (UnidadNegocioId),
 	GerenciaId INT NOT NULL FOREIGN KEY REFERENCES Gerencia (GerenciaId),
 	ObservacionAof VARCHAR(MAX) NULL,
-	NumeroPlaca	INT NOT NULL,
-	FechaDespacho DATETIME NOT NULL,
-	PatenteCamion VARCHAR(10) NOT NULL FOREIGN KEY REFERENCES Camion (Patente),
-	LlamadaDiaAnterior BIT NOT NULL,
+	-- FASE 2 PLANIFICADOR
+	FechaDespacho DATETIME NULL,
+	PatenteCamion VARCHAR(10) NULL FOREIGN KEY REFERENCES Camion (Patente),
+	LlamadaDiaAnterior BIT NULL,
 	ComentariosLlamada VARCHAR(MAX) NULL,
-	EnlaceId INT NOT NULL FOREIGN KEY REFERENCES Enlace (EnlaceId),
-	NumeroDocumento	INT NOT NULL,
-	NumeroEntrega INT NOT NULL,
-	FechaEntregaDocumento DATETIME NOT NULL,
-	FechaRecepcionDocumento	DATETIME NOT NULL,
-	Folio INT NOT NULL,
-	TipoDocumentoId INT NOT NULL FOREIGN KEY REFERENCES TipoDocumento (TipoDocumentoId),
+	EnlaceId INT NULL FOREIGN KEY REFERENCES Enlace (EnlaceId),
+	-- FASE 3 CLIENTE
+	NumeroDocumento	INT NULL,
+	NumeroEntrega INT NULL,
+	FechaEntregaDocumento DATETIME NULL,
+	FechaRecepcionDocumento	DATETIME NULL,
+	Folio INT NULL,
+	TipoDocumentoId INT NULL FOREIGN KEY REFERENCES TipoDocumento (TipoDocumentoId),
+	-- FASE 4 BODEGA
 	Concrecion BIT NULL,
 	NombreConcrecion VARCHAR(255) NULL,
-	RUTConcrecion VARCHAR(12) NULL,
+	RUTConcrecion VARCHAR(8) NULL,
 	VRUTConcrecion VARCHAR(1) NULL,
-	MotivoNoConcrecion VARCHAR(MAX) NULL,
-	RetiroReal INT NULL,
-	EstaActivo BIT NOT NULL
+	MotivoNoConcrecion VARCHAR(MAX) NULL
+)
+GO
+
+CREATE TABLE EquiposSolicitados (
+	NumeroPlaca VARCHAR(50) NULL,
+	Modelo VARCHAR(50) NOT NULL,
+	Marca VARCHAR(50) NOT NULL,
+	EstadoEquipo VARCHAR(255) NOT NULL,
+	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
+)
+GO
+
+CREATE TABLE EquiposRetirados (
+	NumeroPlaca VARCHAR(50) NOT NULL,
+	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
 )
 GO
 

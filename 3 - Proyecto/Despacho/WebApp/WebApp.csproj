@@ -164,6 +164,7 @@
     <Content Include="Content\img\Caja.png" />
     <Content Include="Content\img\Caja.svg" />
     <Content Include="Content\img\producto.png" />
+    <Content Include="Content\js\Solicitud.js" />
     <Content Include="Content\js\Existencia.js" />
     <Content Include="Content\js\CargaMasiva.js" />
     <Content Include="Content\js\EmpresaTransporte.js" />

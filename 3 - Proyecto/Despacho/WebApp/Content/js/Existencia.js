@@ -173,9 +173,7 @@
                 CargarFiltroBins($(this).val());
             });
 
-            CargarFiltroBins(bodegas[0].Codigo, function () {
-                if (_callback) _callback();
-            });
+            CargarFiltroBins(bodegas[0].Codigo, _callback());
         });
     };
 
@@ -196,10 +194,10 @@
     let Filtrar = function () {
         let tabla = $('#lista-existencia').mDatatable();
 
-        if ($('#filtro-bodega').length > 0) tabla.search('BODEGA DE SEGUNDA', 'NomBodega');
+        if ($('#filtro-bodega').length > 0) tabla.search($('#filtro-bodega').find('option:selected').text(), 'NomBodega',);
         if ($('#filtro-bin').length > 0) tabla.search($('#filtro-bin').val(), 'Bin');
 
-        DibujarBodega(existenciasAgrupadas);
+        //DibujarBodega(existenciasAgrupadas);
     };
 
     return {
