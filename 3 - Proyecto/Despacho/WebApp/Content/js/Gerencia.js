@@ -6,7 +6,7 @@
 
   let InitElementos = function () {
     if ($("#listagerencias").length > 0) {
-      cargarTabla("Gerenciaid", "Gerencia", { Gerenciaid: 0 }, "#listagerencias", "#buscargerencia", [
+      cargarTabla("Gerenciaid", "Gerencia", { id: 0 }, "#listagerencias", "#buscargerencia", [
           { field: "Gerenciaid", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
           { field: "Clienteid", title: "# Cliente", responsive: { visible: "lg" } },
@@ -16,11 +16,11 @@
     $('#btnGuardar').click(function () {
       let id = $('#gerenciaid').val();
       let activo = $('#activo').val();
-      let Descripcion = $('#descripcion').val();
-      let Clienteid = $('#clienteid').val();
+      let descripcion = $('#descripcion').val();
+      let clienteid = $('#clienteid').val();
       
       $.post("/Gerencia/" + (id > 0 ? "Edit" : "Create"), {
-        GerenciaId: id,
+        Gerenciaid: id,
         Descripcion: descripcion,
         Clienteid: clienteid,
         EstaActivo: activo

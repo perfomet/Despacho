@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
@@ -56,11 +52,11 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public JsonResult Listar(int id)
+    public JsonResult Listar(int tipodocumentoid)
     {
-      if (id > 0)
+      if (tipodocumentoid > 0)
       {
-        return Json(Datos.Datos.TipoDocumento.ObtenerTipoDocumento(id));
+        return Json(Datos.Datos.TipoDocumento.ObtenerTipoDocumento(tipodocumentoid));
       }
       else
       {

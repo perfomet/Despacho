@@ -15,15 +15,15 @@ namespace Datos.Datos
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.TipoSolicitud> tipossolicitudes = new List<Modelo.TipoSolicitud>();
+			List<Modelo.TipoSolicitud> listasolicitudes = new List<Modelo.TipoSolicitud>();
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.TipoSolicitud tiposolicitud = new Modelo.TipoSolicitud();
 				tiposolicitud.FromDataRow(fila);
-				tipossolicitudes.Add(tiposolicitud);
+				listasolicitudes.Add(tiposolicitud);
 			}
 
-			return tipossolicitudes;
+			return listasolicitudes;
 		}
 
 		public static Modelo.TipoSolicitud ObtenerTipoSolicitud(int tiposolicitudId)

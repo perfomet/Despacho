@@ -5,22 +5,22 @@
   };
 
   let InitElementos = function () {
-    if ($("#listaClientes").length > 0) {
-      cargarTabla("TipoDocumentoId", "TipoDocumento", { Id: 0 }, "#listatiposdedocumentos", "#buscartipodocumento",
+    if ($("#listadocumentos").length > 0) {
+      cargarTabla("Tipodocumentoid", "TipoDocumento", { Tipodocumentoid: 0 }, "#listadocumentos", "#buscartipodocumento",
       [
-        { field: "TipoDocumentoId", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "Tipodocumentoid", title: "#", width: 50, selector: !1, textAlign: "center" },
         { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
        ], true, true);
     }
     $('#btnGuardar').click(function () {
-      let id = $('#id').val();
+      let id = $('#tipodocumentoid').val();
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
       
 
       $.post("/TipoDocumento/" + (id > 0 ? "Edit" : "Create"), {
-       TipoDocumentoId: id,
+        tipodocumentoid: id,
         Descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {

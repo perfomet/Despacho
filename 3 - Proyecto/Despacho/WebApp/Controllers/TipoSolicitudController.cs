@@ -21,7 +21,7 @@ namespace Despacho.Controllers
 
       public ActionResult Create()
       {
-      return View("TipoSolicitud", new Datos.Modelo.TipoSolicitud());
+      return View("TipodeSolicitud", new Datos.Modelo.TipoSolicitud());
     }
 
       [HttpPost]
@@ -36,7 +36,7 @@ namespace Despacho.Controllers
       {
         Datos.Modelo.TipoSolicitud solicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id);
 
-        return View("TipoSolicitud", solicitud);
+        return View("TipodeSolicitud", solicitud);
     }
 
       [HttpPost]

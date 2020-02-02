@@ -9,29 +9,29 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.TipoDocumento> ObtenerTiposdeDocumentos()
 		{
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT TipoDocumento.TipoDocumentoId, TipoDocumento.Descripcion, TipoDocumento.EstaActivo";
 			string FROMSentence = " FROM TipoDocumento";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.TipoDocumento> tiposdedocumentos = new List<Modelo.TipoDocumento>();
+			List<Modelo.TipoDocumento> listadocumentos = new List<Modelo.TipoDocumento>();
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.TipoDocumento tipodocumento = new Modelo.TipoDocumento();
 				tipodocumento.FromDataRow(fila);
-				tiposdedocumentos.Add(tipodocumento);
+				listadocumentos.Add(tipodocumento);
 			}
 
-			return tiposdedocumentos;
+			return listadocumentos;
 		}
 
 		public static Modelo.TipoDocumento ObtenerTipoDocumento(int tipodocumentoId)
 		{
 
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT TipoDocumento.TipoDocumentoId, TipoDocumento.Descripcion, TipoDocumento.EstaActivo";
 			string FROMSentence = " FROM TipoDocumento";
-			string WHERESentence = " WHERE TipoDocumentoId = '" + tipodocumentoId.ToString() + "'";
+			string WHERESentence = " WHERE TipoDocumento.TipoDocumentoId = " + tipodocumentoId.ToString() ;
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.TipoDocumento tipodocumento = new Modelo.TipoDocumento();
@@ -60,12 +60,12 @@ namespace Datos.Datos
 		public static bool Modificar(Modelo.TipoDocumento tipodocumento)
 		{
 			string UPDATESentence = "UPDATE TipoDocumento";
-			string SETSentence = " SET Descripcion = '{1}'";
-			string WHERESentence = " WHERE TipoDocumentoId = {0}";
+			string SETSentence = " SET TipoDocumento.Descripcion = '{1}'";
+			string WHERESentence = " WHERE TipoDocumento.TipoDocumentoId = {0}";
 
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, tipodocumento.TipoDocumentoId, tipodocumento.Descripcion);
+			builder.AppendFormat(SQLSentence, tipodocumento.Tipodocumentoid, tipodocumento.Descripcion);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -73,8 +73,8 @@ namespace Datos.Datos
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE TipoDocumento";
-			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE TipoDocumentoId = {0}";
+			string SETSentence = " SET TipoDocumento.EstaActivo = CASE WHEN TipoDocumento.EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE TipoDocumento.TipoDocumentoId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);

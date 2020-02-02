@@ -5,8 +5,8 @@
   };
 
   let InitElementos = function () {
-    if ($("#listatipossolicitudes").length > 0) {
-      cargarTabla("TipoSolicitudId", "TipoSolicitud", { Id: 0 }, "#listatipossolicitudes", "#buscartiposolicitud",
+    if ($("#listasolicitudes").length > 0) {
+      cargarTabla("TipoSolicitudId", "TipoSolicitud", { TipoSolicitudId: 0 }, "#listasolicitudes", "#buscartiposolicitud",
       [
         { field: "TipoSolicitudId", title: "#", width: 50, selector: !1, textAlign: "center" },
         { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },

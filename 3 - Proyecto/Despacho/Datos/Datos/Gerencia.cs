@@ -14,15 +14,15 @@ namespace Datos.Datos
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.Gerencia> gerencias = new List<Modelo.Gerencia>();
+			List<Modelo.Gerencia> listagerencias = new List<Modelo.Gerencia>();
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.Gerencia gerencia = new Modelo.Gerencia();
 				gerencia.FromDataRow(fila);
-				gerencias.Add(gerencia);
+				listagerencias.Add(gerencia);
 			}
 
-			return gerencias;
+			return listagerencias;
 		}
 
 		public static Modelo.Gerencia ObtenerGerencia(int id)

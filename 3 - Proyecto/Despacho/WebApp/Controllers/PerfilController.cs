@@ -2,7 +2,7 @@
 
 namespace Despacho.Controllers
 {
-  public class PrioridadController : Controller
+  public class PerfilController : Controller
   {
     public ActionResult Index()
     {
