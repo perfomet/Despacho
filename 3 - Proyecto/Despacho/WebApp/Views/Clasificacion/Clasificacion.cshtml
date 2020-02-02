@@ -1,0 +1,62 @@
+﻿@model Datos.Modelo.Clasificacion
+@{
+	ViewBag.SeccionTieneTitulo = true;
+
+	if (Model.Clasificacionid > 0)
+	{
+		ViewBag.Title = "Despacho - " + Model.Cantidad;
+		ViewBag.TituloSeccion = Model.Cantidad;
+	}
+	else
+	{
+		
+		ViewBag.Title = "Despacho - Clasificación Nueva";
+		ViewBag.TituloSeccion = " Clasificación Nueva";
+	}
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/clasificacion.less" />
+}
+
+@section Scripts{
+	@Scripts.Render("~/bundles/clasificacion")
+}
+
+<div class="m-portlet m-portlet--tab">
+	<!--begin::Form-->
+	<form class="m-form m-form--fit m-form--label-align-right">
+		<div class="m-portlet__body">
+			<input type="hidden" value="@Model.Clasificacionid" id="id">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Cantidad</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Cantidad" id="cantidad" style="width: 50%">
+				</div>
+				<label for="example-text-input" class="col-2 col-form-label">Unidad de Medida</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Unidadmedidaid" id="empresatransporteid" style="width: 50%">
+				</div>
+			</div>
+
+
+		</div>
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions">
+				<div class="row">
+					<div class="col-2">
+					</div>
+					<div class="col-10">
+						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+						<a href="/Clasificacion/Index" class="btn btn-secondary">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+

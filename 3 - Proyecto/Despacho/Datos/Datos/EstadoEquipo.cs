@@ -54,7 +54,7 @@ namespace Datos.Datos
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 
-			builder.AppendFormat(SQLSentence, estadoequipo.descripcion);
+			builder.AppendFormat(SQLSentence, estadoequipo.Descripcion);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
@@ -66,7 +66,7 @@ namespace Datos.Datos
 
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, estadoequipo.estadoequipoid, estadoequipo.descripcion);
+			builder.AppendFormat(SQLSentence, estadoequipo.Estadoequipoid, estadoequipo.Descripcion);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
