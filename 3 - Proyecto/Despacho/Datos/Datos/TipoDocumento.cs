@@ -49,7 +49,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.TipoDocumento tipodocumento)
 		{
 			string INSERTSentence = "INSERT INTO TipoDocumento";
-			string VALUESSentence = " VALUES('{1}', 1);";
+			string VALUESSentence = " VALUES('{0}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 

@@ -2,7 +2,7 @@
 @{
 	ViewBag.SeccionTieneTitulo = true;
 
-	if (Model.TipoDocumentoId == 0)
+	if (Model.Tipodocumentoid == 0)
 	{
 		ViewBag.Title = "Despacho - Nuevo Tipo Documento";
 		ViewBag.TituloSeccion = "Nuevo Tipo Documento";
@@ -26,7 +26,7 @@
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.TipoDocumentoId" id="id">
+			<input type="hidden" value="@Model.Tipodocumentoid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">

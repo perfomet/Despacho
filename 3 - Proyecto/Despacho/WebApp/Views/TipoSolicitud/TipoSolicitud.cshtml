@@ -2,7 +2,7 @@
 @{
 	ViewBag.SeccionTieneTitulo = true;
 
-	if (Model.TipoSolicitudId == 0)
+	if (Model.Tiposolicitudid == 0)
 	{
 		ViewBag.Title = "Despacho - Nuevo Tipo Solicitud";
 		ViewBag.TituloSeccion = "Nuevo Tipo Solicitud";
@@ -19,15 +19,14 @@
 }
 
 @section Scripts{
-	<!--@Scripts.Render("~/bundles/tiposolicitud")-->
-	<script type="text/javascript" src="~/Content/js/TipoSolicitud.js">
+	@Scripts.Render("~/bundles/tiposolicitud")
 }
 
 <div class="m-portlet m-portlet--tab">
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.TipoSolicitudId" id="id">
+			<input type="hidden" value="@Model.Tiposolicitudid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">

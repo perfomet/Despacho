@@ -64,7 +64,7 @@ namespace Datos.Datos
 			string WHERESentence = " WHERE TipoSolicitudId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, tiposolicitud.TipoSolicitudId, tiposolicitud.Descripcion, tiposolicitud.Observaciones);
+			builder.AppendFormat(SQLSentence, tiposolicitud.Tiposolicitudid, tiposolicitud.Descripcion, tiposolicitud.Observaciones);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

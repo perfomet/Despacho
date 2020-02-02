@@ -6,21 +6,21 @@
 
   let InitElementos = function () {
     if ($("#listadocumentos").length > 0) {
-      cargarTabla("Tipodocumentoid", "TipoDocumento", { Tipodocumentoid: 0 }, "#listadocumentos", "#buscartipodocumento",
+      cargarTabla("Tipodocumentoid", "TipoDocumento", { tipodocumentoid: 0 }, "#listadocumentos", "#buscartipodocumento",
       [
         { field: "Tipodocumentoid", title: "#", width: 50, selector: !1, textAlign: "center" },
         { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
        ], true, true);
     }
+
     $('#btnGuardar').click(function () {
-      let id = $('#tipodocumentoid').val();
+      let id = parseInt($('#id').val());
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
-      
 
       $.post("/TipoDocumento/" + (id > 0 ? "Edit" : "Create"), {
-        tipodocumentoid: id,
+        Tipodocumentoid: id,
         Descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {

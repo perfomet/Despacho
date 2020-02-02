@@ -6,66 +6,67 @@ using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
-  
-    public class TipoSolicitudController : Controller
-    {
-      public ActionResult Index()
-      {
-        return View();
-      }
 
-      public ActionResult Details(int id)
-      {
-        return View();
-      }
+	public class TipoSolicitudController : Controller
+	{
+		public ActionResult Index()
+		{
+			return View();
+		}
 
-      public ActionResult Create()
-      {
-      return View("TipodeSolicitud", new Datos.Modelo.TipoSolicitud());
-    }
+		public ActionResult Details(int id)
+		{
+			return View();
+		}
 
-      [HttpPost]
-      public ActionResult Create(Datos.Modelo.TipoSolicitud solicitud)
-      {
-        bool exito = Datos.Datos.TipoSolicitud.Crear(solicitud);
+		public ActionResult Create()
+		{
+			return View("TipodeSolicitud", new Datos.Modelo.TipoSolicitud());
+		}
 
-        return Json(new { exito = exito });
-      }
+		[HttpPost]
+		public ActionResult Create(Datos.Modelo.TipoSolicitud solicitud)
+		{
+			bool exito = Datos.Datos.TipoSolicitud.Crear(solicitud);
 
-      public ActionResult Edit(int id)
-      {
-        Datos.Modelo.TipoSolicitud solicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id);
+			return Json(new { exito = exito });
+		}
 
-        return View("TipodeSolicitud", solicitud);
-    }
+		public ActionResult Edit(int id)
+		{
+			Datos.Modelo.TipoSolicitud solicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id);
 
-      [HttpPost]
-      public ActionResult Edit(Datos.Modelo.TipoSolicitud solicitud)
-      {
-        bool exito = Datos.Datos.TipoSolicitud.Modificar(solicitud);
+			return View("TipodeSolicitud", solicitud);
+		}
 
-        return Json(new { exito = exito });
-      }
+		[HttpPost]
+		public ActionResult Edit(Datos.Modelo.TipoSolicitud solicitud)
+		{
+			bool exito = Datos.Datos.TipoSolicitud.Modificar(solicitud);
 
-      [HttpPost]
-    public JsonResult EstaActivo(int id)
-    {
-      bool exito = Datos.Datos.TipoSolicitud.EstaActivo(id);
+			return Json(new { exito = exito });
+		}
 
-      return Json(new { exito = exito });
-    }
-    [HttpPost]
-      public JsonResult Listar(int id)
-      {
-        if (id > 0)
-        {
-          return Json(Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id));
-        }
-        else
-        {
-          return Json(Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes());
-        }
-      }
-    }
-  
+		[HttpPost]
+		public JsonResult EstaActivo(int id)
+		{
+			bool exito = Datos.Datos.TipoSolicitud.EstaActivo(id);
+
+			return Json(new { exito = exito });
+		}
+
+		[HttpPost]
+		public JsonResult Listar(int id)
+		{
+			if (id > 0)
+			{
+				return Json(Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id));
+			}
+			else
+			{
+				return Json(Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes());
+			}
+		}
+	}
+
 }
