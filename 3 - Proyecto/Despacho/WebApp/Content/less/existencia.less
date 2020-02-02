@@ -2,3 +2,36 @@
 
 body {
 }
+
+#seccion-bodega {
+	height: 500px;
+	position: relative;
+	z-index: 1;
+}
+
+#seccion-bodega img {
+	height: 64px;
+	width: 64px;
+	position: absolute;
+	transform: scaleX(-1);
+	filter: saturate(0) brightness(100%) contrast(100%);
+}
+
+#seccion-bodega img:hover {
+	filter: none;
+}
+
+.seccion-bin {
+	display: flex;
+}
+
+.seccion-modelo {
+	position: relative;
+	display: flex;
+	height: 250px;
+}
+
+#m_portlet_tools_1 .m-portlet__head {
+	background-color: #colores[primario] !important;
+	border-color: #colores[primario] !important;
+}

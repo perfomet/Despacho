@@ -9,8 +9,8 @@ namespace Datos.Datos
 
 		public static List<Modelo.Existencia> ObtenerExistencias()
 		{
-			string SELECTSentence = "SELECT *";
-			string FROMSentence = " FROM Existencia";
+			string SELECTSentence = "SELECT E.*, C.Nombre";
+			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -28,10 +28,9 @@ namespace Datos.Datos
 
 		public static Modelo.Existencia ObtenerExistencia(string serie)
 		{
-
-			string SELECTSentence = "SELECT *";
-			string FROMSentence = " FROM Existencia";
-			string WHERESentence = " WHERE Serie = '" + serie + "'";
+			string SELECTSentence = "SELECT E.*, C.Nombre";
+			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string WHERESentence = " WHERE E.Serie = '" + serie + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Existencia existencia = new Modelo.Existencia();

@@ -77,7 +77,29 @@
                     search: {
                         input: $(idBuscador)
                     },
-                    columns: columnas
+                    columns: columnas,
+                    translate: {
+                        records: {
+                            processing: "Cargando...",
+                            noRecords: "No se encontrarón registros"
+                        },
+                        toolbar: {
+                            pagination: {
+                                items: {
+                                    default: {
+                                        first: "Primero",
+                                        prev: "Anterior",
+                                        next: "Siguiente",
+                                        last: "Último",
+                                        more: "Más páginas",
+                                        input: "Número de página",
+                                        select: "Seleccionar tamaño de página"
+                                    },
+                                    info: "Viendo {{start}} - {{end}} de {{total}} registros"
+                                }
+                            }
+                        }
+                    }
                 });
             });
 

@@ -11,8 +11,12 @@ namespace Datos._librerias
     {
         const string SERVER_KEY = "Server";
         const string DB_KEY = "DB";
+        const string DB_EXISTENCIAS_KEY = "DBExistencias";
         const string USER_KEY = "User";
         const string PASSWORD_KEY = "Password";
+
+        public static string DB_EXISTENCIAS { get { return LeerTexto(DB_EXISTENCIAS_KEY); } }
+        public static string DB { get { return LeerTexto(DB_KEY); } }
 
         static string LeerTexto(string key)
         {

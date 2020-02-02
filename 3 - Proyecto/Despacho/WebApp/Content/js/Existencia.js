@@ -2,9 +2,11 @@
     let existencias = [];
     let existenciasAgrupadas = {};
 
-    let Init = function () {
-        $('#m_portlet_tools_1 .m-portlet__body').toggle();
+    let ancho = 2;
+    let alto = 2;
+    let profundidad = 5;
 
+    let Init = function () {
         $.post("/Existencia/Listar", { serie: "" }, function (data) {
             existencias = data;
             existenciasAgrupadas = AgruparExistencias(data);
@@ -14,10 +16,14 @@
     };
 
     let InitElementos = function () {
-        CargarFiltroBodegas();
-        DibujarBodega(existenciasAgrupadas);
+        CargarFiltroBodegas(function () {
+            DibujarBodega(existenciasAgrupadas);
+        });
+
         CargarLista();
+
         $('.m-select2').select2();
+
         $('#filtro-filtrar').click(function () {
             Filtrar();
         });
@@ -27,27 +33,82 @@
         let agrupado = {};
 
         lista.forEach((existencia) => {
-            if (!agrupado[existencia.Bin]) agrupado[existencia.Bin] = {};
-            if (!agrupado[existencia.Bin][existencia.Modelo]) agrupado[existencia.Bin][existencia.Modelo] = [];
-            agrupado[existencia.Bin][existencia.Modelo].push(existencia);
+            if (!agrupado[existencia.Bodega]) agrupado[existencia.Bodega] = {};
+            if (!agrupado[existencia.Bodega][existencia.Bin]) agrupado[existencia.Bodega][existencia.Bin] = {};
+            if (!agrupado[existencia.Bodega][existencia.Bin][existencia.Modelo]) agrupado[existencia.Bodega][existencia.Bin][existencia.Modelo] = [];
+            agrupado[existencia.Bodega][existencia.Bin][existencia.Modelo].push(existencia);
         });
 
         return agrupado;
     };
 
     let DibujarBodega = function (existencias) {
-        //console.log(existenciasAgrupadas);
+        $('#seccion-bodega').html('');
 
-        for (let a in existencias) {
-            //console.log(a + ':');
-            for (let e in existencias[a]) {
-                //console.log(e, existenciasAgrupadas[a][e].length);
+        let bodega = $('#filtro-bodega').val();
+
+        $('#seccion-bodega').css('overflow-y', 'auto');
+
+        for (let bin in existencias[bodega]) {
+            let divBin = $('<div class="seccion-bin" data-bin="' + bin + '"></div>');
+
+            divBin.css('height', '500px');
+
+            for (let modelo in existencias[bodega][bin]) {
+                divBin.append(CrearSeccionModelo(modelo, existencias[bodega][bin][modelo]));
             }
+
+            $('#seccion-bodega').append(divBin);
         }
     };
 
+    let CrearSeccionModelo = function (modelo, productos) {
+        let cantidad = productos.length;
+
+        let agregados = 0;
+
+        let divModelo = $('<div class="seccion-modelo" data-modelo="' + modelo + '"></div>');
+
+        let fondoModelo = $('<div class="fondo-seccion"></div>');
+
+        fondoModelo.css('width', (32 * 3 * ancho) + 'px');
+
+        divModelo.css('margin-left', (32 * 2 * ancho) + 'px');
+
+        divModelo.append(fondoModelo);
+
+        //bim.css('background-color', 'gray');
+
+        for (let al = 0; al < alto; al++) {
+            for (let p = 0; p < profundidad; p++) {
+                for (let an = 0; an < ancho; an++) {
+                    if (cantidad > agregados) {
+                        let x = an * 32;
+                        let y = (p * 18) + (34 * al);
+
+                        if (p > 0) x += 32 * p;
+
+                        if (an > 0) y -= 18 * an;
+
+                        let img = $('<img src="/Content/img/Caja.svg" data-x="' + x + '" data-y="' + y + '"data-z="' + p + '" style="left: ' + x + 'px;bottom: ' + y + 'px;z-index: -' + p + '"/>');
+
+                        img.css('left', x + 'px');
+                        img.css('bottom', y + 'px');
+                        img.css('z-index', (p * -1));
+
+                        divModelo.append(img);
+
+                        agregados++;
+                    }
+                }
+            }
+        }
+
+        return divModelo;
+    };
+
     let CargarLista = function () {
-        let tabla = $('#lista-existencia').mDatatable({
+        $('#lista-existencia').mDatatable({
             data: {
                 type: "local",
                 source: existencias,
@@ -56,29 +117,49 @@
             layout: {
                 theme: "default",
                 class: "",
-                scroll: !1,
-                footer: !1
+                scroll: false,
+                footer: false
             },
-            sortable: !0,
-            pagination: !0,
+            sortable: true,
+            pagination: true,
             search: {
                 input: $('#buscarExistencia')
             },
             columns: [
                 { field: "Serie", title: "Serie", responsive: { visible: "lg" } },
-                { field: "Placa", title: "Placa", responsive: { visible: "lg" } },
+                { field: "Placa", title: "Placa", responsive: { visible: "lg" }, template: function (e, a, i) { return e.Placa ? e.Placa : e.Referencia } },
                 { field: "Denominacion", title: "Descripción", responsive: { visible: "lg" } },
                 { field: "Bin", title: "Bin", responsive: { visible: "lg" } },
                 { field: "NomBodega", title: "Bodega", responsive: { visible: "lg" } },
-                { field: "Propietario", title: "Cliente", responsive: { visible: "lg" } },
-                { field: "FechaAlmacenaje", title: "Fecha Almacenaje", responsive: { visible: "lg" }, template: function (e, a, i) { return moment(parseInt(e.FechaAlmacenaje.split('(')[1].split(')')[0])).format("DD/MM/YYYY HH:mm"); } }
-            ]
+                { field: "Cliente", title: "Cliente", responsive: { visible: "lg" } },
+                { field: "FechaAlmacenaje", title: "Fecha Almacenaje", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" }
+            ],
+            translate: {
+                records: {
+                    processing: "Cargando...",
+                    noRecords: "No se encontrarón registros"
+                },
+                toolbar: {
+                    pagination: {
+                        items: {
+                            default: {
+                                first: "Primero",
+                                prev: "Anterior",
+                                next: "Siguiente",
+                                last: "Último",
+                                more: "Más páginas",
+                                input: "Número de página",
+                                select: "Seleccionar tamaño de página"
+                            },
+                            info: "Viendo {{start}} - {{end}} de {{total}} registros"
+                        }
+                    }
+                }
+            }
         });
-
-        console.log(tabla.search.toString());
     };
 
-    let CargarFiltroBodegas = function () {
+    let CargarFiltroBodegas = function (_callback) {
         $.post("/Existencia/ObtenerBodegas", { codigo: "" }, function (bodegas) {
             $('#filtro-bodega').html('');
 
@@ -88,15 +169,17 @@
 
             $('#filtro-bodega').select2({ placeholder: "Seleccione una bodega" });
 
-            CargarFiltroBins(bodegas[0].Codigo);
-
             $('#filtro-bodega').change(function () {
                 CargarFiltroBins($(this).val());
+            });
+
+            CargarFiltroBins(bodegas[0].Codigo, function () {
+                if (_callback) _callback();
             });
         });
     };
 
-    let CargarFiltroBins = function (bodega) {
+    let CargarFiltroBins = function (bodega, _callback) {
         $.post("/Existencia/ObtenerBins", { bodega: bodega }, function (bins) {
             $('#filtro-bin').html('');
 
@@ -105,11 +188,16 @@
             });
 
             $('#filtro-bin').select2({ placeholder: "Seleccione una bin" });
+
+            if (_callback) _callback();
         });
     };
 
     let Filtrar = function () {
-        
+        let tabla = $('#lista-existencia').mDatatable();
+
+        if ($('#filtro-bodega').length > 0) tabla.search('BODEGA DE SEGUNDA', 'NomBodega');
+        if ($('#filtro-bin').length > 0) tabla.search($('#filtro-bin').val(), 'Bin');
 
         DibujarBodega(existenciasAgrupadas);
     };

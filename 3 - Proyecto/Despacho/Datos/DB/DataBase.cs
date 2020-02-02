@@ -34,6 +34,11 @@ namespace Datos.DB
             return null;
         }
 
+        public static void CambiarBaseDatos(string DB)
+        {
+            Con.ChangeDatabase(DB);
+        }
+
         public static OdbcConnection ObtenerConexion()
         {
             if (Con == null || Con.State != ConnectionState.Open)

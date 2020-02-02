@@ -47,6 +47,26 @@ namespace Datos.Datos
 			return cliente;
 		}
 
+		public static Modelo.Cliente ObtenerCliente(string codigo)
+		{
+
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM Cliente";
+			string WHERESentence = " WHERE Codigo = '" + codigo + "'";
+			string ORDERSentence = ";";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			Modelo.Cliente cliente = new Modelo.Cliente();
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				cliente.FromDataRow(fila);
+			}
+
+			return cliente;
+		}
+
 		public static bool Crear(Modelo.Cliente cliente)
 		{
 			string INSERTSentence = "INSERT INTO Cliente";

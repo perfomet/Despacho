@@ -162,6 +162,7 @@
     <Content Include="Content\css\externos\bootstrap.css" />
     <Content Include="Content\css\externos\bootstrap.min.css" />
     <Content Include="Content\img\Caja.png" />
+    <Content Include="Content\img\Caja.svg" />
     <Content Include="Content\img\producto.png" />
     <Content Include="Content\js\Existencia.js" />
     <Content Include="Content\js\CargaMasiva.js" />

@@ -1,3 +1,16 @@
+USE master
+GO
+
+IF EXISTS(SELECT 1 FROM sys.databases WHERE name LIKE 'MiLogistic') BEGIN
+	DROP DATABASE MiLogistic
+END
+
+CREATE DATABASE MiLogistic
+GO
+
+USE MiLogistic
+GO
+
 IF EXISTS(SELECT 1 FROM sys.tables WHERE name LIKE 'Existencia') BEGIN
 	DROP TABLE Existencia
 END
