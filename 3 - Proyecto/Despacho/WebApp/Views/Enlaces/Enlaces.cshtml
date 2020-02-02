@@ -1,11 +1,11 @@
-﻿@model Datos.Modelo.EstadoEquipo
+﻿@model Datos.Modelo.Enlaces
 @{
 	ViewBag.SeccionTieneTitulo = true;
 
-	if (Model.Estadoequipoid == 0)
+	if (Model.Enlaceid == 0)
 	{
-		ViewBag.Title = "Despacho - Nuevo Estado del Equipo";
-		ViewBag.TituloSeccion = "Nuevo Estado del Equipo";
+		ViewBag.Title = "Despacho - Nuevo Enlace";
+		ViewBag.TituloSeccion = "Nuevo Enlace";
 	}
 	else
 	{
@@ -15,18 +15,18 @@
 }
 
 @section Less{
-	<link rel="stylesheet/less" type="text/css" href="~/Content/less/estadoequipo.less" />
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/enlace.less" />
 }
 
 @section Scripts{
-	@Scripts.Render("~/bundles/estadoequipo")
+	@Scripts.Render("~/bundles/enlace")
 }
 
 <div class="m-portlet m-portlet--tab">
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.Estadoequipoid" id="id">
+			<input type="hidden" value="@Model.Enlaceid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
@@ -35,7 +35,7 @@
 					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">
@@ -44,13 +44,14 @@
 					</div>
 					<div class="col-10">
 						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
-						<a href="/EstadoEquipo/Index" class="btn btn-secondary">Volver</a>
+						<a href="/Enlaces/Index" class="btn btn-secondary">Volver</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
 </div>
+
 
 
 

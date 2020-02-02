@@ -65,39 +65,61 @@ namespace Despacho
 
 			bundles.Add(new ScriptBundle("~/bundles/login")
 					.Include("~/Content/js/Login.js"));
+			
+			bundles.Add(new ScriptBundle("~/bundles/cargaMasiva")
+					.Include("~/Content/js/CargaMasiva.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/cliente")
 					.Include("~/Content/js/Cliente.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/cargaMasiva")
-					.Include("~/Content/js/CargaMasiva.js"));
+			bundles.Add(new ScriptBundle("~/bundles/unidadnegocio")
+					.Include("~/Content/js/UnidadNegocio.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/gerencia")
+					.Include("~/Content/js/Gerencia.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/usuario")
+					.Include("~/Content/js/Usuario.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/perfil")
+					.Include("~/Content/js/Perfil.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/tiposolicitud")
+				.Include("~/Content/js/TipoSolicitud.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/camion")
 					.Include("~/Content/js/Camion.js"));
-			
+
 			bundles.Add(new ScriptBundle("~/bundles/empresatransporte")
 					.Include("~/Content/js/EmpresaTransporte.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/estadoequipo")
 					.Include("~/Content/js/EstadoEquipo.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/tipodocumento")
-					.Include("~/Content/js/TipoDocumento.js"));
-
-			bundles.Add(new ScriptBundle("~/bundles/estadoequipo")
-					.Include("~/Content/js/EstadoEquipo.js"));
-
-			bundles.Add(new ScriptBundle("~/bundles/tiposolicitud")
-					.Include("~/Content/js/TipoSolicitud.js"));
-
 			bundles.Add(new ScriptBundle("~/bundles/unidadmedida")
 					.Include("~/Content/js/UnidadMedida.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/unidadnegocio")
-					.Include("~/Content/js/UnidadNegocio.js"));
+			bundles.Add(new ScriptBundle("~/bundles/clasificacion")
+					.Include("~/Content/js/Clasificacion.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/usuario")
-					.Include("~/Content/js/Usuario.js"));
+			bundles.Add(new ScriptBundle("~/bundles/prioridad")
+					.Include("~/Content/js/Prioridad.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/enlace")
+					.Include("~/Content/js/Enlaces.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/tipodocumento")
+					.Include("~/Content/js/TipoDocumento.js"));
+
+	
+
+		
+
+			
+
+			
+
+			
 
 			#endregion
 		}

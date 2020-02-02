@@ -1,14 +1,15 @@
-﻿let EstadoEquipo = function () {
+﻿let Clasificacion = function () {
 
   let Init = function () {
     InitElementos();
   };
 
   let InitElementos = function () {
-    if ($("#listaestadoequipos").length > 0) {
-      cargarTabla("Estadoequipoid", "EstadoEquipo", { Id: 0 }, "#listaestadoequipos", "#buscarestadoequipo", [
-        { field: "Estadoequipoid", title: "#", width: 50, selector: !1, textAlign: "center" },
-        { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
+    if ($("#listaclasificacion").length > 0) {
+      cargarTabla("Clasificacionid", "Clasificacion", { id: 0 }, "#listaclasificacion", "#buscarclasificacion", [
+        { field: "Clasificacionid", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "Cantidad", title: "Cantidad", responsive: { visible: "lg" } },
+        { field: "Unidadmedidaid", title: "Unidad de Medida", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
       ], true, true);
     }
@@ -16,11 +17,13 @@
     $('#btnGuardar').click(function () {
       let id = $('#id').val();
       let activo = $('#activo').val();
-      let nombre = $('#descripcion').val();
-      
+      let cantidad = $('#cantidad').val();
+      let unidadmedidaid = $('#unidadmedidaid').val();
+
       $.post("/EstadoEquipo/" + (id > 0 ? "Edit" : "Create"), {
-        Estadoequipoid: id,
-        Descripcion: descripcion,
+        Clasificacionid: id,
+        Cantidad: cantidad,
+        Unidadmedidaid: unidadmedidaid,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
@@ -31,7 +34,7 @@
       });
     });
   };
-   
+
   return {
     init: function () {
       Init();
@@ -40,5 +43,5 @@
 }();
 
 $(() => {
-  EstadoEquipo.init();
+  Clasificacion.init();
 });
