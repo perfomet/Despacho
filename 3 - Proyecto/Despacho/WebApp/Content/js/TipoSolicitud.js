@@ -6,9 +6,9 @@
 
   let InitElementos = function () {
     if ($("#listasolicitudes").length > 0) {
-      cargarTabla("TipoSolicitudId", "TipoSolicitud", { TipoSolicitudId: 0 }, "#listasolicitudes", "#buscartiposolicitud",
+      cargarTabla("Tiposolicitudid", "TipoSolicitud", { Tiposolicitudid: 0 }, "#listasolicitudes", "#buscartiposolicitud",
       [
-        { field: "TipoSolicitudId", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "Tiposolicitudid", title: "#", width: 50, selector: !1, textAlign: "center" },
         { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
         { field: "Observaciones", title: "Observaciones", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
@@ -23,7 +23,7 @@
       let observaciones = $('#observaciones').val();
       
       $.post("/TipoSolicitud/" + (id > 0 ? "Edit" : "Create"), {
-        TipoSolicitudId: id,
+        Tiposolicitudid: id,
         Descripcion: descripcion,
         Observaciones: observaciones,
         EstaActivo: activo
