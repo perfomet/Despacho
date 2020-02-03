@@ -8,8 +8,8 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Gerencia> ObtenerGerencias()
 		{
-			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Gerencia.EstaActivo";
-			string FROMSentence = " FROM Gerencia";
+			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Cliente.Nombre AS Nombrecliente, Gerencia.EstaActivo";
+			string FROMSentence = " FROM Cliente INNER JOIN Gerencia ON Cliente.ClienteId = Gerencia.ClienteId";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -28,8 +28,8 @@ namespace Datos.Datos
 		public static Modelo.Gerencia ObtenerGerencia(int id)
 		{
 
-			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Gerencia.EstaActivo";
-			string FROMSentence = " FROM Gerencia";
+			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Cliente.Nombre AS Clientenombre, Gerencia.EstaActivo";
+			string FROMSentence = " FROM Cliente INNER JOIN Gerencia ON Cliente.ClienteId = Gerencia.ClienteId";
 			string WHERESentence = " WHERE Gerencia.GerenciaId = '" + id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;

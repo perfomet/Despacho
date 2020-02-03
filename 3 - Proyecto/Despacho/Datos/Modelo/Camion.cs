@@ -7,14 +7,19 @@ namespace Datos.Modelo
 	{
 		public string Patente { get; set; }
 		public string Descripcion { get; set; }
-		public string Empresatransporteid { get; set; }
+		public int Empresatransporteid { get; set; }
+		public string Empresatransporte { get; set; }
 		public bool EstaActivo { get; set; }
+
+		
 		public void FromDataRow(DataRow fila)
 		{
 			this.Patente = fila[0].ToString();
 			this.Descripcion = fila[1].ToString();
-			this.Empresatransporteid = fila[2].ToString();
-			this.EstaActivo = bool.Parse(fila[3].ToString());
+			this.Empresatransporteid = int.Parse(fila[2].ToString());
+			this.Empresatransporte = fila[3].ToString();
+			this.EstaActivo = bool.Parse(fila[4].ToString());
+			
 		}
 	}
 }

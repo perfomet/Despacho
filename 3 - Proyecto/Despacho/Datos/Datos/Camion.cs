@@ -11,8 +11,8 @@ namespace Datos.Datos
 		
 		public static List<Modelo.Camion> ObtenerCamiones()
 		{
-			string SELECTSentence = "SELECT Camion.Patente AS Patente, Camion.Descripcion AS Descripcion, Camion.EmpresaTransporteId AS EmpresaTransporteId, Camion.EstaActivo AS EstaActivo";
-			string FROMSentence = " FROM Camion";
+			string SELECTSentence = "SELECT Camion.Patente, Camion.Descripcion, Camion.EmpresaTransporteId, EmpresaTransporte.Nombre AS Empresatransporte, Camion.EstaActivo";
+			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
 			string WHERESentence = "";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 
@@ -31,9 +31,8 @@ namespace Datos.Datos
 
 		public static Modelo.Camion ObtenerCamion(string Patente)
 		{
-			string SELECTSentence = "SELECT Camion.Patente AS Patente, Camion.Descripcion AS Descripcion, Camion.EmpresaTransporteId AS EmpresaTransporteId, Camion.EsTaActivo AS EstaActivo";
-			string FROMSentence = " FROM Camion";
-			
+			string SELECTSentence = "SELECT Camion.Patente, Camion.Descripcion, Camion.EmpresaTransporteId, EmpresaTransporte.Nombre AS Empresatransporte, Camion.EstaActivo";
+			string FROMSentence = " FROM Camion INNER JOIN EmpresaTransporte ON Camion.EmpresaTransporteId = EmpresaTransporte.EmpresaTransporteId";
 			string WHERESentence = " WHERE (Camion.Patente LIKE '" + Patente + "')";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			Modelo.Camion camion = new Modelo.Camion();
@@ -61,7 +60,7 @@ namespace Datos.Datos
 		{
 			StringBuilder builder = new StringBuilder();
 			string UPDATESentence = "UPDATE Camion";
-			string SETSentence = " SET patente = '{0}', Descripcion = '{1}',  EmpresaTransporteId = {2}";
+			string SETSentence = " SET Descripcion = '{1}',  EmpresaTransporteId = {2}";
 			string WHERESentence = " WHERE Patente LIKE '{0}'";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			builder.AppendFormat(SQLSentence  , camion.Patente, camion.Descripcion, camion.Empresatransporteid);

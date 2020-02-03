@@ -5,9 +5,9 @@
   };
 
   let InitElementos = function () {
-    if ($("#listaperfiles").length > 0) {
-      cargarTabla("PerfilId", "Perfil", { Id: 0 }, "#listaperfiles", "#buscarperfil", [
-        { field: "PerfilId", title: "#", width: 50, selector: !1, textAlign: "center" },
+    if ($("#listaperfil").length > 0) {
+      cargarTabla("Perfilid", "Perfil", { Id: 0 }, "#listaperfil", "#buscarperfil", [
+        { field: "Perfilid", title: "#", width: 50, selector: !1, textAlign: "center" },
         { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
       ], true, true);
@@ -19,7 +19,7 @@
       let descripcion = $('#descripcion').val();
      
       $.post("/Perfil/" + (id > 0 ? "Edit" : "Create"), {
-        PerfilId: id,
+        Perfilid: id,
         Descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {

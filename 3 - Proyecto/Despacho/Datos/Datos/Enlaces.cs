@@ -12,8 +12,8 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Enlaces> ObtenerEnlaces()
 		{
-			string SELECTSentence = "SELECT Enlaces.EnlaceId, Enlaces.Descripcion,  Enlaces.EstaActivo";
-			string FROMSentence = " FROM Enlaces";
+			string SELECTSentence = "SELECT Enlace.EnlaceId, Enlace.Descripcion,  Enlace.EstaActivo";
+			string FROMSentence = " FROM Enlace";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -30,9 +30,9 @@ namespace Datos.Datos
 		}
 		public static Modelo.Enlaces ObtenerEnlace(int Id)
 		{
-			string SELECTSentence = "SELECT Enlaces.EnlaceId, Enlaces.Descripcion,  Enlaces.EstaActivo";
-			string FROMSentence = " FROM Enlaces";
-			string WHERESentence = " WHERE Enlaces.EnlaceId = " + Id.ToString();
+			string SELECTSentence = "SELECT Enlace.EnlaceId, Enlace.Descripcion,  Enlace.EstaActivo";
+			string FROMSentence = " FROM Enlace";
+			string WHERESentence = " WHERE Enlace.EnlaceId = " + Id.ToString();
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Enlaces enlace = new Modelo.Enlaces();
@@ -49,33 +49,33 @@ namespace Datos.Datos
 
 		public static bool Crear(Modelo.Enlaces enlaces)
 		{
-			string INSERTSentence = "INSERT INTO Enlaces";
-			string VALUESSentence = " VALUES('{1}', 1);";
+			string INSERTSentence = "INSERT INTO Enlace";
+			string VALUESSentence = " VALUES('{0}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 
-			builder.AppendFormat(SQLSentence,enlaces.Descripcion);
+			builder.AppendFormat(SQLSentence, enlaces.Descripcion);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.Enlaces enlaces)
 		{
-			string UPDATESentence = "UPDATE Enlaces";
-			string SETSentence = " SET Enlaces.Descripcion = '{1}'";
-			string WHERESentence = " WHERE Enlaces.EnlaceId = {0}";
+			string UPDATESentence = "UPDATE Enlace";
+			string SETSentence = " SET Enlace.Descripcion = '{1}'";
+			string WHERESentence = " WHERE Enlace.EnlaceId = {0}";
 
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, enlaces.Descripcion);
+			builder.AppendFormat(SQLSentence, enlaces.Enlaceid, enlaces.Descripcion);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool EstaActivo(int Id)
 		{
-			string UPDATESentence = "UPDATE Enlaces";
-			string SETSentence = " SET Enlaces.EstaActivo = CASE WHEN Enlaces.EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE Enlaces.EstadoEquipoId = {0}";
+			string UPDATESentence = "UPDATE Enlace";
+			string SETSentence = " SET Enlace.EstaActivo = CASE WHEN Enlace.EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE Enlace.EnlaceId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);

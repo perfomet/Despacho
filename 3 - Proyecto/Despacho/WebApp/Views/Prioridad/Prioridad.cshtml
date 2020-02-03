@@ -2,15 +2,15 @@
 @{
 	ViewBag.SeccionTieneTitulo = true;
 
-	if (Model.PrioridadId == 0)
+	if (Model.prioridadid == 0)
 	{
 		ViewBag.Title = "Despacho - Nueva Prioridad";
 		ViewBag.TituloSeccion = "Nueva Prioridad";
 	}
 	else
 	{
-		ViewBag.Title = "Despacho - " + Model.Descripcion;
-		ViewBag.TituloSeccion = Model.Descripcion;
+		ViewBag.Title = "Despacho - " + Model.descripcion;
+		ViewBag.TituloSeccion = Model.descripcion;
 	}
 }
 
@@ -26,13 +26,13 @@
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.PrioridadId" id="id">
+			<input type="hidden" value="@Model.prioridadid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.descripcion" id="descripcion" style="width: 50%">
 				</div>
 			</div>
 

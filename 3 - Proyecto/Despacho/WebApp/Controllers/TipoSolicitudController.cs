@@ -36,7 +36,7 @@ namespace Despacho.Controllers
 		{
 			Datos.Modelo.TipoSolicitud solicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(id);
 
-			return View("TipodeSolicitud", solicitud);
+			return View("TipoSolicitud", solicitud);
 		}
 
 		[HttpPost]

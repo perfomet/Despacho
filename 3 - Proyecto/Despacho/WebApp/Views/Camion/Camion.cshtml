@@ -1,18 +1,20 @@
 ﻿@model Datos.Modelo.Camion
 @{
-		ViewBag.SeccionTieneTitulo = true;
+	ViewBag.SeccionTieneTitulo = true;
 
-		if (Model.Patente == "")
-		{
-			ViewBag.Title = "Despacho - Camión Nuevo";
-			ViewBag.TituloSeccion = " Camión Nuevo";
-		}
-		else
-		{
-			ViewBag.Title = "Despacho - " + Model.Descripcion;
-			ViewBag.TituloSeccion = Model.Descripcion;
-		}	
+	if (Model.Patente == "")
+	{
+		ViewBag.Title = "Despacho - Camión Nuevo";
+		ViewBag.TituloSeccion = " Camión Nuevo";
 	}
+	else
+	{
+		ViewBag.Title = "Despacho - Camion";
+		ViewBag.TituloSeccion = Model.Patente + " - " + Model.Descripcion;
+	}
+
+	List<Datos.Modelo.EmpresaTransporte> empresas = Datos.Datos.EmpresaTransporte.ObtenerEmpresasdeTransportes();
+}
 
 @section Less{
 	<link rel="stylesheet/less" type="text/css" href="~/Content/less/camion.less" />
@@ -30,23 +32,24 @@
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
-				<label for="example-text-input" class="col-2 col-form-label">Patente</label>
-				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Patente" id="patente" style="width: 50%">
-				</div>
 				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
 				</div>
-				<label for="example-text-input" class="col-2 col-form-label">Empresa de Transporte</label>
-				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Empresatransporteid" id="empresatransporteid" style="width: 50%">
-				</div>
-
 			</div>
-
-
+			<div class="form-group m-form__group row">
+				<label class="col-form-label col-lg-2 col-sm-12">Empresa de Transporte</label>
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="empresatransporteid" name="empresatransporteid">
+						@foreach (Datos.Modelo.EmpresaTransporte empresa in empresas)
+						{
+							<option value="@empresa.EmpresaTransporteId" @(Model.Empresatransporteid == empresa.EmpresaTransporteId ? "selected" : "")>@empresa.Nombre</option>
+						}
+					</select>
+				</div>
+			</div>
 		</div>
+
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">
 				<div class="row">

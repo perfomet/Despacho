@@ -12,6 +12,9 @@
 		ViewBag.Title = "Despacho - " + Model.Username;
 		ViewBag.TituloSeccion = Model.Username;
 	}
+
+	List<Datos.Modelo.Perfil> roles = Datos.Datos.Perfil.ObtenerPerfiles();
+	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
 }
 
 @section Less{
@@ -34,35 +37,62 @@
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Username" id="username" style="width: 50%">
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Contraseña</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Password" id="password" style="width: 50%">
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Nombres</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Nombres" id="nombres" style="width: 50%">
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Apellido Paterno</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.ApellidoPaterno" id="apellidopaterno" style="width: 50%">
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Apellido Materno</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.ApellidoMaterno" id="apellidomaterno" style="width: 50%">
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Email</label>
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Email" id="email" style="width: 50%">
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Rol</label>
-				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.PerfilId" id="perfilid" style="width: 50%">
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="perfilid" name="perfilid">
+						<option value="" selected disabled>Seleccione un rol</option>
+						@foreach (Datos.Modelo.Perfil perfil in roles)
+						{
+							<option value="@perfil.Perfilid" @(Model.PerfilId == perfil.Perfilid ? "selected" : "")>@perfil.Descripcion  </option>
+						}
+					</select>
 				</div>
+			</div>
+			<div class="form-group m-form__group row">
+
 				<label for="example-text-input" class="col-2 col-form-label">Cliente</label>
-				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.ClienteId" id="clienteid" style="width: 50%">
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="clienteid" name="clienteid">
+						<option value="" selected disabled>Seleccione un cliente</option>
+						@foreach (Datos.Modelo.Cliente cliente in clientes)
+						{
+							<option value="@cliente.ClienteId" @(Model.ClienteId == cliente.ClienteId ? "selected" : "")>@cliente.Nombre</option>
+						}
+					</select>
 				</div>
-		 	</div>
+			</div>
 		</div>
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">
