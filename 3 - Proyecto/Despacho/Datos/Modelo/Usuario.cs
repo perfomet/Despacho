@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace Datos.Modelo
 {
@@ -13,7 +14,9 @@ namespace Datos.Modelo
 		public string NombreCompleto { get { return Nombres + " " + ApellidoPaterno + (ApellidoMaterno == null ? "" : " " + ApellidoMaterno); } }
 		public string Email { get; set; }
 		public int PerfilId { get; set; }
+		public string Perfilnombre { get; set; }
 		public int? ClienteId { get; set; }
+		public string Clientenombre { get; set; }
 		public bool EstaActivo { get; set; }
 		public Perfil Perfil
 		{
@@ -37,8 +40,12 @@ namespace Datos.Modelo
 			this.ApellidoMaterno = fila[5].ToString();
 			this.Email = fila[6].ToString();
 			this.PerfilId = int.Parse(fila[7].ToString());
-			if (fila[8] != null && !fila[8].ToString().Equals("")) this.ClienteId = int.Parse(fila[8].ToString());
-			this.EstaActivo = bool.Parse(fila[9].ToString());
+			this.Perfilnombre=fila[8].ToString();
+			this.ClienteId = (fila[9].ToString() == "" ? 0 : int.Parse(fila[9].ToString()));
+			//if (fila[9] != null && !fila[9].ToString().Equals("")) this.ClienteId=int.Parse(fila[9].ToString());
+			this.Clientenombre = fila[10].ToString();
+			//if (fila[8] != null && !fila[8].ToString().Equals("")) this.ClienteId = int.Parse(fila[8].ToString());
+			this.EstaActivo = bool.Parse(fila[11].ToString());
 		}
 	}
 }

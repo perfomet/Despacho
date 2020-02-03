@@ -2,7 +2,7 @@
 @{
 	ViewBag.SeccionTieneTitulo = true;
 
-	if (Model.PerfilId == 0)
+	if (Model.Perfilid == 0)
 	{
 		ViewBag.Title = "Despacho - Nuevo Rol";
 		ViewBag.TituloSeccion = "Nuevo Rol";
@@ -20,14 +20,14 @@
 
 @section Scripts{
 	@Scripts.Render("~/bundles/perfil")
-	<!--<script type="text/javascript" src="~/Content/js/Perfil.js"></script>-->
+	
 }
 
 <div class="m-portlet m-portlet--tab">
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.PerfilId" id="id">
+			<input type="hidden" value="@Model.Perfilid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">

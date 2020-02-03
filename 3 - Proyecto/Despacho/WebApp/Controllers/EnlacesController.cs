@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
-  public class Enlaces : Controller
+  public class EnlacesController : Controller
   {
     public ActionResult Index()
     {

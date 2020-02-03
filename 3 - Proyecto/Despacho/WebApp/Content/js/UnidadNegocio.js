@@ -5,11 +5,13 @@
   };
 
   let InitElementos = function () {
+    $('.m-select2').select2();
+
     if ($("#listaunidadesdenegocio").length > 0) {
       cargarTabla("UnidadNegocioId", "UnidadNegocio", { Id: 0 }, "#listaunidadesdenegocio", "#buscarunidadnegocio", [
         { field: "UnidadNegocioId", title: "#", width: 50, selector: !1, textAlign: "center" },
         { field: "Descripcion", title: "Descripción", responsive: { visible: "lg" } },
-        { field: "ClienteId", title: "Cliente", responsive: { visible: "lg" } },
+        { field: "Clientenombre", title: "Cliente", responsive: { visible: "lg" } },
         { field: "EstaActivo", title: "Activo", responsive: { visible: "lg" }, template: function (e, a, i) { return e.EstaActivo == true ? "Si" : "No"; } }
       ], true, true);
     }
@@ -18,7 +20,7 @@
       let id = $('#id').val();
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
-      let cliente = $('#cliente').val();
+      let cliente = $('#clienteid').val();
    
 
       $.post("/UnidadNegocio/" + (id > 0 ? "Edit" : "Create"), {

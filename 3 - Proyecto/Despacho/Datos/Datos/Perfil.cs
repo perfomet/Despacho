@@ -9,29 +9,29 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Perfil> ObtenerPerfiles()
 		{
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT Perfil.PerfilId, Perfil.Descripcion, Perfil.EstaActivo";
 			string FROMSentence = " FROM Perfil";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.Perfil> perfiles = new List<Modelo.Perfil>();
+			List<Modelo.Perfil> listaperfil = new List<Modelo.Perfil>();
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.Perfil perfil = new Modelo.Perfil();
 				perfil.FromDataRow(fila);
-				perfiles.Add(perfil);
+				listaperfil.Add(perfil);
 			}
 
-			return perfiles;
+			return listaperfil;
 		}
 
 		public static Modelo.Perfil ObtenerPerfil(int Id)
 		{
 
-			string SELECTSentence = "SELECT *";
+			string SELECTSentence = "SELECT Perfil.PerfilId, Perfil.Descripcion, Perfil.EstaActivo";
 			string FROMSentence = " FROM Perfil";
-			string WHERESentence = " WHERE PerfilId = '" + Id.ToString() + "'";
+			string WHERESentence = " WHERE Perfil.PerfilId = '" + Id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Perfil perfil = new Modelo.Perfil();
@@ -49,22 +49,22 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Perfil perfil)
 		{
 			string INSERTSentence = "INSERT INTO Perfil";
-			string VALUESSentence = " VALUES('{1}', 1);";
+			string VALUESSentence = " VALUES('{0}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, perfil.Descripcion, perfil.PerfilId);
+			builder.AppendFormat(SQLSentence, perfil.Descripcion);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.Perfil perfil)
 		{
 			string UPDATESentence = "UPDATE Perfil";
-			string SETSentence = " SET Descripcion = '{1}'";
+			string SETSentence = " SET Perfil.Descripcion = '{1}'";
 			string WHERESentence = " WHERE PerfilId = {0}";
 
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, perfil.Descripcion);
+			builder.AppendFormat(SQLSentence, perfil.Perfilid, perfil.Descripcion);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
@@ -72,8 +72,8 @@ namespace Datos.Datos
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Perfil";
-			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE PerfilId = {0}";
+			string SETSentence = " SET Perfil.EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE Perfil.PerfilId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);

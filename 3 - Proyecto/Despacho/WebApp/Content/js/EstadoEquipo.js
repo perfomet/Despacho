@@ -16,7 +16,7 @@
     $('#btnGuardar').click(function () {
       let id = $('#id').val();
       let activo = $('#activo').val();
-      let nombre = $('#descripcion').val();
+      let descripcion = $('#descripcion').val();
       
       $.post("/EstadoEquipo/" + (id > 0 ? "Edit" : "Create"), {
         Estadoequipoid: id,

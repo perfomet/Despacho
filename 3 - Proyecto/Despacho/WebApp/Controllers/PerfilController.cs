@@ -54,13 +54,13 @@ namespace Despacho.Controllers
     [HttpPost]
     public JsonResult Listar(int id)
     {
-      if (id == 0)
+      if (id > 0)
       {
-        return Json(Datos.Datos.Perfil.ObtenerPerfiles());
+        return Json(Datos.Datos.Perfil.ObtenerPerfil(id));
       }
       else
       {
-        return Json(Datos.Datos.Perfil.ObtenerPerfil(id));
+        return Json(Datos.Datos.Perfil.ObtenerPerfiles());
       }
     }
   }

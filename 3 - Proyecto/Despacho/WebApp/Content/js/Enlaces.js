@@ -18,13 +18,13 @@
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
 
-      $.post("/Enlace/" + (id > 0 ? "Edit" : "Create"), {
+      $.post("/Enlaces/" + (id > 0 ? "Edit" : "Create"), {
         Enlaceid: id,
         descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/EstadoEquipo/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Enlaces/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }
@@ -40,5 +40,5 @@
 }();
 
 $(() => {
-  EstadoEquipo.init();
+  Enlaces.init();
 });
