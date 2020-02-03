@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 
 namespace Datos.Modelo
 {
@@ -42,7 +43,16 @@ namespace Datos.Modelo
 		public string VRUTConcrecion { get; set; }
 		public string MotivoNoConcrecion { get; set; }
 
+		public int SolicitanteId { get; set; }
 
+		public List<EquipoSolicitado> EquiposSolicitados { get { return Datos.EquipoSolicitado.ObtenerEquiposSolicitados(SolicitudDespachoId); } }
+		public List<EquipoRetirado> EquiposRetirados { get { return Datos.EquipoRetirado.ObtenerEquiposRetirados(SolicitudDespachoId); } }
+
+		public string TipoSolicitud { get; set; }
+		public string EstadoSolicitud { get; set; }
+		public string Prioridad { get; set; }
+		public string Solicitante { get; set; }
+		public string Cliente { get; set; }
 
 		public void FromDataRow(DataRow fila)
 		{
@@ -67,21 +77,30 @@ namespace Datos.Modelo
 
 			this.FechaDespacho = fila[18].ToString();
 			this.PatenteCamion = fila[19].ToString();
-			this.LlamadaDiaAnterior = bool.Parse(fila[20].ToString());
+			this.LlamadaDiaAnterior = fila[20].ToString().Equals(string.Empty) ? false : bool.Parse(fila[20].ToString());
 			this.ComentariosLlamada = fila[21].ToString();
-			this.EnlaceId = int.Parse(fila[22].ToString());
+			this.EnlaceId = fila[22].ToString().Equals(string.Empty) ? 0 : int.Parse(fila[22].ToString());
 
-			this.NumeroDocumento = int.Parse(fila[23].ToString());
-			this.NumeroEntrega = int.Parse(fila[24].ToString());
+			this.NumeroDocumento = fila[23].ToString().Equals(string.Empty) ? 0 : int.Parse(fila[23].ToString());
+			this.NumeroEntrega = fila[24].ToString().Equals(string.Empty) ? 0 : int.Parse(fila[24].ToString());
 			this.FechaEntregaDocumento = fila[25].ToString();
 			this.FechaRecepcionDocumento = fila[26].ToString();
-			this.Folio = int.Parse(fila[27].ToString());
-			this.TipoDocumentoId = int.Parse(fila[28].ToString());
+			this.Folio = fila[27].ToString().Equals(string.Empty) ? 0 : int.Parse(fila[27].ToString());
+			this.TipoDocumentoId = fila[28].ToString().Equals(string.Empty) ? 0 : int.Parse(fila[28].ToString());
 
-			this.Concrecion = bool.Parse(fila[29].ToString());
+			this.Concrecion = fila[29].ToString().Equals(string.Empty) ? false : bool.Parse(fila[29].ToString());
 			this.NombreConcrecion = fila[30].ToString();
-			this.VRUTConcrecion = fila[31].ToString();
-			this.MotivoNoConcrecion = fila[32].ToString();
+			this.RUTConcrecion = fila[31].ToString();
+			this.VRUTConcrecion = fila[32].ToString();
+			this.MotivoNoConcrecion = fila[33].ToString();
+
+			this.SolicitanteId = int.Parse(fila[34].ToString());
+
+			this.TipoSolicitud = fila[35].ToString();
+			this.EstadoSolicitud = fila[36].ToString();
+			this.Prioridad = fila[37].ToString();
+			this.Solicitante = fila[38].ToString();
+			this.Cliente = fila[39].ToString();
 		}
 	}
 }

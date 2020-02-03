@@ -9,57 +9,49 @@ namespace Despacho.Controllers
 			return View();
 		}
 
-		public ActionResult Details(int id)
+		public ActionResult Solicitud(int? id)
 		{
-			return View();
-		}
-
-		public ActionResult Create()
-		{
-			return View();
-		}
-
-		[HttpPost]
-		public ActionResult Create(Datos.Modelo.Cliente cliente)
-		{
-			bool exito = Datos.Datos.Cliente.Crear(cliente);
-
-			return Json(new { exito = exito });
-		}
-
-		public ActionResult Edit(int id)
-		{
-			Datos.Modelo.Cliente cliente = Datos.Datos.Cliente.ObtenerCliente(id);
-
-			return View("Cliente", cliente); ;
-		}
-
-		[HttpPost]
-		public ActionResult Edit(Datos.Modelo.Cliente cliente)
-		{
-			bool exito = Datos.Datos.Cliente.Modificar(cliente);
-
-			return Json(new { exito = exito });
-		}
-
-		[HttpPost]
-		public JsonResult Delete(int id)
-		{
-			bool exito = Datos.Datos.Cliente.EstaActivo(id);
-
-			return Json(new { exito = exito });
-		}
-
-		[HttpPost]
-		public JsonResult Listar(int clienteId)
-		{
-			if (clienteId > 0)
+			if (id > 0)
 			{
-				return Json(Datos.Datos.Cliente.ObtenerCliente(clienteId));
+				Datos.Modelo.Solicitud solicitud = Datos.Datos.Solicitud.ObtenerSolicitud(id.Value);
+				return View(solicitud);
 			}
 			else
 			{
-				return Json(Datos.Datos.Cliente.ObtenerClientes());
+				return View(new Datos.Modelo.Solicitud());
+			}
+		}
+
+		[HttpPost]
+		public ActionResult Create(Datos.Modelo.Solicitud solicitud)
+		{
+			Datos.Modelo.Usuario solicitante = (Datos.Modelo.Usuario)Session["usuario"];
+
+			solicitud.SolicitanteId = solicitante.UsuarioId;
+
+			bool exito = Datos.Datos.Solicitud.Crear(solicitud);
+
+			return Json(new { exito = exito });
+		}
+
+		[HttpPost]
+		public ActionResult Edit(Datos.Modelo.Solicitud solicitud)
+		{
+			bool exito = Datos.Datos.Solicitud.Modificar(solicitud);
+
+			return Json(new { exito = exito });
+		}
+
+		[HttpPost]
+		public JsonResult ObtenerSolicitudes(int solicitudId)
+		{
+			if (solicitudId > 0)
+			{
+				return Json(Datos.Datos.Solicitud.ObtenerSolicitud(solicitudId));
+			}
+			else
+			{
+				return Json(Datos.Datos.Solicitud.ObtenerSolicitudes());
 			}
 		}
 	}

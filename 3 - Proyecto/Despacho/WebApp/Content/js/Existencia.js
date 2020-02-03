@@ -16,13 +16,15 @@
     };
 
     let InitElementos = function () {
-        CargarFiltroBodegas(function () {
-            DibujarBodega(existenciasAgrupadas);
-        });
+        $('#filtro-bodega').select2();
+
+        window.crearSelectorFecha("#filtro-fecha-almacenaje", moment().subtract(29, 'days'), moment());
 
         CargarLista();
 
-        $('.m-select2').select2();
+        $('#filtro-bodega').change(function () {
+            CargarFiltroBins();
+        });
 
         $('#filtro-filtrar').click(function () {
             Filtrar();
@@ -49,7 +51,7 @@
 
         $('#seccion-bodega').css('overflow-y', 'auto');
 
-        for (let bin in existencias[bodega]) {
+        for (let bin in (bodega ? existencias[bodega] : existencias[0])) {
             let divBin = $('<div class="seccion-bin" data-bin="' + bin + '"></div>');
 
             divBin.css('height', '500px');
@@ -108,10 +110,12 @@
     };
 
     let CargarLista = function () {
+        let picker = $('#filtro-fecha-almacenaje').data('daterangepicker');
+
         $('#lista-existencia').mDatatable({
             data: {
                 type: "local",
-                source: existencias,
+                source: existencias.filter((e) => { return moment(e.FechaAlmacenaje, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
                 pageSize: 10
             },
             layout: {
@@ -159,45 +163,40 @@
         });
     };
 
-    let CargarFiltroBodegas = function (_callback) {
-        $.post("/Existencia/ObtenerBodegas", { codigo: "" }, function (bodegas) {
-            $('#filtro-bodega').html('');
+    let CargarFiltroBins = function () {
+        $.post("/Existencia/ObtenerBins", { bodega: $('#filtro-bodega').val() }, function (bins) {
+            $('#filtro-bin').html('<option value="0" selected>Todas</option>');
 
-            bodegas.forEach((bodega) => {
-                $('#filtro-bodega').append('<option value="' + bodega.Codigo + '">' + bodega.Nombre + '</option>');
-            });
+            if (bins.length > 0) {
+                bins.forEach((bin) => {
+                    $('#filtro-bin').append('<option value="' + bin.Codigo + '">' + bin.Codigo + '</option>');
+                });
 
-            $('#filtro-bodega').select2({ placeholder: "Seleccione una bodega" });
-
-            $('#filtro-bodega').change(function () {
-                CargarFiltroBins($(this).val());
-            });
-
-            CargarFiltroBins(bodegas[0].Codigo, _callback());
-        });
-    };
-
-    let CargarFiltroBins = function (bodega, _callback) {
-        $.post("/Existencia/ObtenerBins", { bodega: bodega }, function (bins) {
-            $('#filtro-bin').html('');
-
-            bins.forEach((bin) => {
-                $('#filtro-bin').append('<option value="' + bin.Codigo + '">' + bin.Codigo + '</option>');
-            });
+                $('#filtro-bin').removeAttr('disabled');
+            } else {
+                $('#filtro-bin').attr('disabled', 'disabled');
+            }
 
             $('#filtro-bin').select2({ placeholder: "Seleccione una bin" });
-
-            if (_callback) _callback();
         });
     };
 
     let Filtrar = function () {
         let tabla = $('#lista-existencia').mDatatable();
+        let picker = $('#filtro-fecha-almacenaje').data('daterangepicker');
 
-        if ($('#filtro-bodega').length > 0) tabla.search($('#filtro-bodega').find('option:selected').text(), 'NomBodega',);
-        if ($('#filtro-bin').length > 0) tabla.search($('#filtro-bin').val(), 'Bin');
+        let filtrado = existencias.filter((e) => {
+            let valido = true;
 
-        //DibujarBodega(existenciasAgrupadas);
+            if ($('#filtro-bodega').val()) valido = valido && e.CodBodega == $('#filtro-bodega').val();
+            if ($('#filtro-bin').val() && $('#filtro-bin').val() != 0) valido = valido && e.Bin == $('#filtro-bin').val();
+            if (picker) valido = valido && moment(e.FechaAlmacenaje, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate);
+
+            return valido;
+        });
+
+        tabla.originalDataSet = filtrado;
+        tabla.load();
     };
 
     return {

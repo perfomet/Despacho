@@ -45,6 +45,7 @@ namespace Datos.Datos
 
 			return usuario;
 		}
+
 		public static bool Crear(Modelo.Usuario usuario)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -86,6 +87,7 @@ namespace Datos.Datos
 
 			return usuario;
 		}
+
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Usuario";

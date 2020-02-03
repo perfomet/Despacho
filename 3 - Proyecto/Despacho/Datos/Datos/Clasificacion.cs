@@ -8,8 +8,8 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Clasificacion> ObtenerClasificaciones()
 		{
-			string SELECTSentence = "SELECT Clasificacion.ClasificacionId, Clasificacion.Cantidad, Clasificacion.UnidadMedidaId, Clasificacion.EstaActivo";
-			string FROMSentence = " FROM Clasificacion";
+			string SELECTSentence = "SELECT Clasificacion.ClasificacionId, Clasificacion.Cantidad, Clasificacion.UnidadMedidaId, Clasificacion.EstaActivo, UnidadMedida.Descripcion";
+			string FROMSentence = " FROM Clasificacion INNER JOIN UnidadMedida ON UnidadMedida.UnidadMedidaId = Clasificacion.UnidadMedidaId";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -28,8 +28,8 @@ namespace Datos.Datos
 		public static Modelo.Clasificacion ObtenerClasificacion(int id)
 		{
 
-			string SELECTSentence = "SELECT Clasificacion.ClasificacionId, Clasificacion.Cantidad, Clasificacion.UnidadMedidaId, Clasificacion.EstaActivo";
-			string FROMSentence = " FROM Clasificacion";
+			string SELECTSentence = "SELECT Clasificacion.ClasificacionId, Clasificacion.Cantidad, Clasificacion.UnidadMedidaId, Clasificacion.EstaActivo, UnidadMedida.Descripcion";
+			string FROMSentence = " FROM Clasificacion INNER JOIN UnidadMedida ON UnidadMedida.UnidadMedidaId = Clasificacion.UnidadMedidaId";
 			string WHERESentence = " WHERE Clasificacion.ClasificacionId = '" + id.ToString() + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -48,7 +48,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Clasificacion clasificacion)
 		{
 			string INSERTSentence = "INSERT INTO Clasificacion";
-			string VALUESSentence = " VALUES({1}, {2}, 1);";
+			string VALUESSentence = " VALUES({0}, {1}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, clasificacion.Cantidad, clasificacion.Unidadmedidaid);
@@ -62,7 +62,7 @@ namespace Datos.Datos
 			string WHERESentence = " WHERE Clasificacion.ClasificacionId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, clasificacion.Cantidad, clasificacion.Unidadmedidaid, clasificacion.EstaActivo);
+			builder.AppendFormat(SQLSentence, clasificacion.Clasificacionid, clasificacion.Cantidad, clasificacion.Unidadmedidaid);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

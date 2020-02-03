@@ -80,7 +80,7 @@ VALUES (2, 'administrador', '123', 'Usuario', 'Administrador', NULL, 'pruebas@pr
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
 VALUES (3, 'planificador', '123', 'Usuario', 'Planificador', NULL, 'pruebas@prueba.cl', NULL, 1)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
-VALUES (4, 'cliente', '123', 'Usuario', 'Cliente', NULL, 'pruebas@prueba.cl', NULL, 1)
+VALUES (4, 'cliente', '123', 'Usuario', 'Cliente', NULL, 'pruebas@prueba.cl', 2003, 1)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
 VALUES (5, 'bodega', '123', 'Usuario', 'Bodega', NULL, 'pruebas@prueba.cl', NULL, 1)
 
@@ -774,20 +774,23 @@ CREATE TABLE SolicitudDespacho (
 	NombreConcrecion VARCHAR(255) NULL,
 	RUTConcrecion VARCHAR(8) NULL,
 	VRUTConcrecion VARCHAR(1) NULL,
-	MotivoNoConcrecion VARCHAR(MAX) NULL
+	MotivoNoConcrecion VARCHAR(MAX) NULL,
+	SolicitanteId INT NOT NULL FOREIGN KEY REFERENCES Usuario(UsuarioId)
 )
 GO
 
 CREATE TABLE EquiposSolicitados (
+	EquipoSolicitadoId INT PRIMARY KEY IDENTITY,
 	NumeroPlaca VARCHAR(50) NULL,
-	Modelo VARCHAR(50) NOT NULL,
 	Marca VARCHAR(50) NOT NULL,
-	EstadoEquipo VARCHAR(255) NOT NULL,
+	Modelo VARCHAR(50) NOT NULL,
+	EstadoEquipoId INT NOT NULL FOREIGN KEY REFERENCES EstadoEquipo(EstadoEquipoId),
 	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
 )
 GO
 
 CREATE TABLE EquiposRetirados (
+	EquipoRetiradoId INT PRIMARY KEY IDENTITY,
 	NumeroPlaca VARCHAR(50) NOT NULL,
 	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
 )

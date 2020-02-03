@@ -3,6 +3,8 @@
 	ViewBag.SeccionTieneTitulo = true;
 	ViewBag.TituloSeccion = "Consulta de Existencias";
 	ViewBag.Pagina = 3;
+
+	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas();
 }
 
 @section Less {
@@ -29,8 +31,11 @@
 		<div class="m-portlet__head-tools">
 			<ul class="m-portlet__nav">
 				<li class="m-portlet__nav-item">
-					<a href="#" id="filtro-filtrar" class="m-portlet__nav-link m-portlet__nav-link--icon">
-						<i class="la la-refresh"></i>
+					<a href="#" id="filtro-filtrar" class="btn btn-secondary m-btn--md m--margin-right-10">
+						<span>
+							<span>Filtrar</span>&nbsp;&nbsp;
+							<i class="la la-refresh"></i>
+						</span>
 					</a>
 				</li>
 				<li class="m-portlet__nav-item">
@@ -43,22 +48,42 @@
 	</div>
 	<div class="m-portlet__body">
 		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-			<div class="col-xl-6">
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">Bodega</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<select class="form-control m-select2" id="filtro-bodega" name="filtro-bodega"></select>
+			<div class="row">
+				<div class="col-lg-6 col-xs-12 mt-2">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Bodega</label>
+						<div class="col-lg-9 col-sm-12">
+							<select class="form-control m-select2" id="filtro-bodega" name="filtro-bodega">
+								<option value="" selected>Todas</option>
+								@foreach (Datos.Modelo.Bodega bodega in bodegas)
+								{
+									<option value="@bodega.Codigo">@bodega.Nombre</option>
+								}
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-xl-6">
-				Fecha Almacenaje
-			</div>
-			<div class="col-xl-6">
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">Bin</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<select class="form-control m-select2" id="filtro-bin" name="filtro-bin"></select>
+				<div class="col-lg-6 col-xs-12 mt-2">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Fecha Almacenaje</label>
+						<div class="col-lg-9 col-sm-12">
+							<div class='input-group pull-right' id='filtro-fecha-almacenaje'>
+								<input type='text' class="form-control m-input" readonly placeholder="Seleccione la fecha de inicio y fin" />
+								<div class="input-group-append">
+									<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xs-12 mt-2">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Bin</label>
+						<div class="col-lg-9 col-sm-12">
+							<select class="form-control m-select2" id="filtro-bin" name="filtro-bin" disabled>
+								<option value="" selected>Todas</option>
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>

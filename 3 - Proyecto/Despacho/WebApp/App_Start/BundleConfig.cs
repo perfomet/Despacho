@@ -48,11 +48,11 @@ namespace Despacho
 			bundles.Add(new StyleBundle("~/Content/css/metronic")
 					.Include("~/Content/librerias/metronic/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css")
 					.Include("~/Content/librerias/metronic/assets/vendors/base/vendors.bundle.css")
-					.Include("~/Content/librerias/metronic/assets/themes/demo12/base/style.bundle.css"));
+					.Include("~/Content/librerias/metronic/assets/themes/default/base/style.bundle.css"));
 
 			bundles.Add(new ScriptBundle("~/bundles/metronic")
 					.Include("~/Content/librerias/metronic/assets/vendors/base/vendors.bundle.js")
-					.Include("~/Content/librerias/metronic/assets/themes/demo12/base/scripts.bundle.js")
+					.Include("~/Content/librerias/metronic/assets/themes/default/base/scripts.bundle.js")
 					.Include("~/Content/librerias/metronic/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js")
 					.Include("~/Content/librerias/metronic/assets/app/js/dashboard.js"));
 

@@ -9,7 +9,7 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Comuna> ObtenerComunas()
 		{
-			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna";
+			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna, EstaActivo";
 			string FROMSentence = " FROM Comuna";
 			string SQLSentence = SELECTSentence + FROMSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -40,7 +40,7 @@ namespace Datos.Datos
 					tipoFiltro = "RegionId";
 					break;
 			}
-			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna";
+			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna, EstaActivo";
 			string FROMSentence = " FROM Comuna";
 			string WHERESentence = " WHERE " + tipoFiltro + " = " + id.ToString();
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
@@ -62,7 +62,7 @@ namespace Datos.Datos
 		public static Modelo.Comuna ObtenerComuna(int comunaId)
 		{
 			Modelo.Comuna comuna = new Modelo.Comuna();
-			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna";
+			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna, EstaActivo";
 			string FROMSentence = " FROM Comuna";
 			string WHERESentence = " WHERE ComunaId = " + comunaId.ToString();
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;

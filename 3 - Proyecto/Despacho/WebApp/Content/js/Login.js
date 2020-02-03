@@ -4,6 +4,8 @@
     let Init = function () {
         if (logueado == "True") location.href = '/Home/Index';
 
+        $('#usuario').focus();
+
         usuario = localStorage.getItem('usuario');
 
         if (usuario) {
@@ -14,7 +16,8 @@
             if (usuario.ApellidoMaterno) nombre += ' ' + usuario.ApellidoMaterno;
 
             $('.usuario-ok').html(nombre);
-            $('#continuar').click();
+
+            Continuar();
         }
 
         InitElementos();
@@ -22,26 +25,7 @@
 
     let InitElementos = function () {
         $('#continuar').click(() => {
-            let user = $('#usuario').val();
-
-            $.post('/Login/ObtenerUsuario', { usuario: user }, function (data) {
-                if (data.Username == user) {
-                    localStorage.setItem('usuario', btoa(JSON.stringify(data)));
-
-                    let nombre = data.Nombres + ' ' + data.ApellidoPaterno;
-                    if (data.ApellidoMaterno) nombre += ' ' + data.ApellidoMaterno;
-
-                    $('.usuario-ok').html(nombre);
-
-                    $('.div-clave').css('display', 'flex');
-                    $('.div-ingresar').css('display', 'flex');
-                    $('.div-usuario-ok').css('display', 'flex');
-                    $('.div-continuar').hide();
-                    $('.div-usuario').hide();
-                } else {
-                    alert('Usuario no encontrado');
-                }
-            });
+            Continuar();
         });
 
         $('#volver').click(() => {
@@ -55,18 +39,54 @@
         });
 
         $('#ingresar').click(() => {
-            usuario = localStorage.getItem('usuario');
-            if (usuario) usuario = JSON.parse(atob(usuario));
+            Ingresar();
+        });
 
-            $.post('/Login/Ingresar', { usuario: usuario.Username, clave: $('#clave').val() }, function (data) {
-                if (data.exito == true) {
-                    localStorage.setItem('usuario', btoa(JSON.stringify(data.usuario)));
+        $('#usuario').keyup(function (e) {
+            if (e.keyCode == 13) Continuar();
+        });
 
-                    location.href = '/Home/Index';
-                } else {
-                    alert('Clave incorrecta.');
-                }
-            });
+        $('#clave').keyup(function (e) {
+            if (e.keyCode == 13) Ingresar();
+        });
+    };
+
+    let Continuar = function () {
+        let user = $('#usuario').val();
+
+        $.post('/Login/ObtenerUsuario', { usuario: user }, function (data) {
+            if (data.Username == user) {
+                localStorage.setItem('usuario', btoa(JSON.stringify(data)));
+
+                let nombre = data.Nombres + ' ' + data.ApellidoPaterno;
+                if (data.ApellidoMaterno) nombre += ' ' + data.ApellidoMaterno;
+
+                $('.usuario-ok').html(nombre);
+
+                $('.div-clave').css('display', 'flex');
+                $('.div-ingresar').css('display', 'flex');
+                $('.div-usuario-ok').css('display', 'flex');
+                $('.div-continuar').hide();
+                $('.div-usuario').hide();
+                $('#clave').focus();
+            } else {
+                alert('Usuario no encontrado');
+            }
+        });
+    };
+
+    let Ingresar = function () {
+        usuario = localStorage.getItem('usuario');
+        if (usuario) usuario = JSON.parse(atob(usuario));
+
+        $.post('/Login/Ingresar', { usuario: usuario.Username, clave: $('#clave').val() }, function (data) {
+            if (data.exito == true) {
+                localStorage.setItem('usuario', btoa(JSON.stringify(data.usuario)));
+
+                location.href = '/Home/Index';
+            } else {
+                alert('Clave incorrecta.');
+            }
         });
     };
 

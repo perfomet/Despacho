@@ -14,4 +14,14 @@ namespace Datos.Modelo
 			this.EstaActivo = bool.Parse(fila[2].ToString());
 		}
 	}
+
+	public enum EstadosSolicitud
+	{
+		SolicitudIngresada = 1,
+		PlacasIngresadas = 2,
+		Planificado = 3,
+		Documentado = 4,
+		Concreción = 5,
+		AprobadoCliente = 6
+	}
 }

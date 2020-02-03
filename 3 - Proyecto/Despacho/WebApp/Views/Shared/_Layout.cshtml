@@ -37,11 +37,11 @@
 	</script>
 
 	@Scripts.Render("~/bundles/metronic")
+	<script src="../../../assets/themes/default/custom/crud/forms/widgets/bootstrap-daterangepicker.js" type="text/javascript"></script>
 	@Scripts.Render("~/bundles/general")
 	@RenderSection("Scripts", required: false)
-
 </head>
-<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 	<!-- begin:: Page -->
 	<div class="m-grid m-grid--hor m-grid--root m-page">
 		<!-- BEGIN: Header -->
@@ -52,7 +52,7 @@
 					<div class="m-stack__item m-brand  m-brand--skin-dark ">
 						<div class="m-stack m-stack--ver m-stack--general">
 							<div class="m-stack__item m-stack__item--middle m-brand__logo">
-								<a href="index.html" class="m-brand__logo-wrapper">
+								<a href="/Home/Index" class="m-brand__logo-wrapper">
 									<img alt="" src="~/Content/img/logo-invertido.png" style="width: 100%;" />
 								</a>
 							</div>
@@ -96,17 +96,20 @@
 									<div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
 										<ul class="m-menu__subnav">
 											<li class="m-menu__item " aria-haspopup="true">
-												<a href="actions.html" class="m-menu__link ">
+												<a href="/Solicitud/Solicitud" class="m-menu__link ">
 													<i class="m-menu__link-icon flaticon-add"></i>
 													<span class="m-menu__link-text">Crear Solicitud</span>
 												</a>
 											</li>
-											<li class="m-menu__item" aria-haspopup="true">
-												<a href="/CargaMasiva/Index" class="m-menu__link ">
-													<i class="m-menu__link-icon flaticon-cogwheel-2"></i>
-													<span class="m-menu__link-text">Cargar Masivamente</span>
-												</a>
-											</li>
+											@if (usuario.PerfilId == 1 || usuario.PerfilId == 2 || usuario.PerfilId == 4)
+											{
+												<li class="m-menu__item" aria-haspopup="true">
+													<a href="/CargaMasiva/Index" class="m-menu__link ">
+														<i class="m-menu__link-icon flaticon-cogwheel-2"></i>
+														<span class="m-menu__link-text">Cargar Masivamente</span>
+													</a>
+												</li>
+											}
 											<li class="m-menu__item" aria-haspopup="true">
 												<a href="/Existencia/Index" class="m-menu__link ">
 													<i class="m-menu__link-icon flaticon-search-1"></i>
@@ -138,12 +141,6 @@
 													<span class="m-menu__link-text">Proximamente</span>
 												</a>
 											</li>
-											<!--
-											<li class="m-menu__item"><h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Finance Reports</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3><ul class="m-menu__inner"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-map"></i><span class="m-menu__link-text">Annual Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-user"></i><span class="m-menu__link-text">HR Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-clipboard"></i><span class="m-menu__link-text">IPO Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-graphic-1"></i><span class="m-menu__link-text">Finance Margins</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-graphic-2"></i><span class="m-menu__link-text">Revenue Reports</span></a></li></ul></li>
-											<li class="m-menu__item"><h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Project Reports</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3><ul class="m-menu__inner"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Coca Cola CRM</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Delta Airlines Booking Site</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Malibu Accounting</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Vineseed Website Rewamp</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Zircon Mobile App</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Mercury CMS</span></a></li></ul></li>
-											<li class="m-menu__item"><h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">HR Reports</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3><ul class="m-menu__inner"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Staff Directory</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Client Directory</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Salary Reports</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Staff Payslips</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Corporate Expenses</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Project Expenses</span></a></li></ul></li>
-											<li class="m-menu__item"><h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Reporting Apps</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3><ul class="m-menu__inner"><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><span class="m-menu__link-text">Report Adjusments</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><span class="m-menu__link-text">Sources & Mediums</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><span class="m-menu__link-text">Reporting Settings</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><span class="m-menu__link-text">Conversions</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><span class="m-menu__link-text">Report Flows</span></a></li><li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="actions.html" class="m-menu__link "><span class="m-menu__link-text">Audit & Logs</span></a></li></ul></li>
-											-->
 										</ul>
 									</div>
 								</li>
@@ -225,20 +222,6 @@
 																	</span>
 																</a>
 															</li>
-															<!--
-															<li class="m-nav__item">
-																	<a href="profile.html" class="m-nav__link">
-																			<i class="m-nav__link-icon flaticon-share"></i>
-																			<span class="m-nav__link-text">Activity</span>
-																	</a>
-															</li>
-															<li class="m-nav__item">
-																	<a href="profile.html" class="m-nav__link">
-																			<i class="m-nav__link-icon flaticon-chat-1"></i>
-																			<span class="m-nav__link-text">Messages</span>
-																	</a>
-															</li>
-															-->
 															<li class="m-nav__separator m-nav__separator--fit">
 															</li>
 															<li class="m-nav__item">
@@ -287,8 +270,13 @@
 				<!-- BEGIN: Aside Menu -->
 				<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500" style="position: relative;">
 					<ul class="m-menu__nav m-menu__nav--dropdown-submenu-arrow">
-						<li class="m-menu__item  @(ViewBag.Pagina == 0 ? "m-menu__item--active" : "")" aria-haspopup="true"><a href="/Home/Index" class="m-menu__link "><span class="m-menu__item-here"></span><i class="m-menu__link-icon flaticon-line-graph"></i><span class="m-menu__link-text">Inicio</span></a></li>
-						<br />
+						<li class="m-menu__item  @(ViewBag.Pagina == 0 ? "m-menu__item--active" : "")" aria-haspopup="true">
+							<a href="/Home/Index" class="m-menu__link ">
+								<span class="m-menu__item-here"></span>
+								<i class="m-menu__link-icon flaticon-line-graph"></i>
+								<span class="m-menu__link-text">Inicio</span>
+							</a>
+						</li>
 						<li class="m-menu__section m-menu__section--first">
 							<h4 class="m-menu__section-text">Solicitudes</h4>
 							<i class="m-menu__section-icon flaticon-more-v2"></i>
@@ -307,14 +295,17 @@
 								</span>
 							</a>
 						</li>
-						<li class="m-menu__item @(ViewBag.Pagina == 2 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
-							<a href="/CargaMasiva/Index" class="m-menu__link ">
-								<span class="m-menu__item-here"></span>
-								<i class="m-menu__link-icon flaticon-file" style="color: #868aa8"></i>
-								<span class="m-menu__link-text">Carga Masiva</span>
-							</a>
-						</li>
-						<li class="m-menu__section m-menu__section--first">
+						@if (usuario.PerfilId == 1 || usuario.PerfilId == 2 || usuario.PerfilId == 4)
+						{
+							<li class="m-menu__item @(ViewBag.Pagina == 2 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+								<a href="/CargaMasiva/Index" class="m-menu__link ">
+									<span class="m-menu__item-here"></span>
+									<i class="m-menu__link-icon flaticon-file" style="color: #868aa8"></i>
+									<span class="m-menu__link-text">Carga Masiva</span>
+								</a>
+							</li>
+						}
+						<li class="m-menu__section">
 							<h4 class="m-menu__section-text">Existencias</h4>
 							<i class="m-menu__section-icon flaticon-more-v2"></i>
 						</li>
@@ -325,139 +316,142 @@
 								<span class="m-menu__link-text">Consulta Existencias</span>
 							</a>
 						</li>
-						<li class="m-menu__section m-menu__section--first">
-							<h4 class="m-menu__section-text">Administración</h4>
-							<i class="m-menu__section-icon flaticon-more-v2"></i>
-						</li>
-						<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true">
-							<a href="javascript:;" class="m-menu__link m-menu__toggle">
-								<span class="m-menu__item-here"></span>
-								<i class="m-menu__link-icon flaticon-layers"></i>
-								<span class="m-menu__link-text">Clientes</span>
-								<i class="m-menu__ver-arrow la la-angle-right"></i>
-							</a>
-							<div class="m-menu__submenu ">
-								<span class="m-menu__arrow"></span>
-								<ul class="m-menu__subnav">
-									<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
-										<span class="m-menu__link">
-											<span class="m-menu__item-here"></span>
-											<span class="m-menu__link-text">Clientes</span>
-										</span>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Cliente/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-users" style="color: #868aa8"><span></span></i>
-											<span class="m-menu__link-text">Clientes</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/UnidadNegocio/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-suitcase" style="color: #868aa8"><span></span></i>
-											<span class="m-menu__link-text">Unidades Negocio</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Gerencia/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-user-settings" style="color: #868aa8"><span></span></i>
-											<span class="m-menu__link-text">Gerencias</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true">
-							<a href="javascript:;" class="m-menu__link m-menu__toggle">
-								<span class="m-menu__item-here"></span>
-								<i class="m-menu__link-icon flaticon-layers"></i>
-								<span class="m-menu__link-text">Usuarios</span>
-								<i class="m-menu__ver-arrow la la-angle-right"></i>
-							</a>
-							<div class="m-menu__submenu ">
-								<span class="m-menu__arrow"></span>
-								<ul class="m-menu__subnav">
-									<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
-										<span class="m-menu__link">
-											<span class="m-menu__item-here"></span>
-											<span class="m-menu__link-text">Usuarios</span>
-										</span>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Usuario/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-user-add" style="color: #868aa8"><span></span></i>
-											<span class="m-menu__link-text">Usuarios</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Perfil/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-user-ok" style="color: #868aa8"><span></span></i>
-											<span class="m-menu__link-text">Roles</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true">
-							<a href="javascript:;" class="m-menu__link m-menu__toggle">
-								<span class="m-menu__item-here"></span>
-								<i class="m-menu__link-icon flaticon-layers"></i>
-								<span class="m-menu__link-text">Otros</span>
-								<i class="m-menu__ver-arrow la la-angle-right"></i>
-							</a>
-							<div class="m-menu__submenu ">
-								<span class="m-menu__arrow"></span>
-								<ul class="m-menu__subnav">
-									<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
-										<span class="m-menu__link">
-											<span class="m-menu__item-here"></span>
-											<span class="m-menu__link-text">Otros</span>
-										</span>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/TipoSolicitud/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-folder-2" style="color: #868aa8;"><span></span></i>
-											<span class="m-menu__link-text">Tipos Solicitud</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Camion/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-truck" style="color: #868aa8;"><span></span></i>
-											<span class="m-menu__link-text">Camiones</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/EstadoEquipo/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-technology" style="color: #868aa8;"><span></span></i>
-											<span class="m-menu__link-text">Estados Equipos</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Clasificacion/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
-											<span class="m-menu__link-text">Clasificaciones</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Prioridad/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
-											<span class="m-menu__link-text">Prioridades</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/Enlaces/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
-											<span class="m-menu__link-text">Enlaces</span>
-										</a>
-									</li>
-									<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-										<a href="/TipoDocumento/Index" class="m-menu__link ">
-											<i class="m-menu__link-bullet flaticon-folder-2"><span></span></i>
-											<span class="m-menu__link-text">Tipos Documentos</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</li>
+						@if (usuario.PerfilId == 1 || usuario.PerfilId == 2)
+						{
+							<li class="m-menu__section">
+								<h4 class="m-menu__section-text">Administración</h4>
+								<i class="m-menu__section-icon flaticon-more-v2"></i>
+							</li>
+							<li class="m-menu__item  m-menu__item--submenu @((ViewBag.Pagina == 4 || ViewBag.Pagina == 5 || ViewBag.Pagina == 6) ? "m-menu__item--open" : "")" aria-haspopup="true">
+								<a href="javascript:;" class="m-menu__link m-menu__toggle">
+									<span class="m-menu__item-here"></span>
+									<i class="m-menu__link-icon flaticon-layers"></i>
+									<span class="m-menu__link-text">Clientes</span>
+									<i class="m-menu__ver-arrow la la-angle-right"></i>
+								</a>
+								<div class="m-menu__submenu ">
+									<span class="m-menu__arrow"></span>
+									<ul class="m-menu__subnav">
+										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+											<span class="m-menu__link">
+												<span class="m-menu__item-here"></span>
+												<span class="m-menu__link-text">Clientes</span>
+											</span>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 4 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Cliente/Index" class="m-menu__link">
+												<i class="m-menu__link-bullet flaticon-users" style="color: #868aa8"><span></span></i>
+												<span class="m-menu__link-text">Clientes</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 5 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/UnidadNegocio/Index" class="m-menu__link">
+												<i class="m-menu__link-bullet flaticon-suitcase" style="color: #868aa8"><span></span></i>
+												<span class="m-menu__link-text">Unidades Negocio</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 6 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Gerencia/Index" class="m-menu__link">
+												<i class="m-menu__link-bullet flaticon-user-settings" style="color: #868aa8"><span></span></i>
+												<span class="m-menu__link-text">Gerencias</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="m-menu__item  m-menu__item--submenu @((ViewBag.Pagina == 7 || ViewBag.Pagina == 8) ? "m-menu__item--open" : "")" aria-haspopup="true">
+								<a href="javascript:;" class="m-menu__link m-menu__toggle">
+									<span class="m-menu__item-here"></span>
+									<i class="m-menu__link-icon flaticon-layers"></i>
+									<span class="m-menu__link-text">Usuarios</span>
+									<i class="m-menu__ver-arrow la la-angle-right"></i>
+								</a>
+								<div class="m-menu__submenu ">
+									<span class="m-menu__arrow"></span>
+									<ul class="m-menu__subnav">
+										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+											<span class="m-menu__link">
+												<span class="m-menu__item-here"></span>
+												<span class="m-menu__link-text">Usuarios</span>
+											</span>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 7 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Usuario/Index" class="m-menu__link ">
+												<i class="m-menu__link-bullet flaticon-user-add" style="color: #868aa8"><span></span></i>
+												<span class="m-menu__link-text">Usuarios</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 8 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Perfil/Index" class="m-menu__link ">
+												<i class="m-menu__link-bullet flaticon-user-ok" style="color: #868aa8"><span></span></i>
+												<span class="m-menu__link-text">Roles</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="m-menu__item  m-menu__item--submenu @((ViewBag.Pagina > 8 && ViewBag.Pagina < 16) ? "m-menu__item--open" : "")" aria-haspopup="true">
+								<a href="javascript:;" class="m-menu__link m-menu__toggle">
+									<span class="m-menu__item-here"></span>
+									<i class="m-menu__link-icon flaticon-layers"></i>
+									<span class="m-menu__link-text">Otros</span>
+									<i class="m-menu__ver-arrow la la-angle-right"></i>
+								</a>
+								<div class="m-menu__submenu ">
+									<span class="m-menu__arrow"></span>
+									<ul class="m-menu__subnav">
+										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+											<span class="m-menu__link">
+												<span class="m-menu__item-here"></span>
+												<span class="m-menu__link-text">Otros</span>
+											</span>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 9 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/TipoSolicitud/Index" class="m-menu__link ">
+												<i class="m-menu__link-bullet flaticon-folder-2" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Tipos Solicitud</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 10 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Camion/Index" class="m-menu__link ">
+												<i class="m-menu__link-bullet flaticon-truck" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Camiones</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 11 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/EstadoEquipo/Index" class="m-menu__link ">
+												<i class="m-menu__link-bullet flaticon-technology" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Estados Equipos</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 12 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Clasificacion/Index" class="m-menu__link ">
+												<i class="m-menu__link-icon flaticon-layers" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Clasificaciones</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 13 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Prioridad/Index" class="m-menu__link ">
+												<i class="m-menu__link-icon flaticon-layers" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Prioridades</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 14 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/Enlaces/Index" class="m-menu__link ">
+												<i class="m-menu__link-icon flaticon-layers" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Enlaces</span>
+											</a>
+										</li>
+										<li class="m-menu__item @(ViewBag.Pagina == 15 ? "m-menu__item--active" : "")" aria-haspopup="true" m-menu-link-redirect="1">
+											<a href="/TipoDocumento/Index" class="m-menu__link ">
+												<i class="m-menu__link-bullet flaticon-folder-2" style="color: #868aa8;"><span></span></i>
+												<span class="m-menu__link-text">Tipos Documentos</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+						}
 					</ul>
 				</div>
 				<!-- END: Aside Menu -->
@@ -502,7 +496,7 @@
 				<div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
 					<div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
 						<span class="m-footer__copyright">
-							2020 &copy; Sistema de Despacho por <a href="https://natla.cl" class="m-link">Natla Tecnologías</a>
+							2020 &copy; Sistema de Despacho por <a href="https://mimet.cl" class="m-link">Mimet S.A.</a>
 						</span>
 					</div>
 					<div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
@@ -535,11 +529,6 @@
 		<div class="m-quick-sidebar__content m--hide">
 			<span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
 			<ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
-				<!--
-				<li class="nav-item m-tabs__item">
-					<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_quick_sidebar_tabs_messenger" role="tab">Messages</a>
-				</li>
-				-->
 				<li class="nav-item m-tabs__item">
 					<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_quick_sidebar_tabs_settings" role="tab">Settings</a>
 				</li>
@@ -548,179 +537,6 @@
 				</li>
 			</ul>
 			<div class="tab-content">
-				<!--
-				<div class="tab-pane active" id="m_quick_sidebar_tabs_messenger" role="tabpanel">
-					<div class="m-messenger m-messenger--message-arrow m-messenger--skin-light">
-						<div class="m-messenger__messages m-scrollable">
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--in">
-									<div class="m-messenger__message-pic">
-										<img src="assets/app/media/img//users/user3.jpg" alt="" />
-									</div>
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-username">
-												Megan wrote
-											</div>
-											<div class="m-messenger__message-text">
-												Hi Bob. What time will be the meeting ?
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--out">
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-text">
-												Hi Megan. It's at 2.30PM
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--in">
-									<div class="m-messenger__message-pic">
-										<img src="assets/app/media/img//users/user3.jpg" alt="" />
-									</div>
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-username">
-												Megan wrote
-											</div>
-											<div class="m-messenger__message-text">
-												Will the development team be joining ?
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--out">
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-text">
-												Yes sure. I invited them as well
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__datetime">2:30PM</div>
-								<div class="m-messenger__wrapper">
-									<div class="m-messenger__message m-messenger__message--in">
-										<div class="m-messenger__message-pic">
-											<img src="assets/app/media/img//users/user3.jpg" alt="" />
-										</div>
-										<div class="m-messenger__message-body">
-											<div class="m-messenger__message-arrow"></div>
-											<div class="m-messenger__message-content">
-												<div class="m-messenger__message-username">
-													Megan wrote
-												</div>
-												<div class="m-messenger__message-text">
-													Noted. For the Coca-Cola Mobile App project as well ?
-												</div>
-											</div>
-										</div>
-									</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--out">
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-text">
-												Yes, sure.
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--out">
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-text">
-												Please also prepare the quotation for the Loop CRM project as well.
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__datetime">3:15PM</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--in">
-									<div class="m-messenger__message-no-pic m--bg-fill-danger">
-										<span>M</span>
-									</div>
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-username">
-												Megan wrote
-											</div>
-												<div class="m-messenger__message-text">
-													Noted. I will prepare it.
-												</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--out">
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-text">
-												Thanks Megan. I will see you later.
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="m-messenger__wrapper">
-								<div class="m-messenger__message m-messenger__message--in">
-									<div class="m-messenger__message-pic">
-										<img src="assets/app/media/img//users/user3.jpg" alt="" />
-									</div>
-									<div class="m-messenger__message-body">
-										<div class="m-messenger__message-arrow"></div>
-										<div class="m-messenger__message-content">
-											<div class="m-messenger__message-username">
-												Megan wrote
-											</div>
-											<div class="m-messenger__message-text">
-												Sure. See you in the meeting soon.
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="m-messenger__seperator"></div>
-
-						<div class="m-messenger__form">
-							<div class="m-messenger__form-controls">
-								<input type="text" name="" placeholder="Type here..." class="m-messenger__form-input">
-							</div>
-							<div class="m-messenger__form-tools">
-								<a href="" class="m-messenger__form-attachment">
-									<i class="la la-paperclip"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				-->
 				<div class="tab-pane active" id="m_quick_sidebar_tabs_settings" role="tabpanel">
 					<div class="m-list-settings m-scrollable">
 						<div class="m-list-settings__group">

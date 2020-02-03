@@ -1,18 +1,21 @@
 ﻿@model Datos.Modelo.Clasificacion
 @{
 	ViewBag.SeccionTieneTitulo = true;
+	ViewBag.Pagina = 12;
 
 	if (Model.Clasificacionid > 0)
 	{
-		ViewBag.Title = "Despacho - " + Model.Cantidad;
-		ViewBag.TituloSeccion = Model.Cantidad;
+		ViewBag.Title = "Despacho - Clasificación";
+		ViewBag.TituloSeccion = "Clasificación " + Model.Cantidad + " " + Model.UnidadMedida;
 	}
 	else
 	{
-		
+
 		ViewBag.Title = "Despacho - Clasificación Nueva";
 		ViewBag.TituloSeccion = " Clasificación Nueva";
 	}
+
+	List<Datos.Modelo.UnidadMedida> unidades = Datos.Datos.UnidadMedida.ObtenerUnidadesdeMedida();
 }
 
 @section Less{
@@ -35,13 +38,20 @@
 				<div class="col-10">
 					<input class="form-control m-input" type="text" value="@Model.Cantidad" id="cantidad" style="width: 50%">
 				</div>
-				<label for="example-text-input" class="col-2 col-form-label">Unidad de Medida</label>
-				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Unidadmedidaid" id="empresatransporteid" style="width: 50%">
-				</div>
 			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-form-label col-lg-2 col-sm-12">Unidad Medida</label>
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="unidadmedidaid" name="unidadmedidaid">
+						<option value="0" selected disabled>Seleccione una unidad de medida</option>
+						@foreach (Datos.Modelo.UnidadMedida unidad in unidades)
+						{
+							<option value="@unidad.UnidadMedidaId" @(unidad.UnidadMedidaId == Model.Unidadmedidaid ? "selected" : "")>@unidad.Descripcion</option>
+						}
+					</select>
+				</div>
 
-
+			</div>
 		</div>
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">

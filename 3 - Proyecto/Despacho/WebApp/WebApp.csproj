@@ -2522,7 +2522,6 @@
     <Content Include="Views\Gerencia\Gerencia.cshtml" />
     <Content Include="Views\Perfil\Perfil.cshtml" />
     <Content Include="Views\Prioridad\Prioridad.cshtml" />
-    <Content Include="Views\Solicitud\Solicitud.cshtml" />
     <Content Include="Views\TipoDocumento\TipoDocumento.cshtml" />
     <Content Include="Views\TipoSolicitud\TipoSolicitud.cshtml" />
     <Content Include="Views\UnidadNegocio\UnidadNegocio.cshtml" />
@@ -2531,6 +2530,7 @@
     <Content Include="Views\Clasificacion\Clasificacion.cshtml" />
     <Content Include="Views\Enlaces\Index.cshtml" />
     <Content Include="Views\Enlaces\Enlaces.cshtml" />
+    <Content Include="Views\Solicitud\Solicitud.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2651,6 +2651,7 @@
     <Content Include="Content\less\perfil.less" />
     <Content Include="Content\less\prioridad.less" />
     <Content Include="Content\less\enlace.less" />
+    <Content Include="Content\less\solicitud.less" />
     <None Include="packages.config" />
     <Content Include="Content\js\externos\jquery-3.4.1.slim.min.map" />
     <Content Include="Content\js\externos\jquery-3.4.1.min.map" />

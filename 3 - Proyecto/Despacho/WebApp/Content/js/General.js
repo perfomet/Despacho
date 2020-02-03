@@ -129,6 +129,30 @@
                 }
             });
         };
+
+        window.crearSelectorFecha = function (idSelector, inicio, fin) {
+            $(idSelector + " .form-control").val(inicio.format("DD/MM/YYYY") + " - " + fin.format("DD/MM/YYYY"))
+
+            $(idSelector).daterangepicker({
+                buttonClasses: "m-btn btn",
+                applyClass: "btn-primary",
+                cancelClass: "btn-secondary",
+                cancelButtonText: "Cerrar",
+                startDate: inicio,
+                endDate: fin,
+                ranges: {
+                    Todo: [moment('01/01/1900', 'DD/MM/YYYY'), moment()],
+                    Hoy: [moment(), moment()],
+                    Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                    "Últimos 7 Días": [moment().subtract(6, "days"), moment()],
+                    "Últimos 30 Días": [moment().subtract(29, "days"), moment()],
+                    "Este Mes": [moment().startOf("month"), moment().endOf("month")],
+                    "El Mes Pasado": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+                }
+            }, function (a, t, n) {
+                $(idSelector + " .form-control").val(a.format("DD/MM/YYYY") + " - " + t.format("DD/MM/YYYY"))
+            });
+        };
     };
 
     return {
