@@ -842,3 +842,11 @@ GO
 CREATE VIEW Existencia AS 
 SELECT * FROM MiLogistic.dbo.Existencia
 GO
+
+CREATE TABLE BinToEstadoEquipo (
+	Bintoestadoequipoid INT PRIMARY KEY IDENTITY(1, 1),
+	Estadoequipoid INT NOT NULL,
+	Bin VARCHAR(100) NOT NULL,
+	EstaActivo BIT NOT NULL
+	)
+GO
