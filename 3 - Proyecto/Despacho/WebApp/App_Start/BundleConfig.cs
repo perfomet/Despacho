@@ -96,6 +96,9 @@ namespace Despacho
 			bundles.Add(new ScriptBundle("~/bundles/estadoequipo")
 					.Include("~/Content/js/EstadoEquipo.js"));
 
+		bundles.Add(new ScriptBundle("~/bundles/BinToEstadoEquipo")
+					.Include("~/Content/js/BinToEstadoEquipo.js"));
+
 			bundles.Add(new ScriptBundle("~/bundles/unidadmedida")
 					.Include("~/Content/js/UnidadMedida.js"));
 

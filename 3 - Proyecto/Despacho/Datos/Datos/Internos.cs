@@ -1,5 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using System;
+using System.Data;
+using Datos.DB;
+
 
 namespace Datos.Datos
 {
@@ -8,6 +11,28 @@ namespace Datos.Datos
 		public const int sdominicana = 1;
 		public const int schile = 0;
 
+		public static bool ExisteTabla(string nombretabla)
+		{
+			string SELECTSentence = "SELECT COUNT(*)";
+			string FROMSentence = " FROM INFORMATION_SCHEMA.TABLES "; 
+			string WHERESentence=" WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = @nombreTabla";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			return (dataTable.Rows.Count > 0);
+		}
+		public static bool CreateTable(string nametable)
+		{
+			if (ExisteTabla(nametable) == true)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+			
+		}
 		public static int CuentaCaracteres(string texto, string caracter)
 		{
 			return texto.Length - texto.Replace(caracter, "").Length;
