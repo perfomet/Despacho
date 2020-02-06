@@ -166,7 +166,6 @@
     <Content Include="Content\img\Caja.png" />
     <Content Include="Content\img\Caja.svg" />
     <Content Include="Content\img\producto.png" />
-    <Content Include="Content\js\BinToEstadoEquipo.js" />
     <Content Include="Content\js\Enlaces.js" />
     <Content Include="Content\js\Solicitud.js" />
     <Content Include="Content\js\Existencia.js" />
@@ -2532,8 +2531,6 @@
     <Content Include="Views\Enlaces\Index.cshtml" />
     <Content Include="Views\Enlaces\Enlaces.cshtml" />
     <Content Include="Views\Solicitud\Solicitud.cshtml" />
-    <Content Include="Views\BinToEstadoEquipo\BinToEstadoEquipo.cshtml" />
-    <Content Include="Views\BinToEstadoEquipo\Init.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

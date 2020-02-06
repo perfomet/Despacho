@@ -24,11 +24,22 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Datos.Modelo.EstadoEquipo estadoequipo)
+    public ActionResult Create(Datos.Modelo.EstadoEquipo estadoequipo, List<Datos.Modelo.BinToEstadoEquipo> bins)
     {
-      bool exito = Datos.Datos.EstadoEquipo.Crear(estadoequipo);
+      int id = Datos.Datos.EstadoEquipo.Crear(estadoequipo);
 
-      return Json(new { exito = exito });
+      if(id > 0)
+      {
+        bins.ForEach((bin) =>
+        {
+          bin.Estadoequipoid = id;
+        });
+
+        Datos.Datos.BinToEstadoEquipo.Eliminar(id);
+        Datos.Datos.BinToEstadoEquipo.Crear(bins);
+      }
+
+      return Json(new { exito = (id > 0) });
     }
 
     public ActionResult Edit(int id)
@@ -39,9 +50,12 @@ namespace Despacho.Controllers
     }
 
     [HttpPost]
-    public ActionResult Edit(Datos.Modelo.EstadoEquipo estadoequipo)
+    public ActionResult Edit(Datos.Modelo.EstadoEquipo estadoequipo, List<Datos.Modelo.BinToEstadoEquipo> bins)
     {
       bool exito = Datos.Datos.EstadoEquipo.Modificar(estadoequipo);
+
+      Datos.Datos.BinToEstadoEquipo.Eliminar(estadoequipo.Estadoequipoid);
+      Datos.Datos.BinToEstadoEquipo.Crear(bins);
 
       return Json(new { exito = exito });
     }

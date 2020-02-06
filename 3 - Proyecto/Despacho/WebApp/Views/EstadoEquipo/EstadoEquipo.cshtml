@@ -13,6 +13,7 @@
 		ViewBag.Title = "Despacho - " + Model.Descripcion;
 		ViewBag.TituloSeccion = Model.Descripcion;
 	}
+	List<Datos.Modelo.Bin> bines = Datos.Datos.Bin.ObtenerBins();
 }
 
 @section Less{
@@ -36,7 +37,17 @@
 					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
 				</div>
 			</div>
-			
+			<div class="form-group m-form__group row">
+				<label class="col-form-label col-lg-2 col-sm-12">Bin</label>
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="bin" name="bin" multiple="multiple">
+						@foreach (Datos.Modelo.Bin bin in bines)
+						{
+							<option value="@bin.Codigo" @(Model.Bins.Any(b => b.Bin == bin.Codigo) ? "selected" : "")>@bin.Codigo</option>
+						}
+					</select>
+				</div>
+			</div>
 		</div>
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">

@@ -12,10 +12,10 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.EstadoEquipo> ObtenerEstadosEquipos()
 		{
-			string SELECTSentence = "SELECT EstadoEquipo.EstadoEquipoId, EstadoEquipo.Descripcion,  EstadoEquipo.EstaActivo";
+			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM EstadoEquipo";
 			string WHERESentence = "";
-			string ORDERSentence = ";";
+			string ORDERSentence = "";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.EstadoEquipo> estadoequipos = new List<Modelo.EstadoEquipo>();
@@ -30,9 +30,9 @@ namespace Datos.Datos
 		}
 		public static Modelo.EstadoEquipo ObtenerEstadoEquipo(int Id)
 		{
-			string SELECTSentence = "SELECT EstadoEquipo.EstadoEquipoId, EstadoEquipo.Descripcion,  EstadoEquipo.EstaActivo";
+			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM EstadoEquipo";
-			string WHERESentence = " WHERE EstadoEquipo.EstadoEquipoId = '" + Id.ToString() + "'";
+			string WHERESentence = " WHERE EstadoEquipoId = " + Id;
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.EstadoEquipo estadoequipo = new Modelo.EstadoEquipo();
@@ -47,19 +47,27 @@ namespace Datos.Datos
 			return estadoequipo;
 		}
 
-		public static bool Crear(Modelo.EstadoEquipo estadoequipo)
+		public static int Crear(Modelo.EstadoEquipo estadoequipo)
 		{
+
 			string INSERTSentence = "INSERT INTO EstadoEquipo";
-			string VALUESSentence = " VALUES('{1}', 1);";
+			string VALUESSentence = " VALUES('{0}', 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 
 			builder.AppendFormat(SQLSentence, estadoequipo.Descripcion);
-			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
+
+			if (DataBase.ExecuteNonQuery(builder.ToString()) > 0)
+			{
+				return int.Parse(DataBase.ExecuteScalar("SELECT EstadoEquipoId FROM EstadoEquipo WHERE Descripcion LIKE '" + estadoequipo.Descripcion + "'").ToString());
+			}
+
+			return 0;
 		}
 
 		public static bool Modificar(Modelo.EstadoEquipo estadoequipo)
 		{
+
 			string UPDATESentence = "UPDATE EstadoEquipo";
 			string SETSentence = " SET EstadoEquipo.Descripcion = '{1}'";
 			string WHERESentence = " WHERE EstadoEquipo.EstadoEquipoId = {0}";

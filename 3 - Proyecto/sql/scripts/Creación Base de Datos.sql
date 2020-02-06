@@ -846,7 +846,6 @@ GO
 CREATE TABLE BinToEstadoEquipo (
 	Bintoestadoequipoid INT PRIMARY KEY IDENTITY(1, 1),
 	Estadoequipoid INT NOT NULL,
-	Bin VARCHAR(100) NOT NULL,
-	EstaActivo BIT NOT NULL
-	)
+	Bin VARCHAR(100) NOT NULL
+)
 GO
