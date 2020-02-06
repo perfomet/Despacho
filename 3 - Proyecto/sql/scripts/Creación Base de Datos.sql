@@ -246,12 +246,7 @@ INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId, EstaActivo) VALUES (2,
 SET IDENTITY_INSERT Gerencia OFF
 GO
 
-CREATE TABLE Enlace (
-	EnlaceId INT PRIMARY KEY IDENTITY,
-	Descripcion VARCHAR(255) NOT NULL UNIQUE,
-	EstaActivo BIT NOT NULL
-)
-GO
+
 
 CREATE TABLE TipoDocumento (
 	TipoDocumentoId INT PRIMARY KEY IDENTITY,
@@ -847,5 +842,32 @@ CREATE TABLE BinToEstadoEquipo (
 	Bintoestadoequipoid INT PRIMARY KEY IDENTITY(1, 1),
 	Estadoequipoid INT NOT NULL,
 	Bin VARCHAR(100) NOT NULL
+)
+GO
+
+CREATE TABLE TipoPersonal (
+TipoPersonalId INT PRIMARY KEY IDENTITY(1, 1),
+Descripcion VARCHAR(50) NOT NULL
+)
+
+SET IDENTITY_INSERT TipoPersonal ON
+GO
+
+INSERT INTO TipoPersonal (TipoPersonalId, Descripcion) VALUES (1, 'Pioneta')
+INSERT INTO TipoPersonal (TipoPersonalId, Descripcion) VALUES (2, 'Chofer')
+INSERT INTO TipoPersonal (TipoPersonalId, Descripcion) VALUES (3, 'Enlace')
+
+SET IDENTITY_INSERT TipoPersonal OFF
+
+CREATE TABLE Enlace (
+EnlaceId INT PRIMARY KEY IDENTITY(1, 1),
+RUT INT NOT NULL UNIQUE,
+DV  INT NOT NULL,
+Nombre VARCHAR(100) NOT NULL,
+PrimerApellido VARCHAR(100) NOT NULL,
+SegundoApellido VARCHAR(100) NOT NULL,
+Email VARCHAR(100) NOT NULL,
+TipoPersonalId INT NOT NULL FOREIGN KEY REFERENCES TipoPersonal (TipoPersonalId),
+EstaActivo BIT NOT NULL
 )
 GO
