@@ -132,7 +132,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BinToEstadoEquipoController.cs" />
     <Compile Include="Controllers\CamionController.cs" />
     <Compile Include="Controllers\CargaMasivaController.cs" />
     <Compile Include="Controllers\ClasificacionController.cs" />
@@ -2533,8 +2532,6 @@
     <Content Include="Views\Enlaces\Index.cshtml" />
     <Content Include="Views\Enlaces\Enlaces.cshtml" />
     <Content Include="Views\Solicitud\Solicitud.cshtml" />
-    <Content Include="Views\BinToEstadoEquipo\BinToEstadoEquipo.cshtml" />
-    <Content Include="Views\BinToEstadoEquipo\Init.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

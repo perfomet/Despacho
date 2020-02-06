@@ -6,12 +6,30 @@ namespace Datos.Datos
 {
 	public class Bin
 	{
+		public static List<Modelo.Bin> ObtenerBins()
+		{
+			string SELECTSentence = "SELECT DISTINCT Bin";
+			string FROMSentence = " FROM Existencia";
+			string WHERESentence = "";
+			string ORDERSentence = " ORDER BY Bin;";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+			List<Modelo.Bin> bins = new List<Modelo.Bin>();
 
+				foreach (DataRow fila in dataTable.Rows)
+				{
+					Modelo.Bin bin = new Modelo.Bin();
+					bin.FromDataRow(fila);
+					bins.Add(bin);
+				}
+
+				return bins;
+		}
 		public static List<Modelo.Bin> ObtenerBins(string codigoBodega)
 		{
 			string SELECTSentence = "SELECT DISTINCT Bin";
 			string FROMSentence = " FROM Existencia";
-			string WHERESentence = " WHERE Bodega = '" + codigoBodega + "'";
+			string WHERESentence = " WHERE Bodega LIKE '" + codigoBodega + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
