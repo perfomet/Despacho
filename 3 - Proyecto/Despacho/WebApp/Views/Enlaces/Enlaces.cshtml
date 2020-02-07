@@ -33,16 +33,14 @@
 
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">RUT</label>
-
-				<input class="form-control m-input" type="text" value="@Model.RUT" id="rut" style="width: 10%">
-				
-				<label for="example-text-input" class="col-2 col-form-label">-</label>
-				<input class="form-control m-input" type="text" value="@Model.DV" id="dv" style="width: 10%">
+				<input class="form-control m-input" type="number" aria-describedby="numberHelp" value="@Model.RUT" id="rut" style="width: 10%">
+				<label for="example-text-input" class="col-1 col-form-label">-</label>
+				<input class="form-control m-input" type="text"  value="(@Model.DV)" id="dv" style="width: 10%">
 			</div>
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Nombres</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text" value="@Model.Nombre" id="nombre" style="width: 50%">
+					<input class="form-control m-input" type="text"  value="@Model.Nombre" id="nombre" style="width: 50%">
 				</div>
 			</div>
 			<div class="form-group m-form__group row">
@@ -60,7 +58,7 @@
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Email</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="email" aria-describedby="emailHelp" value="@Model.Email" id="email" style="width: 50%">
+					<input class="form-control m-input" type="email"  aria-describedby="emailHelp" value="@Model.Email" id="email" style="width: 50%">
 				</div>
 			</div>
 			<div class="form-group m-form__group row">
