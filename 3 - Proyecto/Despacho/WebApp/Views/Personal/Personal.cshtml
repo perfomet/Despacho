@@ -13,7 +13,7 @@
 		ViewBag.Title = "Despacho - " + Model.Nombre;
 		ViewBag.TituloSeccion = Model.Nombre;
 	}
-		List<Datos.Modelo.TipoPersonal> listatipodepersonal = Datos.Datos.TipoPersonal.ObtenerTiposdePersonal();
+	List<Datos.Modelo.TipoPersonal> listatipodepersonal = Datos.Datos.TipoPersonal.ObtenerTiposdePersonal();
 }
 
 @section Less{
@@ -31,16 +31,20 @@
 			<input type="hidden" value="@Model.Personalid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
+			
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">RUT</label>
-				<input class="form-control m-input" type="number" pattern="[0-9]*" maxlength="8" aria-valuemax="99999999" aria-describedby="RUT" value="@Model.RUT" id="rut" style="width: calc(41% - 40px);">
+				<input class="form-control m-input" type="text" pattern="[0-9]*" maxlength="8" aria-valuemax="99999999" aria-describedby="RUT" value="@Model.RUT" id="rut" style="width: calc(41% - 40px);">
 				<label for="example-text-input" class="col-form-label">-</label>
 				<input class="form-control m-input" type="text" value="@Model.DV" id="dv" style="width: 40px" maxlength="1">
+				<!--
+					<span class="m-form__help">Mask <code>9</code>, <code>99</code> or ... <code>9999999999</code></span>
+		--	-->
 			</div>
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Nombres</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="text"  value="@Model.Nombre" id="nombre" style="width: 50%">
+					<input class="form-control m-input" type="text" value="@Model.Nombre" id="nombre" style="width: 50%">
 				</div>
 			</div>
 			<div class="form-group m-form__group row">
@@ -58,7 +62,7 @@
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Email</label>
 				<div class="col-10">
-					<input class="form-control m-input" type="email"  aria-describedby="emailHelp" value="@Model.Email" id="email" style="width: 50%">
+					<input class="form-control m-input" type="email" aria-describedby="emailHelp" value="@Model.Email" id="email" style="width: 50%">
 				</div>
 			</div>
 			<div class="form-group m-form__group row">
@@ -72,7 +76,7 @@
 					</select>
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="m-portlet__foot m-portlet__foot--fit">
 			<div class="m-form__actions">

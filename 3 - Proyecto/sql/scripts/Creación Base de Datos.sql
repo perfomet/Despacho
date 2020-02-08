@@ -728,7 +728,7 @@ SET IDENTITY_INSERT TipoPersonal OFF
 CREATE TABLE Personal (
 	PersonalId INT PRIMARY KEY IDENTITY(1, 1),
 	RUT INT NOT NULL UNIQUE,
-	DV  INT NOT NULL,
+	DV  CHAR(1) NOT NULL,
 	Nombre VARCHAR(100) NOT NULL,
 	PrimerApellido VARCHAR(100) NOT NULL,
 	SegundoApellido VARCHAR(100) NOT NULL,
@@ -828,7 +828,7 @@ CREATE TABLE CargaMasiva (
 	CargaMasivaId INT PRIMARY KEY IDENTITY(1001, 1),
 	UsuarioId INT NOT NULL FOREIGN KEY REFERENCES Usuario (UsuarioId),
 	FechaHora DATETIME NOT NULL,
-	EstaActivo BIT NOT NULL
+	Archivo VARCHAR(255) NOT NULL
 )
 GO
 
@@ -840,8 +840,6 @@ CREATE TABLE CargaMasivaDetalle (
 	FechaSolicitud VARCHAR(20) NOT NULL,
 	FechaRecepcion VARCHAR(20) NOT NULL,
 	BodegaOrigen VARCHAR(100) NOT NULL,
-	EstadoEquipo VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla EstadoEquipo
-	Clasificacion VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Clasificacion
 	NumeroCliente VARCHAR(20) NOT NULL,
 	NombreCliente VARCHAR(100) NOT NULL,
 	DireccionCliente VARCHAR(255) NOT NULL,
@@ -849,11 +847,10 @@ CREATE TABLE CargaMasivaDetalle (
 	TelefonoContacto VARCHAR(15) NOT NULL,
 	Rut VARCHAR(12) NOT NULL,
 	Proyecto VARCHAR(100) NOT NULL, 
-	Prioridad VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Prioridad
 	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
 	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
 	ObservacionAof VARCHAR(MAX) NOT NULL,
-	EstaActivo BIT NOT NULL
+	Prioridad VARCHAR(100) NOT NULL -- Enlaza por texto a tabla Prioridad
 )
 GO
 
@@ -861,8 +858,7 @@ GO
 CREATE TABLE CargaMasivaDetalleProducto (
 	CargaMasivaDetalleId INT NOT NULL FOREIGN KEY REFERENCES CargaMasivaDetalle (CargaMasivaDetalleId),
 	NumeroPlaca VARCHAR(20) NOT NULL, -- Enlaza por numero a tabla de Existencias
-	UNIQUE (CargaMasivaDetalleId, NumeroPlaca),
-	EstaActivo BIT NOT NULL
+	UNIQUE (CargaMasivaDetalleId, NumeroPlaca)
 )
 GO
 
