@@ -12,7 +12,6 @@ namespace Datos.Modelo
 		{
 			this.TipoPersonalId = int.Parse(fila[0].ToString());
 			this.Descripcion = fila[1].ToString();
-
 		}
 	}
 }

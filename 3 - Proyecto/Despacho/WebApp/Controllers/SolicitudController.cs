@@ -9,6 +9,13 @@ namespace Despacho.Controllers
 			return View();
 		}
 
+		public ActionResult Detalle(int solicitudId)
+		{
+			Datos.Modelo.Solicitud solicitud = Datos.Datos.Solicitud.ObtenerSolicitud(solicitudId);
+
+			return View(solicitud);
+		}
+
 		public ActionResult Solicitud(int? id)
 		{
 			if (id > 0)

@@ -136,7 +136,7 @@
     <Compile Include="Controllers\CargaMasivaController.cs" />
     <Compile Include="Controllers\ClasificacionController.cs" />
     <Compile Include="Controllers\EmpresaTransporteController.cs" />
-    <Compile Include="Controllers\EnlacesController.cs" />
+    <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\GerenciaController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PrioridadController.cs" />
@@ -166,7 +166,7 @@
     <Content Include="Content\img\Caja.png" />
     <Content Include="Content\img\Caja.svg" />
     <Content Include="Content\img\producto.png" />
-    <Content Include="Content\js\Enlaces.js" />
+    <Content Include="Content\js\Personal.js" />
     <Content Include="Content\js\Solicitud.js" />
     <Content Include="Content\js\Existencia.js" />
     <Content Include="Content\js\CargaMasiva.js" />
@@ -2528,9 +2528,10 @@
     <Content Include="Views\Usuario\Usuario.cshtml" />
     <Content Include="Views\Clasificacion\Index.cshtml" />
     <Content Include="Views\Clasificacion\Clasificacion.cshtml" />
-    <Content Include="Views\Enlaces\Index.cshtml" />
-    <Content Include="Views\Enlaces\Enlaces.cshtml" />
+    <Content Include="Views\Personal\Index.cshtml" />
+    <Content Include="Views\Personal\Personal.cshtml" />
     <Content Include="Views\Solicitud\Solicitud.cshtml" />
+    <Content Include="Views\Solicitud\Detalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2650,7 +2651,7 @@
     <Content Include="Content\less\tiposolicitud.less" />
     <Content Include="Content\less\perfil.less" />
     <Content Include="Content\less\prioridad.less" />
-    <Content Include="Content\less\enlace.less" />
+    <Content Include="Content\less\personal.less" />
     <Content Include="Content\less\solicitud.less" />
     <None Include="packages.config" />
     <Content Include="Content\js\externos\jquery-3.4.1.slim.min.map" />

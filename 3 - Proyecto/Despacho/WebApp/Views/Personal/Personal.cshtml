@@ -1,12 +1,12 @@
-﻿@model Datos.Modelo.Enlaces
+﻿@model Datos.Modelo.Personal
 @{
 	ViewBag.SeccionTieneTitulo = true;
 	ViewBag.Pagina = 14;
 
-	if (Model.Enlaceid == 0)
+	if (Model.Personalid == 0)
 	{
-		ViewBag.Title = "Despacho - Nuevo Enlace";
-		ViewBag.TituloSeccion = "Nuevo Enlace";
+		ViewBag.Title = "Despacho - Nuevo Personal";
+		ViewBag.TituloSeccion = "Nuevo Personal";
 	}
 	else
 	{
@@ -17,25 +17,25 @@
 }
 
 @section Less{
-	<link rel="stylesheet/less" type="text/css" href="~/Content/less/enlace.less" />
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/personal.less" />
 }
 
 @section Scripts{
-	@Scripts.Render("~/bundles/enlace")
+	@Scripts.Render("~/bundles/personal")
 }
 
 <div class="m-portlet m-portlet--tab">
 	<!--begin::Form-->
 	<form class="m-form m-form--fit m-form--label-align-right">
 		<div class="m-portlet__body">
-			<input type="hidden" value="@Model.Enlaceid" id="id">
+			<input type="hidden" value="@Model.Personalid" id="id">
 			<input type="hidden" value="@Model.EstaActivo" id="activo">
 
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">RUT</label>
-				<input class="form-control m-input" type="number" pattern="[0-9]*" maxlength="12" aria-valuemax="99999999" aria-describedby="numberHelp" value="@Model.RUT" id="rut" style="width: 10%">
-				<label for="example-text-input" class="col-1 col-form-label">-</label>
-				<input class="form-control m-input" type="text"  readonly value="(@Model.DV)" id="dv" style="width: 10%">
+				<input class="form-control m-input" type="text" pattern="[0-9]*" maxlength="8" aria-valuemax="99999999" aria-describedby="RUR" value="@Model.RUT" id="rut" style="width: calc(41% - 40px);">
+				<label for="example-text-input" class="col-form-label">-</label>
+				<input class="form-control m-input" type="text" value="@Model.DV" id="dv" style="width: 40px" maxlength="1">
 			</div>
 			<div class="form-group m-form__group row">
 				<label for="example-text-input" class="col-2 col-form-label">Nombres</label>
@@ -64,7 +64,7 @@
 			<div class="form-group m-form__group row">
 				<label class="col-form-label col-lg-2 col-sm-12">Tipo de Personal</label>
 				<div class="col-lg-10 col-sm-12">
-					<select class="form-control m-select2" id="Tipopersonalid" name="tipopersonalid">
+					<select class="form-control m-select2" id="tipopersonalid" name="tipopersonalid">
 						@foreach (Datos.Modelo.TipoPersonal tipopersonal in listatipodepersonal)
 						{
 							<option value="@tipopersonal.TipoPersonalId" @(Model.Tipopersonalid == tipopersonal.TipoPersonalId ? "selected" : "")>@tipopersonal.Descripcion</option>

@@ -21,6 +21,11 @@
             $('#filtro-filtrar').click(function () {
                 Filtrar();
             });
+
+            $(document).on('click', '#lista-solicitudes tbody tr', function () {
+                let id = $(this).find('.solicitud-despacho-id').attr('data-id');
+                location.href = "/Solicitud/Solicitud/" + id;
+            });
         }
 
         if ($('#formulario-solicitud').length > 0) {
@@ -95,7 +100,7 @@
                 TipoDocumentoId: tipoDocumentoId
             }, function (data) {
                 if (data.exito) {
-                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/EstadoEquipo/Index"; });
+                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Solicitud/Index"; });
                 } else {
                     mensaje("Error", "No se pudo guardar la información", "error");
                 }
@@ -124,7 +129,7 @@
             columns: [
                 {
                     field: "SolicitudDespachoId", title: "Numero Solicitud", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        return '<a class="form-control" href="/Solicitud/Solicitud/' + e.SolicitudDespachoId + '">' + e.SolicitudDespachoId + '</a>';
+                        return '<label class="solicitud-despacho-id" data-id="' + e.SolicitudDespachoId + '">' + e.SolicitudDespachoId + '</label>';
                     }
                 },
                 { field: "FechaSolicitud", title: "Fecha/Hora", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },

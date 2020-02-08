@@ -1,14 +1,14 @@
 ﻿@{
-	ViewBag.Title = "Despacho - Enlace";
+	ViewBag.Title = "Despacho - Personal";
 	ViewBag.SeccionTieneTitulo = true;
-	ViewBag.TituloSeccion = "Enlace";
+	ViewBag.TituloSeccion = "Personal";
 	ViewBag.Pagina = 14;
 }
 @section Less{
-	<link rel="stylesheet/less" type="text/css" href="~/Content/less/enlace.less" />
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/personal.less" />
 }
 @section Scripts{
-	@Scripts.Render("~/bundles/enlace")
+	@Scripts.Render("~/bundles/personal")
 }
 
 <div class="m-portlet m-portlet--mobile">
@@ -29,7 +29,7 @@
 					<div class="form-group m-form__group row align-items-center">
 						<div class="col-md-4">
 							<div class="m-input-icon m-input-icon--left">
-								<input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarenlace">
+								<input type="text" class="form-control m-input m-input--solid" placeholder="Buscar..." id="buscarpersonal">
 								<span class="m-input-icon__icon m-input-icon__icon--left">
 									<span><i class="la la-search"></i></span>
 								</span>
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-					<a href="/Enlaces/Create" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+					<a href="/Personal/Create" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
 						<span>
 							<i class="flaticon-add"></i>
 							<span>Crear</span>
@@ -50,7 +50,7 @@
 		</div>
 		<!--end: Search Form -->
 		<!--begin: Datatable -->
-		<div class="m_datatable" id="listaenlaces"></div>
+		<div class="m_datatable" id="listapersonal"></div>
 		<!--end: Datatable -->
 	</div>
 </div>

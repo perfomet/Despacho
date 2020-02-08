@@ -108,8 +108,8 @@ namespace Despacho
 			bundles.Add(new ScriptBundle("~/bundles/prioridad")
 					.Include("~/Content/js/Prioridad.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/enlace")
-					.Include("~/Content/js/Enlaces.js"));
+			bundles.Add(new ScriptBundle("~/bundles/personal")
+					.Include("~/Content/js/Personal.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/tipodocumento")
 					.Include("~/Content/js/TipoDocumento.js"));

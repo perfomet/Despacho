@@ -3,21 +3,26 @@
 	secundario: #0B6880;
 	claro: #17A680;
 	blanco: #FFFFFF;
+	gris-claro: #dedede;
 }
 
 body {
 }
 
-.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link {
+.m-menu__item.m-menu__item--active > .m-menu__link {
 	background-color: #colores[primario]!important;
 }
 
-.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
+.m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
 	color: #colores[blanco]!important;
 }
 
-.m-aside-menu .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item > .m-menu__link .m-menu__link-bullet {
-	width: 35px !important;
+.m_aside_left .m-menu__item .m-menu__link .m-menu__link-text {
+	color: #colores[gris-claro]!important;
+}
+
+.m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-text {
+	color: #colores[blanco]!important;
 }
 
 #m_header_menu .m-menu__link-badge span {
@@ -39,4 +44,8 @@ body {
 
 .m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-text {
 	color: white !important;
+}
+
+.m-timeline-2 {
+	position: relative;
 }
