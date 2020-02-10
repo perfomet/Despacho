@@ -16,6 +16,7 @@ namespace Datos.Modelo
 		public int PerfilId { get; set; }
 		public string Perfilnombre { get; set; }
 		public int? ClienteId { get; set; }
+		public int? CargaMasivaId { get; set; }
 		public string Clientenombre { get; set; }
 		public bool EstaActivo { get; set; }
 		public Perfil Perfil
@@ -29,7 +30,11 @@ namespace Datos.Modelo
 			get { return Datos.Cliente.ObtenerCliente(ClienteId.GetValueOrDefault()); }
 			set { Cliente = value; }
 		}
-
+		public CargaMasiva CargaMasiva
+		{
+			//get { return Datos.Usuario.ObtenerCargaMasiva(CargaMasivaId.GetValueOrDefault()); }
+			set { CargaMasiva = value; }
+		}
 		public void FromDataRow(DataRow fila)
 		{
 			this.UsuarioId = int.Parse(fila[0].ToString());

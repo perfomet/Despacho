@@ -33,6 +33,7 @@
       let email = $('#email').val();
       let perfilid = $('#perfilid').val();
       let clienteid = $('#clienteid').val();
+      let cargamasivaid = $('#cargamasivaid').val;
 
       $.post("/Usuario/" + (id > 0 ? "Edit" : "Create"), {
         UsuarioId: id,
@@ -44,6 +45,7 @@
         Email: email,
         Perfilid: perfilid,
         Clienteid: clienteid,
+        CargaMasivaid=cargamasivaid,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {

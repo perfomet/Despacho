@@ -3,6 +3,11 @@
 	ViewBag.SeccionTieneTitulo = true;
 	ViewBag.TituloSeccion = "Carga Masiva";
 	ViewBag.Pagina = 2;
+
+	List<Datos.Modelo.TipoSolicitud> tipos = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
+	List<Datos.Modelo.EstadoEquipo> estadosEquipos = Datos.Datos.EstadoEquipo.ObtenerEstadosEquipos();
+	List<Datos.Modelo.EstadoSolicitud> estadosSolicitudes = Datos.Datos.EstadoSolicitud.ObtenerEstadosSolicitudes();
+	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias();
 }
 
 @section Less{

@@ -11,8 +11,6 @@ namespace Datos.Modelo
 		public string FechaSolicitud { get; set; }
 		public string FechaRecepcion { get; set; }
 		public string BodegaOrigen { get; set; }
-		public string EstadoEquipo { get; set; }
-		public string Clasificacion { get; set; }
 		public string NumeroCliente { get; set; }
 		public string NombreCliente { get; set; }
 		public string DireccionCliente { get; set; }
@@ -20,10 +18,11 @@ namespace Datos.Modelo
 		public string TelefonoContacto { get; set; }
 		public string Rut { get; set; }
 		public string Proyecto { get; set; }
-		public string Prioridad { get; set; }
 		public string UnidadNegocio { get; set; }
 		public string Gerencia { get; set; }
 		public string ObservacionAof { get; set; }
+		public string Prioridad { get; set; }
+		
 
 		public CargaMasiva CargaMasiva
 		{
@@ -44,19 +43,18 @@ namespace Datos.Modelo
 			this.FechaSolicitud = fila[3].ToString();
 			this.FechaRecepcion = fila[4].ToString();
 			this.BodegaOrigen = fila[5].ToString();
-			this.EstadoEquipo = fila[6].ToString();
-			this.Clasificacion = fila[7].ToString();
-			this.NumeroCliente = fila[8].ToString();
-			this.NombreCliente = fila[9].ToString();
-			this.DireccionCliente = fila[10].ToString();
-			this.Comuna = fila[11].ToString();
-			this.TelefonoContacto = fila[12].ToString();
-			this.Rut = fila[13].ToString();
-			this.Proyecto = fila[14].ToString();
-			this.Prioridad = fila[15].ToString();
-			this.UnidadNegocio = fila[16].ToString();
-			this.Gerencia = fila[17].ToString();
-			this.ObservacionAof = fila[18].ToString();
+			this.NumeroCliente = fila[6].ToString();
+			this.NombreCliente = fila[7].ToString();
+			this.DireccionCliente = fila[8].ToString();
+			this.Comuna = fila[9].ToString();
+			this.TelefonoContacto = fila[10].ToString();
+			this.Rut = fila[11].ToString();
+			this.Proyecto = fila[12].ToString();
+			this.UnidadNegocio = fila[13].ToString();
+			this.Gerencia = fila[14].ToString();
+			this.ObservacionAof = fila[15].ToString();
+			this.Prioridad = fila[16].ToString();
+				
 		}
 	}
 }

@@ -2532,6 +2532,7 @@
     <Content Include="Views\Personal\Personal.cshtml" />
     <Content Include="Views\Solicitud\Solicitud.cshtml" />
     <Content Include="Views\Solicitud\Detalle.cshtml" />
+    <Content Include="Views\CargaMasiva\CargaMasiva.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

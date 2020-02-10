@@ -9,7 +9,7 @@ namespace Datos.Modelo
 		public int CargaMasivaId { get; set; }
 		public int UsuarioId { get; set; }
 		public DateTime FechaHora { get; set; }
-
+		public string Archivo { get; set; }
 		public Usuario Usuario
 		{
 			get { return Datos.Usuario.ObtenerUsuario(UsuarioId); }
@@ -25,6 +25,7 @@ namespace Datos.Modelo
 			this.CargaMasivaId = int.Parse(fila[0].ToString());
 			this.UsuarioId = int.Parse(fila[1].ToString());
 			this.FechaHora = DateTime.Parse(fila[2].ToString());
+			this.Archivo = fila[3].ToString();
 		}
 	}
 }
