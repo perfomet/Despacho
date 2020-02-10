@@ -11,7 +11,8 @@ namespace Datos.Datos
 		{
 			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna, EstaActivo";
 			string FROMSentence = " FROM Comuna";
-			string SQLSentence = SELECTSentence + FROMSentence;
+			string WHERESentence = "";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Comuna> comunas = new List<Modelo.Comuna>();
 

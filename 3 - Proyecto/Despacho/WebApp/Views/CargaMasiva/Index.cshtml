@@ -5,19 +5,92 @@
 	ViewBag.Pagina = 2;
 
 	List<Datos.Modelo.TipoSolicitud> tipos = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
-	List<Datos.Modelo.EstadoEquipo> estadosEquipos = Datos.Datos.EstadoEquipo.ObtenerEstadosEquipos();
-	List<Datos.Modelo.EstadoSolicitud> estadosSolicitudes = Datos.Datos.EstadoSolicitud.ObtenerEstadosSolicitudes();
-	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias();
+	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas();
+	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
+	List<Datos.Modelo.Comuna> comunas = Datos.Datos.Comuna.ObtenerComunas();
+	List<Datos.Modelo.UnidadNegocio> unidadNegocios = Datos.Datos.UnidadNegocio.ObtenerUnidadesNegocio();
+	List<Datos.Modelo.Gerencia> gerencias = Datos.Datos.Gerencia.ObtenerGerencias();
+	List<Datos.Modelo.Prioridad> prioridades = Datos.Datos.Prioridad.ObtenerPrioridades();
 }
-
-@section Less{
+	@section Less{
 	<link rel="stylesheet/less" type="text/css" href="~/Content/less/cargaMasiva.less" />
 }
 
-@section Scripts{
+@section Scripts{>
 	@Scripts.Render("~/bundles/cargaMasiva")
 }
 
+<div class="m-portlet m-portlet--metal m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true" id="m_portlet_tools_1">
+	<div class="m-portlet__head">
+		<div class="m-portlet__head-caption">
+			<div class="m-portlet__head-title">
+				<span class="m-portlet__head-icon">
+					<i class="flaticon-search-magnifier-interface-symbol"></i>
+				</span>
+				<h3 class="m-portlet__head-text">
+					Filtros
+				</h3>
+			</div>
+		</div>
+		<div class="m-portlet__head-tools">
+			<ul class="m-portlet__nav">
+				<li class="m-portlet__nav-item">
+					<a href="#" id="filtro-filtrar" class="btn btn-secondary m-btn--md m--margin-right-10">
+						<span>
+							<span>Filtrar</span>&nbsp;&nbsp;
+							<i class="la la-refresh"></i>
+						</span>
+					</a>
+				</li>
+				<li class="m-portlet__nav-item">
+					<a id="filtro-ocultar" href="#" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+						<i class="la la-angle-down"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="m-portlet__body">
+		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+			<div class="row">
+				<div class="col-xl-6 m--margin-top-10">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Usuario</label>
+						<div class="col-lg-8 col-sm-12">
+							<input class="form-control" id="filtro-usuario" name="filtro-usuario" type="text" />
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 m--margin-top-10">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Denominación</label>
+						<div class="col-lg-8 col-sm-12">
+							<input class="form-control" id="filtro-denominacion" name="filtro-denominacion" type="text" />
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 m--margin-top-10">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Tipo de Solicitud</label>
+						<div class="col-lg-8 col-sm-12">
+							<select class="form-control m-select2" id="filtro-tipo-solicitud" name="filtro-tipo-solicitud">
+								<option value="" selected>Todos</option>
+								@foreach (Datos.Modelo.TipoSolicitud tipo in tipos)
+								{
+									<option value="@tipo.Tiposolicitudid">@tipo.Descripcion</option>
+								}
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				
+			</div>
+		</div>
+	</div>
+</div>
 <div class="m-portlet m-portlet--mobile">
 	<div class="m-portlet__head">
 		<div class="m-portlet__head-caption">
