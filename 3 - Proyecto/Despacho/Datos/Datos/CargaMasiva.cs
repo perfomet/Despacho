@@ -7,6 +7,7 @@ namespace Datos.Datos
 {
 	public class CargaMasiva
 	{
+		
 		public static List<Modelo.CargaMasiva> ObtenerCargasMasivas()
 		{
 			string SELECTSentence = "SELECT CargaMasiva.CargaMasivaId, CargaMasiva.UsuarioId, CargaMasiva.FechaHora, CargaMasiva.Archivo, Usuario.Username, Usuario.Nombres + ISNULL(' ' + Usuario.ApellidoPaterno, '') + ISNULL(' ' + Usuario.ApellidoMaterno, '') AS NombreUsuario, Perfil.Descripcion, Cliente.Codigo, Cliente.NombreCliente, Cliente.Prefijo";

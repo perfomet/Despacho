@@ -30,11 +30,11 @@ namespace Datos.Modelo
 			get { return Datos.Cliente.ObtenerCliente(ClienteId.GetValueOrDefault()); }
 			set { Cliente = value; }
 		}
-		public CargaMasiva CargaMasiva
+		/*public CargaMasiva CargaMasiva
 		{
-			//get { return Datos.Usuario.ObtenerCargaMasiva(CargaMasivaId.GetValueOrDefault()); }
+			get { return Datos.CargaMasiva.ObtenerCargaMasiva(CargaMasivaId.GetValueOrDefault()); }
 			set { CargaMasiva = value; }
-		}
+		}*/
 		public void FromDataRow(DataRow fila)
 		{
 			this.UsuarioId = int.Parse(fila[0].ToString());

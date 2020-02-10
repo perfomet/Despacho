@@ -14,7 +14,7 @@ namespace Datos.Modelo
 		{
 			get { return Datos.Usuario.ObtenerUsuario(UsuarioId); }
 		}
-
+		
 		public List<CargaMasivaDetalle> Detalle
 		{
 			get { return new List<CargaMasivaDetalle>(); }

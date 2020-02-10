@@ -4,13 +4,8 @@
 	ViewBag.TituloSeccion = "Carga Masiva";
 	ViewBag.Pagina = 2;
 
-	List<Datos.Modelo.TipoSolicitud> tipos = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
-	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas();
-	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
-	List<Datos.Modelo.Comuna> comunas = Datos.Datos.Comuna.ObtenerComunas();
-	List<Datos.Modelo.UnidadNegocio> unidadNegocios = Datos.Datos.UnidadNegocio.ObtenerUnidadesNegocio();
-	List<Datos.Modelo.Gerencia> gerencias = Datos.Datos.Gerencia.ObtenerGerencias();
-	List<Datos.Modelo.Prioridad> prioridades = Datos.Datos.Prioridad.ObtenerPrioridades();
+	List<Datos.Modelo.Usuario> usuarios = Datos.Datos.Usuario.ObtenerUsuariosCargaMasiva();
+
 }
 	@section Less{
 	<link rel="stylesheet/less" type="text/css" href="~/Content/less/cargaMasiva.less" />
@@ -57,7 +52,21 @@
 					<div class="form-group m-form__group row">
 						<label class="col-form-label col-lg-3 col-sm-12">Usuario</label>
 						<div class="col-lg-8 col-sm-12">
-							<input class="form-control" id="filtro-usuario" name="filtro-usuario" type="text" />
+							<input class="form-control m-select2" id="filtro-usuario" name="filtro-usuario" type="text">
+								
+							</input>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+			<div class="row">
+				<div class="col-xl-6 m--margin-top-10">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Fecha realización</label>
+						<div class="col-lg-8 col-sm-12">
+							<input class="form-control" id="filtro-fecharealizada" name="filtro-fecharealizada" type="date" />
 						</div>
 					</div>
 				</div>
