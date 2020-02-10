@@ -61,32 +61,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-6 m--margin-top-10">
-					<div class="form-group m-form__group row">
-						<label class="col-form-label col-lg-3 col-sm-12">Denominación</label>
-						<div class="col-lg-8 col-sm-12">
-							<input class="form-control" id="filtro-denominacion" name="filtro-denominacion" type="text" />
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-6 m--margin-top-10">
-					<div class="form-group m-form__group row">
-						<label class="col-form-label col-lg-3 col-sm-12">Tipo de Solicitud</label>
-						<div class="col-lg-8 col-sm-12">
-							<select class="form-control m-select2" id="filtro-tipo-solicitud" name="filtro-tipo-solicitud">
-								<option value="" selected>Todos</option>
-								@foreach (Datos.Modelo.TipoSolicitud tipo in tipos)
-								{
-									<option value="@tipo.Tiposolicitudid">@tipo.Descripcion</option>
-								}
-							</select>
-						</div>
-					</div>
-				</div>
-				
-				
-				
-				
 			</div>
 		</div>
 	</div>
