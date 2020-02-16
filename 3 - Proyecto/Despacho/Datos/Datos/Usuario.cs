@@ -112,9 +112,10 @@ namespace Datos.Datos
 		}
 		public static List<Modelo.Usuario> ObtenerUsuariosCargaMasiva()
 		{
-			string SELECTSentence = "SELECT Usuario.*";
-			string FROMSentence = " FROM Usuario INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId";
-			string SQLSentence = SELECTSentence + FROMSentence;
+			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS TipoPerfil, Usuario.ClienteId, Cliente.Nombre AS ClienteNombre, Usuario.EstaActivo";
+			string FROMSentence = " FROM Usuario";
+			string INNERJOINSentence= " INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId INNER JOIN Perfil ON Usuario.PerfilId = Perfil.PerfilId";
+			string SQLSentence = SELECTSentence + FROMSentence + INNERJOINSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Usuario> usuarios = new List<Modelo.Usuario>();
 

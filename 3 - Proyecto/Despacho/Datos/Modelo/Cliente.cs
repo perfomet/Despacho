@@ -12,6 +12,8 @@ namespace Datos.Modelo
 		public string Prefijo { get; set; }
 		public bool EstaActivo { get; set; }
 
+
+
 		public void FromDataRow(DataRow fila)
 		{
 			

@@ -101,5 +101,25 @@ namespace Datos.Datos
 			builder.AppendFormat(SQLSentence, clienteId);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
+
+		public static List<Modelo.Cliente> ObtenerClientesCargaMasiva()
+		{
+			string SELECTSentence = "SELECT Cliente.ClienteId, Cliente.Codigo, Cliente.Nombre, Cliente.RUT, Cliente.VRUT, Cliente.Prefijo, Cliente.EstaActivo";
+			string FROMSentence = " FROM Cliente";
+			string INNERJOINSentence = " INNER JOIN CargaMasiva ON Cliente.ClienteId = CargaMasiva.ClienteId";
+			string WHERESentence = "";
+			string ORDERSentence = ";";
+			string SQLSentence = SELECTSentence + FROMSentence + INNERJOINSentence + WHERESentence + ORDERSentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+			List<Modelo.Cliente> clientes = new List<Modelo.Cliente>();
+			foreach (DataRow fila in dataTable.Rows)
+			{
+				Modelo.Cliente cliente = new Modelo.Cliente();
+				cliente.FromDataRow(fila);
+				clientes.Add(cliente);
+			}
+
+			return clientes;
+		}
 	}
 }
