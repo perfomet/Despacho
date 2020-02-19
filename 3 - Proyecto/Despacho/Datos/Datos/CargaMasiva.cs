@@ -7,6 +7,7 @@ namespace Datos.Datos
 {
 	public class CargaMasiva
 	{
+		
 		public static List<Modelo.CargaMasiva> ObtenerCargasMasivas()
 		{
 			string SELECTSentence = "SELECT CargaMasiva.CargaMasivaId, CargaMasiva.UsuarioId, CargaMasiva.FechaHora, CargaMasiva.Archivo, Usuario.Username, Usuario.Nombres + ISNULL(' ' + Usuario.ApellidoPaterno, '') + ISNULL(' ' + Usuario.ApellidoMaterno, '') AS NombreUsuario, Perfil.Descripcion, Cliente.Codigo, Cliente.NombreCliente, Cliente.Prefijo";
@@ -35,7 +36,7 @@ namespace Datos.Datos
 			string SELECTSentence = "SELECT CargaMasiva.CargaMasivaId, CargaMasiva.UsuarioId, CargaMasiva.FechaHora, CargaMasiva.Archivo, Usuario.Username, Usuario.Nombres + ISNULL(' ' + Usuario.ApellidoPaterno, '') + ISNULL(' ' + Usuario.ApellidoMaterno, '') AS NombreUsuario, Perfil.Descripcion, Cliente.Codigo, Cliente.NombreCliente, Cliente.Prefijo";
 			string FROMSentence = " FROM Usuario";
 			string JOINSentence = " INNER JOIN CargaMasiva ON Usuario.UsuarioId = CargaMasiva.UsuarioId INNER JOIN Perfil ON Usuario.PerfilId = Perfil.PerfilId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId";
-			string WHERESentence = "";
+			string WHERESentence = " WHERE CargaMasiva.CargaMasivaId = "+id.ToString();
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
 

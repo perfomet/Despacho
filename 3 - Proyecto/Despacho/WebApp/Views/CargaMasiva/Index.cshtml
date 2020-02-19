@@ -4,39 +4,125 @@
 	ViewBag.TituloSeccion = "Carga Masiva";
 	ViewBag.Pagina = 2;
 
-	List<Datos.Modelo.TipoSolicitud> tipos = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
-	List<Datos.Modelo.EstadoEquipo> estadosEquipos = Datos.Datos.EstadoEquipo.ObtenerEstadosEquipos();
-	List<Datos.Modelo.EstadoSolicitud> estadosSolicitudes = Datos.Datos.EstadoSolicitud.ObtenerEstadosSolicitudes();
-	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias();
-}
+	List<Datos.Modelo.Usuario> usuarios = Datos.Datos.Usuario.ObtenerUsuariosCargaMasiva();
 
-@section Less{
+}
+	@section Less{
 	<link rel="stylesheet/less" type="text/css" href="~/Content/less/cargaMasiva.less" />
 }
 
-@section Scripts{
+@section Scripts{>
 	@Scripts.Render("~/bundles/cargaMasiva")
 }
 
-<div class="m-portlet m-portlet--mobile">
+<div class="m-portlet m-portlet--metal m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true" id="m_portlet_tools_1">
 	<div class="m-portlet__head">
 		<div class="m-portlet__head-caption">
 			<div class="m-portlet__head-title">
+				<span class="m-portlet__head-icon">
+					<i class="flaticon-search-magnifier-interface-symbol"></i>
+				</span>
 				<h3 class="m-portlet__head-text">
 					Filtros
 				</h3>
 			</div>
 		</div>
+		<div class="m-portlet__head-tools">
+			<ul class="m-portlet__nav">
+				<li class="m-portlet__nav-item">
+					<a href="#" id="filtro-filtrar" class="btn btn-secondary m-btn--md m--margin-right-10">
+						<span>
+							<span>Filtrar</span>&nbsp;&nbsp;
+							<i class="la la-refresh"></i>
+						</span>
+					</a>
+				</li>
+				<li class="m-portlet__nav-item">
+					<a id="filtro-ocultar" href="#" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+						<i class="la la-angle-down"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 	<div class="m-portlet__body">
-		<input class="form-control m-input" type="text" value="Artisanal kale" id="buscarCargaMasiva">
-		<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-			<span>
-				<i class="flaticon-add"></i>
-				<span>Crear</span>
-			</span>
-		</a>
+		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+			<div class="row">
+				<div class="col-xl-6 m--margin-top-10">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Usuario</label>
+						<!--<input class="form-control m-select2" id="filtro-usuario" name="filtro-usuario" type="text">
+						-->
+						<select class="form-control col-lg-3 col-sm-12 m-select2" id="filtro-usuario" name="filtro-cliente">
+							<option value="" selected>Todos</option>
+							@foreach (Datos.Modelo.Usuario usuario in usuarios)
+							{
+								<option value="@usuario.UsuarioId">@usuario.Username</option>
+							}
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+			<div class="row">
+				<div class="col-xl-6 m--margin-top-10">
+					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-4 col-sm-12">Fecha Carga</label>
+						<div class="col-lg-7 col-sm-12">
+							<div class='input-group pull-right' id='filtro-fechacarga'>
+								<input type='text' class="form-control m-input" readonly placeholder="Seleccione la fecha de la carga" />
+								<div class="input-group-append">
+									<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+						<!--
+							<label class="col-form-label col-lg-3 col-sm-12">Fecha desde</label>
+							<input class="form-control col-lg-3 col-sm-12" id="filtro-fechadesde" name="filtro-fechadesde" type="date" value=date.now />
+							<label class="col-form-label col-lg-3 col-sm-12">Fecha hasta</label>
+							<input class="form-control col-lg-3 col-sm-12" id="filtro-fechahasta" name="filtro-fechahasta" type="date" value="today" />
+						-->
+			</div>
+
+		</div>
+			
 	</div>
+</div>
+<div class="m-portlet m-portlet--mobile">
+	<div class="m-portlet__head">
+		<div class="m-portlet__head-caption">
+			<div class="m-portlet__head-title">
+				<label for="exampleInputEmail1">Carga Masiva</label>
+			</div>
+		</div>
+	</div>
+	<div class="m-portlet__body">
+		<div class="col-12 col-lg-5">
+			<div class="form-group m-form__group">
+				<div class="custom-file">
+					<input type="file" class="custom-file-input" lang="es-cl" id="archivocarga" accept=".xls,.xlsx">
+					<label class="custom-file-label" for="archivocarga">Seleccione un archivo</label>
+				</div>
+				<div class="form-group m-form__group">
+					<a class="pull-right btn btn-sm btn-success col-8 col-lg-5 mb-3 mr-3" href="../Content/Archivos/Carga Masiva.xls" target="_blank" style="float: right;margin-top: 2.2rem;">Descargar Archivo Ejemplo</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-5">
+			<button class="btn btn-sm btn-primary" id="btnProcesarRegistros" style="width: 100%; font-size: 1.4rem;margin-top: 2.2rem;">Procesar</button>
+		</div>
+			<div class="col-7" id="alertaProcesar" style="display:none;">
+				<div class="alert alert-warning">
+					<strong>¡Importante!</strong> Presione el botón <b>Procesar</b> para guardar la información.
+				</div>
+			</div>
+
+
+			
+		</div>
 </div>
 
 <div class="m-portlet m-portlet--mobile">
@@ -51,7 +137,7 @@
 	</div>
 	<div class="m-portlet__body">
 		<!--begin: Datatable -->
-		<div class="m_datatable" id="local_data"></div>
+		<div class="m_datatable" id="lista-cargasmasivas"></div>
 		<!--end: Datatable -->
 	</div>
 </div>

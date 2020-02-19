@@ -7,45 +7,7 @@ namespace Datos.Datos
 {
 	public class Usuario
 	{
-		public static Modelo.Usuario ObtenerUsuarioCargaMasiva(int idusuario)
-		{
-			Modelo.Usuario usuario = new Modelo.Usuario();
-			string SELECTSentence = "SELECT Usuario.*";
-			string FROMSentence = " FROM Usuario INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId";
-			string WHERESentence = " WHERE Usuario.IdUsuario = '" + idusuario + "'";
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-
-			if (dataTable.Rows.Count > 0)
-			{
-				DataRow fila = dataTable.Rows[0];
-				usuario.FromDataRow(fila);
-			}
-
-			return usuario;
-		}
-		public static List<Modelo.Usuario> ObtenerUsuariosCargaMasiva()
-		{
-			string SELECTSentence = "SELECT Usuario.*";
-			string FROMSentence = " FROM Usuario INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId";
-			string SQLSentence = SELECTSentence + FROMSentence;
-			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.Usuario> usuarios = new List<Modelo.Usuario>();
-
-			foreach (DataRow fila in dataTable.Rows)
-			{
-				Modelo.Usuario usuario = new Modelo.Usuario();
-
-				usuario.FromDataRow(fila);
-
-				usuarios.Add(usuario);
-			}
-
-			return usuarios;
-		}
-
-
-
+		
 		public static List<Modelo.Usuario> ObtenerUsuarios()
 		{
 			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS Rol, Usuario.ClienteId, Cliente.Nombre AS Clientenombre, Usuario.EstaActivo";
@@ -65,8 +27,6 @@ namespace Datos.Datos
 
 			return usuarios;
 		}
-
-
 		public static Modelo.Usuario ObtenerUsuario(string username)
 		{
 			Modelo.Usuario usuario = new Modelo.Usuario();
@@ -84,7 +44,6 @@ namespace Datos.Datos
 
 			return usuario;
 		}
-
 		public static bool Crear(Modelo.Usuario usuario)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -95,7 +54,6 @@ namespace Datos.Datos
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
-
 		public static bool Modificar(Modelo.Usuario usuario)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -107,7 +65,6 @@ namespace Datos.Datos
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
-
 		public static Modelo.Usuario ObtenerUsuario(int usuarioId)
 		{
 			Modelo.Usuario usuario = new Modelo.Usuario();
@@ -126,7 +83,6 @@ namespace Datos.Datos
 
 			return usuario;
 		}
-
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Usuario";
@@ -136,6 +92,43 @@ namespace Datos.Datos
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
+		}
+		public static Modelo.Usuario ObtenerCargaMasiva(int idcargamasiva)
+		{
+			Modelo.Usuario usuario = new Modelo.Usuario();
+			string SELECTSentence = "SELECT Usuario.*";
+			string FROMSentence = " FROM Usuario INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId";
+			string WHERESentence = " WHERE CargaMasiva.IdCargaMasiva = " + idcargamasiva.ToString();
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				usuario.FromDataRow(fila);
+			}
+
+			return usuario;
+		}
+		public static List<Modelo.Usuario> ObtenerUsuariosCargaMasiva()
+		{
+			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS TipoPerfil, Usuario.ClienteId, Cliente.Nombre AS ClienteNombre, Usuario.EstaActivo";
+			string FROMSentence = " FROM Usuario";
+			string INNERJOINSentence= " INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId INNER JOIN Perfil ON Usuario.PerfilId = Perfil.PerfilId";
+			string SQLSentence = SELECTSentence + FROMSentence + INNERJOINSentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+			List<Modelo.Usuario> usuarios = new List<Modelo.Usuario>();
+
+			foreach (DataRow fila in dataTable.Rows)
+			{
+				Modelo.Usuario usuario = new Modelo.Usuario();
+
+				usuario.FromDataRow(fila);
+
+				usuarios.Add(usuario);
+			}
+
+			return usuarios;
 		}
 	}
 }
