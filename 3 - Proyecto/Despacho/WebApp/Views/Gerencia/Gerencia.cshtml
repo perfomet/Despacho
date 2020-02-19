@@ -15,6 +15,7 @@
 	}
 
 	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 }
 
 @section Less{
@@ -38,18 +39,24 @@
 					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
 				</div>
 			</div>
-			<div class="form-group m-form__group row">
-				<label class="col-form-label col-lg-2 col-sm-12">Cliente</label>
-				<div class="col-lg-10 col-sm-12">
-					<select class="form-control m-select2" id="clienteid" name="clienteid">
-						@foreach (Datos.Modelo.Cliente cliente in clientes)
-						{
-							<option value="@cliente.ClienteId" @(Model.Clienteid == cliente.ClienteId ? "selected" : "")>@cliente.Nombre</option>
-						}
-					</select>
+			@if (usuario.ClienteId == null)
+			{
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label">Cliente</label>
+					<div class="col-lg-10 col-sm-12">
+						<select class="form-control m-select2" id="clienteid" name="clienteid">
+							@foreach (Datos.Modelo.Cliente cliente in clientes)
+							{
+								<option value="@cliente.ClienteId" @(Model.Clienteid == cliente.ClienteId ? "selected" : "")>@cliente.Nombre</option>
+							}
+						</select>
+					</div>
 				</div>
-
-			</div>
+			}
+			else
+			{
+				<input id="clienteid" type="hidden" value="@usuario.ClienteId" />
+			}
 			<div class="m-portlet__foot m-portlet__foot--fit">
 				<div class="m-form__actions">
 					<div class="row">

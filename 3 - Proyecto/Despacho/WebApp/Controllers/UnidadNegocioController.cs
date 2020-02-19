@@ -2,8 +2,8 @@
 
 namespace Despacho.Controllers
 {
-    public class UnidadNegocioController : Controller
-    {
+	public class UnidadNegocioController : Controller
+	{
 		public ActionResult Index()
 		{
 			return View();
@@ -31,7 +31,7 @@ namespace Despacho.Controllers
 		{
 			Datos.Modelo.UnidadNegocio unidadnegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(id);
 			return View("UnidadNegocio", unidadnegocio);
-			
+
 		}
 
 		[HttpPost]
@@ -49,17 +49,19 @@ namespace Despacho.Controllers
 			return Json(new { exito = exito });
 		}
 
-		
+
 		[HttpPost]
 		public JsonResult Listar(int Id)
 		{
+			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
 			if (Id > 0)
 			{
 				return Json(Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(Id));
 			}
 			else
 			{
-				return Json(Datos.Datos.UnidadNegocio.ObtenerUnidadesNegocio());
+				return Json(Datos.Datos.UnidadNegocio.ObtenerUnidadesNegocio(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 			}
 		}
 	}

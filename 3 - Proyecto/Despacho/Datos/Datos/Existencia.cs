@@ -7,11 +7,11 @@ namespace Datos.Datos
 	public class Existencia
 	{
 
-		public static List<Modelo.Existencia> ObtenerExistencias()
+		public static List<Modelo.Existencia> ObtenerExistencias(int clienteId)
 		{
 			string SELECTSentence = "SELECT E.*, C.Nombre";
 			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
-			string WHERESentence = "";
+			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);

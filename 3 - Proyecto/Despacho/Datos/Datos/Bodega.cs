@@ -7,12 +7,12 @@ namespace Datos.Datos
 	public class Bodega
 	{
 
-		public static List<Modelo.Bodega> ObtenerBodegas()
+		public static List<Modelo.Bodega> ObtenerBodegas(int clienteId)
 		{
-			string SELECTSentence = "SELECT DISTINCT Bodega, NomBodega";
-			string FROMSentence = " FROM Existencia";
-			string WHERESentence = "";
-			string ORDERSentence = ";";
+			string SELECTSentence = "SELECT DISTINCT E.Bodega, E.NomBodega";
+			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
+			string ORDERSentence = " ORDER BY E.NomBodega;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);

@@ -4,10 +4,12 @@
 	ViewBag.TituloSeccion = "Solicitudes de Despacho";
 	ViewBag.Pagina = 1;
 
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
 	List<Datos.Modelo.TipoSolicitud> tipos = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
 	List<Datos.Modelo.EstadoEquipo> estadosEquipos = Datos.Datos.EstadoEquipo.ObtenerEstadosEquipos();
 	List<Datos.Modelo.EstadoSolicitud> estadosSolicitudes = Datos.Datos.EstadoSolicitud.ObtenerEstadosSolicitudes();
-	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias();
+	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias("", usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
 }
 
 @section Less {
@@ -167,15 +169,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 order-1 order-xl-2 m--align-right">
-					<a href="/Solicitud/Solicitud" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-						<span>
-							<i class="flaticon-add"></i>
-							<span>Nueva Solicitud</span>
-						</span>
-					</a>
-					<div class="m-separator m-separator--dashed d-xl-none"></div>
-				</div>
+				@if (usuario.PerfilId == 4)
+				{
+					<div class="col-xl-4 order-1 order-xl-2 m--align-right">
+						<a href="/Solicitud/Solicitud" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+							<span>
+								<i class="flaticon-add"></i>
+								<span>Nueva Solicitud</span>
+							</span>
+						</a>
+						<div class="m-separator m-separator--dashed d-xl-none"></div>
+					</div>
+				}
 			</div>
 		</div>
 		<!--end: Search Form -->

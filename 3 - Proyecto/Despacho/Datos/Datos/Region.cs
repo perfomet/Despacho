@@ -9,7 +9,7 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.Region> ObtenerRegiones()
 		{
-			string SELECTSentence = "SELECT RegionId, Region";
+			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM Region";
 			string SQLSentence = SELECTSentence + FROMSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -31,7 +31,7 @@ namespace Datos.Datos
 		{
 
 			Modelo.Region region = new Modelo.Region();
-			string SELECTSentence = "SELECT RegionId, Region";
+			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM Region";
 			string WHERESentence = " WHERE RegionId = " + regionId.ToString();
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;

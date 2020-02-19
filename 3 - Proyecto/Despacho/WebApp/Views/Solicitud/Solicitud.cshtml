@@ -14,16 +14,19 @@
 		ViewBag.TituloSeccion = "Solicitud " + Model.SolicitudDespachoId;
 	}
 
-	Datos.Modelo.Usuario usuario = (Datos.Modelo.Usuario)Session["usuario"];
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 
 	List<Datos.Modelo.TipoSolicitud> tiposSolicitud = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
-	List<Datos.Modelo.Comuna> comunas = Datos.Datos.Comuna.ObtenerComunas();
+	List<Datos.Modelo.Region> regiones = Datos.Datos.Region.ObtenerRegiones();
 	List<Datos.Modelo.Prioridad> prioridades = Datos.Datos.Prioridad.ObtenerPrioridades();
-	List<Datos.Modelo.UnidadNegocio> unidadesMegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadesNegocio();
-	List<Datos.Modelo.Gerencia> gerencias = Datos.Datos.Gerencia.ObtenerGerencias();
+	List<Datos.Modelo.UnidadNegocio> unidadesMegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadesNegocio(usuario.Cliente != null ? usuario.ClienteId.Value : 0);
+	List<Datos.Modelo.Gerencia> gerencias = Datos.Datos.Gerencia.ObtenerGerencias(usuario.Cliente != null ? usuario.ClienteId.Value : 0);
 	List<Datos.Modelo.Camion> camiones = Datos.Datos.Camion.ObtenerCamiones();
-	List<Datos.Modelo.Enlaces> enlaces = Datos.Datos.Enlaces.ObtenerEnlaces();
 	List<Datos.Modelo.TipoDocumento> tiposDocumento = Datos.Datos.TipoDocumento.ObtenerTiposdeDocumentos();
+	List<Datos.Modelo.EstadoEquipo> estadosEquipos = Datos.Datos.EstadoEquipo.ObtenerEstadosEquipos();
+	List<Datos.Modelo.Marca> marcas = Datos.Datos.Marca.ObtenerMarcas(usuario.Cliente != null ? usuario.ClienteId.Value : 0);
+	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias(marcas.FirstOrDefault().Codigo, usuario.Cliente != null ? usuario.ClienteId.Value : 0);
+	List<Datos.Modelo.Personal> personales = Datos.Datos.Personal.ObtenerPersonal();
 }
 
 @section Less{
@@ -79,7 +82,7 @@
 						<!--begin: Form Wizard Nav -->
 						<div class="m-wizard__nav">
 							<div class="m-wizard__steps">
-								<div class="m-wizard__step m-wizard__step--current" m-wizard-target="seccion-solicitud">
+								<div class="m-wizard__step @(Model.EstadoSolicitudId == 0 ? "m-wizard__form-step--current" : "") @(Model.EstadoSolicitudId > 0 ? "m-wizard__form-step--done" : "")" m-wizard-target="seccion-solicitud">
 									<div class="m-wizard__step-info">
 										<a href="#" class="m-wizard__step-number">
 											<span><span>1</span></span>
@@ -88,14 +91,14 @@
 											<span></span>
 										</div>
 										<div class="m-wizard__step-label">
-											Solicitud
+											Solicitud @Model.EstadoSolicitudId
 										</div>
 									</div>
 								</div>
 
 								@if (Model.EstadoSolicitudId > 0)
 								{
-									<div class="m-wizard__step" m-wizard-target="seccion-planificacion">
+									<div class="m-wizard__step @((Model.EstadoSolicitudId == 1 || Model.EstadoSolicitudId == 2) ? "m-wizard__form-step--current" : "") @(Model.EstadoSolicitudId > 2 ? "m-wizard__form-step--done" : "")" m-wizard-target="seccion-planificacion">
 										<div class="m-wizard__step-info">
 											<a href="#" class="m-wizard__step-number">
 												<span><span>2</span></span>
@@ -110,9 +113,9 @@
 									</div>
 								}
 
-								@if (Model.EstadoSolicitudId > 0)
+								@if (Model.EstadoSolicitudId > 2)
 								{
-									<div class="m-wizard__step" m-wizard-target="seccion-documentacion">
+									<div class="m-wizard__step @(Model.EstadoSolicitudId == 3 ? "m-wizard__form-step--current" : "") @(Model.EstadoSolicitudId > 3 ? "m-wizard__form-step--done" : "")" m-wizard-target="seccion-documentacion">
 										<div class="m-wizard__step-info">
 											<a href="#" class="m-wizard__step-number">
 												<span><span>3</span></span>
@@ -127,9 +130,9 @@
 									</div>
 								}
 
-								@if (Model.EstadoSolicitudId > 0)
+								@if (Model.EstadoSolicitudId > 3)
 								{
-									<div class="m-wizard__step" m-wizard-target="seccion-concrecion">
+									<div class="m-wizard__step @(Model.EstadoSolicitudId == 4 ? "m-wizard__form-step--current" : "") @(Model.EstadoSolicitudId > 4 ? "m-wizard__form-step--done" : "")" m-wizard-target="seccion-concrecion">
 										<div class="m-wizard__step-info">
 											<a href="#" class="m-wizard__step-number">
 												<span><span>4</span></span>
@@ -144,9 +147,9 @@
 									</div>
 								}
 
-								@if (Model.EstadoSolicitudId > 3)
+								@if (Model.EstadoSolicitudId > 7)
 								{
-									<div class="m-wizard__step" m-wizard-target="seccion-aprobacion">
+									<div class="m-wizard__step @(Model.EstadoSolicitudId == 5 ? "m-wizard__form-step--current" : "") @(Model.EstadoSolicitudId > 5 ? "m-wizard__form-step--done" : "")" m-wizard-target="seccion-aprobacion">
 										<div class="m-wizard__step-info">
 											<a href="#" class="m-wizard__step-number">
 												<span><span>5</span></span>
@@ -177,137 +180,303 @@
 							<!--begin: Form Body -->
 							<div class="m-portlet__body m-portlet__body--no-padding">
 								<!--begin: Form Wizard Step 1-->
-								<div class="m-wizard__form-step m-wizard__form-step--current" id="seccion-solicitud">
+								<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 0 ? "m-wizard__form-step--current" : "")" id="seccion-solicitud">
 									<input type="hidden" id="solicitudId" value="@Model.SolicitudDespachoId" />
 									<input type="hidden" id="estadoId" value="@Model.EstadoSolicitudId" />
 
 									<div class="m-form__section m-form__section--first">
+										<div class="m-form__heading">
+											<h3 class="m-form__heading-title">Datos Solicitud</h3>
+										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Tipo Solicitud:</label>
 											<div class="col-xl-9 col-lg-9">
-												<select id="tipoSolicitudId" class="form-control m-select2" placeholder="">
-													<option value="0" selected disabled>Seleccione un tipo de solicitud</option>
-													@foreach (Datos.Modelo.TipoSolicitud tipo in tiposSolicitud)
-													{
-														<option value="@tipo.Tiposolicitudid" @(tipo.Tiposolicitudid == Model.TipoSolicitudId ? "selected" : "")>@tipo.Descripcion</option>
-													}
-												</select>
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<select id="tipoSolicitudId" class="form-control m-select2" placeholder="">
+														<option value="0" selected disabled>Seleccione un tipo de solicitud</option>
+														@foreach (Datos.Modelo.TipoSolicitud tipo in tiposSolicitud)
+														{
+															<option value="@tipo.Tiposolicitudid" @(tipo.Tiposolicitudid == Model.TipoSolicitudId ? "selected" : "")>@tipo.Descripcion</option>
+														}
+													</select>
+												}
+												else
+												{
+													<input type="hidden" value="@Model.TipoSolicitudId" id="tipoSolicitudId" />
+													@Model.TipoSolicitud
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Recepción:</label>
 											<div class="col-xl-9 col-lg-9">
-												<div class='input-group date pull-right'>
-													<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcion" value="@Model.FechaRecepcion">
-													<div class="input-group-append">
-														<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<div class='input-group date pull-right'>
+														<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcion" value="@Model.FechaRecepcion">
+														<div class="input-group-append">
+															<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+														</div>
 													</div>
-												</div>
+												}
+												else
+												{
+													<input type="hidden" value="@Model.FechaRecepcion" id="fechaRecepcion" />
+													@Model.FechaRecepcion
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Bodega de Origen:</label>
 											<div class="col-xl-9 col-lg-9">
-												<input type="text" class="form-control m-input" value="@Model.BodegaOrigen" id="bodegaOrigen" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="text" class="form-control m-input" value="@Model.BodegaOrigen" id="bodegaOrigen" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.BodegaOrigen" id="bodegaOrigen" />
+													@Model.BodegaOrigen
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Número de Cliente:</label>
 											<div class="col-xl-9 col-lg-9">
-												<input type="text" class="form-control m-input" value="@Model.NumeroCliente" id="numeroCliente" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="text" class="form-control m-input" value="@Model.NumeroCliente" id="numeroCliente" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.NumeroCliente" id="numeroCliente" />
+													@Model.NumeroCliente
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Nombre del Cliente:</label>
 											<div class="col-xl-9 col-lg-9">
-												<input type="text" class="form-control m-input" value="@Model.NombreCliente" id="nombreCliente" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="text" class="form-control m-input" value="@Model.NombreCliente" id="nombreCliente" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.NombreCliente" id="nombreCliente" />
+													@Model.NombreCliente
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
-											<label class="col-xl-3 col-lg-3 col-form-label">* Dirección del Cliente:</label>
+											<label class="col-xl-3 col-lg-3 col-form-label">* Dirección Cliente:</label>
 											<div class="col-xl-9 col-lg-9">
-												<input type="text" class="form-control m-input" value="@Model.DireccionCliente" id="direccionCliente" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="text" class="form-control m-input" value="@Model.DireccionCliente" id="direccionCliente" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.DireccionCliente" id="direccionCliente" />
+													@Model.DireccionCliente
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Comuna del Cliente:</label>
 											<div class="col-xl-9 col-lg-9">
-												<select id="comunaClienteId" class="form-control m-select2" placeholder="">
-													<option value="0" selected disabled>Seleccione una comuna</option>
-													@foreach (Datos.Modelo.Comuna comuna in comunas)
-													{
-														<option value="@comuna.ComunaId" @(comuna.ComunaId == Model.ComunaClienteId ? "selected" : "")>@comuna.Nombre</option>
-													}
-												</select>
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<select id="regionClienteId" class="form-control m-select2" placeholder="">
+														<option value="0" selected disabled>Seleccione una región</option>
+														@{
+															Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
+															foreach (Datos.Modelo.Region region in regiones)
+															{
+																<option value="@region.RegionId" @((comuna != null && region.RegionId == comuna.RegionId) ? "selected" : "")>@region.Nombre</option>
+															}
+														}
+													</select>
+												}
+												else
+												{
+													Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
+													<input type="hidden" value="@comuna.RegionId" id="regionClienteId" />
+													@comuna.Region
+												}
+											</div>
+										</div>
+										<div class="form-group m-form__group row">
+											<label class="col-xl-3 col-lg-3 col-form-label">* Comuna del Cliente:</label>
+											<div class="col-xl-9 col-lg-9">
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
+
+													<select id="comunaClienteId" class="form-control m-select2" placeholder="" @(comuna != null ? "" : "disabled")>
+														<option value="0" selected disabled>Seleccione una comuna</option>
+														@if (comuna != null)
+														{
+															List<Datos.Modelo.Comuna> comunas = Datos.Datos.Comuna.ObtenerComunas(comuna.RegionId, Datos.Datos.TipoFiltroComuna.RegionId);
+
+															foreach (Datos.Modelo.Comuna c in comunas)
+															{
+																<option value="@c.RegionId" @(c.ComunaId == Model.ComunaClienteId ? "selected" : "")>@c.Nombre</option>
+															}
+														}
+													</select>
+												}
+												else
+												{
+													Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
+													<input type="hidden" value="@Model.ComunaClienteId" id="comunaClienteId" />
+													@comuna.Nombre
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">Teléfono Contacto Cliente:</label>
 											<div class="col-xl-9 col-lg-9">
-												<input type="tel" class="form-control m-input" value="@Model.NumeroTelefonoContacto" id="telefonoContacto" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="tel" class="form-control m-input" value="@Model.NumeroTelefonoContacto" id="telefonoContacto" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.NumeroTelefonoContacto" id="telefonoContacto" />
+													@Model.NumeroTelefonoContacto
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* RUT Cliente:</label>
 											<div class="col-xl-9 col-lg-9 d-flex" style="align-items: center;">
-												<input type="number" class="form-control m-input w-75" value="@Model.RutCliente" id="rutCliente" maxlength="8" /> &nbsp;-&nbsp;
-												<input type="text" class="form-control m-input w-25" value="@Model.VRutCliente" id="vrutCliente" maxlength="1" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="text" class="form-control m-input" value="@((Model.RutCliente == null || Model.RutCliente.Equals(string.Empty)) && (Model.VRutCliente == null || Model.VRutCliente.Equals(string.Empty)) ? "" : Model.RutCliente+"-"+Model.VRutCliente)" id="rutCliente" maxlength="12" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.RutCliente-@Model.VRutCliente" id="rutCliente" />
+													@(Model.RutCliente + "-" + @Model.VRutCliente)
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Proyecto:</label>
 											<div class="col-xl-9 col-lg-9">
-												<input type="text" class="form-control m-input" value="@Model.Proyecto" id="proyecto" />
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<input type="text" class="form-control m-input" value="@Model.Proyecto" id="proyecto" />
+												}
+												else
+												{
+													<input type="hidden" value="@Model.Proyecto" id="proyecto" />
+													@Model.Proyecto
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Prioridad:</label>
 											<div class="col-xl-9 col-lg-9">
-												<select id="prioridadId" class="form-control m-select2" placeholder="">
-													<option value="0" selected disabled>Seleccione una prioridad</option>
-													@foreach (Datos.Modelo.Prioridad prioridad in prioridades)
-													{
-														<option value="@prioridad.prioridadid" @(prioridad.prioridadid == Model.PrioridadId ? "selected" : "")>@prioridad.descripcion</option>
-													}
-												</select>
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<select id="prioridadId" class="form-control m-select2" placeholder="">
+														<option value="0" selected disabled>Seleccione una prioridad</option>
+														@foreach (Datos.Modelo.Prioridad prioridad in prioridades)
+														{
+															<option value="@prioridad.prioridadid" @(prioridad.prioridadid == Model.PrioridadId ? "selected" : "")>@prioridad.descripcion</option>
+														}
+													</select>
+												}
+												else
+												{
+													<input type="hidden" value="@Model.PrioridadId" id="prioridadId" />
+													@Model.Prioridad
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Unidad de Negocio:</label>
 											<div class="col-xl-9 col-lg-9">
-												<select id="unidadNegocioId" class="form-control m-select2" placeholder="">
-													<option value="0" selected disabled>Seleccione una unidad de negocio</option>
-													@foreach (Datos.Modelo.UnidadNegocio unidadNegocio in unidadesMegocio)
-													{
-														if (usuario.ClienteId == unidadNegocio.ClienteId || usuario.ClienteId == 0 || usuario.ClienteId == null)
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<select id="unidadNegocioId" class="form-control m-select2" placeholder="">
+														<option value="0" selected disabled>Seleccione una unidad de negocio</option>
+														@foreach (Datos.Modelo.UnidadNegocio unidadNegocio in unidadesMegocio)
 														{
-															<option value="@unidadNegocio.UnidadNegocioId" @(unidadNegocio.UnidadNegocioId == Model.UnidadNegocioId ? "selected" : "")>@unidadNegocio.Descripcion</option>
+															if (usuario != null && (usuario.ClienteId == unidadNegocio.ClienteId || usuario.ClienteId == 0 || usuario.ClienteId == null))
+															{
+																<option value="@unidadNegocio.UnidadNegocioId" @(unidadNegocio.UnidadNegocioId == Model.UnidadNegocioId ? "selected" : "")>@unidadNegocio.Descripcion</option>
+															}
 														}
-													}
-												</select>
+													</select>
+												}
+												else
+												{
+													Datos.Modelo.UnidadNegocio unidadnegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(Model.UnidadNegocioId);
+													<input type="hidden" value="@Model.UnidadNegocioId" id="unidadNegocioId" />
+													@unidadnegocio.Descripcion
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Gerencia:</label>
 											<div class="col-xl-9 col-lg-9">
-												<select id="gerenciaId" class="form-control m-select2" placeholder="">
-													<option value="0" selected disabled>Seleccione una gerencia</option>
-													@foreach (Datos.Modelo.Gerencia gerencia in gerencias)
-													{
-														if (usuario.ClienteId == gerencia.Clienteid || usuario.ClienteId == 0 || usuario.ClienteId == null)
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<select id="gerenciaId" class="form-control m-select2" placeholder="">
+														<option value="0" selected disabled>Seleccione una gerencia</option>
+														@foreach (Datos.Modelo.Gerencia gerencia in gerencias)
 														{
-															<option value="@gerencia.Gerenciaid" @(gerencia.Gerenciaid == Model.GerenciaId ? "selected" : "")>@gerencia.Descripcion</option>
+															if (usuario != null && (usuario.ClienteId == gerencia.Clienteid || usuario.ClienteId == 0 || usuario.ClienteId == null))
+															{
+																<option value="@gerencia.Gerenciaid" @(gerencia.Gerenciaid == Model.GerenciaId ? "selected" : "")>@gerencia.Descripcion</option>
+															}
 														}
-													}
-												</select>
+													</select>
+												}
+												else
+												{
+													Datos.Modelo.Gerencia gerencia = Datos.Datos.Gerencia.ObtenerGerencia(Model.GerenciaId);
+													<input type="hidden" value="@Model.GerenciaId" id="gerenciaId" />
+													@gerencia.Descripcion
+												}
 											</div>
 										</div>
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">Observaciones:</label>
 											<div class="col-xl-9 col-lg-9">
-												<textarea class="form-control m-input" id="observaciones" maxlength="255">@Model.ObservacionAof</textarea>
+												@if (Model.EstadoSolicitudId == 0)
+												{
+													<textarea class="form-control m-input" id="observaciones" maxlength="255">@Model.ObservacionAof</textarea>
+												}
+												else
+												{
+													<input type="hidden" value="@Model.ObservacionAof" id="observaciones" />
+													@Model.ObservacionAof
+												}
 											</div>
 										</div>
+									</div>
+									<div class="m-separator m-separator--dashed m-separator--lg"></div>
+									<div class="m-form__section">
+										<div class="m-form__heading">
+											<div style="display: flex;justify-content: end;">
+												<h3 class="m-form__heading-title" style="width: 100%;">Equipos a Solicitar</h3>
+												@if (Model.EstadoSolicitudId < 2)
+												{
+													<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modalEquipoSolicitado">
+														<span>
+															<i class="flaticon-add"></i>
+															<span>Solicitar Equipos</span>
+														</span>
+													</a>
+												}
+											</div>
+										</div>
+										<div class="m_datatable" id="lista-equipos-solicitados"></div>
 									</div>
 								</div>
 								<!--end: Form Wizard Step 1-->
@@ -315,7 +484,7 @@
 								@if (Model.EstadoSolicitudId > 0)
 								{
 									<!--begin: Form Wizard Step 2-->
-									<div class="m-wizard__form-step" id="seccion-planificacion">
+									<div class="m-wizard__form-step @((Model.EstadoSolicitudId == 1 || Model.EstadoSolicitudId == 2) ? "m-wizard__form-step--current" : "")" id="seccion-planificacion">
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Despacho:</label>
 											<div class="col-xl-9 col-lg-9">
@@ -360,26 +529,29 @@
 												<textarea class="form-control m-input" id="comentarios" maxlength="255">@Model.ComentariosLlamada</textarea>
 											</div>
 										</div>
-										<div class="form-group m-form__group row">
-											<label class="col-xl-3 col-lg-3 col-form-label">* Enlace:</label>
-											<div class="col-xl-9 col-lg-9">
-												<select id="enlaceId" class="form-control m-select2" placeholder="">
-													<option value="0" selected disabled>Seleccione un enlace</option>
-													@foreach (Datos.Modelo.Enlaces enlace in enlaces)
-													{
-														<option value="@enlace.Enlaceid" @(enlace.Enlaceid == Model.EnlaceId ? "selected" : "")>@enlace.Descripcion</option>
-													}
-												</select>
+										<div class="m-separator m-separator--dashed m-separator--lg"></div>
+										<div class="m-form__section">
+											<div class="m-form__heading">
+												<div style="display: flex;justify-content: end;">
+													<h3 class="m-form__heading-title" style="width: 100%;">Personal Asignado</h3>
+													<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modalEquipoSolicitado">
+														<span>
+															<i class="flaticon-add"></i>
+															<span>Asignar Personal</span>
+														</span>
+													</a>
+												</div>
 											</div>
+											<div class="m_datatable" id="lista-personal-asignado"></div>
 										</div>
 									</div>
 									<!--end: Form Wizard Step 2-->
 								}
 
-								@if (Model.EstadoSolicitudId > 0)
+								@if (Model.EstadoSolicitudId > 1)
 								{
 									<!--begin: Form Wizard Step 3-->
-									<div class="m-wizard__form-step" id="seccion-documentacion">
+									<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 3 ? "m-wizard__form-step--current" : "")" id="seccion-documentacion">
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Número de Documento:</label>
 											<div class="col-xl-9 col-lg-9">
@@ -436,10 +608,10 @@
 									<!--end: Form Wizard Step 3-->
 								}
 
-								@if (Model.EstadoSolicitudId > 0)
+								@if (Model.EstadoSolicitudId > 2)
 								{
 									<!--begin: Form Wizard Step 4-->
-									<div class="m-wizard__form-step" id="seccion-concrecion">
+									<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 4 ? "m-wizard__form-step--current" : "")" id="seccion-concrecion">
 										<div class="form-group m-form__group row">
 											<label class="col-xl-3 col-lg-3 col-form-label">* Concreción:</label>
 											<div class="col-xl-9 col-lg-9">
@@ -478,10 +650,10 @@
 									<!--end: Form Wizard Step 4-->
 								}
 
-								@if (Model.EstadoSolicitudId > 3)
+								@if (Model.EstadoSolicitudId > 7)
 								{
 									<!--begin: Form Wizard Step 5-->
-									<div class="m-wizard__form-step" id="seccion-aprobacion">
+									<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 5 ? "m-wizard__form-step--current" : "")" id="seccion-aprobacion">
 										Seccion 5
 									</div>
 									<!--end: Form Wizard Step 5-->
@@ -534,3 +706,97 @@
 	<!--end: Portlet Body-->
 </div>
 <!--End::Main Portlet-->
+<!--begin::Modal-->
+<div class="modal fade" id="modalEquipoSolicitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Solicitud de Equipos</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group m-form__group row">
+					<label class="col-xl-3 col-lg-3 col-form-label">* Estado Equipo:</label>
+					<div class="col-xl-9 col-lg-9">
+						<select id="estadoEquipo" class="form-control m-select2" placeholder="">
+							<option value="0" selected disabled>Seleccione un estado de equipo</option>
+							@foreach (Datos.Modelo.EstadoEquipo estado in estadosEquipos)
+							{
+								<option value="@estado.Estadoequipoid">@estado.Descripcion</option>
+							}
+						</select>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-xl-3 col-lg-3 col-form-label">* Marca:</label>
+					<div class="col-xl-9 col-lg-9">
+						<select id="marcaEquipo" class="form-control m-select2" placeholder="">
+							<option value="0" selected disabled>Seleccione una marca</option>
+							@foreach (Datos.Modelo.Marca marca in marcas)
+							{
+								<option value="@marca.Codigo">@(marca.Codigo.Equals(string.Empty) ? "Sin Marca" : marca.Codigo)</option>
+							}
+						</select>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-xl-3 col-lg-3 col-form-label">* Modelo:</label>
+					<div class="col-xl-9 col-lg-9">
+						<select id="modeloEquipo" class="form-control m-select2" placeholder="">
+							<option value="0" selected disabled>Seleccione un modelo</option>
+							@foreach (Datos.Modelo.ModeloExistencia modelo in modelos)
+							{
+								<option value="@modelo.Codigo">@(modelo.Codigo.Equals(string.Empty) ? "Sin Modelo" : modelo.Codigo)</option>
+							}
+						</select>
+					</div>
+				</div>
+				<div class="form-group m-form__group row">
+					<label class="col-xl-3 col-lg-3 col-form-label">* Cantidad:</label>
+					<div class="col-xl-9 col-lg-9">
+						<input type="number" class="form-control m-input" value="1" id="cantidadEquipos" min="1" />
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-success" id="solicitarEquipos">Solicitar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end::Modal-->
+<!--begin::Modal-->
+<div class="modal fade" id="modalPersonalAsignado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Asignación de Personal</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group m-form__group row">
+					<label class="col-xl-3 col-lg-3 col-form-label">* Personal:</label>
+					<div class="col-xl-9 col-lg-9">
+						<select id="estadoEquipo" class="form-control m-select2" placeholder="">
+							<option value="0" selected disabled>Seleccione un miembro del personal</option>
+							@foreach (Datos.Modelo.Personal personal in personales)
+							{
+								<option value="@personal.Personalid">@(personal.TipoPersonal + " - " + personal.Nombre)</option>
+							}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-success" id="solicitarEquipos">Asignar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end::Modal-->

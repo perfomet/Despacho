@@ -8,8 +8,9 @@
 
     let Init = function () {
         $.post("/Existencia/Listar", { serie: "" }, function (data) {
+            console.log(data)
             existencias = data;
-            existenciasAgrupadas = AgruparExistencias(data);
+            //existenciasAgrupadas = AgruparExistencias(data);
 
             InitElementos();
         });
@@ -110,6 +111,7 @@
     };
 
     let CargarLista = function () {
+        console.log(existencias)
         let picker = $('#filtro-fecha-almacenaje').data('daterangepicker');
 
         $('#lista-existencia').mDatatable({

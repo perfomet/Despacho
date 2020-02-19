@@ -12,26 +12,24 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Listar(string serie)
 		{
-			JsonResult result;
+			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 
 			if (!serie.Equals(string.Empty))
 			{
-				result = Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
+				return Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
 			}
 			else
 			{
-				result = Json(Datos.Datos.Existencia.ObtenerExistencias());
+				return Json(Datos.Datos.Existencia.ObtenerExistencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 			}
-
-			result.MaxJsonLength = 50000000;
-
-			return result;
 		}
 
 		[HttpPost]
 		public JsonResult ObtenerBins(string bodega)
 		{
-			return Json(Datos.Datos.Bin.ObtenerBins(bodega));
+			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
+			return Json(Datos.Datos.Bin.ObtenerBins(bodega, usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 		}
 	}
 }

@@ -10,6 +10,7 @@ namespace Datos.Modelo
 		public string Marca { get; set; }
 		public string Modelo { get; set; }
 		public int SolicitudDespachoId { get; set; }
+		public string EstadoEquipo { get; set; }
 
 		public void FromDataRow(DataRow fila)
 		{
@@ -19,6 +20,7 @@ namespace Datos.Modelo
 			this.Modelo = fila[3].ToString();
 			this.EstadoEquipoId = int.Parse(fila[4].ToString());
 			this.SolicitudDespachoId = int.Parse(fila[5].ToString());
+			this.EstadoEquipo = fila[6].ToString();
 		}
 	}
 }

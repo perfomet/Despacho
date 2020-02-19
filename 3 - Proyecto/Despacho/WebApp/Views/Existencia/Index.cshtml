@@ -4,7 +4,9 @@
 	ViewBag.TituloSeccion = "Consulta de Existencias";
 	ViewBag.Pagina = 3;
 
-	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas();
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
+	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas(usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
 }
 
 @section Less {

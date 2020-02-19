@@ -6,11 +6,11 @@ namespace Datos.Datos
 {
 	public class Gerencia
 	{
-		public static List<Modelo.Gerencia> ObtenerGerencias()
+		public static List<Modelo.Gerencia> ObtenerGerencias(int clienteId)
 		{
 			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Cliente.Nombre AS Nombrecliente, Gerencia.EstaActivo";
 			string FROMSentence = " FROM Cliente INNER JOIN Gerencia ON Cliente.ClienteId = Gerencia.ClienteId";
-			string WHERESentence = "";
+			string WHERESentence = clienteId > 0 ? (" WHERE Cliente.ClienteId = " + clienteId) : ""; ;
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -48,7 +48,7 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.Gerencia gerencia)
 		{
 			string INSERTSentence = "INSERT INTO Gerencia";
-			string VALUESSentence = " VALUES('{1}',{2}, 1);";
+			string VALUESSentence = " VALUES('{0}', {1}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, gerencia.Descripcion, gerencia.Clienteid);

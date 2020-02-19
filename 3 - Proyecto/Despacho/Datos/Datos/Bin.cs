@@ -6,31 +6,32 @@ namespace Datos.Datos
 {
 	public class Bin
 	{
-		public static List<Modelo.Bin> ObtenerBins()
+		public static List<Modelo.Bin> ObtenerBins(int clienteId)
 		{
-			string SELECTSentence = "SELECT DISTINCT Bin";
-			string FROMSentence = " FROM Existencia";
-			string WHERESentence = "";
-			string ORDERSentence = " ORDER BY Bin;";
+			string SELECTSentence = "SELECT DISTINCT E.Bin";
+			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
+			string ORDERSentence = " ORDER BY E.Bin;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Bin> bins = new List<Modelo.Bin>();
 
-				foreach (DataRow fila in dataTable.Rows)
-				{
-					Modelo.Bin bin = new Modelo.Bin();
-					bin.FromDataRow(fila);
-					bins.Add(bin);
-				}
+			foreach (DataRow fila in dataTable.Rows)
+			{
+				Modelo.Bin bin = new Modelo.Bin();
+				bin.FromDataRow(fila);
+				bins.Add(bin);
+			}
 
-				return bins;
+			return bins;
 		}
-		public static List<Modelo.Bin> ObtenerBins(string codigoBodega)
+
+		public static List<Modelo.Bin> ObtenerBins(string codigoBodega, int clienteId)
 		{
-			string SELECTSentence = "SELECT DISTINCT Bin";
-			string FROMSentence = " FROM Existencia";
-			string WHERESentence = " WHERE Bodega LIKE '" + codigoBodega + "'";
-			string ORDERSentence = ";";
+			string SELECTSentence = "SELECT DISTINCT E.Bin";
+			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string WHERESentence = " WHERE E.Bodega = '" + codigoBodega + "'" + (clienteId > 0 ? (" AND C.ClienteId = " + clienteId) : "");
+			string ORDERSentence = " ORDER BY E.Bin;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);

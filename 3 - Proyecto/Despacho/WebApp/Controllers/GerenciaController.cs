@@ -23,7 +23,7 @@ namespace Despacho.Controllers
 		public ActionResult Create(Datos.Modelo.Gerencia gerencia)
 		{
 			bool exito = Datos.Datos.Gerencia.Crear(gerencia);
-			
+
 			return Json(new { exito = exito });
 		}
 
@@ -53,13 +53,15 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Listar(int id)
 		{
+			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
 			if (id > 0)
 			{
 				return Json(Datos.Datos.Gerencia.ObtenerGerencia(id));
 			}
 			else
 			{
-				return Json(Datos.Datos.Gerencia.ObtenerGerencias());
+				return Json(Datos.Datos.Gerencia.ObtenerGerencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 			}
 		}
 	}

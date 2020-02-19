@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
@@ -30,20 +31,30 @@ namespace Despacho.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Datos.Modelo.Solicitud solicitud)
+		public ActionResult Create(Datos.Modelo.Solicitud solicitud, List<Datos.Modelo.EquipoSolicitado> equiposSolicitados)
 		{
 			Datos.Modelo.Usuario solicitante = (Datos.Modelo.Usuario)Session["usuario"];
 
 			solicitud.SolicitanteId = solicitante.UsuarioId;
 
-			bool exito = Datos.Datos.Solicitud.Crear(solicitud);
+			int solicitudId = Datos.Datos.Solicitud.Crear(solicitud);
 
-			return Json(new { exito = exito });
+			equiposSolicitados.ForEach((equipo) =>
+			{
+				equipo.SolicitudDespachoId = solicitudId;
+			});
+
+			Datos.Datos.EquipoSolicitado.Crear(equiposSolicitados);
+
+			return Json(new { exito = solicitudId > 0 });
 		}
 
 		[HttpPost]
-		public ActionResult Edit(Datos.Modelo.Solicitud solicitud)
+		public ActionResult Edit(Datos.Modelo.Solicitud solicitud, List<Datos.Modelo.EquipoSolicitado> equiposSolicitados)
 		{
+			Datos.Datos.EquipoSolicitado.EliminarPorSolicitud(solicitud.SolicitudDespachoId);
+			Datos.Datos.EquipoSolicitado.Crear(equiposSolicitados);
+
 			bool exito = Datos.Datos.Solicitud.Modificar(solicitud);
 
 			return Json(new { exito = exito });
@@ -52,14 +63,28 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult ObtenerSolicitudes(int solicitudId)
 		{
+			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
 			if (solicitudId > 0)
 			{
 				return Json(Datos.Datos.Solicitud.ObtenerSolicitud(solicitudId));
 			}
 			else
 			{
-				return Json(Datos.Datos.Solicitud.ObtenerSolicitudes());
+				return Json(Datos.Datos.Solicitud.ObtenerSolicitudes(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 			}
+		}
+
+		[HttpPost]
+		public JsonResult ObtenerEquiposSolicitados(int solicitudId)
+		{
+			return Json(Datos.Datos.EquipoSolicitado.ObtenerEquiposSolicitados(solicitudId));
+		}
+
+		[HttpPost]
+		public JsonResult ObtenerComunas(int regionId)
+		{
+			return Json(Datos.Datos.Comuna.ObtenerComunas(regionId, Datos.Datos.TipoFiltroComuna.RegionId));
 		}
 	}
 }

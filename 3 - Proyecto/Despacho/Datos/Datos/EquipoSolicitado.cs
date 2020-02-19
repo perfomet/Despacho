@@ -9,8 +9,8 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.EquipoSolicitado> ObtenerEquiposSolicitados(int solicitudDespachoId)
 		{
-			string SELECTSentence = "SELECT *";
-			string FROMSentence = " FROM EquiposSolicitados";
+			string SELECTSentence = "SELECT ES.*, EE.Descripcion";
+			string FROMSentence = " FROM EquiposSolicitados ES INNER JOIN EstadoEquipo EE ON EE.EstadoEquipoId = ES.EstadoEquipoId";
 			string WHERESentence = " WHERE SolicitudDespachoId = " + solicitudDespachoId;
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
