@@ -9,7 +9,7 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.CargaMasivaDetalle> ObtenerCargasMasivasDetalle()
 		{
-			string SELECTSentence = "SELECT CargaMasivaDetalleId, CargaMasivaId, TipoSolicitud, FechaSolicitud, FechaRecepcion, BodegaOrigen, NumeroCliente, NombreCliente, DireccionCliente, Comuna, TelefonoContacto, Rut, Proyecto, UnidadNegocio, Gerencia, ObservacionAof, Prioridad";
+			string SELECTSentence = "SELECT CargaMasivaDetalleId, CargaMasivaId, NumeroSolicitud, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, DireccionCalleCliente, DireccionNumeroCliente, Region, Comuna, TelefonoContacto, TelefonoContacto2, Rut, UnidadNegocio, Gerencia, ObservacionAof, Prioridad";
 			string FROMSentence = " FROM CargaMasivaDetalle";
 			string JOINSentence = "";
 			string WHERESentence = "";
@@ -31,7 +31,7 @@ namespace Datos.Datos
 
 		public static Modelo.CargaMasivaDetalle ObtenerCargaMasivaDetalle(int id)
 		{
-			string SELECTSentence = "SELECT CargaMasivaDetalleId, CargaMasivaId, TipoSolicitud, FechaSolicitud, FechaRecepcion, BodegaOrigen, NumeroCliente, NombreCliente, DireccionCliente, Comuna, TelefonoContacto, Rut, Proyecto, UnidadNegocio, Gerencia, ObservacionAof, Prioridad";
+			string SELECTSentence = "SELECT CargaMasivaDetalleId, CargaMasivaId, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, DireccionCalleCliente, DireccionNumeroCliente, Region, Comuna, TelefonoContacto, Rut, UnidadNegocio, Gerencia, ObservacionAof, Prioridad";
 			string FROMSentence = " FROM CargaMasivaDetalle";
 			string JOINSentence = "";
 			string WHERESentence = " CargaMasivaDetalleId = " + id.ToString();
@@ -52,11 +52,11 @@ namespace Datos.Datos
 
 		public static int Crear(Modelo.CargaMasivaDetalle cargamasivadetalle)
 		{
-			string INSERTSentence = "INSERT INTO CargaMasivaDetalle (CargaMasivaId, TipoSolicitud, FechaSolicitud, FechaRecepcion, BodegaOrigen, NumeroCliente, NombreCliente, DireccionCliente, Comuna, TelefonoContacto, Rut, Proyecto, UnidadNegocio, Gerencia, ObservacionAof, Prioridad)";
+			string INSERTSentence = "INSERT INTO CargaMasivaDetalle (CargaMasivaId, NumeroSolicitud, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, DireccionCalleCliente, DireccionNumeroCliente, Region, Comuna, TelefonoContacto, TelefonoContacto2, Rut, UnidadNegocio, Gerencia, ObservacionAof, Prioridad)";
 			string VALUESSentence = " VALUES({1}, '{2}', '{3}', '{4)', '{5}', '{6}', '{7)', '{8}', '{9}', '{10)', '{11}', '{12}', '{13)', '{14}', '{15}', '{16)');";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cargamasivadetalle.CargaMasivaDetalleId, cargamasivadetalle.CargaMasivaId, cargamasivadetalle.TipoSolicitud, cargamasivadetalle.FechaSolicitud, cargamasivadetalle.FechaRecepcion, cargamasivadetalle.BodegaOrigen, cargamasivadetalle.NumeroCliente, cargamasivadetalle.NombreCliente, cargamasivadetalle.DireccionCliente, cargamasivadetalle.Comuna, cargamasivadetalle.TelefonoContacto, cargamasivadetalle.Rut, cargamasivadetalle.Proyecto, cargamasivadetalle.UnidadNegocio, cargamasivadetalle.Gerencia, cargamasivadetalle.ObservacionAof, cargamasivadetalle.Prioridad);
+			builder.AppendFormat(SQLSentence, cargamasivadetalle.CargaMasivaDetalleId, cargamasivadetalle.CargaMasivaId, cargamasivadetalle.NumeroSolicitud, cargamasivadetalle.TipoSolicitud, cargamasivadetalle.FechaSolicitud, cargamasivadetalle.FechaRecepcion, cargamasivadetalle.NumeroCliente, cargamasivadetalle.NombreCliente, cargamasivadetalle.DireccionCalleCliente, cargamasivadetalle.DireccionNumeroCliente, cargamasivadetalle.Region, cargamasivadetalle.Comuna, cargamasivadetalle.TelefonoContacto, cargamasivadetalle.TelefonoContacto2, cargamasivadetalle.Rut, cargamasivadetalle.UnidadNegocio, cargamasivadetalle.Gerencia, cargamasivadetalle.ObservacionAof, cargamasivadetalle.Prioridad);
 			DataBase.ExecuteNonQuery(builder.ToString());
 			return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
 		}
@@ -67,11 +67,11 @@ namespace Datos.Datos
 
 			cargamasivadetalles.ForEach((detalle) =>
 			{
-				string INSERTSentence = "INSERT INTO CargaMasivaDetalle (CargaMasivaId, TipoSolicitud, FechaSolicitud, FechaRecepcion, BodegaOrigen, NumeroCliente, NombreCliente, DireccionCliente, Comuna, TelefonoContacto, Rut, Proyecto, UnidadNegocio, Gerencia, ObservacionAof, Prioridad)";
+				string INSERTSentence = "INSERT INTO CargaMasivaDetalle (CargaMasivaId, NumeroSolicitud, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, DireccionCalleCliente, DireccionNumeroCliente, Region, Comuna, TelefonoContacto, TelefonoContacto2, Rut, UnidadNegocio, Gerencia, ObservacionAof, Prioridad)";
 				string VALUESSentence = " VALUES({1}, '{2}', '{3}', '{4)', '{5}', '{6}', '{7)', '{8}', '{9}', '{10)', '{11}', '{12}', '{13)', '{14}', '{15}', '{16)');";
 				string SQLSentence = INSERTSentence + VALUESSentence;
 				StringBuilder builder = new StringBuilder();
-				builder.AppendFormat(SQLSentence, detalle.CargaMasivaDetalleId, detalle.CargaMasivaId, detalle.TipoSolicitud, detalle.FechaSolicitud, detalle.FechaRecepcion, detalle.BodegaOrigen, detalle.NumeroCliente, detalle.NombreCliente, detalle.DireccionCliente, detalle.Comuna, detalle.TelefonoContacto, detalle.Rut, detalle.Proyecto, detalle.UnidadNegocio, detalle.Gerencia, detalle.ObservacionAof, detalle.Prioridad);
+				builder.AppendFormat(SQLSentence, detalle.CargaMasivaDetalleId, detalle.CargaMasivaId, detalle.NumeroSolicitud, detalle.TipoSolicitud, detalle.FechaSolicitud, detalle.FechaRecepcion, detalle.NumeroCliente, detalle.NombreCliente, detalle.DireccionCalleCliente, detalle.DireccionNumeroCliente, detalle.Region, detalle.Comuna, detalle.TelefonoContacto, detalle.TelefonoContacto2, detalle.Rut, detalle.UnidadNegocio, detalle.Gerencia, detalle.ObservacionAof, detalle.Prioridad);
 				insertados += DataBase.ExecuteNonQuery(builder.ToString());
 			});
 
@@ -81,11 +81,11 @@ namespace Datos.Datos
 		public static bool Modificar(Modelo.CargaMasivaDetalle cargamasivadetalle)
 		{
 			string UPDATESentence = "UPDATE CargaMasivaDetalle";
-			string SETSentence = " SET CargaMasivaId = {1}, TipoSolicitud = '{2}', FechaSolicitud = '{3}', FechaRecepcion = '{4}', BodegaOrigen = '{5}', NumeroCliente = '{6}', NombreCliente = '{7}', DireccionCliente = '{8}', Comuna = '{9}', TelefonoContacto = '{10}', Rut = '{11}', Proyecto = '{12}', UnidadNegocio = '{13}', Gerencia = '{14}', ObservacionAof = '{15}', Prioridad = '{16}'";
+			string SETSentence = " SET CargaMasivaId = {1}, NumeroSolicitud = '{2}', TipoSolicitud = '{3}', FechaSolicitud = '{4}', FechaRecepcion = '{5}', NumeroCliente = '{6}', NombreCliente = '{7}', DireccionCalleCliente = '{8}', DireccionNumeroCliente = '{9}', Region = '{10}', Comuna = '{11}', TelefonoContacto = '{12}', TelefonoContacto2 = '{13}', Rut = '{14}', UnidadNegocio = '{15}', Gerencia = '{16}', ObservacionAof = '{17}', Prioridad = '{18}'";
 			string WHERESentence = " WHERE CargaMasivaId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cargamasivadetalle.CargaMasivaDetalleId, cargamasivadetalle.CargaMasivaId, cargamasivadetalle.TipoSolicitud, cargamasivadetalle.FechaSolicitud, cargamasivadetalle.FechaRecepcion, cargamasivadetalle.BodegaOrigen, cargamasivadetalle.NumeroCliente, cargamasivadetalle.NombreCliente, cargamasivadetalle.DireccionCliente, cargamasivadetalle.Comuna, cargamasivadetalle.TelefonoContacto, cargamasivadetalle.Rut, cargamasivadetalle.Proyecto, cargamasivadetalle.UnidadNegocio, cargamasivadetalle.Gerencia, cargamasivadetalle.ObservacionAof, cargamasivadetalle.Prioridad);
+			builder.AppendFormat(SQLSentence, cargamasivadetalle.CargaMasivaDetalleId, cargamasivadetalle.CargaMasivaId, cargamasivadetalle.NumeroSolicitud, cargamasivadetalle.TipoSolicitud, cargamasivadetalle.FechaSolicitud, cargamasivadetalle.FechaRecepcion, cargamasivadetalle.NumeroCliente, cargamasivadetalle.NombreCliente, cargamasivadetalle.DireccionCalleCliente, cargamasivadetalle.DireccionNumeroCliente, cargamasivadetalle.Region, cargamasivadetalle.Comuna, cargamasivadetalle.TelefonoContacto, cargamasivadetalle.TelefonoContacto2, cargamasivadetalle.Rut, cargamasivadetalle.UnidadNegocio, cargamasivadetalle.Gerencia, cargamasivadetalle.ObservacionAof, cargamasivadetalle.Prioridad);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

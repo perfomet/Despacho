@@ -1,31 +1,33 @@
 ﻿let estados = {
-  faltaTipoSolicitud: { id: 1, title: "Falta el campo 'TipoSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaFechaSolicitud: { id: 2, title: "Falta el campo 'FechaSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaFechaRecepcion: { id: 3, title: "Falta el campo 'FechaRecepcion'", class: "m-badge--danger", tipo: 'danger' },
-  faltaBodegaOrigen: { id: 4, title: "Falta el campo 'BodegaOrigen'", class: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", class: "m-badge--danger", tipo: 'danger' },
+  faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", class: "m-badge--danger", tipo: 'danger' },
+  faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", class: "m-badge--danger", tipo: 'danger' },
+  faltaFechaRecepcion: { id: 4, title: "Falta el campo 'FechaRecepcion'", class: "m-badge--danger", tipo: 'danger' },
   faltaNumeroCliente: { id: 5, title: "Falta el campo 'NumeroCliente'", class: "m-badge--danger", tipo: 'danger' },
   faltaNombreCliente: { id: 6, title: "Falta el campo 'NombreCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaDireccionCliente: { id: 7, title: "Falta el campo 'DireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaComuna: { id: 8, title: "Falta el campo 'Comuna'", class: "m-badge--danger", tipo: 'danger' },
-  faltaTelefonoContacto: { id: 9, title: "Falta el campo 'TelefonoContacto'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRUT: { id: 10, title: "Falta el campo 'RUT'", class: "m-badge--danger", tipo: 'danger' },
-  rutInvalido: { id: 11, title: "El RUT ingresado no es válido", class: "m-badge--danger", tipo: 'danger' },
-  faltaProyecto: { id: 12, title: "Falta el campo 'Proyecto'", class: "m-badge--danger", tipo: 'danger' },
-  faltaUnidadNegocio: { id: 13, title: "Falta el campo 'UnidadNegocio'", class: "m-badge--danger", tipo: 'danger' },
-  faltaGerencia: { id: 14, title: "Falta el campo 'Gerencia'", class: "m-badge--danger", tipo: 'danger' },
-  faltaObservacionAof: { id: 15, title: "Falta el campo 'ObservacionAof'", class: "m-badge--danger", tipo: 'danger' },
-  faltaPrioridad: { id: 16, title: "Falta el campo 'Prioridad'", class: "m-badge--danger", tipo: 'danger' },
-  faltaPlaca: { id: 17, title: "Falta el campo 'Placa'", class: "m-badge--danger", tipo: 'danger' },
-  tipoSolicitud: { id: 18, title: "Tipo de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoFechaSolicitud: { id: 19, title: "Fecha de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoFechaRecepcion: { id: 20, title: "Fecha de Recepción incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoBodegaOrigen: { id: 21, title: "Bodega Origen incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoNumeroCliente: { id: 22, title: "Numero Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoNombreCliente: { id: 23, title: "Nombre Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoComuna: { id: 24, title: "Comuna incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoGerencia: { id: 25, title: "Gerencia incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoPrioridad: { id: 26, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoPlaca: { id: 27, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
+  faltaDireccionCalleCliente: { id: 7, title: "Falta el campo 'DireccionCalleCliente'", class: "m-badge--danger", tipo: 'danger' },
+  faltaDireccionNumeroCliente: { id: 8, title: "Falta el campo 'DireccionNumeroCliente'", class: "m-badge--danger", tipo: 'danger' },
+  faltaRegion: { id: 9, title: "Falta el campo 'Region'", class: "m-badge--danger", tipo: 'danger' },
+  faltaComuna: { id: 10, title: "Falta el campo 'Comuna'", class: "m-badge--danger", tipo: 'danger' },
+  faltaTelefonoContacto: { id: 11, title: "Falta el campo 'TelefonoContacto'", class: "m-badge--danger", tipo: 'danger' },
+  faltaTelefonoContacto2: { id: 12, title: "Falta el campo 'TelefonoContacto2'", class: "m-badge--danger", tipo: 'danger' },
+  faltaRUT: { id: 13, title: "Falta el campo 'RUT'", class: "m-badge--danger", tipo: 'danger' },
+  rutInvalido: { id: 14, title: "El RUT ingresado no es válido", class: "m-badge--danger", tipo: 'danger' },
+  faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", class: "m-badge--danger", tipo: 'danger' },
+  faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", class: "m-badge--danger", tipo: 'danger' },
+  faltaObservacionAof: { id: 17, title: "Falta el campo 'ObservacionAof'", class: "m-badge--danger", tipo: 'danger' },
+  faltaPrioridad: { id: 18, title: "Falta el campo 'Prioridad'", class: "m-badge--danger", tipo: 'danger' },
+  faltaPlaca: { id: 19, title: "Falta el campo 'Placa'", class: "m-badge--danger", tipo: 'danger' },
+  tipoSolicitud: { id: 20, title: "Tipo de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoFechaSolicitud: { id: 21, title: "Fecha de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoFechaRecepcion: { id: 22, title: "Fecha de Recepción incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroCliente: { id: 23, title: "Numero Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
+  tipoNombreCliente: { id: 24, title: "Nombre Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
+  tipoRegion: { id: 25, title: "Nombre Región incorrecto", class: "m-badge--danger", tipo: 'danger' },
+  tipoComuna: { id: 26, title: "Comuna incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoGerencia: { id: 27, title: "Gerencia incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoPrioridad: { id: 28, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoPlaca: { id: 29, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
 };
 
 
@@ -175,10 +177,10 @@ let CargaMasiva = function () {
 
             filas.forEach((objeto) => {
               registros.push({
+                numeroSolicitud:objet['NumeroSolicitud'],
                 tiposolicitud: objeto['TipoSolicitud'],
                 fechasolicitud: objecto['FechaSolicitud'],
                 fecharecepcion: objecto['FechaRecepcion'],
-                bodegaorigen: objeto['BodegaOrigen'],
                 numerocliente: objeto['NumeroCliente'],
                 nombrecliente: objeto['NombreCliente'],
                 direccioncliente: objeto['DireccionCliente'],
@@ -263,15 +265,9 @@ let CargaMasiva = function () {
         {
           registro.estados.push(estados.FechaRecepcion);
         }
-        // VALIDA QUE EL TIPO DE BODEGA DE ORIGEN EXISTA Y SEA VÁLIDO
-        {
-          registro.estados.push(estados.tipoBodegaOrigen);
-        }
+        
 
-        // VALIDA QUE EL tipoBodegaOrigen EXISTA
-        if (!registro.tipoBodegaOrigen) {
-          registro.estados.push(estados.tipoBodegaOrigen);
-        }
+        
 
         // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
         {
@@ -335,8 +331,8 @@ let CargaMasiva = function () {
 
         // SI EL TIPO DE IDENTIFICADOR ES 'RUT', Y EXISTEN LOS DATOS DE IDENTIFICACIÓN, VALIDA QUE EL RUT SEA VÁLIDO
         if (
+          !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
           !registro.estados.contiene(estados.tipoSolicitud) &&
-          !registro.estados.contiene(estados.tipoBodegaOrigen) &&
           !registro.estados.contiene(estados.tipoNumeroCliente) &&
           !registro.estados.contiene(estados.tipoNombreCliente) &&
           !registro.estados.contiene(estados.tipoComuna) &&
@@ -347,7 +343,6 @@ let CargaMasiva = function () {
           !registro.estados.contiene(estados.faltaTipoSolicitud) &&
           !registro.estados.contiene(estados.faltaFechaSolicitud) &&
           !registro.estados.contiene(estados.faltaFechaRecepcion) &&
-          !registro.estados.contiene(estados.faltaBodegaOrigen) &&
           !registro.estados.contiene(estados.faltaNumeroCliente) &&
           !registro.estados.contiene(estados.faltaNombreCliente) &&
           !registro.estados.contiene(estados.faltaRUT) &&
@@ -368,24 +363,24 @@ let CargaMasiva = function () {
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
         if (
-          !registro.estados.contiene(estados.tipoBodegaOrigen) &&
           !registro.estados.contiene(estados.tipoNumeroCliente) &&
           !registro.estados.contiene(estados.tipoNombreCliente) &&
+          !registro.estados.contiene(estados.tipoRegion) &&
           !registro.estados.contiene(estados.tipoComuna) &&
           !registro.estados.contiene(estados.tipoNumeroCliente) &&
           !registro.estados.contiene(estados.tipoGerencia) &&
           !registro.estados.contiene(estados.tipoPrioridad) &&
           !registro.estados.contiene(estados.tipoPlaca) &&
-          !registro.estados.contiene(estados.faltaBodegaOrigen) &&
+          !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
           !registro.estados.contiene(estados.faltaNumeroCliente) &&
           !registro.estados.contiene(estados.faltaNombreCliente) &&
           !registro.estados.contiene(estados.faltaRUT) &&
-          !registro.estados.contiene(estados.faltaDireccionCliente) &&
+          !registro.estados.contiene(estados.faltaDireccionCalleCliente) &&
+          !registro.estados.contiene(estados.faltaDireccionNumeroCliente) &&
+          !registro.estados.contiene(estados.faltaRegion) &&
           !registro.estados.contiene(estados.faltaComuna) &&
-          !registro.estados.contiene(estados.faltaDireccionCliente) &&
           !registro.estados.contiene(estados.faltaGerencia) &&
           !registro.estados.contiene(estados.faltaPrioridad) &&
-          !registro.estados.contiene(estados.faltaProyecto) &&
           !registro.estados.contiene(estados.faltaObservacionAof) &&
           !registro.estados.contiene(estados.faltaPlaca) &&
           numeroSolicitudActual != registro.numeroSolicitud
@@ -436,17 +431,15 @@ let CargaMasiva = function () {
         registro.acciones || [],
         null,
         registro.estados || [],
+        registro.NumeroSolicitud || '',
         registro.tipoSolicitud || '',
-        registro.tipoBodegaOrigen || '',
         registro.tipoNumeroCliente || '',
         registro.tipoNombreCliente || '',
+        registro.tipoRegion || '',
         registro.tipoComuna || '',
         registro.tipoGerencia || '',
         registro.tipoPrioridad || '',
         registro.tipoPlaca || '',
-        registro.fechaInstalacion || '',
-        mes ? mes.nombre : (registro.mes || ''),
-        registro.anno || '',
         registro.cantidad || ''
       ];
 
@@ -483,6 +476,9 @@ let CargaMasiva = function () {
       return false;
     }
 
+    if (!columnas.contiene('NumeroSolicitud')) {
+      return false;
+    }
     if (!columnas.contiene('TipoSolicitud')) {
       return false;
     }
@@ -494,11 +490,7 @@ let CargaMasiva = function () {
     if (!columnas.contiene('FechaRecepcion')) {
       return false;
     }
-
-    if (!columnas.contiene('BodegaOrigen')) {
-      return false;
-    }
-
+    
     if (!columnas.contiene('NumeroCliente')) {
       return false;
     }
@@ -507,7 +499,14 @@ let CargaMasiva = function () {
       return false;
     }
 
-    if (!columnas.contiene('DireccionCliente')) {
+    if (!columnas.contiene('DireccionCalleCliente')) {
+      return false;
+    }
+    if (!columnas.contiene('DireccionNumeroCliente')) {
+      return false;
+    }
+
+    if (!columnas.contiene('Region')) {
       return false;
     }
 
@@ -519,14 +518,14 @@ let CargaMasiva = function () {
       return false;
     }
 
+    if (!columnas.contiene('TelefonoContacto2')) {
+      return false;
+    }
     if (!columnas.contiene('Rut')) {
       return false;
     }
 
-    if (!columnas.contiene('Proyecto')) {
-      return false;
-    }
-
+  
     if (!columnas.contiene('UnidadNegocio')) {
       return false;
     }
