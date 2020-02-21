@@ -2535,6 +2535,11 @@
     <Content Include="Views\CargaMasiva\CargaMasiva.cshtml" />
     <Content Include="Views\CargaMasiva\CargaMasivaDetalle.cshtml" />
     <Content Include="Views\CargaMasiva\CargaMasivaDetalleProducto.cshtml" />
+    <Content Include="Views\Solicitud\Secciones\SeccionSolicitud.cshtml" />
+    <Content Include="Views\Solicitud\Secciones\SeccionPlanificacion.cshtml" />
+    <Content Include="Views\Solicitud\Secciones\SeccionDocumentacion.cshtml" />
+    <Content Include="Views\Solicitud\Secciones\SeccionConcrecion.cshtml" />
+    <Content Include="Views\Solicitud\Secciones\SeccionAprobacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

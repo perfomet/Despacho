@@ -6,19 +6,21 @@ namespace Datos.Modelo
 	public class Solicitud : Base.ModeloBase
 	{
 		public int SolicitudDespachoId { get; set; }
+		public int NumeroSolicitud { get; set; }
 		public int TipoSolicitudId { get; set; }
 		public int EstadoSolicitudId { get; set; }
 		public string FechaSolicitud { get; set; }
 		public string FechaRecepcion { get; set; }
-		public string BodegaOrigen { get; set; }
 		public string NumeroCliente { get; set; }
 		public string NombreCliente { get; set; }
-		public string DireccionCliente { get; set; }
+		public string CalleDireccionCliente { get; set; }
+		public int NumeroDireccionCliente { get; set; }
+		public int RegionClienteId { get; set; }
 		public int ComunaClienteId { get; set; }
 		public string NumeroTelefonoContacto { get; set; }
+		public string NumeroTelefonoContactoAdicional { get; set; }
 		public string RutCliente { get; set; }
 		public string VRutCliente { get; set; }
-		public string Proyecto { get; set; }
 		public int PrioridadId { get; set; }
 		public int UnidadNegocioId { get; set; }
 		public int GerenciaId { get; set; }
@@ -48,28 +50,29 @@ namespace Datos.Modelo
 		public List<EquipoRetirado> EquiposRetirados { get { return Datos.EquipoRetirado.ObtenerEquiposRetirados(SolicitudDespachoId); } }
 		public List<PersonalAsignado> PersonalAsignado { get { return Datos.PersonalAsignado.ObtenerPersonalAsignado(SolicitudDespachoId); } }
 
-		public string TipoSolicitud { get; set; }
-		public string EstadoSolicitud { get; set; }
-		public string Prioridad { get; set; }
-		public string Solicitante { get; set; }
-		public string Cliente { get; set; }
+		public TipoSolicitud TipoSolicitud { get { return Datos.TipoSolicitud.ObtenerTipoSolicitud(this.TipoSolicitudId); } }
+		public EstadoSolicitud EstadoSolicitud { get { return Datos.EstadoSolicitud.ObtenerEstadoSolicitud(this.EstadoSolicitudId); } }
+		public Prioridad Prioridad { get { return Datos.Prioridad.ObtenerPrioridad(this.PrioridadId); } }
+		public Usuario Solicitante { get { return Datos.Usuario.ObtenerUsuario(this.SolicitanteId); } }
 
 		public void FromDataRow(DataRow fila)
 		{
 			this.SolicitudDespachoId = int.Parse(fila[0].ToString());
+			this.NumeroSolicitud = int.Parse(fila[1].ToString());
 			this.TipoSolicitudId = int.Parse(fila[1].ToString());
 			this.EstadoSolicitudId = int.Parse(fila[2].ToString());
 			this.FechaSolicitud = fila[3].ToString();
 			this.FechaRecepcion = fila[4].ToString();
-			this.BodegaOrigen = fila[5].ToString();
 			this.NumeroCliente = fila[6].ToString();
 			this.NombreCliente = fila[7].ToString();
-			this.DireccionCliente = fila[8].ToString();
+			this.CalleDireccionCliente = fila[8].ToString();
+			this.NumeroDireccionCliente = int.Parse(fila[8].ToString());
+			this.RegionClienteId = int.Parse(fila[9].ToString());
 			this.ComunaClienteId = int.Parse(fila[9].ToString());
 			this.NumeroTelefonoContacto = fila[10].ToString();
+			this.NumeroTelefonoContactoAdicional = fila[10].ToString();
 			this.RutCliente = fila[11].ToString();
 			this.VRutCliente = fila[12].ToString();
-			this.Proyecto = fila[13].ToString();
 			this.PrioridadId = int.Parse(fila[14].ToString());
 			this.UnidadNegocioId = int.Parse(fila[15].ToString());
 			this.GerenciaId = int.Parse(fila[16].ToString());
@@ -94,12 +97,6 @@ namespace Datos.Modelo
 			this.MotivoNoConcrecion = fila[32].ToString();
 
 			this.SolicitanteId = int.Parse(fila[33].ToString());
-
-			this.TipoSolicitud = fila[34].ToString();
-			this.EstadoSolicitud = fila[35].ToString();
-			this.Prioridad = fila[36].ToString();
-			this.Solicitante = fila[37].ToString();
-			this.Cliente = fila[38].ToString();
 		}
 	}
 }

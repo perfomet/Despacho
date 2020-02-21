@@ -7,11 +7,11 @@ namespace Datos.Datos
 	public class ModeloExistencia
 	{
 
-		public static List<Modelo.ModeloExistencia> ObtenerModelosExistencias(string marca, int clienteId)
+		public static List<Modelo.ModeloExistencia> ObtenerModelosExistencias(int clienteId)
 		{
 			string SELECTSentence = "SELECT DISTINCT E.Modelo";
 			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
-			string WHERESentence = (marca.Equals(string.Empty) ? "" : (" WHERE E.Marca = '" + marca + "'")) + (clienteId > 0 ? (" AND C.ClienteId = " + clienteId) : "");
+			string WHERESentence = (clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "");
 			string ORDERSentence = " ORDER BY E.Modelo;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
