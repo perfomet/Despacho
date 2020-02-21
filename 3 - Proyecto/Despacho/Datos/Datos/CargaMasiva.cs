@@ -52,14 +52,15 @@ namespace Datos.Datos
 			return cargamasiva;
 		}
 
-		public static bool Crear(Modelo.CargaMasiva cargamasiva)
+		public static int Crear(Modelo.CargaMasiva cargamasiva)
 		{
 			string INSERTSentence = "INSERT INTO CargaMasiva (UsuarioId, FechaHora, Archivo)";
 			string VALUESSentence = " VALUES({1}, '{2}', '{3}');";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
-			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
+			DataBase.ExecuteNonQuery(builder.ToString());
+			return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
 		}
 
 		public static bool Modificar(Modelo.CargaMasiva cargamasiva)

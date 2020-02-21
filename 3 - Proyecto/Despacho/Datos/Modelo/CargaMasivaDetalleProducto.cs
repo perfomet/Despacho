@@ -5,6 +5,7 @@ namespace Datos.Modelo
 	public class CargaMasivaDetalleProducto : Base.ModeloBase
 	{
 		public int CargaMasivaDetalleId { get; set; }
+		public int NumeroSolicitud { get; set; }
 		public string NumeroPlaca { get; set; }
 
 		public CargaMasivaDetalle CargaMasivaDetalle

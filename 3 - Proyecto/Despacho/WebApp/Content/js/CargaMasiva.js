@@ -26,14 +26,13 @@
   tipoGerencia: { id: 25, title: "Gerencia incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoPrioridad: { id: 26, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoPlaca: { id: 27, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
-   };
+};
 
 
 
 let acciones = {
-  crearPaciente: 1,
-  ingresarDispositivo: 2,
-  agregarProcedimientos: 3
+  crearSolicitud: 1,
+  agregarPlaca: 2
 };
 
 let CargaMasiva = function () {
@@ -172,7 +171,7 @@ let CargaMasiva = function () {
             }
 
             registros = [];
- 
+
 
             filas.forEach((objeto) => {
               registros.push({
@@ -191,7 +190,7 @@ let CargaMasiva = function () {
                 gerencia: objeto['Gerencia'],
                 observacionaof: objeto['ObservacionAof'],
                 prioridad: objeto['Prioridad'],
-                placa: objecto]['Placa']
+                placa: objecto['Placa']
               });
             });
 
@@ -245,6 +244,8 @@ let CargaMasiva = function () {
         return;
       }
 
+      let numeroSolicitudActual = 0;
+
       registros.forEach((registro) => {
         // VACÍA LAS LISTAS DE ESTADOS Y ACCIONES
         registro.estados = [];
@@ -273,7 +274,7 @@ let CargaMasiva = function () {
         }
 
         // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
-       {
+        {
           registro.estados.push(estados.tipoNumeroCliente);
         }
 
@@ -303,7 +304,7 @@ let CargaMasiva = function () {
         }
 
         // SI EL TIPO DE GERENCIA ES VALIDO 
-        {
+        if(!registro.gerencia){
           registro.estados.push(estados.tipoGerencia);
         }
 
@@ -331,13 +332,6 @@ let CargaMasiva = function () {
         if (!registro.tipoPlaca) {
           registro.estados.push(estados.tipoPlaca);
         }
-        
-       
-        *******
-
-
-
-        
 
         // SI EL TIPO DE IDENTIFICADOR ES 'RUT', Y EXISTEN LOS DATOS DE IDENTIFICACIÓN, VALIDA QUE EL RUT SEA VÁLIDO
         if (
@@ -365,14 +359,13 @@ let CargaMasiva = function () {
           !registro.estados.contiene(estados.faltaProyecto) &&
           !registro.estados.contiene(estados.faltaObservacionAof) &&
           !registro.estados.contiene(estados.faltaPlaca)
-        )
-        {
+        ) {
           let rut = registro.rut;
-          if (!ModuloVigilancia.ValidaRut(rut))
-          {
+          if (!ModuloVigilancia.ValidaRut(rut)) {
             registro.estados.push(estados.rutInvalido);
           }
         }
+
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
         if (
           !registro.estados.contiene(estados.tipoBodegaOrigen) &&
@@ -394,40 +387,18 @@ let CargaMasiva = function () {
           !registro.estados.contiene(estados.faltaPrioridad) &&
           !registro.estados.contiene(estados.faltaProyecto) &&
           !registro.estados.contiene(estados.faltaObservacionAof) &&
-          !registro.estados.contiene(estados.faltaPlaca)
-        )
-          {
-            // INTENTA OBTENER AL PACIENTE
-            let identificador = registro.identificador;
-            if (registro.tipoIdentificador.toUpperCase() == 'RUT') identificador += '-' + registro.dv;
-            let paciente = CapaDatos.ObtenerPacientes(identificador);
-
-          
-            // SI NO HAY ERRORES DE VALIDACIÓN, AGREGA LA ACCIÓN DE CREAR PACIENTE AL REGISTRO
-          if (!registro.estados.contiene(estados.faltaNombreCliente))
-            {
-              registro.acciones.push(acciones.crearPaciente);
-            }
-          }
-          // SI LA FECHA ES VÁLIDA, VALIDA QUE ESTA NO SEA POSTERIOR A LA FECHA ACTUAL
-          if (!registro.estados.contiene(estados.fechaInstalacionNoValida) && fechaInstalacion > moment(moment().format('DD/MM/YYYY'), 'DD/MM/YYYY'))
-        {
-          registro.estados.push(estados.fechaInstalacionPosterior);
+          !registro.estados.contiene(estados.faltaPlaca) &&
+          numeroSolicitudActual != registro.numeroSolicitud
+        ) {
+          // SI NO HAY ERRORES DE VALIDACIÓN, AGREGA LA ACCIÓN DE CREAR SOLICITUD AL REGISTRO
+          registro.acciones.push(acciones.crearSolicitud);
+        } else if (!registro.estados.contiene(estados.faltaPlaca) && registro.numeroSolicitud == numeroSolicitudActual) {
+          // SI SOLO TENGO LA PLACA
+          registro.acciones.push(acciones.agregarPlaca);
         }
-         _GuardarDatos(registro);
-        });
 
-      let cargaMasiva = {
-        idCargaMasiva: CapaDatos.ObtenerMaxSecuencia(),
-        fechaHora: moment().format('DD/MM/YYYY HH:mm'),
-        responsable: sessionStorage["usuarioLogueado"],
-        archivo:nombreArchivo,
-        registros: registros,
-        tipo: ModuloVigilancia.CargaMasiva
-        
-      };
-
-      CapaDatos.InsertarCargaMasiva(cargaMasiva);
+        numeroSolicitudActual = registro.numeroSolicitud;
+      });
 
       _CargarTabla();
 
@@ -436,8 +407,7 @@ let CargaMasiva = function () {
       $('#divTablaResultado').show();
 
       ModuloVigilancia.AlertaExito('Archivo procesado, para ver detalle ir a histórico de cargas', '¡Atención!');
-    } catch (ex)
-    {
+    } catch (ex) {
       console.log(ex);
       ModuloVigilancia.AlertaError('No se pudo procesar la información, verifique el archivo.', '¡Atención!');
     }
@@ -445,103 +415,11 @@ let CargaMasiva = function () {
     $('#btnProcesarRegistros').removeClass('pulso-guardar');
   };
 
-  let _GuardarDatos = function (registro) {
-    if (_ObtenerEstadosMalos(registro).length == 0) {
-      let cargamasiva;
-
-      if (registro.acciones.contiene(acciones.CrearCargaMasiva)) {
-        let identificador = registro.identificador;
-        if (registro.tipoIdentificador.toUpperCase() == 'RUT') identificador += '-' + registro.dv;
-        paciente = CapaDatos.ObtenerPacientes(identificador);
-
-        if (!CargaMasivaId) {
-          cargamasiva = _CrearCargaMasiva(registro);
-        }
-      }
-
-    }
-  };
-
-  let _CrearCargaMasiva = function (registro) {
-    let cargamasivaid = registro.CargaMasivaId;
-    
-    let identificador = registro.identificador;
-    if (tipoIdentificador == 'rut') identificador += '-' + registro.dv;
-
-    
-    let registroAntiguo = _ObtenerRegistroMasAntiguo(registro);
-
-    let fechaAdmision = '01/' + (registroAntiguo.mes > 10 ? registroAntiguo.mes : ('0' + registroAntiguo.mes)) + '/' + registroAntiguo.anno;
-
-    CapaDatos.InsertarPaciente({
-      idPaciente: identificador,
-      tipoIdentificador: tipoIdentificador,
-      nombre: registro.nombres,
-      apellidoPaterno: registro.apat,
-      apellidoMaterno: registro.amat,
-      
-      esAmbulatorio: true,
-      fechaAdmision: fechaAdmision,
-      dispositivos: [],
-      procedimientos: [],
-      sindromes: [],
-      servicios: [],
-      vigilancias: []
-    });
-
-    return CapaDatos.ObtenerPacientes(identificador);
-  };
-
-  
-
-  let _AgregarProcedimientos = function (registro, paciente) {
-    let dispositivo = _ObtenerDispositivoPaciente(registro, paciente);
-
-    if (dispositivo) {
-      let mes = ModuloVigilancia.Meses().obtener({ numero: registro.mes });
-
-      let procedimiento = dispositivo.procedimientosAmbulatorios.obtener({ numeroMes: registro.mes, anno: registro.anno });
-
-      if (procedimiento) {
-        procedimiento.cantidadProcedimientos += parseInt(registro.cantidad);
-      } else {
-        dispositivo.procedimientosAmbulatorios.push({
-          cantidadProcedimientos: parseInt(registro.cantidad),
-          mes: mes.nombre,
-          numeroMes: mes.numero,
-          anno: registro.anno
-        });
-      }
-    }
-
-    CapaDatos.ActulizarPaciente(paciente, paciente.idPaciente);
-  };
-
-  let _ObtenerRegistroMasAntiguo = function (registro) {
-    return registros.filter((r) => {
-      return r.identificador == registro.identificador;
-    }).sort((a, b) => {
-      if (a.mes > b.mes && a.anno > b.anno) {
-        return 1;
-      }
-
-      if (a.mes < b.mes && a.anno < b.anno) {
-        return -1;
-      }
-
-      return 0;
-    })[0];
-  };
-
-  
-
-  let _ObtenerEstadosMalos = function (registro)
-  {
+  let _ObtenerEstadosMalos = function (registro) {
     return registro.estados.filter((e) => { return e.tipo == 'danger'; });
   };
 
-  let _CargarTabla = function ()
-  {
+  let _CargarTabla = function () {
     tabla.clear();
     let data = [];
 
@@ -553,7 +431,7 @@ let CargaMasiva = function () {
       if ($('input[name="resutadoRegistro"][value="2"]:checked').val() == undefined && registro.estados.length == 0) {
         return;
       }
-      
+
       let valores = [
         registro.acciones || [],
         null,
@@ -667,6 +545,45 @@ let CargaMasiva = function () {
     return true;
   };
 
+  let _Guardar = function () {
+    let cargaMasiva = {
+      idCargaMasiva: CapaDatos.ObtenerMaxSecuencia(),
+      fechaHora: moment().format('DD/MM/YYYY HH:mm'),
+      responsable: sessionStorage["usuarioLogueado"],
+      archivo: nombreArchivo
+    };
+
+    let detalle = [];
+    let productosDetalle = [];
+
+    registros.forEach((registro) => {
+      if (registro.acciones.contiene(acciones.crearSolicitud)) {
+        detalle.push({
+          //propiedades del detalle
+          numeroSolicitud: registro.numeroSolicitud
+        });
+
+        productosDetalle.push({
+          numeroPlaca: registro.numeroPlaca,
+          numeroSolicitud: registro.numeroSolicitud
+        });
+      } else if (registro.acciones.contiene(acciones.agregarPlaca)) {
+        productosDetalle.push({
+          numeroPlaca: registro.numeroPlaca,
+          numeroSolicitud: registro.numeroSolicitud
+        });
+      }
+    });
+
+    $.post("/CargaMasiva/Create", {
+      cargamasiva: cargaMasiva,
+      detallecargamasiva: detalle,
+      cargaMasivaDetalleProductos: productosDetalle
+    }, function (data) {
+
+    });
+  }
+
   return {
     init: function () {
       InitCargaMasiva();
@@ -679,9 +596,9 @@ let CargaMasiva = function () {
 
   let cargasmasivas;
 
-    let Init = function () {
-        InitElementos();
-    };
+  let Init = function () {
+    InitElementos();
+  };
 
   let InitElementos = function () {
     $('.m-select2').select2();
@@ -726,71 +643,71 @@ let CargaMasiva = function () {
           input: $('#buscarCargaMasiva')
         },
         columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY"},
+          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
           { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-          ],
+        ],
         translate: {
           records: {
-                      processing: "Cargando...",
-                      noRecords: "No se encontraron registros"
-                    },
+            processing: "Cargando...",
+            noRecords: "No se encontraron registros"
+          },
           toolbar: {
             pagination: {
               items: {
                 default: {
-                          first: "Primero",
-                          prev: "Anterior",
-                          next: "Siguiente",
-                          last: "Último",
-                          more: "Más páginas",
-                          input: "Número de página",
-                          select: "Seleccionar tamaño de página"
-                        },
-                  info: "Viendo {{start}} - {{end}} de {{total}} registros"
-                }
+                  first: "Primero",
+                  prev: "Anterior",
+                  next: "Siguiente",
+                  last: "Último",
+                  more: "Más páginas",
+                  input: "Número de página",
+                  select: "Seleccionar tamaño de página"
+                },
+                info: "Viendo {{start}} - {{end}} de {{total}} registros"
               }
             }
           }
+        }
       });
     };
-      $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
-          $(".m_datatable").mDatatable({
-              data: {
-                  type: "local",
-                  source: cargas,
-                  pageSize: 10
-              },
-              layout: {
-                  theme: "default",
-                  class: "",
-                  scroll: !1,
-                  footer: !1
-              },
-              sortable: !0,
-              pagination: !0,
-              search: {
-                  input: $("#buscarCargaMasiva")
-              },
-              columns: [
-                { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-                { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
-                { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-                { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-                ], true, true);
-              
-          });
-      });
-  };
+    $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
+      $(".m_datatable").mDatatable({
+        data: {
+          type: "local",
+          source: cargas,
+          pageSize: 10
+        },
+        layout: {
+          theme: "default",
+          class: "",
+          scroll: !1,
+          footer: !1
+        },
+        sortable: !0,
+        pagination: !0,
+        search: {
+          input: $("#buscarCargaMasiva")
+        },
+        columns: [
+          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
+          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+        ], true, true);
 
-    return {
-            init: function () {
-              Init();
-              }
-            };
+    });
+  });
+};
+
+return {
+  init: function () {
+    Init();
+  }
+};
   }();
 
 $(() => {
-    CargaMasiva.init();
+  CargaMasiva.init();
 });
