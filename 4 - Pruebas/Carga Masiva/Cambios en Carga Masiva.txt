@@ -1,0 +1,8 @@
+Eliminar Bodega de Origen
+Separar la Dirección en Calle y Número para validar con Google Maps
+Teléfono de contacto obligatorio
+se agrega un teléfono de contacto _2 que es opcional
+se elimina el campo Proyecto
+Las ObservacionesAof se limitan a 500 caracteres máximo
+Agregar Número de Solicitud Interno del Cliente, (Primera columna del Excel)
+Agregar Región en el Excel
