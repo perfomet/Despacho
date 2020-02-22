@@ -845,10 +845,10 @@ CREATE TABLE CargaMasivaDetalle (
 	TipoSolicitud VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla TipoSolicitud
 	FechaSolicitud VARCHAR(20) NOT NULL,
 	FechaRecepcion VARCHAR(20) NOT NULL,
-	NumeroCliente VARCHAR(20) NOT NULL,
+	NumeroCliente VARCHAR(50) NOT NULL,
 	NombreCliente VARCHAR(100) NOT NULL,
 	CalleDireccionCliente VARCHAR(255) NOT NULL,
-	NumeroDireccionCliente VARCHAR(255) NOT NULL,
+	NumeroDireccionCliente NUMERIC NOT NULL,
 	RegionCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Region
 	ComunaCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
 	NumeroTelefonoContacto VARCHAR(15) NOT NULL,
@@ -864,6 +864,7 @@ GO
 -- Se crea un detalle de producto por cada numero de placa distinto en el archivo
 CREATE TABLE CargaMasivaDetalleProducto (
 	CargaMasivaDetalleId INT NOT NULL FOREIGN KEY REFERENCES CargaMasivaDetalle (CargaMasivaDetalleId),
+	NumeroSolicitud INT NOT NULL, 
 	NumeroPlaca VARCHAR(20) NOT NULL, -- Enlaza por numero a tabla de Existencias
 	UNIQUE (CargaMasivaDetalleId, NumeroPlaca)
 )
