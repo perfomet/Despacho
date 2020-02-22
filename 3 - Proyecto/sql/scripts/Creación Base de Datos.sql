@@ -847,18 +847,18 @@ CREATE TABLE CargaMasivaDetalle (
 	FechaRecepcion VARCHAR(20) NOT NULL,
 	NumeroCliente VARCHAR(20) NOT NULL,
 	NombreCliente VARCHAR(100) NOT NULL,
-	DireccionCalleCliente VARCHAR(255) NOT NULL,
-	DireccionNumeroCliente VARCHAR(255) NOT NULL,
-	Region VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Region
-	Comuna VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
-	TelefonoContacto VARCHAR(15) NOT NULL,
-	TelefonoContacto2 VARCHAR(15) NOT NULL,
-	Rut VARCHAR(12) NOT NULL,
+	CalleDireccionCliente VARCHAR(255) NOT NULL,
+	NumeroDireccionCliente VARCHAR(255) NOT NULL,
+	RegionCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Region
+	ComunaCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
+	NumeroTelefonoContacto VARCHAR(15) NOT NULL,
+	NumeroTelefonoContactoAdicional VARCHAR(15) NOT NULL,
+	RutCliente VARCHAR(12) NOT NULL,
 	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
 	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
 	ObservacionAof VARCHAR(500) NOT NULL,
 	Prioridad VARCHAR(100) NOT NULL -- Enlaza por texto a tabla Prioridad
-)
+	)
 GO
 
 -- Se crea un detalle de producto por cada numero de placa distinto en el archivo

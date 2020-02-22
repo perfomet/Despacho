@@ -5,13 +5,13 @@
   faltaFechaRecepcion: { id: 4, title: "Falta el campo 'FechaRecepcion'", class: "m-badge--danger", tipo: 'danger' },
   faltaNumeroCliente: { id: 5, title: "Falta el campo 'NumeroCliente'", class: "m-badge--danger", tipo: 'danger' },
   faltaNombreCliente: { id: 6, title: "Falta el campo 'NombreCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaDireccionCalleCliente: { id: 7, title: "Falta el campo 'DireccionCalleCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaDireccionNumeroCliente: { id: 8, title: "Falta el campo 'DireccionNumeroCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRegion: { id: 9, title: "Falta el campo 'Region'", class: "m-badge--danger", tipo: 'danger' },
-  faltaComuna: { id: 10, title: "Falta el campo 'Comuna'", class: "m-badge--danger", tipo: 'danger' },
-  faltaTelefonoContacto: { id: 11, title: "Falta el campo 'TelefonoContacto'", class: "m-badge--danger", tipo: 'danger' },
-  faltaTelefonoContacto2: { id: 12, title: "Falta el campo 'TelefonoContacto2'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRUT: { id: 13, title: "Falta el campo 'RUT'", class: "m-badge--danger", tipo: 'danger' },
+  faltaCalleDireccionCliente: { id: 7, title: "Falta el campo 'CalleDireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroDireccionCliente: { id: 8, title: "Falta el campo 'NumeroDireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
+  faltaRegionCliente: { id: 9, title: "Falta el campo 'RegionCliente'", class: "m-badge--danger", tipo: 'danger' },
+  faltaComunaCliente: { id: 10, title: "Falta el campo 'ComunaCliente'", class: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroTelefonoContacto: { id: 11, title: "Falta el campo 'NumeroTelefonoContacto'", class: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroTelefonoContactoAdicional: { id: 12, title: "Falta el campo 'NumeroTelefonoContactoAdicional'", class: "m-badge--danger", tipo: 'danger' },
+  faltaRUTCliente: { id: 13, title: "Falta el campo 'RUTCliente'", class: "m-badge--danger", tipo: 'danger' },
   rutInvalido: { id: 14, title: "El RUT ingresado no es válido", class: "m-badge--danger", tipo: 'danger' },
   faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", class: "m-badge--danger", tipo: 'danger' },
   faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", class: "m-badge--danger", tipo: 'danger' },
@@ -23,8 +23,8 @@
   tipoFechaRecepcion: { id: 22, title: "Fecha de Recepción incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoNumeroCliente: { id: 23, title: "Numero Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
   tipoNombreCliente: { id: 24, title: "Nombre Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoRegion: { id: 25, title: "Nombre Región incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoComuna: { id: 26, title: "Comuna incorrecta", class: "m-badge--danger", tipo: 'danger' },
+  tipoRegionCliente: { id: 25, title: "Nombre Región incorrecto", class: "m-badge--danger", tipo: 'danger' },
+  tipoComunaCliente: { id: 26, title: "ComunaCliente incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoGerencia: { id: 27, title: "Gerencia incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoPrioridad: { id: 28, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoPlaca: { id: 29, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
@@ -183,11 +183,13 @@ let CargaMasiva = function () {
                 fecharecepcion: objecto['FechaRecepcion'],
                 numerocliente: objeto['NumeroCliente'],
                 nombrecliente: objeto['NombreCliente'],
-                direccioncliente: objeto['DireccionCliente'],
-                comuna: objeto['Comuna'],
-                telefonocontacto: objeto['TelefonoContacto'],
-                rut: objeto['RUT'],
-                proyecto: objeto['Proyecto'],
+                calledireccioncliente: objeto['CalleDireccionCliente'],
+                numerodireccioncliente: objeto['NumeroDireccionCliente'],
+                regioncliente: objeto['RegionCliente'],
+                comunacliente: objeto['ComunaCliente'],
+                numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
+                numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
+                rutcliente: objeto['RutCliente'],
                 unidadnegocion: objeto['UnidadNegocio'],
                 gerencia: objeto['Gerencia'],
                 observacionaof: objeto['ObservacionAof'],
@@ -255,6 +257,9 @@ let CargaMasiva = function () {
 
         // VALIDA QUE EL TIPO DE SOLICITUD EXISTA Y SEA VÁLIDO
         {
+          registro.estados.push(estados.numeroSolicitud);
+        }
+        {
           registro.estados.push(estados.tipoSolicitud);
         }
         // VALIDA QUE LA FECHA DE SOLICITUD EXISTA Y SEA VÁLIDO
@@ -266,9 +271,6 @@ let CargaMasiva = function () {
           registro.estados.push(estados.FechaRecepcion);
         }
         
-
-        
-
         // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
         {
           registro.estados.push(estados.tipoNumeroCliente);
@@ -288,15 +290,24 @@ let CargaMasiva = function () {
         if (!registro.tipoNombreCliente) {
           registro.estados.push(estados.tipoNombreCliente);
         }
-
-        // SI EL TIPO DE COMUNA ES VALIDO 
+        // SI EL TIPO DE REGION ES VALIDO 
         {
-          registro.estados.push(estados.tipoComuna);
+          registro.estados.push(estados.tipoRegionCliente);
         }
 
         // VALIDA QUE LA COMUNA EXISTA
-        if (!registro.tipoComuna) {
-          registro.estados.push(estados.tipoComuna);
+        if (!registro.tipoRegionCliente) {
+          registro.estados.push(estados.faltaRegionCliente);
+        }
+
+        // SI EL TIPO DE COMUNA ES VALIDO 
+        {
+          registro.estados.push(estados.tipoComunaCliente);
+        }
+
+        // VALIDA QUE LA COMUNA EXISTA
+        if (!registro.tipoComunaCliente) {
+          registro.estados.push(estados.faltaComunaCliente);
         }
 
         // SI EL TIPO DE GERENCIA ES VALIDO 
@@ -332,31 +343,34 @@ let CargaMasiva = function () {
         // SI EL TIPO DE IDENTIFICADOR ES 'RUT', Y EXISTEN LOS DATOS DE IDENTIFICACIÓN, VALIDA QUE EL RUT SEA VÁLIDO
         if (
           !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
-          !registro.estados.contiene(estados.tipoSolicitud) &&
-          !registro.estados.contiene(estados.tipoNumeroCliente) &&
-          !registro.estados.contiene(estados.tipoNombreCliente) &&
-          !registro.estados.contiene(estados.tipoComuna) &&
-          !registro.estados.contiene(estados.tipoNumeroCliente) &&
-          !registro.estados.contiene(estados.tipoGerencia) &&
-          !registro.estados.contiene(estados.tipoPrioridad) &&
-          !registro.estados.contiene(estados.tipoPlaca) &&
           !registro.estados.contiene(estados.faltaTipoSolicitud) &&
           !registro.estados.contiene(estados.faltaFechaSolicitud) &&
           !registro.estados.contiene(estados.faltaFechaRecepcion) &&
           !registro.estados.contiene(estados.faltaNumeroCliente) &&
           !registro.estados.contiene(estados.faltaNombreCliente) &&
-          !registro.estados.contiene(estados.faltaRUT) &&
-          !registro.estados.contiene(estados.faltaDireccionCliente) &&
-          !registro.estados.contiene(estados.faltaComuna) &&
-          !registro.estados.contiene(estados.faltaDireccionCliente) &&
+          !registro.estados.contiene(estados.faltaCalleDireccionCliente) &&
+          !registro.estados.contiene(estados.faltaNumeroDireccionCliente) &&
+          !registro.estados.contiene(estados.faltaRegionCliente) &&
+          !registro.estados.contiene(estados.faltaComunaCliente) &&
+          !registro.estados.contiene(estados.faltaNumeroTelefonoContacto) &&
+          !registro.estados.contiene(estados.faltaNumeroTelefonoContactoAdicional) &&
+          !registro.estados.contiene(estados.faltaRUTCliente) &&
+          !registro.estados.contiene(estados.faltaUnidadNegocio) &&
           !registro.estados.contiene(estados.faltaGerencia) &&
-          !registro.estados.contiene(estados.faltaPrioridad) &&
-          !registro.estados.contiene(estados.faltaProyecto) &&
           !registro.estados.contiene(estados.faltaObservacionAof) &&
-          !registro.estados.contiene(estados.faltaPlaca)
+          !registro.estados.contiene(estados.faltaPrioridad) &&
+          !registro.estados.contiene(estados.faltaPlaca) &&
+          !registro.estados.contiene(estados.tipoSolicitud) &&
+          !registro.estados.contiene(estados.tipoRegionCliente) &&
+          !registro.estados.contiene(estados.tipoComunaCliente) &&
+          !registro.estados.contiene(estados.tipoUnidadNegocio) &&
+          !registro.estados.contiene(estados.tipoGerencia) &&
+          !registro.estados.contiene(estados.tipoPrioridad) &&
+          !registro.estados.contiene(estados.tipoPlaca)
+                           
         ) {
-          let rut = registro.rut;
-          if (!ModuloVigilancia.ValidaRut(rut)) {
+          let rutcliente = registro.rutcliente;
+          if (!ModuloVigilancia.ValidaRut(rutcliente)) {
             registro.estados.push(estados.rutInvalido);
           }
         }
@@ -365,9 +379,8 @@ let CargaMasiva = function () {
         if (
           !registro.estados.contiene(estados.tipoNumeroCliente) &&
           !registro.estados.contiene(estados.tipoNombreCliente) &&
-          !registro.estados.contiene(estados.tipoRegion) &&
-          !registro.estados.contiene(estados.tipoComuna) &&
-          !registro.estados.contiene(estados.tipoNumeroCliente) &&
+          !registro.estados.contiene(estados.tipoRegionCliente) &&
+          !registro.estados.contiene(estados.tipoComunaCliente) &&
           !registro.estados.contiene(estados.tipoGerencia) &&
           !registro.estados.contiene(estados.tipoPrioridad) &&
           !registro.estados.contiene(estados.tipoPlaca) &&
@@ -377,8 +390,8 @@ let CargaMasiva = function () {
           !registro.estados.contiene(estados.faltaRUT) &&
           !registro.estados.contiene(estados.faltaDireccionCalleCliente) &&
           !registro.estados.contiene(estados.faltaDireccionNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaRegion) &&
-          !registro.estados.contiene(estados.faltaComuna) &&
+          !registro.estados.contiene(estados.faltaRegionCliente) &&
+          !registro.estados.contiene(estados.faltaComunaCliente) &&
           !registro.estados.contiene(estados.faltaGerencia) &&
           !registro.estados.contiene(estados.faltaPrioridad) &&
           !registro.estados.contiene(estados.faltaObservacionAof) &&
@@ -435,8 +448,8 @@ let CargaMasiva = function () {
         registro.tipoSolicitud || '',
         registro.tipoNumeroCliente || '',
         registro.tipoNombreCliente || '',
-        registro.tipoRegion || '',
-        registro.tipoComuna || '',
+        registro.tipoRegionCliente || '',
+        registro.tipoComunaCliente || '',
         registro.tipoGerencia || '',
         registro.tipoPrioridad || '',
         registro.tipoPlaca || '',
@@ -499,33 +512,34 @@ let CargaMasiva = function () {
       return false;
     }
 
-    if (!columnas.contiene('DireccionCalleCliente')) {
-      return false;
-    }
-    if (!columnas.contiene('DireccionNumeroCliente')) {
+    if (!columnas.contiene('CalleDireccionCliente')) {
       return false;
     }
 
-    if (!columnas.contiene('Region')) {
+    if (!columnas.contiene('NumeroDireccionCliente')) {
       return false;
     }
 
-    if (!columnas.contiene('Comuna')) {
+    if (!columnas.contiene('RegionCliente')) {
       return false;
     }
 
-    if (!columnas.contiene('TelefonoContacto')) {
+    if (!columnas.contiene('ComunaCliente')) {
       return false;
     }
 
-    if (!columnas.contiene('TelefonoContacto2')) {
-      return false;
-    }
-    if (!columnas.contiene('Rut')) {
+    if (!columnas.contiene('NumeroTelefonoContacto')) {
       return false;
     }
 
-  
+    if (!columnas.contiene('NumeroTelefonoContactoAdicional')) {
+      return false;
+    }
+
+    if (!columnas.contiene('RutCliente')) {
+      return false;
+    }
+      
     if (!columnas.contiene('UnidadNegocio')) {
       return false;
     }

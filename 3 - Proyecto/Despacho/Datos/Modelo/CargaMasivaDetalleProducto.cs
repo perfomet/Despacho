@@ -16,7 +16,8 @@ namespace Datos.Modelo
 		public void FromDataRow(DataRow fila)
 		{
 			this.CargaMasivaDetalleId = int.Parse(fila[0].ToString());
-			this.NumeroPlaca = fila[1].ToString();
+			this.NumeroSolicitud = int.Parse(fila[1].ToString());
+			this.NumeroPlaca = fila[2].ToString();
 		}
 	}
 }

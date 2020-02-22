@@ -13,13 +13,13 @@ namespace Datos.Modelo
 		public string FechaRecepcion { get; set; }
 		public string NumeroCliente { get; set; }
 		public string NombreCliente { get; set; }
-		public string DireccionCalleCliente { get; set; }
-		public string DireccionNumeroCliente { get; set; }
-		public string Region { get; set; }
-		public string Comuna { get; set; }
-		public string TelefonoContacto { get; set; }
-		public string TelefonoContacto2 { get; set; }
-		public string Rut { get; set; }
+		public string CalleDireccionCliente { get; set; }
+		public string NumeroDireccionCliente { get; set; }
+		public string RegionCliente { get; set; }
+		public string ComunaCliente { get; set; }
+		public string NumeroTelefonoContacto { get; set; }
+		public string NumeroTelefonoContactoAdicional { get; set; }
+		public string RutCliente { get; set; }
 		public string UnidadNegocio { get; set; }
 		public string Gerencia { get; set; }
 		public string ObservacionAof { get; set; }
@@ -47,18 +47,18 @@ namespace Datos.Modelo
 			this.FechaRecepcion = fila[5].ToString();
 			this.NumeroCliente = fila[6].ToString();
 			this.NombreCliente = fila[7].ToString();
-			this.DireccionCalleCliente = fila[8].ToString();
-			this.DireccionNumeroCliente = fila[9].ToString();
-			this.Region = fila[10].ToString();
-			this.Comuna = fila[11].ToString();
-			this.TelefonoContacto = fila[12].ToString();
-			this.TelefonoContacto2 = fila[13].ToString();
-			this.Rut = fila[14].ToString();
+			this.CalleDireccionCliente = fila[8].ToString();
+			this.NumeroDireccionCliente = fila[9].ToString();
+			this.RegionCliente = fila[10].ToString();
+			this.ComunaCliente = fila[11].ToString();
+			this.NumeroTelefonoContacto = fila[12].ToString();
+			this.NumeroTelefonoContactoAdicional = fila[13].ToString();
+			this.RutCliente = fila[14].ToString();
 			this.UnidadNegocio = fila[15].ToString();
 			this.Gerencia = fila[16].ToString();
 			this.ObservacionAof = fila[17].ToString();
 			this.Prioridad = fila[18].ToString();
-				
+			
 		}
 	}
 }

@@ -49,10 +49,10 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.CargaMasivaDetalleProducto producto)
 		{
 			string INSERTSentence = "INSERT INTO CargaMasivaDetalleProducto";
-			string VALUESSentence = " VALUES('{0}', '{1}');";
+			string VALUESSentence = " VALUES('{0}', {1}, '{2}');";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, producto.CargaMasivaDetalleId, producto.NumeroPlaca);
+			builder.AppendFormat(SQLSentence, producto.CargaMasivaDetalleId, producto.NumeroSolicitud, producto.NumeroPlaca);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
