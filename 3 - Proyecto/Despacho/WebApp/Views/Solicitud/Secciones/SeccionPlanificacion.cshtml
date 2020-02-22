@@ -1,0 +1,99 @@
+﻿@model Datos.Modelo.Solicitud
+@{
+	List<Datos.Modelo.Camion> camiones = Datos.Datos.Camion.ObtenerCamiones();
+	List<Datos.Modelo.Personal> personales = Datos.Datos.Personal.ObtenerPersonal();
+}
+<div class="m-wizard__form-step @((Model.EstadoSolicitudId == 1 || Model.EstadoSolicitudId == 2) ? "m-wizard__form-step--current" : "")" id="seccion-planificacion">
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Despacho:</label>
+		<div class="col-xl-9 col-lg-9">
+			<div class='input-group date pull-right'>
+				<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de despacho" id="fechaDespacho" value="@Model.FechaDespacho">
+				<div class="input-group-append">
+					<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Camión:</label>
+		<div class="col-xl-9 col-lg-9">
+			<select id="patenteCamion" class="form-control m-select2" placeholder="">
+				<option value="0" selected disabled>Seleccione un camión</option>
+				@foreach (Datos.Modelo.Camion camion in camiones)
+				{
+					<option value="@camion.Patente" @(camion.Patente == Model.PatenteCamion ? "selected" : "")>@camion.Descripcion</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Llamada día Anterior:</label>
+		<div class="col-xl-9 col-lg-9">
+			<div class="m-radio-inline">
+				<label class="m-radio">
+					<input type="radio" name="llamada" value="1"> Si
+					<span></span>
+				</label>
+				<label class="m-radio">
+					<input type="radio" name="llamada" value="0"> No
+					<span></span>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">Comentarios:</label>
+		<div class="col-xl-9 col-lg-9">
+			<textarea class="form-control m-input" id="comentarios" maxlength="255">@Model.ComentariosLlamada</textarea>
+		</div>
+	</div>
+	<div class="m-separator m-separator--dashed m-separator--lg"></div>
+	<div class="m-form__section">
+		<div class="m-form__heading">
+			<div style="display: flex;justify-content: end;">
+				<h3 class="m-form__heading-title" style="width: 100%;">Personal Asignado</h3>
+				<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modalEquipoSolicitado">
+					<span>
+						<i class="flaticon-add"></i>
+						<span>Asignar Personal</span>
+					</span>
+				</a>
+			</div>
+		</div>
+		<div class="m_datatable" id="lista-personal-asignado"></div>
+	</div>
+</div>
+
+<!--begin::Modal-->
+<div class="modal fade" id="modalPersonalAsignado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Asignación de Personal</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group m-form__group row">
+					<label class="col-xl-3 col-lg-3 col-form-label">* Personal:</label>
+					<div class="col-xl-9 col-lg-9">
+						<select id="estadoEquipo" class="form-control m-select2" placeholder="">
+							<option value="0" selected disabled>Seleccione un miembro del personal</option>
+							@foreach (Datos.Modelo.Personal personal in personales)
+							{
+								<option value="@personal.Personalid">@(personal.TipoPersonal + " - " + personal.Nombre)</option>
+							}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-success" id="solicitarEquipos">Asignar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end::Modal-->

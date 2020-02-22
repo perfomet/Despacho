@@ -76,11 +76,15 @@ VALUES (1, 'dperdigon', '123', 'David', 'Perdigón', 'García', 'davidperdigon.g
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
 VALUES (1, 'fbalmaseda', '123', 'Fancisco', 'Balmaseda', 'Neyra', 'francisco.vivacuba@gmail.com', NULL, 1)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
+VALUES (1, 'soporte', '123', 'Usuario', 'Soporte', NULL, 'soporte@gmail.com', NULL, 1)
+INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
 VALUES (2, 'administrador', '123', 'Usuario', 'Administrador', NULL, 'pruebas@prueba.cl', NULL, 1)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
 VALUES (3, 'planificador', '123', 'Usuario', 'Planificador', NULL, 'pruebas@prueba.cl', NULL, 1)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
-VALUES (4, 'cliente', '123', 'Usuario', 'Cliente', NULL, 'pruebas@prueba.cl', 2003, 1)
+VALUES (4, 'soprole', '123', 'Usuario', 'Soprole', NULL, 'pruebas@prueba.cl', 2004, 1)
+INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
+VALUES (4, 'andina', '123', 'Usuario', 'Andina', NULL, 'pruebas@prueba.cl', 2001, 1)
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo)  
 VALUES (5, 'bodega', '123', 'Usuario', 'Bodega', NULL, 'pruebas@prueba.cl', NULL, 1)
 
@@ -760,29 +764,31 @@ GO
 
 CREATE TABLE SolicitudDespacho (
 	-- FASE 1 CLIENTE
-	SolicitudDespachoId	INT PRIMARY KEY IDENTITY (10101, 1),
+	SolicitudDespachoId	INT PRIMARY KEY IDENTITY (1100, 1),
+	NumeroSolicitud INT NOT NULL UNIQUE,
 	TipoSolicitudId INT NOT NULL FOREIGN KEY REFERENCES TipoSolicitud (TipoSolicitudId),
 	EstadoSolicitudId INT NOT NULL FOREIGN KEY REFERENCES EstadoSolicitud (EstadoSolicitudId),
 	FechaSolicitud DATETIME NOT NULL,
 	FechaRecepcion DATETIME NOT NULL,
-	BodegaOrigen VARCHAR(10) NOT NULL,
 	NumeroCliente VARCHAR(50) NOT NULL,
 	NombreCliente VARCHAR(255) NOT NULL,
-	DireccionCliente VARCHAR(255) NOT NULL,
+	CalleDireccionCliente VARCHAR(100) NOT NULL,
+	NumeroDireccionCliente NUMERIC NOT NULL,
+	RegionClienteId INT NOT NULL FOREIGN KEY REFERENCES Region (RegionId),
 	ComunaClienteId INT NOT NULL FOREIGN KEY REFERENCES Comuna (ComunaId),
-	NumeroTelefonoContacto VARCHAR(15) NULL,
+	NumeroTelefonoContacto VARCHAR(15) NOT NULL,
+	NumeroTelefonoContactoAdicional VARCHAR(15) NULL,
 	RutCliente VARCHAR(8) NOT NULL,
 	VRutCliente CHAR(1) NOT NULL,
-	Proyecto VARCHAR(100) NOT NULL,
 	PrioridadId INT NOT NULL FOREIGN KEY REFERENCES Prioridad (PrioridadId),
 	UnidadNegocioId INT NOT NULL FOREIGN KEY REFERENCES UnidadNegocio (UnidadNegocioId),
 	GerenciaId INT NOT NULL FOREIGN KEY REFERENCES Gerencia (GerenciaId),
-	ObservacionAof VARCHAR(MAX) NULL,
+	ObservacionAof VARCHAR(500) NULL,
 	-- FASE 2 PLANIFICADOR
 	FechaDespacho DATETIME NULL,
 	PatenteCamion VARCHAR(10) NULL FOREIGN KEY REFERENCES Camion (Patente),
 	LlamadaDiaAnterior BIT NULL,
-	ComentariosLlamada VARCHAR(MAX) NULL,
+	ComentariosLlamada VARCHAR(500) NULL,
 	-- FASE 3 CLIENTE
 	NumeroDocumento	INT NULL,
 	NumeroEntrega INT NULL,
@@ -795,7 +801,7 @@ CREATE TABLE SolicitudDespacho (
 	NombreConcrecion VARCHAR(255) NULL,
 	RUTConcrecion VARCHAR(8) NULL,
 	VRUTConcrecion VARCHAR(1) NULL,
-	MotivoNoConcrecion VARCHAR(MAX) NULL,
+	MotivoNoConcrecion VARCHAR(500) NULL,
 	SolicitanteId INT NOT NULL FOREIGN KEY REFERENCES Usuario(UsuarioId)
 )
 GO
@@ -809,9 +815,8 @@ GO
 CREATE TABLE EquiposSolicitados (
 	EquipoSolicitadoId INT PRIMARY KEY IDENTITY,
 	NumeroPlaca VARCHAR(50) NULL,
-	Marca VARCHAR(50) NOT NULL,
-	Modelo VARCHAR(50) NOT NULL,
-	EstadoEquipoId INT NOT NULL FOREIGN KEY REFERENCES EstadoEquipo(EstadoEquipoId),
+	Modelo VARCHAR(50) NULL,
+	EstadoEquipoId INT NULL FOREIGN KEY REFERENCES EstadoEquipo(EstadoEquipoId),
 	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
 )
 GO

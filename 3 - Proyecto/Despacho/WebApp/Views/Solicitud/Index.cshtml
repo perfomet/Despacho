@@ -9,7 +9,7 @@
 	List<Datos.Modelo.TipoSolicitud> tipos = Datos.Datos.TipoSolicitud.ObtenerTiposSolicitudes();
 	List<Datos.Modelo.EstadoEquipo> estadosEquipos = Datos.Datos.EstadoEquipo.ObtenerEstadosEquipos();
 	List<Datos.Modelo.EstadoSolicitud> estadosSolicitudes = Datos.Datos.EstadoSolicitud.ObtenerEstadosSolicitudes();
-	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias("", usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
+	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
 }
 
 @section Less {

@@ -303,7 +303,6 @@ let EquiposSolicitados = function () {
                         return id + placa
                     }
                 },
-                { field: "Marca", title: "Marca", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control marca" value="' + (e.Marca || '') + '" />' + (e.Marca || '') } },
                 { field: "Modelo", title: "Modelo", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control modelo" value="' + (e.Modelo || '') + '" />' + (e.Modelo || '') } },
                 { field: "EstadoEquipo", title: "Estado", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control estado" value="' + (e.EstadoEquipo || '') + '" />' + (e.EstadoEquipo || '') } },
                 {
@@ -343,17 +342,11 @@ let EquiposSolicitados = function () {
         let solicitudId = $('#solicitudId').val();
         let estadoId = $('#estadoEquipo').val();
         let estado = $('#estadoEquipo').find('option:selected').html();
-        let marca = $('#marcaEquipo').val();
         let modelo = $('#modeloEquipo').val();
         let cantidad = $('#cantidadEquipos').val();
 
         if (!estadoId) {
             mensaje('Error', 'Debe seleccionar un estado', 'error');
-            return;
-        }
-
-        if (!marca) {
-            mensaje('Error', 'Debe seleccionar una marca', 'error');
             return;
         }
 
@@ -371,7 +364,6 @@ let EquiposSolicitados = function () {
             equipos.push({
                 EquipoSolicitadoId: 0,
                 NumeroPlaca: null,
-                Marca: marca,
                 Modelo: modelo,
                 EstadoEquipoId: estadoId,
                 EstadoEquipo: estado,
@@ -394,9 +386,6 @@ let EquiposSolicitados = function () {
     let _Limpiar = function () {
         $('#estadoEquipo').val('0');
         $('#estadoEquipo').trigger('change');
-
-        $('#marcaEquipo').val('0');
-        $('#marcaEquipo').trigger('change');
 
         $('#modeloEquipo').val('0');
         $('#modeloEquipo').trigger('change');

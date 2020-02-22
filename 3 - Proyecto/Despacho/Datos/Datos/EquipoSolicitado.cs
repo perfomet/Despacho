@@ -9,8 +9,8 @@ namespace Datos.Datos
 	{
 		public static List<Modelo.EquipoSolicitado> ObtenerEquiposSolicitados(int solicitudDespachoId)
 		{
-			string SELECTSentence = "SELECT ES.*, EE.Descripcion";
-			string FROMSentence = " FROM EquiposSolicitados ES INNER JOIN EstadoEquipo EE ON EE.EstadoEquipoId = ES.EstadoEquipoId";
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM EquiposSolicitados";
 			string WHERESentence = " WHERE SolicitudDespachoId = " + solicitudDespachoId;
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -35,10 +35,10 @@ namespace Datos.Datos
 			foreach (Modelo.EquipoSolicitado equipo in equipos)
 			{
 				string INSERTSentence = "INSERT INTO EquiposSolicitados";
-				string VALUESSentence = " VALUES('{0}', '{1}', '{2}', {3}, {4});";
+				string VALUESSentence = " VALUES('{0}', '{1}', {2}, {3});";
 				string SQLSentence = INSERTSentence + VALUESSentence;
 				StringBuilder builder = new StringBuilder();
-				builder.AppendFormat(SQLSentence, equipo.NumeroPlaca, equipo.Marca, equipo.Modelo, equipo.EstadoEquipoId, equipo.SolicitudDespachoId);
+				builder.AppendFormat(SQLSentence, equipo.NumeroPlaca, equipo.Modelo, equipo.EstadoEquipoId, equipo.SolicitudDespachoId);
 
 				creados += DataBase.ExecuteNonQuery(builder.ToString());
 			}
@@ -49,10 +49,10 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.EquipoSolicitado equipo)
 		{
 			string INSERTSentence = "INSERT INTO EquiposSolicitados";
-			string VALUESSentence = " VALUES('{0}', '{1}', '{2}', {3}, {4});";
+			string VALUESSentence = " VALUES('{0}', '{1}', {2}, {3});";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, equipo.NumeroPlaca, equipo.Marca, equipo.Modelo, equipo.EstadoEquipoId, equipo.SolicitudDespachoId);
+			builder.AppendFormat(SQLSentence, equipo.NumeroPlaca, equipo.Modelo, equipo.EstadoEquipoId, equipo.SolicitudDespachoId);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

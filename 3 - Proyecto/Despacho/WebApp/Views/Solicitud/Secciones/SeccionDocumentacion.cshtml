@@ -1,0 +1,59 @@
+﻿@model Datos.Modelo.Solicitud
+@{
+	List<Datos.Modelo.TipoDocumento> tiposDocumento = Datos.Datos.TipoDocumento.ObtenerTiposdeDocumentos();
+}
+<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 3 ? "m-wizard__form-step--current" : "")" id="seccion-documentacion">
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Número de Documento:</label>
+		<div class="col-xl-9 col-lg-9">
+			<input type="number" class="form-control m-input" value="@Model.NumeroDocumento" id="numeroDocumento" />
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Número de Entrega:</label>
+		<div class="col-xl-9 col-lg-9">
+			<input type="number" class="form-control m-input" value="@Model.NumeroEntrega" id="numeroEntrega" />
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Entrega Documento:</label>
+		<div class="col-xl-9 col-lg-9">
+			<div class='input-group date pull-right'>
+				<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de entrega" id="fechaEntregaDoc" value="@Model.FechaEntregaDocumento">
+				<div class="input-group-append">
+					<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Recepcion Documento:</label>
+		<div class="col-xl-9 col-lg-9">
+			<div class='input-group date pull-right'>
+				<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcionDoc" value="@Model.FechaRecepcionDocumento">
+				<div class="input-group-append">
+					<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Folio:</label>
+		<div class="col-xl-9 col-lg-9">
+			<input type="number" class="form-control m-input" value="@Model.Folio" id="folio" />
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Tipo de Documento:</label>
+		<div class="col-xl-9 col-lg-9">
+			<select id="tipoDocumentoId" class="form-control m-select2" placeholder="">
+				<option value="0" selected disabled>Seleccione un tipo de documento</option>
+				@foreach (Datos.Modelo.TipoDocumento tipo in tiposDocumento)
+				{
+					<option value="@tipo.Tipodocumentoid" @(tipo.Tipodocumentoid == Model.TipoDocumentoId ? "selected" : "")>@tipo.Descripcion</option>
+				}
+			</select>
+		</div>
+	</div>
+</div>
+

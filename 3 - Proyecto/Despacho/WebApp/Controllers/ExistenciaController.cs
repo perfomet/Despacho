@@ -20,7 +20,7 @@ namespace Despacho.Controllers
 			}
 			else
 			{
-				return Json(Datos.Datos.Existencia.ObtenerExistencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
+				 return Json(Datos.Datos.Existencia.ObtenerExistencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 			}
 		}
 

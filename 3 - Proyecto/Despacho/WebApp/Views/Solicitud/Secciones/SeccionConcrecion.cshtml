@@ -1,0 +1,40 @@
+﻿@model Datos.Modelo.Solicitud
+@{
+
+}
+<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 4 ? "m-wizard__form-step--current" : "")" id="seccion-concrecion">
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Concreción:</label>
+		<div class="col-xl-9 col-lg-9">
+			<div class="m-radio-inline">
+				<label class="m-radio">
+					<input type="radio" name="concrecion" value="1"> Si
+					<span></span>
+				</label>
+				<label class="m-radio">
+					<input type="radio" name="concrecion" value="0"> No
+					<span></span>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* Nombre:</label>
+		<div class="col-xl-9 col-lg-9">
+			<input type="text" class="form-control m-input" value="@Model.NombreConcrecion" id="nombreConcrecion" />
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">* RUT:</label>
+		<div class="col-xl-9 col-lg-9 d-flex" style="align-items: center;">
+			<input type="number" class="form-control m-input w-75" value="@Model.RUTConcrecion" id="rutConcrecion" maxlength="8" /> &nbsp;-&nbsp;
+			<input type="text" class="form-control m-input w-25" value="@Model.VRUTConcrecion" id="vrutConcrecion" maxlength="1" />
+		</div>
+	</div>
+	<div class="form-group m-form__group row">
+		<label class="col-xl-3 col-lg-3 col-form-label">Motivo de NO Concreción:</label>
+		<div class="col-xl-9 col-lg-9">
+			<textarea class="form-control m-input" id="motivoNoConcrecion" maxlength="255">@Model.MotivoNoConcrecion</textarea>
+		</div>
+	</div>
+</div>
