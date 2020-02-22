@@ -836,20 +836,22 @@ GO
 CREATE TABLE CargaMasivaDetalle (
 	CargaMasivaDetalleId INT PRIMARY KEY IDENTITY(1, 1),
 	CargaMasivaId INT NOT NULL FOREIGN KEY REFERENCES CargaMasiva (CargaMasivaId),
+	NumeroSolicitud INT NOT NULL,
 	TipoSolicitud VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla TipoSolicitud
 	FechaSolicitud VARCHAR(20) NOT NULL,
 	FechaRecepcion VARCHAR(20) NOT NULL,
-	BodegaOrigen VARCHAR(100) NOT NULL,
 	NumeroCliente VARCHAR(20) NOT NULL,
 	NombreCliente VARCHAR(100) NOT NULL,
-	DireccionCliente VARCHAR(255) NOT NULL,
+	DireccionCalleCliente VARCHAR(255) NOT NULL,
+	DireccionNumeroCliente VARCHAR(255) NOT NULL,
+	Region VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Region
 	Comuna VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
 	TelefonoContacto VARCHAR(15) NOT NULL,
+	TelefonoContacto2 VARCHAR(15) NOT NULL,
 	Rut VARCHAR(12) NOT NULL,
-	Proyecto VARCHAR(100) NOT NULL, 
 	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
 	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
-	ObservacionAof VARCHAR(MAX) NOT NULL,
+	ObservacionAof VARCHAR(500) NOT NULL,
 	Prioridad VARCHAR(100) NOT NULL -- Enlaza por texto a tabla Prioridad
 )
 GO
