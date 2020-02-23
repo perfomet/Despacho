@@ -29,14 +29,210 @@
   tipoPrioridad: { id: 28, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoPlaca: { id: 29, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
 };
-
-
-
 let acciones = {
   crearSolicitud: 1,
   agregarPlaca: 2
 };
+let InitElementos = function () {
+  $('.m-select2').select2();
 
+  if ($("#lista-cargasmasivas").length > 0) {
+    window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
+
+    $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
+      cargasmasivas = data;
+
+      CargarLista();
+    });
+
+    $('#filtro-filtrar').click(function () {
+      let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
+      //Filtrar();
+    });
+
+    $(document).on('click', '#lista-cargasmasivas tbody tr', function () {
+      let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
+      location.href = "/CargaMasiva/CargaMasiva/" + id;
+    });
+  }
+  tabla = $("#tabla").DataTable({
+    pageLength: 5,
+    lengthChange: false,
+    language: {
+      decimal: ",",
+      emptyTable: "No hay información",
+      info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
+      infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+      infoFiltered: "(Filtrado de _MAX_ total entradas)",
+      thousands: ".",
+      lengthMenu: "Ver _MENU_",
+      loadingRecords: "Cargando...",
+      processing: "Procesando...",
+      search: "Buscar:",
+      zeroRecords: "Sin resultados encontrados",
+      paginate: {
+        first: "Primero",
+        last: "Ultimo",
+        next: "Siguiente",
+        previous: "Anterior"
+      }
+    },
+    columnDefs: [
+      { targets: 0, visible: false },
+      {
+        targets: 1,
+        orderable: false,
+        render: function (e, a, t, n) {
+          let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
+          let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+
+          return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
+        }
+      },
+      {
+        targets: 2,
+        orderable: false,
+        render: function (e, a, t, n) {
+          let div = $('<div></div>');
+          let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
+          let estados = t[2];
+          let actions = t[0];
+
+          let tooltip = $('<div></div>');
+
+          if (estados.length > 0) {
+            if (estados.length > 1) {
+              boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
+            } else {
+              boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
+            }
+
+            estados.forEach((e) => {
+              tooltip.append('<li>' + e.title + '</li>');
+            });
+          } else {
+            if (actions.length > 1) {
+              boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
+            } else {
+              boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
+            }
+
+
+          }
+
+          boton.attr('title', tooltip.html());
+          div.html(boton);
+          return div.html();
+        }
+      }
+    ]
+  });
+
+  let nombreArchivo;
+
+  $('#archivoCarga').change((oEvent) => {
+    // Get The File From The Input
+    let archivo = oEvent.target.files[0];
+
+    if (archivo) {
+      nombreArchivo = archivo.name;
+
+      $('label[for="archivoCarga"]').html(nombreArchivo);
+
+      let reader = new FileReader();
+
+      reader.onload = function (e) {
+        ModuloVigilancia.MostrarCargando();
+
+        try {
+          let data = e.target.result;
+          let workbook = XLSX.read(data, {
+            type: 'binary'
+          });
+
+          let filas = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[workbook.SheetNames[0]]);
+          let columnas = _ObtenerColumnas(workbook.Sheets[workbook.SheetNames[0]]);
+
+          if (!_VerificarFormato(columnas)) {
+            ModuloVigilancia.OcultarCargando();
+            ModuloVigilancia.AlertaError('El formato del archivo seleccionado no es correcto, verifique el archivo.', '¡Atención!');
+            return;
+          }
+
+          if (filas && filas.length == 0) {
+            ModuloVigilancia.OcultarCargando();
+            ModuloVigilancia.AlertaError('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.', '¡Atención!');
+            return;
+          }
+
+          registros = [];
+
+
+          filas.forEach((objeto) => {
+            registros.push({
+              numeroSolicitud: objet['NumeroSolicitud'],
+              tiposolicitud: objeto['TipoSolicitud'],
+              fechasolicitud: objecto['FechaSolicitud'],
+              fecharecepcion: objecto['FechaRecepcion'],
+              numerocliente: objeto['NumeroCliente'],
+              nombrecliente: objeto['NombreCliente'],
+              calledireccioncliente: objeto['CalleDireccionCliente'],
+              numerodireccioncliente: objeto['NumeroDireccionCliente'],
+              regioncliente: objeto['RegionCliente'],
+              comunacliente: objeto['ComunaCliente'],
+              numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
+              numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
+              rutcliente: objeto['RutCliente'],
+              unidadnegocion: objeto['UnidadNegocio'],
+              gerencia: objeto['Gerencia'],
+              observacionaof: objeto['ObservacionAof'],
+              prioridad: objeto['Prioridad'],
+              placa: objecto['Placa']
+            });
+          });
+
+          $('#btnProcesarRegistros').addClass('pulso-guardar');
+          $('#alertaProcesar').show();
+        } catch (ex) {
+          console.log(ex);
+          ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
+        }
+
+        $('#archivoCarga').val(null);
+        ModuloVigilancia.OcultarCargando();
+      };
+
+      reader.onerror = function (ex) {
+        console.log(ex);
+        ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
+        ModuloVigilancia.OcultarCargando();
+        $('#archivoCarga').val(null);
+      };
+
+      reader.readAsBinaryString(archivo);
+    }
+  });
+
+  $('#btnProcesarRegistros').click(() => {
+    _ProcesarRegistros(nombreArchivo);
+
+    $('#archivoCarga').val(null);
+    $('label[for="archivoCarga"]').html('Seleccione un archivo...');
+    $('#alertaProcesar').hide();
+  });
+
+  $(document).on('click', '.page-link', function () {
+    $('.detalle-estados').tooltip();
+  });
+
+  $('#txtBuscar').keyup(function () {
+    tabla.search(this.value).draw();
+  });
+
+  $('input[name="resutadoRegistro"]').click(function () {
+    _CargarTabla();
+  });
+};
 let CargaMasiva = function () {
   let tabla;
   let registros = [];
@@ -46,201 +242,7 @@ let CargaMasiva = function () {
       InitElementos();
     });
   };
-
-  let InitElementos = function () {
-    tabla = $("#tabla").DataTable({
-      pageLength: 5,
-      lengthChange: false,
-      language: {
-        decimal: ",",
-        emptyTable: "No hay información",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
-        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-        infoFiltered: "(Filtrado de _MAX_ total entradas)",
-        thousands: ".",
-        lengthMenu: "Ver _MENU_",
-        loadingRecords: "Cargando...",
-        processing: "Procesando...",
-        search: "Buscar:",
-        zeroRecords: "Sin resultados encontrados",
-        paginate: {
-          first: "Primero",
-          last: "Ultimo",
-          next: "Siguiente",
-          previous: "Anterior"
-        }
-      },
-      columnDefs: [
-        { targets: 0, visible: false },
-        {
-          targets: 1,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
-            let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
-
-            return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
-          }
-        },
-        {
-          targets: 2,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let div = $('<div></div>');
-            let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
-            let estados = t[2];
-            let actions = t[0];
-
-            let tooltip = $('<div></div>');
-
-            if (estados.length > 0) {
-              if (estados.length > 1) {
-                boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
-              } else {
-                boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
-              }
-
-              estados.forEach((e) => {
-                tooltip.append('<li>' + e.title + '</li>');
-              });
-            } else {
-              if (actions.length > 1) {
-                boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
-              } else {
-                boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
-              }
-
-              /*
-              actions.forEach((a) => {
-                if (a == acciones.crearPaciente) {
-                  tooltip.append('<li>Se creó el paciente</li>');
-                }
-
-                if (a == acciones.ingresarDispositivo) {
-                  tooltip.append('<li>Se agregó el dispositivo al paciente</li>');
-                }
-
-                if (a == acciones.agregarProcedimientos) {
-                  tooltip.append('<li>Se agregaron los procedimientos al dispositivo</li>');
-                }
-              });
-              */
-            }
-
-            boton.attr('title', tooltip.html());
-            div.html(boton);
-            return div.html();
-          }
-        }
-      ]
-    });
-
-    let nombreArchivo;
-
-    $('#archivoCarga').change((oEvent) => {
-      // Get The File From The Input
-      let archivo = oEvent.target.files[0];
-
-      if (archivo) {
-        nombreArchivo = archivo.name;
-
-        $('label[for="archivoCarga"]').html(nombreArchivo);
-
-        let reader = new FileReader();
-
-        reader.onload = function (e) {
-          ModuloVigilancia.MostrarCargando();
-
-          try {
-            let data = e.target.result;
-            let workbook = XLSX.read(data, {
-              type: 'binary'
-            });
-
-            let filas = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[workbook.SheetNames[0]]);
-            let columnas = _ObtenerColumnas(workbook.Sheets[workbook.SheetNames[0]]);
-
-            if (!_VerificarFormato(columnas)) {
-              ModuloVigilancia.OcultarCargando();
-              ModuloVigilancia.AlertaError('El formato del archivo seleccionado no es correcto, verifique el archivo.', '¡Atención!');
-              return;
-            }
-
-            if (filas && filas.length == 0) {
-              ModuloVigilancia.OcultarCargando();
-              ModuloVigilancia.AlertaError('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.', '¡Atención!');
-              return;
-            }
-
-            registros = [];
-
-
-            filas.forEach((objeto) => {
-              registros.push({
-                numeroSolicitud:objet['NumeroSolicitud'],
-                tiposolicitud: objeto['TipoSolicitud'],
-                fechasolicitud: objecto['FechaSolicitud'],
-                fecharecepcion: objecto['FechaRecepcion'],
-                numerocliente: objeto['NumeroCliente'],
-                nombrecliente: objeto['NombreCliente'],
-                calledireccioncliente: objeto['CalleDireccionCliente'],
-                numerodireccioncliente: objeto['NumeroDireccionCliente'],
-                regioncliente: objeto['RegionCliente'],
-                comunacliente: objeto['ComunaCliente'],
-                numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
-                numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
-                rutcliente: objeto['RutCliente'],
-                unidadnegocion: objeto['UnidadNegocio'],
-                gerencia: objeto['Gerencia'],
-                observacionaof: objeto['ObservacionAof'],
-                prioridad: objeto['Prioridad'],
-                placa: objecto['Placa']
-              });
-            });
-
-            $('#btnProcesarRegistros').addClass('pulso-guardar');
-            $('#alertaProcesar').show();
-          } catch (ex) {
-            console.log(ex);
-            ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
-          }
-
-          $('#archivoCarga').val(null);
-          ModuloVigilancia.OcultarCargando();
-        };
-
-        reader.onerror = function (ex) {
-          console.log(ex);
-          ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
-          ModuloVigilancia.OcultarCargando();
-          $('#archivoCarga').val(null);
-        };
-
-        reader.readAsBinaryString(archivo);
-      }
-    });
-
-    $('#btnProcesarRegistros').click(() => {
-      _ProcesarRegistros(nombreArchivo);
-
-      $('#archivoCarga').val(null);
-      $('label[for="archivoCarga"]').html('Seleccione un archivo...');
-      $('#alertaProcesar').hide();
-    });
-
-    $(document).on('click', '.page-link', function () {
-      $('.detalle-estados').tooltip();
-    });
-
-    $('#txtBuscar').keyup(function () {
-      tabla.search(this.value).draw();
-    });
-
-    $('input[name="resutadoRegistro"]').click(function () {
-      _CargarTabla();
-    });
-  };
-
+  
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
@@ -560,7 +562,7 @@ let CargaMasiva = function () {
 
   let _Guardar = function () {
     let cargaMasiva = {
-      idCargaMasiva: CapaDatos.ObtenerMaxSecuencia(),
+      idCargaMasiva: CapaDatos.init,
       fechaHora: moment().format('DD/MM/YYYY HH:mm'),
       responsable: sessionStorage["usuarioLogueado"],
       archivo: nombreArchivo
@@ -605,6 +607,7 @@ let CargaMasiva = function () {
 }();
 
 //Antigua versión
+/*
 let CargaMasiva = function () {
 
   let cargasmasivas;
@@ -616,25 +619,7 @@ let CargaMasiva = function () {
   let InitElementos = function () {
     $('.m-select2').select2();
 
-    f($("#lista-cargasmasivas").length > 0)
-    {
-      window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
-
-      $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
-        cargasmasivas = data;
-
-        CargarLista();
-      });
-
-      $('#filtro-filtrar').click(function () {
-        Filtrar();
-      });
-
-      $(document).on('click', '#lista-cargasmasivas tbody tr', function () {
-        let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
-        location.href = "/CargaMasiva/CargaMasiva/" + id;
-      });
-    }
+    
 
     let CargarLista = function () {
       let picker = $('#filtro-fechacarga').data('daterangepicker');
@@ -724,3 +709,4 @@ return {
 $(() => {
   CargaMasiva.init();
 });
+*/

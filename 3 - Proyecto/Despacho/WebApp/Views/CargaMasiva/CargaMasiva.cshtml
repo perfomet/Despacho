@@ -1,39 +1,52 @@
 ﻿
+
+@model Datos.Modelo.CargaMasiva
 @{
-    ViewBag.Title = "CargaMasiva";
+  ViewBag.SeccionTieneTitulo = true;
+  ViewBag.Pagina = 1;
+  ViewBag.Title = "Despacho - Carga Masiva";
+  ViewBag.TituloSeccion = "Nueva Carga Masiva";
+ }
+
+@section Less{
+  <link rel="stylesheet/less" type="text/css" href="~/Content/less/cargaMasiva.less" />
 }
-  <div class="m-portlet m-portlet--mobile">
-    <div class="m-portlet__head">
-      <div class="m-portlet__head-caption">
-        <div class="m-portlet__head-title">
-          <label for="exampleInputEmail1">Carga Masiva</label>
-        </div>
-      </div>
-    </div>
-    <div class="m-portlet__body">
-      <div class="col-12 col-lg-5">
-        <div class="form-group m-form__group">
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" lang="es-cl" id="archivoCarga" accept=".xls,.xlsx">
-            <label class="custom-file-label" for="archivocarga">Seleccione un archivo</label>
-          </div>
-          <div class="form-group m-form__group">
-            <a class="pull-right btn btn-sm btn-success col-8 col-lg-5 mb-3 mr-3" href="../Content/Archivos/Carga Masiva.xls" target="_blank" style="float: right;margin-top: 2.2rem;">Descargar Archivo Ejemplo</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-5">
-        <button class="btn btn-sm btn-primary" id="btnProcesarRegistros" style="width: 100%; font-size: 1.4rem;margin-top: 2.2rem;">Procesar</button>
-      </div>
-      <div class="col-7" id="alertaProcesar" style="display:none;">
-        <div class="alert alert-warning">
-          <strong>¡Importante!</strong> Presione el botón <b>Procesar</b> para guardar la información.
-        </div>
-      </div>
 
-
-
+@section Scripts{
+  <script type="text/javascript" src="~/Content/js/CargaMasiva.js"></script>
+}
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+    <div class="m-portlet__head-caption">
+      <div class="m-portlet__head-title">
+        <label for="exampleInputEmail1">Carga Masiva</label>
+      </div>
     </div>
   </div>
+  <div class="m-portlet__body">
+    <div class="col-12 col-lg-5">
+      <div class="form-group m-form__group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" lang="es-cl" id="archivoCarga" accept=".xls,.xlsx">
+          <label class="custom-file-label" for="archivocarga">Seleccione un archivo</label>
+        </div>
+        <div class="form-group m-form__group">
+          <a class="pull-right btn btn-sm btn-success col-8 col-lg-5 mb-3 mr-3" href="../Content/Archivos/Carga Masiva.xls" target="_blank" style="float: right;margin-top: 2.2rem;">Descargar Archivo Ejemplo</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-5">
+      <button class="btn btn-sm btn-primary" id="btnProcesarRegistros" style="width: 100%; font-size: 1.4rem;margin-top: 2.2rem;">Procesar</button>
+    </div>
+    <div class="col-7" id="alertaProcesar" style="display:none;">
+      <div class="alert alert-warning">
+        <strong>¡Importante!</strong> Presione el botón <b>Procesar</b> para guardar la información.
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
 <h2>CargaMasiva</h2>
 
