@@ -33,9 +33,83 @@ let acciones = {
   crearSolicitud: 1,
   agregarPlaca: 2
 };
-let InitElementos = function () {
+let CargarLista = function () {
+  let picker = $('#filtro-fechacarga').data('daterangepicker');
+  $('#lista-cargasmasivas').mDatatable({
+    data: {
+      type: "local",
+      source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
+      pageSize: 10
+    },
+    layout: {
+      theme: "default",
+      class: "",
+      scroll: false,
+      footer: false
+    },
+    sortable: true,
+    pagination: true,
+    search: {
+      input: $('#buscarCargaMasiva')
+    },
+    columns: [
+      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
+          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+    ],
+    translate: {
+      records: {
+        processing: "Cargando...",
+        noRecords: "No se encontraron registros"
+      },
+      toolbar: {
+        pagination: {
+          items: {
+            default: {
+              first: "Primero",
+              prev: "Anterior",
+              next: "Siguiente",
+              last: "Último",
+              more: "Más páginas",
+              input: "Número de página",
+              select: "Seleccionar tamaño de página"
+            },
+            info: "Viendo {{start}} - {{end}} de {{total}} registros"
+          }
+        }
+      }
+    }
+    });
+  };
+$.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
+  $(".m_datatable").mDatatable({
+    data: {
+      type: "local",
+      source: cargas,
+      pageSize: 10
+    },
+    layout: {
+      theme: "default",
+      class: "",
+      scroll: !1,
+      footer: !1
+    },
+    sortable: !0,
+    pagination: !0,
+    search: {
+      input: $("#buscarCargaMasiva")
+    },
+    columns: [
+      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
+      { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+    ], true, true);
+    });
+ let InitElementos = function () {
   $('.m-select2').select2();
-
+  let cargasmasivas;
   if ($("#lista-cargasmasivas").length > 0) {
     window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
 
@@ -606,107 +680,3 @@ let CargaMasiva = function () {
   };
 }();
 
-//Antigua versión
-/*
-let CargaMasiva = function () {
-
-  let cargasmasivas;
-
-  let Init = function () {
-    InitElementos();
-  };
-
-  let InitElementos = function () {
-    $('.m-select2').select2();
-
-    
-
-    let CargarLista = function () {
-      let picker = $('#filtro-fechacarga').data('daterangepicker');
-      $('#lista-cargasmasivas').mDatatable({
-        data: {
-          type: "local",
-          source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: false,
-          footer: false
-        },
-        sortable: true,
-        pagination: true,
-        search: {
-          input: $('#buscarCargaMasiva')
-        },
-        columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-        ],
-        translate: {
-          records: {
-            processing: "Cargando...",
-            noRecords: "No se encontraron registros"
-          },
-          toolbar: {
-            pagination: {
-              items: {
-                default: {
-                  first: "Primero",
-                  prev: "Anterior",
-                  next: "Siguiente",
-                  last: "Último",
-                  more: "Más páginas",
-                  input: "Número de página",
-                  select: "Seleccionar tamaño de página"
-                },
-                info: "Viendo {{start}} - {{end}} de {{total}} registros"
-              }
-            }
-          }
-        }
-      });
-    };
-    $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
-      $(".m_datatable").mDatatable({
-        data: {
-          type: "local",
-          source: cargas,
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: !1,
-          footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        search: {
-          input: $("#buscarCargaMasiva")
-        },
-        columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-        ], true, true);
-
-    });
-  });
-};
-
-return {
-  init: function () {
-    Init();
-  }
-};
-  }();
-
-$(() => {
-  CargaMasiva.init();
-});
-*/
