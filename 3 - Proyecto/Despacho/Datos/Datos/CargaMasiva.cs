@@ -18,16 +18,16 @@ namespace Datos.Datos
 			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			List<Modelo.CargaMasiva> cargasmasivas = new List<Modelo.CargaMasiva>();
+			List<Modelo.CargaMasiva> listacargasmasivas = new List<Modelo.CargaMasiva>();
 
 			foreach (DataRow fila in dataTable.Rows)
 			{
 				Modelo.CargaMasiva cargamasiva = new Modelo.CargaMasiva();
 				cargamasiva.FromDataRow(fila);
-				cargasmasivas.Add(cargamasiva);
+				listacargasmasivas.Add(cargamasiva);
 			}
 
-			return cargasmasivas;
+			return listacargasmasivas;
 		}
 
 		public static Modelo.CargaMasiva ObtenerCargaMasiva(int id)

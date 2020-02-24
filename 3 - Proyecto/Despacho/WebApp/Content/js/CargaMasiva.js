@@ -38,7 +38,7 @@ let acciones = {
 let CargaMasiva = function () {
   let tabla;
   let registros = [];
-
+  
   let InitCargaMasiva = function () {
     CapaDatos.init(() => {
       InitElementos();
@@ -46,81 +46,104 @@ let CargaMasiva = function () {
   };
 
   let InitElementos = function () {
-    tabla = $("#tabla").DataTable({
-      pageLength: 5,
-      lengthChange: false,
-      language: {
-        decimal: ",",
-        emptyTable: "No hay información",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
-        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-        infoFiltered: "(Filtrado de _MAX_ total entradas)",
-        thousands: ".",
-        lengthMenu: "Ver _MENU_",
-        loadingRecords: "Cargando...",
-        processing: "Procesando...",
-        search: "Buscar:",
-        zeroRecords: "Sin resultados encontrados",
-        paginate: {
-          first: "Primero",
-          last: "Ultimo",
-          next: "Siguiente",
-          previous: "Anterior"
-        }
-      },
-      columnDefs: [
-        { targets: 0, visible: false },
-        {
-          targets: 1,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
-            let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+    
+    let cargasmasivas;
 
-            return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
-          }
+    $('.m-select2').select2();
+
+    if ($("#listacargasmasivas").length > 0) {
+      window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
+
+      $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
+        cargasmasivas = data;
+
+        CargarLista();
+      });
+
+      $('#filtro-filtrar').click(function () {
+        let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
+        //Filtrar();
+      });
+    }
+    else
+    {
+
+    }
+
+    let CargarLista = function () {
+      let picker = $('#filtro-fechacarga').data('daterangepicker');
+      $('#listacargasmasivas').mDatatable({
+        data: {
+          type: "local",
+          source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
+          pageSize: 10
         },
-        {
-          targets: 2,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let div = $('<div></div>');
-            let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
-            let estados = t[2];
-            let actions = t[0];
-
-            let tooltip = $('<div></div>');
-
-            if (estados.length > 0) {
-              if (estados.length > 1) {
-                boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
-              } else {
-                boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
+        layout: {
+          theme: "default",
+          class: "",
+          scroll: false,
+          footer: false
+        },
+        sortable: true,
+        pagination: true,
+        search: {
+          input: $('#buscarCargaMasiva')
+        },
+        columns: [
+          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
+          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+        ],
+        translate: {
+          records: {
+            processing: "Cargando...",
+            noRecords: "No se encontraron registros"
+          },
+          toolbar: {
+            pagination: {
+              items: {
+                default: {
+                  first: "Primero",
+                  prev: "Anterior",
+                  next: "Siguiente",
+                  last: "Último",
+                  more: "Más páginas",
+                  input: "Número de página",
+                  select: "Seleccionar tamaño de página"
+                },
+                info: "Viendo {{start}} - {{end}} de {{total}} registros"
               }
-
-              estados.forEach((e) => {
-                tooltip.append('<li>' + e.title + '</li>');
-              });
-            } else {
-              if (actions.length > 1) {
-                boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
-              } else {
-                boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
-              }
-
-
             }
-
-            boton.attr('title', tooltip.html());
-            div.html(boton);
-            return div.html();
           }
         }
-      ]
+      });
+    };
+    $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
+      $(".m_datatable").mDatatable({
+        data: {
+          type: "local",
+          source: cargas,
+          pageSize: 10
+        },
+        layout: {
+          theme: "default",
+          class: "",
+          scroll: !1,
+          footer: !1
+        },
+        sortable: !0,
+        pagination: !0,
+        search: {
+          input: $("#buscarCargaMasiva")
+        },
+        columns: [
+          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
+          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+        ], true, true);
     });
-
-    let nombreArchivo;
-
     $('#archivoCarga').change((oEvent) => {
       // Get The File From The Input
       let archivo = oEvent.target.files[0];
@@ -204,6 +227,96 @@ let CargaMasiva = function () {
       }
     });
 
+    
+
+    
+
+  return {
+    init: function () {
+      InitCargaMasiva();
+    }
+  };
+}();
+
+let CargaMasivaDetalle = function () {
+  let _Init = function () {
+    _InitElementos();
+  }
+  let _InitElementos = function () {
+    let nombreArchivo;
+
+    tabla = $("#tabla").DataTable({
+      pageLength: 5,
+      lengthChange: false,
+      language: {
+        decimal: ",",
+        emptyTable: "No hay información",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
+        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+        infoFiltered: "(Filtrado de _MAX_ total entradas)",
+        thousands: ".",
+        lengthMenu: "Ver _MENU_",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados",
+        paginate: {
+          first: "Primero",
+          last: "Ultimo",
+          next: "Siguiente",
+          previous: "Anterior"
+        }
+      },
+      columnDefs: [
+        { targets: 0, visible: false },
+        {
+          targets: 1,
+          orderable: false,
+          render: function (e, a, t, n) {
+            let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
+            let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+
+            return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
+          }
+        },
+        {
+          targets: 2,
+          orderable: false,
+          render: function (e, a, t, n) {
+            let div = $('<div></div>');
+            let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
+            let estados = t[2];
+            let actions = t[0];
+
+            let tooltip = $('<div></div>');
+
+            if (estados.length > 0) {
+              if (estados.length > 1) {
+                boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
+              } else {
+                boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
+              }
+
+              estados.forEach((e) => {
+                tooltip.append('<li>' + e.title + '</li>');
+              });
+            } else {
+              if (actions.length > 1) {
+                boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
+              } else {
+                boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
+              }
+
+
+            }
+
+            boton.attr('title', tooltip.html());
+            div.html(boton);
+            return div.html();
+          }
+        }
+      ]
+    });
     $('#btnProcesarRegistros').click(() => {
       _ProcesarRegistros(nombreArchivo);
 
@@ -211,8 +324,7 @@ let CargaMasiva = function () {
       $('label[for="archivoCarga"]').html('Seleccione un archivo...');
       $('#alertaProcesar').hide();
     });
-
-    $(document).on('click', '#lista-cargasmasivas tbody tr', function () {
+    $(document).on('click', '#listacargasmasivas tbody tr', function () {
       let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
       location.href = "/CargaMasiva/CargaMasiva/" + id;
     });
@@ -585,109 +697,8 @@ let CargaMasiva = function () {
     }
     return true;
   };
-
-  return {
-    init: function () {
-      InitCargaMasiva();
-    }
   };
 }();
-
-
-    $('.m-select2').select2();
-    let cargasmasivas;
-    if ($("#lista-cargasmasivas").length > 0) {
-      window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
-
-      $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
-        cargasmasivas = data;
-
-        CargarLista();
-      });
-
-      $('#filtro-filtrar').click(function () {
-        let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
-        //Filtrar();
-      });
-
-      
-    }
-  };
-}();
-let CargarLista = function () {
-  let picker = $('#filtro-fechacarga').data('daterangepicker');
-  $('#lista-cargasmasivas').mDatatable({
-    data: {
-      type: "local",
-      source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
-      pageSize: 10
-    },
-    layout: {
-      theme: "default",
-      class: "",
-      scroll: false,
-      footer: false
-    },
-    sortable: true,
-    pagination: true,
-    search: {
-      input: $('#buscarCargaMasiva')
-    },
-    columns: [
-      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-    ],
-    translate: {
-      records: {
-        processing: "Cargando...",
-        noRecords: "No se encontraron registros"
-      },
-      toolbar: {
-        pagination: {
-          items: {
-            default: {
-              first: "Primero",
-              prev: "Anterior",
-              next: "Siguiente",
-              last: "Último",
-              more: "Más páginas",
-              input: "Número de página",
-              select: "Seleccionar tamaño de página"
-            },
-            info: "Viendo {{start}} - {{end}} de {{total}} registros"
-          }
-        }
-      }
-    }
-    });
-  };
-$.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
-  $(".m_datatable").mDatatable({
-    data: {
-      type: "local",
-      source: cargas,
-      pageSize: 10
-    },
-    layout: {
-      theme: "default",
-      class: "",
-      scroll: !1,
-      footer: !1
-    },
-    sortable: !0,
-    pagination: !0,
-    search: {
-      input: $("#buscarCargaMasiva")
-    },
-    columns: [
-      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
-      { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-    ], true, true);
-    });
  
 $(() => {
   CargaMasiva.init();
