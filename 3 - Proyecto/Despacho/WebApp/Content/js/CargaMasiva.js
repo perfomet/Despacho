@@ -29,10 +29,12 @@
   tipoPrioridad: { id: 28, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
   tipoPlaca: { id: 29, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
 };
+
 let acciones = {
   crearSolicitud: 1,
   agregarPlaca: 2
 };
+
 let CargaMasiva = function () {
   let tabla;
   let registros = [];
@@ -227,6 +229,7 @@ let CargaMasiva = function () {
       _CargarTabla();
     });
   };
+
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
@@ -589,6 +592,8 @@ let CargaMasiva = function () {
     }
   };
 }();
+
+
     $('.m-select2').select2();
     let cargasmasivas;
     if ($("#lista-cargasmasivas").length > 0) {
@@ -684,4 +689,6 @@ $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
     ], true, true);
     });
  
-
+$(() => {
+  CargaMasiva.init();
+});
