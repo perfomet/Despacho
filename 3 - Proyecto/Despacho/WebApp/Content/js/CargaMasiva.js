@@ -33,280 +33,6 @@ let acciones = {
   crearSolicitud: 1,
   agregarPlaca: 2
 };
-let CargarLista = function () {
-  let picker = $('#filtro-fechacarga').data('daterangepicker');
-  $('#lista-cargasmasivas').mDatatable({
-    data: {
-      type: "local",
-      source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
-      pageSize: 10
-    },
-    layout: {
-      theme: "default",
-      class: "",
-      scroll: false,
-      footer: false
-    },
-    sortable: true,
-    pagination: true,
-    search: {
-      input: $('#buscarCargaMasiva')
-    },
-    columns: [
-      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-    ],
-    translate: {
-      records: {
-        processing: "Cargando...",
-        noRecords: "No se encontraron registros"
-      },
-      toolbar: {
-        pagination: {
-          items: {
-            default: {
-              first: "Primero",
-              prev: "Anterior",
-              next: "Siguiente",
-              last: "Último",
-              more: "Más páginas",
-              input: "Número de página",
-              select: "Seleccionar tamaño de página"
-            },
-            info: "Viendo {{start}} - {{end}} de {{total}} registros"
-          }
-        }
-      }
-    }
-    });
-  };
-$.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
-  $(".m_datatable").mDatatable({
-    data: {
-      type: "local",
-      source: cargas,
-      pageSize: 10
-    },
-    layout: {
-      theme: "default",
-      class: "",
-      scroll: !1,
-      footer: !1
-    },
-    sortable: !0,
-    pagination: !0,
-    search: {
-      input: $("#buscarCargaMasiva")
-    },
-    columns: [
-      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
-      { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-    ], true, true);
-    });
- let InitElementos = function () {
-  $('.m-select2').select2();
-  let cargasmasivas;
-  if ($("#lista-cargasmasivas").length > 0) {
-    window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
-
-    $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
-      cargasmasivas = data;
-
-      CargarLista();
-    });
-
-    $('#filtro-filtrar').click(function () {
-      let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
-      //Filtrar();
-    });
-
-    $(document).on('click', '#lista-cargasmasivas tbody tr', function () {
-      let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
-      location.href = "/CargaMasiva/CargaMasiva/" + id;
-    });
-  }
-  tabla = $("#tabla").DataTable({
-    pageLength: 5,
-    lengthChange: false,
-    language: {
-      decimal: ",",
-      emptyTable: "No hay información",
-      info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
-      infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-      infoFiltered: "(Filtrado de _MAX_ total entradas)",
-      thousands: ".",
-      lengthMenu: "Ver _MENU_",
-      loadingRecords: "Cargando...",
-      processing: "Procesando...",
-      search: "Buscar:",
-      zeroRecords: "Sin resultados encontrados",
-      paginate: {
-        first: "Primero",
-        last: "Ultimo",
-        next: "Siguiente",
-        previous: "Anterior"
-      }
-    },
-    columnDefs: [
-      { targets: 0, visible: false },
-      {
-        targets: 1,
-        orderable: false,
-        render: function (e, a, t, n) {
-          let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
-          let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
-
-          return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
-        }
-      },
-      {
-        targets: 2,
-        orderable: false,
-        render: function (e, a, t, n) {
-          let div = $('<div></div>');
-          let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
-          let estados = t[2];
-          let actions = t[0];
-
-          let tooltip = $('<div></div>');
-
-          if (estados.length > 0) {
-            if (estados.length > 1) {
-              boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
-            } else {
-              boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
-            }
-
-            estados.forEach((e) => {
-              tooltip.append('<li>' + e.title + '</li>');
-            });
-          } else {
-            if (actions.length > 1) {
-              boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
-            } else {
-              boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
-            }
-
-
-          }
-
-          boton.attr('title', tooltip.html());
-          div.html(boton);
-          return div.html();
-        }
-      }
-    ]
-  });
-
-  let nombreArchivo;
-
-  $('#archivoCarga').change((oEvent) => {
-    // Get The File From The Input
-    let archivo = oEvent.target.files[0];
-
-    if (archivo) {
-      nombreArchivo = archivo.name;
-
-      $('label[for="archivoCarga"]').html(nombreArchivo);
-
-      let reader = new FileReader();
-
-      reader.onload = function (e) {
-        ModuloVigilancia.MostrarCargando();
-
-        try {
-          let data = e.target.result;
-          let workbook = XLSX.read(data, {
-            type: 'binary'
-          });
-
-          let filas = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[workbook.SheetNames[0]]);
-          let columnas = _ObtenerColumnas(workbook.Sheets[workbook.SheetNames[0]]);
-
-          if (!_VerificarFormato(columnas)) {
-            ModuloVigilancia.OcultarCargando();
-            ModuloVigilancia.AlertaError('El formato del archivo seleccionado no es correcto, verifique el archivo.', '¡Atención!');
-            return;
-          }
-
-          if (filas && filas.length == 0) {
-            ModuloVigilancia.OcultarCargando();
-            ModuloVigilancia.AlertaError('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.', '¡Atención!');
-            return;
-          }
-
-          registros = [];
-
-
-          filas.forEach((objeto) => {
-            registros.push({
-              numeroSolicitud: objet['NumeroSolicitud'],
-              tiposolicitud: objeto['TipoSolicitud'],
-              fechasolicitud: objecto['FechaSolicitud'],
-              fecharecepcion: objecto['FechaRecepcion'],
-              numerocliente: objeto['NumeroCliente'],
-              nombrecliente: objeto['NombreCliente'],
-              calledireccioncliente: objeto['CalleDireccionCliente'],
-              numerodireccioncliente: objeto['NumeroDireccionCliente'],
-              regioncliente: objeto['RegionCliente'],
-              comunacliente: objeto['ComunaCliente'],
-              numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
-              numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
-              rutcliente: objeto['RutCliente'],
-              unidadnegocion: objeto['UnidadNegocio'],
-              gerencia: objeto['Gerencia'],
-              observacionaof: objeto['ObservacionAof'],
-              prioridad: objeto['Prioridad'],
-              placa: objecto['Placa']
-            });
-          });
-
-          $('#btnProcesarRegistros').addClass('pulso-guardar');
-          $('#alertaProcesar').show();
-        } catch (ex) {
-          console.log(ex);
-          ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
-        }
-
-        $('#archivoCarga').val(null);
-        ModuloVigilancia.OcultarCargando();
-      };
-
-      reader.onerror = function (ex) {
-        console.log(ex);
-        ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
-        ModuloVigilancia.OcultarCargando();
-        $('#archivoCarga').val(null);
-      };
-
-      reader.readAsBinaryString(archivo);
-    }
-  });
-
-  $('#btnProcesarRegistros').click(() => {
-    _ProcesarRegistros(nombreArchivo);
-
-    $('#archivoCarga').val(null);
-    $('label[for="archivoCarga"]').html('Seleccione un archivo...');
-    $('#alertaProcesar').hide();
-  });
-
-  $(document).on('click', '.page-link', function () {
-    $('.detalle-estados').tooltip();
-  });
-
-  $('#txtBuscar').keyup(function () {
-    tabla.search(this.value).draw();
-  });
-
-  $('input[name="resutadoRegistro"]').click(function () {
-    _CargarTabla();
-  });
-};
 let CargaMasiva = function () {
   let tabla;
   let registros = [];
@@ -316,7 +42,191 @@ let CargaMasiva = function () {
       InitElementos();
     });
   };
-  
+
+  let InitElementos = function () {
+    tabla = $("#tabla").DataTable({
+      pageLength: 5,
+      lengthChange: false,
+      language: {
+        decimal: ",",
+        emptyTable: "No hay información",
+        info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
+        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
+        infoFiltered: "(Filtrado de _MAX_ total entradas)",
+        thousands: ".",
+        lengthMenu: "Ver _MENU_",
+        loadingRecords: "Cargando...",
+        processing: "Procesando...",
+        search: "Buscar:",
+        zeroRecords: "Sin resultados encontrados",
+        paginate: {
+          first: "Primero",
+          last: "Ultimo",
+          next: "Siguiente",
+          previous: "Anterior"
+        }
+      },
+      columnDefs: [
+        { targets: 0, visible: false },
+        {
+          targets: 1,
+          orderable: false,
+          render: function (e, a, t, n) {
+            let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
+            let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+
+            return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
+          }
+        },
+        {
+          targets: 2,
+          orderable: false,
+          render: function (e, a, t, n) {
+            let div = $('<div></div>');
+            let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
+            let estados = t[2];
+            let actions = t[0];
+
+            let tooltip = $('<div></div>');
+
+            if (estados.length > 0) {
+              if (estados.length > 1) {
+                boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
+              } else {
+                boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
+              }
+
+              estados.forEach((e) => {
+                tooltip.append('<li>' + e.title + '</li>');
+              });
+            } else {
+              if (actions.length > 1) {
+                boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
+              } else {
+                boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
+              }
+
+
+            }
+
+            boton.attr('title', tooltip.html());
+            div.html(boton);
+            return div.html();
+          }
+        }
+      ]
+    });
+
+    let nombreArchivo;
+
+    $('#archivoCarga').change((oEvent) => {
+      // Get The File From The Input
+      let archivo = oEvent.target.files[0];
+
+      if (archivo) {
+        nombreArchivo = archivo.name;
+
+        $('label[for="archivoCarga"]').html(nombreArchivo);
+
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+          ModuloVigilancia.MostrarCargando();
+
+          try {
+            let data = e.target.result;
+            let workbook = XLSX.read(data, {
+              type: 'binary'
+            });
+
+            let filas = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[workbook.SheetNames[0]]);
+            let columnas = _ObtenerColumnas(workbook.Sheets[workbook.SheetNames[0]]);
+
+            if (!_VerificarFormato(columnas)) {
+              ModuloVigilancia.OcultarCargando();
+              ModuloVigilancia.AlertaError('El formato del archivo seleccionado no es correcto, verifique el archivo.', '¡Atención!');
+              return;
+            }
+
+            if (filas && filas.length == 0) {
+              ModuloVigilancia.OcultarCargando();
+              ModuloVigilancia.AlertaError('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.', '¡Atención!');
+              return;
+            }
+
+            registros = [];
+
+
+            filas.forEach((objeto) => {
+              registros.push({
+                numeroSolicitud: objet['NumeroSolicitud'],
+                tiposolicitud: objeto['TipoSolicitud'],
+                fechasolicitud: objecto['FechaSolicitud'],
+                fecharecepcion: objecto['FechaRecepcion'],
+                numerocliente: objeto['NumeroCliente'],
+                nombrecliente: objeto['NombreCliente'],
+                calledireccioncliente: objeto['CalleDireccionCliente'],
+                numerodireccioncliente: objeto['NumeroDireccionCliente'],
+                regioncliente: objeto['RegionCliente'],
+                comunacliente: objeto['ComunaCliente'],
+                numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
+                numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
+                rutcliente: objeto['RutCliente'],
+                unidadnegocion: objeto['UnidadNegocio'],
+                gerencia: objeto['Gerencia'],
+                observacionaof: objeto['ObservacionAof'],
+                prioridad: objeto['Prioridad'],
+                placa: objecto['Placa']
+              });
+            });
+
+            $('#btnProcesarRegistros').addClass('pulso-guardar');
+            $('#alertaProcesar').show();
+          } catch (ex) {
+            console.log(ex);
+            ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
+          }
+
+          $('#archivoCarga').val(null);
+          ModuloVigilancia.OcultarCargando();
+        };
+
+        reader.onerror = function (ex) {
+          console.log(ex);
+          ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
+          ModuloVigilancia.OcultarCargando();
+          $('#archivoCarga').val(null);
+        };
+
+        reader.readAsBinaryString(archivo);
+      }
+    });
+
+    $('#btnProcesarRegistros').click(() => {
+      _ProcesarRegistros(nombreArchivo);
+
+      $('#archivoCarga').val(null);
+      $('label[for="archivoCarga"]').html('Seleccione un archivo...');
+      $('#alertaProcesar').hide();
+    });
+
+    $(document).on('click', '#lista-cargasmasivas tbody tr', function () {
+      let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
+      location.href = "/CargaMasiva/CargaMasiva/" + id;
+    });
+
+    $(document).on('click', '.page-link', function () {
+      $('.detalle-estados').tooltip();
+    });
+
+    $('#txtBuscar').keyup(function () {
+      tabla.search(this.value).draw();
+    });
+
+    $('input[name="resutadoRegistro"]').click(function () {
+      _CargarTabla();
+    });
+  };
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
@@ -346,7 +256,7 @@ let CargaMasiva = function () {
         {
           registro.estados.push(estados.FechaRecepcion);
         }
-        
+
         // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
         {
           registro.estados.push(estados.tipoNumeroCliente);
@@ -387,7 +297,7 @@ let CargaMasiva = function () {
         }
 
         // SI EL TIPO DE GERENCIA ES VALIDO 
-        if(!registro.gerencia){
+        if (!registro.gerencia) {
           registro.estados.push(estados.tipoGerencia);
         }
 
@@ -443,7 +353,7 @@ let CargaMasiva = function () {
           !registro.estados.contiene(estados.tipoGerencia) &&
           !registro.estados.contiene(estados.tipoPrioridad) &&
           !registro.estados.contiene(estados.tipoPlaca)
-                           
+
         ) {
           let rutcliente = registro.rutcliente;
           if (!ModuloVigilancia.ValidaRut(rutcliente)) {
@@ -498,6 +408,45 @@ let CargaMasiva = function () {
 
     $('#btnProcesarRegistros').removeClass('pulso-guardar');
   };
+
+  let _Guardar = function () {
+    let cargaMasiva = {
+      idCargaMasiva: CapaDatos.init,
+      fechaHora: moment().format('DD/MM/YYYY HH:mm'),
+      responsable: sessionStorage["usuarioLogueado"],
+      archivo: nombreArchivo
+    };
+
+    let detalle = [];
+    let productosDetalle = [];
+
+    registros.forEach((registro) => {
+      if (registro.acciones.contiene(acciones.crearSolicitud)) {
+        detalle.push({
+          //propiedades del detalle
+          numeroSolicitud: registro.numeroSolicitud
+        });
+
+        productosDetalle.push({
+          numeroPlaca: registro.numeroPlaca,
+          numeroSolicitud: registro.numeroSolicitud
+        });
+      } else if (registro.acciones.contiene(acciones.agregarPlaca)) {
+        productosDetalle.push({
+          numeroPlaca: registro.numeroPlaca,
+          numeroSolicitud: registro.numeroSolicitud
+        });
+      }
+    });
+
+    $.post("/CargaMasiva/Create", {
+      cargamasiva: cargaMasiva,
+      detallecargamasiva: detalle,
+      cargaMasivaDetalleProductos: productosDetalle
+    }, function (data) {
+
+    });
+  }
 
   let _ObtenerEstadosMalos = function (registro) {
     return registro.estados.filter((e) => { return e.tipo == 'danger'; });
@@ -579,7 +528,7 @@ let CargaMasiva = function () {
     if (!columnas.contiene('FechaRecepcion')) {
       return false;
     }
-    
+
     if (!columnas.contiene('NumeroCliente')) {
       return false;
     }
@@ -615,7 +564,7 @@ let CargaMasiva = function () {
     if (!columnas.contiene('RutCliente')) {
       return false;
     }
-      
+
     if (!columnas.contiene('UnidadNegocio')) {
       return false;
     }
@@ -634,49 +583,105 @@ let CargaMasiva = function () {
     return true;
   };
 
-  let _Guardar = function () {
-    let cargaMasiva = {
-      idCargaMasiva: CapaDatos.init,
-      fechaHora: moment().format('DD/MM/YYYY HH:mm'),
-      responsable: sessionStorage["usuarioLogueado"],
-      archivo: nombreArchivo
-    };
-
-    let detalle = [];
-    let productosDetalle = [];
-
-    registros.forEach((registro) => {
-      if (registro.acciones.contiene(acciones.crearSolicitud)) {
-        detalle.push({
-          //propiedades del detalle
-          numeroSolicitud: registro.numeroSolicitud
-        });
-
-        productosDetalle.push({
-          numeroPlaca: registro.numeroPlaca,
-          numeroSolicitud: registro.numeroSolicitud
-        });
-      } else if (registro.acciones.contiene(acciones.agregarPlaca)) {
-        productosDetalle.push({
-          numeroPlaca: registro.numeroPlaca,
-          numeroSolicitud: registro.numeroSolicitud
-        });
-      }
-    });
-
-    $.post("/CargaMasiva/Create", {
-      cargamasiva: cargaMasiva,
-      detallecargamasiva: detalle,
-      cargaMasivaDetalleProductos: productosDetalle
-    }, function (data) {
-
-    });
-  }
-
   return {
     init: function () {
       InitCargaMasiva();
     }
   };
 }();
+    $('.m-select2').select2();
+    let cargasmasivas;
+    if ($("#lista-cargasmasivas").length > 0) {
+      window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
+
+      $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
+        cargasmasivas = data;
+
+        CargarLista();
+      });
+
+      $('#filtro-filtrar').click(function () {
+        let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
+        //Filtrar();
+      });
+
+      
+    }
+  };
+}();
+let CargarLista = function () {
+  let picker = $('#filtro-fechacarga').data('daterangepicker');
+  $('#lista-cargasmasivas').mDatatable({
+    data: {
+      type: "local",
+      source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
+      pageSize: 10
+    },
+    layout: {
+      theme: "default",
+      class: "",
+      scroll: false,
+      footer: false
+    },
+    sortable: true,
+    pagination: true,
+    search: {
+      input: $('#buscarCargaMasiva')
+    },
+    columns: [
+      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
+          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+    ],
+    translate: {
+      records: {
+        processing: "Cargando...",
+        noRecords: "No se encontraron registros"
+      },
+      toolbar: {
+        pagination: {
+          items: {
+            default: {
+              first: "Primero",
+              prev: "Anterior",
+              next: "Siguiente",
+              last: "Último",
+              more: "Más páginas",
+              input: "Número de página",
+              select: "Seleccionar tamaño de página"
+            },
+            info: "Viendo {{start}} - {{end}} de {{total}} registros"
+          }
+        }
+      }
+    }
+    });
+  };
+$.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
+  $(".m_datatable").mDatatable({
+    data: {
+      type: "local",
+      source: cargas,
+      pageSize: 10
+    },
+    layout: {
+      theme: "default",
+      class: "",
+      scroll: !1,
+      footer: !1
+    },
+    sortable: !0,
+    pagination: !0,
+    search: {
+      input: $("#buscarCargaMasiva")
+    },
+    columns: [
+      { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+      { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
+      { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+      { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+    ], true, true);
+    });
+ 
 
