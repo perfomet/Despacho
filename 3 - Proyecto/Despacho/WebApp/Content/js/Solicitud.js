@@ -23,7 +23,7 @@
             });
 
             $(document).on('click', '#lista-solicitudes tbody tr', function () {
-                let id = $(this).find('.solicitud-despacho-id').attr('data-id');
+                let id = $(this).find('.solicitud-despacho-id').html();
                 location.href = "/Solicitud/Solicitud/" + id;
             });
         }
@@ -48,21 +48,18 @@
                 input: $('#buscarExistencia')
             },
             columns: [
-                {
-                    field: "SolicitudDespachoId", title: "Numero Solicitud", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        return '<label class="solicitud-despacho-id" data-id="' + e.SolicitudDespachoId + '">' + e.SolicitudDespachoId + '</label>';
-                    }
-                },
+                { field: "SolicitudDespachoId", title: "#", responsive: { visible: "lg" }, template: function (e) { return '<span class="solicitud-despacho-id">' + e.SolicitudDespachoId + '</span>' } },
+                { field: "NumeroSolicitud", title: "Numero Solicitud", responsive: { visible: "lg" } },
                 { field: "FechaSolicitud", title: "Fecha/Hora", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
                 {
                     field: "EstadoSolicitud", title: "Estado", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        return '<span class="m-badge m-badge--info m-badge--wide" style="font-size: 1rem;"><b>' + e.EstadoSolicitud + '</b></span>';
+                        return '<span class="m-badge m-badge--info m-badge--wide" style="font-size: 1rem;"><b>' + e.EstadoSolicitud.Descripcion + '</b></span>';
                     }
                 },
-                { field: "TipoSolicitud", title: "Tipo Solicitud", responsive: { visible: "lg" } },
-                { field: "Prioridad", title: "Prioridad", responsive: { visible: "lg" } },
-                { field: "Cliente", title: "Cliente", responsive: { visible: "lg" } },
-                { field: "Solicitante", title: "Solicitante", responsive: { visible: "lg" } }
+                { field: "TipoSolicitud.Descripcion", title: "Tipo Solicitud", responsive: { visible: "lg" } },
+                { field: "Prioridad.descripcion", title: "Prioridad", responsive: { visible: "lg" } },
+                { field: "Solicitante.Cliente.Nombre", title: "Cliente", responsive: { visible: "lg" } },
+                { field: "Solicitante.NombreCompleto", title: "Solicitante", responsive: { visible: "lg" } }
             ],
             translate: {
                 records: {
@@ -125,7 +122,9 @@ let DetalleSolicitud = function () {
 
     let _InitElementos = function () {
         if ($('#formulario-solicitud').length > 0) {
-            new mWizard("formulario-solicitud", { startStep: 1 });
+            new mWizard("formulario-solicitud", {
+                startStep: $('#seccionActual').val()
+            });
 
             $("#fechaRecepcion").datepicker({ todayHighlight: !0, autoclose: !0, format: "dd/mm/yyyy" });
             $("#fechaDespacho").datepicker({ todayHighlight: !0, autoclose: !0, format: "dd/mm/yyyy" });
@@ -150,18 +149,20 @@ let DetalleSolicitud = function () {
         let partesRutCliente = $('#rutCliente').val().replace(/\./g, '').split('-');
 
         let solicitudId = $('#solicitudId').val();
-        let estadoId = $('#estadoId').val();
+        let numeroSolicitud = $('#numeroSolicitud').val();
+        let estadoId = _ProximoEstado($('#estadoId').val());
         let tipoSolicitudId = $('#tipoSolicitudId').val();
         let fechaRecepcion = $('#fechaRecepcion').val();
-        let bodegaOrigen = $('#bodegaOrigen').val();
         let numeroCliente = $('#numeroCliente').val();
         let nombreCliente = $('#nombreCliente').val();
-        let direccionCliente = $('#direccionCliente').val();
+        let calleDireccionCliente = $('#calleDireccionCliente').val();
+        let numeroDireccionCliente = $('#numeroDireccionCliente').val();
+        let regionClienteId = $('#regionClienteId').val();
         let comunaClienteId = $('#comunaClienteId').val();
         let telefonoContacto = $('#telefonoContacto').val();
+        let telefonoContactoAdicional = $('#telefonoContactoAdicional').val();
         let rutCliente = partesRutCliente[0];
         let vrutCliente = partesRutCliente[1];
-        let proyecto = $('#proyecto').val();
         let prioridadId = $('#prioridadId').val();
         let unidadNegocioId = $('#unidadNegocioId').val();
         let gerenciaId = $('#gerenciaId').val();
@@ -185,19 +186,21 @@ let DetalleSolicitud = function () {
         $.post("/Solicitud/" + (solicitudId > 0 ? "Edit" : "Create"), {
             solicitud: {
                 SolicitudDespachoId: solicitudId,
+                NumeroSolicitud: numeroSolicitud,
                 TipoSolicitudId: tipoSolicitudId,
-                EstadoSolicitudId: _ProximoEstado(estadoId),
+                EstadoSolicitudId: estadoId,
                 FechaSolicitud: moment().format("DD/MM/YYYY HH:mm"),
                 FechaRecepcion: fechaRecepcion,
-                BodegaOrigen: bodegaOrigen,
                 NumeroCliente: numeroCliente,
                 NombreCliente: nombreCliente,
-                DireccionCliente: direccionCliente,
+                CalleDireccionCliente: calleDireccionCliente,
+                NumeroDireccionCliente: numeroDireccionCliente,
+                RegionClienteId: regionClienteId,
                 ComunaClienteId: comunaClienteId,
                 NumeroTelefonoContacto: telefonoContacto,
+                NumeroTelefonoContactoAdicional: telefonoContactoAdicional,
                 RutCliente: rutCliente,
                 VRutCliente: vrutCliente,
-                Proyecto: proyecto,
                 PrioridadId: prioridadId,
                 UnidadNegocioId: unidadNegocioId,
                 GerenciaId: gerenciaId,
@@ -245,7 +248,19 @@ let DetalleSolicitud = function () {
     };
 
     let _ProximoEstado = function (estadoActual) {
-        return (estadoId == 0 ? 1 : (estadoId == 1 ? 3 : parseInt(estadoId) + 1));
+        let proximoEstado = parseInt(estadoActual);
+
+        if (estadoActual == 0) {
+            proximoEstado = EquiposSolicitados.Validar() ? 1 : 2;
+        } else if (estadoActual == 1) {
+            proximoEstado = 3;
+        } else if (estadoActual == 2) {
+            proximoEstado = EquiposSolicitados.Validar() ? 1 : 2;
+        } else {
+            proximoEstado += 1;
+        }
+
+        return proximoEstado;
     };
 
     return {
@@ -278,6 +293,27 @@ let EquiposSolicitados = function () {
     };
 
     let _CargarLista = function () {
+        let columnas = [
+            {
+                field: "NumeroPlaca", title: "Placa", responsive: { visible: "lg" }, template: function (e) {
+                    let id = '<input type="hidden" class="form-control id" value="' + (e.EquipoSolicitadoId || '0') + '" />';
+                    let placa = (e.NumeroPlaca || $('#seccionActual').val() > 1) ? '<input type="hidden" class="form-control numero-placa" value="' + e.NumeroPlaca + '" />' + (e.NumeroPlaca || 'Sin Placa') : '<input type="text" class="form-control numero-placa" value="' + (e.NumeroPlaca || '') + '" />';
+                    return id + placa
+                }
+            },
+            { field: "Modelo", title: "Modelo", responsive: { visible: "lg" }, template: function (e) { return '<input type="hidden" class="form-control modelo" value="' + (e.Modelo || '') + '" />' + (e.Modelo || '') } },
+            { field: "EstadoEquipo", title: "Estado", responsive: { visible: "lg" }, template: function (e) { return '<input type="hidden" class="form-control estado" value="' + (e.EstadoEquipo.Descripcion || '') + '" />' + (e.EstadoEquipo.Descripcion || '') } }
+        ];
+
+        // SI LA SECCIÓN ACTUAL ES SOLICITUD Y El USUARIO ES CLIENTE SE MUESTRA LA COLUMNA ELIMINAR
+        if ($('#perfilUsuario').val() == 4 && $('#seccionActual').val() == 1) {
+            columnas.push({
+                field: "Eliminar", title: "Eliminar", responsive: { visible: "lg" }, template: function (e) {
+                    return e.NumeroPlaca ? '' : '<a href="#lista-equipos-solicitados" onclick="EquiposSolicitados.Eliminar(' + e.EquipoSolicitadoId + ')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Eliminar"><i class="la la-trash"></i></a>';
+                }
+            });
+        }
+
         $('#lista-equipos-solicitados').mDatatable({
             data: {
                 type: "local",
@@ -292,25 +328,7 @@ let EquiposSolicitados = function () {
             },
             sortable: true,
             pagination: false,
-            //search: {
-            //    input: $('#buscarExistencia')
-            //},
-            columns: [
-                {
-                    field: "NumeroPlaca", title: "Placa", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        let id = '<input type="hidden" class="form-control id" value="' + (e.EquipoSolicitadoId || '0') + '" />';
-                        let placa = e.NumeroPlaca ? '<input type="hidden" class="form-control numero-placa" value="' + e.NumeroPlaca + '" />' + e.NumeroPlaca : '<input type="text" class="form-control numero-placa" value="' + (e.NumeroPlaca || '') + '" />';
-                        return id + placa
-                    }
-                },
-                { field: "Modelo", title: "Modelo", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control modelo" value="' + (e.Modelo || '') + '" />' + (e.Modelo || '') } },
-                { field: "EstadoEquipo", title: "Estado", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control estado" value="' + (e.EstadoEquipo || '') + '" />' + (e.EstadoEquipo || '') } },
-                {
-                    field: "Eliminar", title: "Eliminar", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        return e.NumeroPlaca ? '' : '<a href="#lista-equipos-solicitados" onclick="EquiposSolicitados.Eliminar(' + e.EquipoSolicitadoId + ')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Eliminar"><i class="la la-trash"></i></a>';
-                    }
-                }
-            ],
+            columns: columnas,
             translate: {
                 records: {
                     processing: "Cargando...",
@@ -366,7 +384,7 @@ let EquiposSolicitados = function () {
                 NumeroPlaca: null,
                 Modelo: modelo,
                 EstadoEquipoId: estadoId,
-                EstadoEquipo: estado,
+                EstadoEquipo: { Descripcion: estado },
                 SolicitudDespachoId: solicitudId
             });
         }
@@ -380,7 +398,9 @@ let EquiposSolicitados = function () {
     };
 
     let _Validar = function () {
-        return equipos.length > 0;
+        return equipos.filter((equipo) => {
+            return !equipo.NumeroPlaca;
+        }).length == 0;
     };
 
     let _Limpiar = function () {

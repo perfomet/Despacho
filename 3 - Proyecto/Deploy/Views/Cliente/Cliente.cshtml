@@ -1,0 +1,74 @@
+﻿@model Datos.Modelo.Cliente
+@{
+	ViewBag.SeccionTieneTitulo = true;
+	ViewBag.Pagina = 4;
+
+	if (Model.ClienteId == 0)
+	{
+		ViewBag.Title = "Despacho - Nuevo Cliente";
+		ViewBag.TituloSeccion = "Nuevo Cliente";
+	}
+	else
+	{
+		ViewBag.Title = "Despacho - " + Model.Nombre;
+		ViewBag.TituloSeccion = Model.Nombre;
+	}
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/cliente.less" />
+}
+
+@section Scripts{
+	@Scripts.Render("~/bundles/cliente")
+}
+
+<div class="m-portlet m-portlet--tab">
+	<!--begin::Form-->
+	<form class="m-form m-form--fit m-form--label-align-right">
+		<div class="m-portlet__body">
+			<input type="hidden" value="@Model.ClienteId" id="id">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Código</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Codigo" id="codigo" style="width: 50%">
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Nombre</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Nombre" id="nombre" style="width: 50%">
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Rut</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Rut" id="rut" style="width: 40%; display: inline-block" maxlength="8"> -
+					<input class="form-control m-input" type="text" value="@Model.VRut" id="vrut" style="width: 40px; display: inline-block" maxlength="1">
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Prefijo</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Prefijo" id="prefijo" style="width: 50%">
+				</div>
+			</div>
+		</div>
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions">
+				<div class="row">
+					<div class="col-2">
+					</div>
+					<div class="col-10">
+						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+						<a href="/Cliente/Index" class="btn btn-secondary">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+

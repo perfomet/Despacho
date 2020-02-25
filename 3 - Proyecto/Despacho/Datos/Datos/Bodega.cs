@@ -10,7 +10,7 @@ namespace Datos.Datos
 		public static List<Modelo.Bodega> ObtenerBodegas(int clienteId)
 		{
 			string SELECTSentence = "SELECT DISTINCT E.Bodega, E.NomBodega";
-			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
 			string ORDERSentence = " ORDER BY E.NomBodega;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -32,7 +32,7 @@ namespace Datos.Datos
 		{
 
 			string SELECTSentence = "SELECT DISTINCT Bodega, NomBodega";
-			string FROMSentence = " FROM Existencia";
+			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia";
 			string WHERESentence = " WHERE Bodega = '" + codigo + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;

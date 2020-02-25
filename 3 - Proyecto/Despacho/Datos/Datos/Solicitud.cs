@@ -10,11 +10,16 @@ namespace Datos.Datos
 
 		public static List<Modelo.Solicitud> ObtenerSolicitudes(int clienteId)
 		{
-			string SELECTSentence = "SELECT *";
-			string FROMSentence = " FROM SolicitudDespacho";
+			string SELECTSentence = "SELECT SD.*, TS.Descripcion, ES.Descripcion, P.Descripcion, U.Nombres + ISNULL(' ' + U.ApellidoPaterno, '') + ISNULL(' ' + U.ApellidoMaterno, ''), C.Nombre";
+			string FROMSentence = " FROM SolicitudDespacho SD";
+			string JOINSentence = " INNER JOIN TipoSolicitud TS ON TS.TipoSolicitudId = SD.TipoSolicitudId";
+			JOINSentence += " INNER JOIN EstadoSolicitud ES ON ES.EstadoSolicitudId = SD.EstadoSolicitudId";
+			JOINSentence += " INNER JOIN Prioridad P ON P.PrioridadId = SD.PrioridadId";
+			JOINSentence += " INNER JOIN Usuario U ON U.UsuarioId = SD.SolicitanteId";
+			JOINSentence += " LEFT JOIN Cliente C ON C.ClienteId = U.ClienteId";
 			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
 			string ORDERSentence = ";";
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Solicitud> solicitudes = new List<Modelo.Solicitud>();
@@ -32,11 +37,16 @@ namespace Datos.Datos
 		public static Modelo.Solicitud ObtenerSolicitud(int id)
 		{
 
-			string SELECTSentence = "SELECT *";
-			string FROMSentence = " FROM SolicitudDespacho";
+			string SELECTSentence = "SELECT SD.*, TS.Descripcion, ES.Descripcion, P.Descripcion, U.Nombres + ISNULL(' ' + U.ApellidoPaterno, '') + ISNULL(' ' + U.ApellidoMaterno, ''), C.Nombre";
+			string FROMSentence = " FROM SolicitudDespacho SD";
+			string JOINSentence = " INNER JOIN TipoSolicitud TS ON TS.TipoSolicitudId = SD.TipoSolicitudId";
+			JOINSentence += " INNER JOIN EstadoSolicitud ES ON ES.EstadoSolicitudId = SD.EstadoSolicitudId";
+			JOINSentence += " INNER JOIN Prioridad P ON P.PrioridadId = SD.PrioridadId";
+			JOINSentence += " INNER JOIN Usuario U ON U.UsuarioId = SD.SolicitanteId";
+			JOINSentence += " LEFT JOIN Cliente C ON C.ClienteId = U.ClienteId";
 			string WHERESentence = " WHERE SolicitudDespachoId = " + id;
 			string ORDERSentence = ";";
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
 
 			Modelo.Solicitud solicitud = new Modelo.Solicitud();
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -59,16 +69,18 @@ namespace Datos.Datos
 			builder.AppendFormat(SQLSentence, solicitud.NumeroSolicitud, solicitud.TipoSolicitudId, solicitud.EstadoSolicitudId, solicitud.FechaSolicitud, solicitud.FechaRecepcion, solicitud.NumeroCliente, solicitud.NombreCliente, solicitud.CalleDireccionCliente, solicitud.NumeroDireccionCliente, solicitud.RegionClienteId, solicitud.ComunaClienteId, solicitud.NumeroTelefonoContacto, solicitud.NumeroTelefonoContactoAdicional, solicitud.RutCliente, solicitud.VRutCliente, solicitud.PrioridadId, solicitud.UnidadNegocioId, solicitud.GerenciaId, solicitud.ObservacionAof, solicitud.SolicitanteId);
 			DataBase.ExecuteNonQuery(builder.ToString());
 
-			return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
+			int id = 0;
+			int.TryParse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString(), out id);
+			return id;
 		}
 
 		public static bool Modificar(Modelo.Solicitud solicitud)
 		{
 			string UPDATESentence = "UPDATE SolicitudDespacho";
-			string SETSentence1 = " SET NumeroSolicitud = {1}, TipoSolicitudId = {2}, EstadoSolicitudId = {3}, FechaSolicitud = '{3}', FechaRecepcion = '{4}',  NumeroCliente = '{5}', NombreCliente = '{6}', CalleDireccionCliente = '{7}', NumeroDireccionCliente = {8},";
-			string SETSentence2 = " RegionClienteId = {9}, ComunaClienteId = {10}, NumeroTelefonoContacto = '{11}', NumeroTelefonoContactoAdicional = '{12}', RutCliente = '{13}', VRutCliente = '{14}', PrioridadId = {15}, UnidadNegocioId = {16}, GerenciaId = {17},";
-			string SETSentence3 = " ObservacionAof = '{18}', FechaDespacho = '{19}', PatenteCamion = '{20}', LlamadaDiaAnterior = {21}, ComentariosLlamada = '{22}', NumeroDocumento = {23}, NumeroEntrega = {24},";
-			string SETSentence4 = " FechaEntregaDocumento = '{25}', FechaRecepcionDocumento = '{26}', Folio = {27}, TipoDocumentoId = CASE WHEN {28} > 0 THEN {28} ELSE NULL END, Concrecion = {29}, NombreConcrecion = '{30}', RUTConcrecion = '{31}', VRUTConcrecion = '{32}', MotivoNoConcrecion = '{33}'";
+			string SETSentence1 = " SET NumeroSolicitud = {1}, TipoSolicitudId = {2}, EstadoSolicitudId = {3}, FechaSolicitud = '{4}', FechaRecepcion = '{5}',  NumeroCliente = '{6}', NombreCliente = '{7}', CalleDireccionCliente = '{8}', NumeroDireccionCliente = {9},";
+			string SETSentence2 = " RegionClienteId = {10}, ComunaClienteId = {11}, NumeroTelefonoContacto = '{12}', NumeroTelefonoContactoAdicional = '{13}', RutCliente = '{14}', VRutCliente = '{15}', PrioridadId = {16}, UnidadNegocioId = {17}, GerenciaId = {18},";
+			string SETSentence3 = " ObservacionAof = '{19}', FechaDespacho = '{20}', PatenteCamion = CASE '{21}' WHEN '' THEN NULL ELSE '{21}' END, LlamadaDiaAnterior = {22}, ComentariosLlamada = '{23}', NumeroDocumento = {24}, NumeroEntrega = {25},";
+			string SETSentence4 = " FechaEntregaDocumento = '{26}', FechaRecepcionDocumento = '{27}', Folio = {28}, TipoDocumentoId = CASE WHEN {29} > 0 THEN {29} ELSE NULL END, Concrecion = {30}, NombreConcrecion = '{31}', RUTConcrecion = '{32}', VRUTConcrecion = '{33}', MotivoNoConcrecion = '{34}'";
 			string WHERESentence = " WHERE SolicitudDespachoId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence1 + SETSentence2 + SETSentence3 + SETSentence4 + WHERESentence;
 			StringBuilder builder = new StringBuilder();

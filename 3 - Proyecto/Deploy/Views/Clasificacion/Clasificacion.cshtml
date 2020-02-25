@@ -1,0 +1,72 @@
+﻿@model Datos.Modelo.Clasificacion
+@{
+	ViewBag.SeccionTieneTitulo = true;
+	ViewBag.Pagina = 12;
+
+	if (Model.Clasificacionid > 0)
+	{
+		ViewBag.Title = "Despacho - Clasificación";
+		ViewBag.TituloSeccion = "Clasificación " + Model.Cantidad + " " + Model.UnidadMedida;
+	}
+	else
+	{
+
+		ViewBag.Title = "Despacho - Clasificación Nueva";
+		ViewBag.TituloSeccion = " Clasificación Nueva";
+	}
+
+	List<Datos.Modelo.UnidadMedida> unidades = Datos.Datos.UnidadMedida.ObtenerUnidadesdeMedida();
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/clasificacion.less" />
+}
+
+@section Scripts{
+	@Scripts.Render("~/bundles/clasificacion")
+}
+
+<div class="m-portlet m-portlet--tab">
+	<!--begin::Form-->
+	<form class="m-form m-form--fit m-form--label-align-right">
+		<div class="m-portlet__body">
+			<input type="hidden" value="@Model.Clasificacionid" id="id">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Cantidad</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Cantidad" id="cantidad" style="width: 50%">
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-form-label col-lg-2 col-sm-12">Unidad Medida</label>
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="unidadmedidaid" name="unidadmedidaid">
+						<option value="0" selected disabled>Seleccione una unidad de medida</option>
+						@foreach (Datos.Modelo.UnidadMedida unidad in unidades)
+						{
+							<option value="@unidad.UnidadMedidaId" @(unidad.UnidadMedidaId == Model.Unidadmedidaid ? "selected" : "")>@unidad.Descripcion</option>
+						}
+					</select>
+				</div>
+
+			</div>
+		</div>
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions">
+				<div class="row">
+					<div class="col-2">
+					</div>
+					<div class="col-10">
+						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+						<a href="/Clasificacion/Index" class="btn btn-secondary">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+

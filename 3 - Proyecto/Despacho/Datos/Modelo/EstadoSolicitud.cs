@@ -6,12 +6,17 @@ namespace Datos.Modelo
 	{
 		public int EstadoSolicitudId { get; set; }
 		public string Descripcion { get; set; }
+		public int SeccionFormularioId { get; set; }
 		public bool EstaActivo { get; set; }
+
+		public SeccionFormulario SeccionFormulario { get { return Datos.SeccionFormulario.ObtenerSeccionFormulario(this.SeccionFormularioId); } }
+
 		public void FromDataRow(DataRow fila)
 		{
 			this.EstadoSolicitudId = int.Parse(fila[0].ToString());
 			this.Descripcion = fila[1].ToString();
-			this.EstaActivo = bool.Parse(fila[2].ToString());
+			this.SeccionFormularioId = int.Parse(fila[2].ToString());
+			this.EstaActivo = bool.Parse(fila[3].ToString());
 		}
 	}
 

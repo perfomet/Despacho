@@ -186,7 +186,7 @@
     <Content Include="Content\less\gerencia.less" />
     <Content Include="Content\less\existencia.less" />
     <Content Include="Content\less\clasificacion.less" />
-    <None Include="Content\less\login.less" />
+    <Content Include="Content\less\login.less" />
     <Content Include="Content\img\Camión con Cajas.svg" />
     <Content Include="Content\img\logo-invertido.png" />
     <Content Include="Content\img\logo-mimet.svg" />
@@ -2540,6 +2540,7 @@
     <Content Include="Views\Solicitud\Secciones\SeccionDocumentacion.cshtml" />
     <Content Include="Views\Solicitud\Secciones\SeccionConcrecion.cshtml" />
     <Content Include="Views\Solicitud\Secciones\SeccionAprobacion.cshtml" />
+    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,19 +2,15 @@
 * CREADO POR: David Perdigón ****************************
 * FECHA Y HORA: 07/01/2020 23:00 ************************
 ********************************************************/
-
-USE master
-GO
+USE MASTER
 
 IF EXISTS(SELECT 1 FROM sys.databases WHERE name LIKE 'Despacho') BEGIN
 	DROP DATABASE Despacho
 END
 
 CREATE DATABASE Despacho
-GO
 
 USE Despacho
-GO
 
 CREATE TABLE Cliente (
 	ClienteId INT PRIMARY KEY IDENTITY(2001, 1),
@@ -25,28 +21,28 @@ CREATE TABLE Cliente (
 	Prefijo VARCHAR(10) NOT NULL,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT Cliente ON
-GO
+
 
 INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2001, 'LOG. ANDINA', 'Andina', NULL, NULL, 'AND', 1)
 INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2002, 'LOG.EMBONOR', 'Embonor', NULL, NULL, 'EMB', 1)
 INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2003, 'LOG.MIMET', 'Servimet', NULL, NULL, '', 1)
-INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2004, 'LOG.STA ELENA', 'Soprople', NULL, NULL, 'SOP', 1)
+INSERT INTO Cliente (ClienteId, Codigo, Nombre, RUT, VRUT, Prefijo, EstaActivo) VALUES (2004, 'LOG.STA ELENA', 'Soprole', NULL, NULL, 'SOP', 1)
 
 SET IDENTITY_INSERT Cliente OFF
-GO
+
 
 CREATE TABLE Perfil (
 	PerfilId INT PRIMARY KEY IDENTITY,
 	Descripcion VARCHAR(50) NOT NULL UNIQUE,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT Perfil ON
-GO
+
 
 INSERT INTO Perfil (PerfilId, Descripcion, EstaActivo) VALUES (1, 'SuperUsuario', 1)
 INSERT INTO Perfil (PerfilId, Descripcion, EstaActivo) VALUES (2, 'Administrador', 1) 
@@ -55,7 +51,7 @@ INSERT INTO Perfil (PerfilId, Descripcion, EstaActivo) VALUES (4, 'Cliente', 1)
 INSERT INTO Perfil (PerfilId, Descripcion, EstaActivo) VALUES (5, 'Bodega', 1) 
 
 SET IDENTITY_INSERT Perfil OFF
-GO
+
 
 CREATE TABLE Usuario (
 	UsuarioId INT PRIMARY KEY IDENTITY(1001, 1),
@@ -69,7 +65,7 @@ CREATE TABLE Usuario (
 	ClienteId INT NULL FOREIGN KEY REFERENCES Cliente (ClienteId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 INSERT INTO Usuario (PerfilId, Username, Password, Nombres, ApellidoPaterno, ApellidoMaterno, Email, ClienteId, EstaActivo) 
 VALUES (1, 'dperdigon', '123', 'David', 'Perdigón', 'García', 'davidperdigon.g@gmail.com', NULL, 1)
@@ -94,24 +90,24 @@ CREATE TABLE TipoSolicitud (
 	Observaciones VARCHAR(255) NULL,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT TipoSolicitud ON
-GO
+
 
 INSERT INTO TipoSolicitud (TipoSolicitudId, Descripcion, Observaciones, EstaActivo)  
- VALUES (1, 'Despacho (Entrega)', 'Cliente retira producto en la bodega de MiLogistic', 1)
+	VALUES (1, 'Despacho (Entrega)', 'Cliente retira producto en la bodega de MiLogistic', 1)
 INSERT INTO TipoSolicitud (TipoSolicitudId, Descripcion, Observaciones, EstaActivo)  
- VALUES (2, 'Despacho y Distribución', 'Enviar producto desde bodegas MiLogistic y llevarlo al cliente final', 1)
+	VALUES (2, 'Despacho y Distribución', 'Enviar producto desde bodegas MiLogistic y llevarlo al cliente final', 1)
 INSERT INTO TipoSolicitud (TipoSolicitudId, Descripcion, Observaciones, EstaActivo)  
- VALUES (3, 'Retiro (Entrega en bodega MiLogistic)', 'Busca equipo en la ubicación del cliente y lo lleva a una bodega de MiLogistic', 1)
+	VALUES (3, 'Retiro (Entrega en bodega MiLogistic)', 'Busca equipo en la ubicación del cliente y lo lleva a una bodega de MiLogistic', 1)
 INSERT INTO TipoSolicitud (TipoSolicitudId, Descripcion, Observaciones, EstaActivo)  
- VALUES (4, 'Traslado', 'Solo entre bodegas MiLogistic', 1)
+	VALUES (4, 'Traslado', 'Solo entre bodegas MiLogistic', 1)
 INSERT INTO TipoSolicitud (TipoSolicitudId, Descripcion, Observaciones, EstaActivo)  
- VALUES (5, 'Distribución', 'Busca producto en x lugar y entrega al cliente final', 1)
+	VALUES (5, 'Distribución', 'Busca producto en x lugar y entrega al cliente final', 1)
 
 SET IDENTITY_INSERT TipoSolicitud OFF
-GO
+
 
 CREATE TABLE EmpresaTransporte (
 	EmpresaTransporteId INT PRIMARY KEY IDENTITY,
@@ -119,16 +115,16 @@ CREATE TABLE EmpresaTransporte (
 	EsPropia BIT NOT NULL,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT EmpresaTransporte ON
-GO
+
 
 INSERT INTO EmpresaTransporte (EmpresaTransporteId, Nombre, EsPropia, EstaActivo) VALUES (1, 'MiLogistic', 1, 1)
 INSERT INTO EmpresaTransporte (EmpresaTransporteId, Nombre, EsPropia, EstaActivo) VALUES (2, 'Otra empresa externa', 0, 1)
 
 SET IDENTITY_INSERT EmpresaTransporte OFF 
-GO
+
 
 CREATE TABLE Camion (
 	Patente VARCHAR(10) PRIMARY KEY,
@@ -137,7 +133,7 @@ CREATE TABLE Camion (
 	UNIQUE (Descripcion, EmpresaTransporteId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 INSERT INTO Camion VALUES ('KXLS-90', 'Camión de Prueba 1', 1, 1)
 INSERT INTO Camion VALUES ('CFDB-82', 'Camión de Prueba 2', 2, 1)
@@ -147,10 +143,10 @@ CREATE TABLE EstadoEquipo (
 	Descripcion VARCHAR(255) NOT NULL UNIQUE,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT EstadoEquipo ON
-GO
+
 
 INSERT INTO EstadoEquipo (EstadoEquipoId, Descripcion, EstaActivo) VALUES (1, 'Usado', 1)
 INSERT INTO EstadoEquipo (EstadoEquipoId, Descripcion, EstaActivo) VALUES (2, 'Nuevo', 1)
@@ -158,23 +154,23 @@ INSERT INTO EstadoEquipo (EstadoEquipoId, Descripcion, EstaActivo) VALUES (3, 'R
 INSERT INTO EstadoEquipo (EstadoEquipoId, Descripcion, EstaActivo) VALUES (4, 'De baja', 1)
 
 SET IDENTITY_INSERT EstadoEquipo OFF 
-GO
+
 
 CREATE TABLE UnidadMedida (
 	UnidadMedidaId INT PRIMARY KEY IDENTITY,
 	Descripcion VARCHAR(10) NOT NULL UNIQUE,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT UnidadMedida ON
-GO
+
 
 INSERT INTO UnidadMedida (UnidadMedidaId, Descripcion, EstaActivo) VALUES (1, 'M2', 1)
 INSERT INTO UnidadMedida (UnidadMedidaId, Descripcion, EstaActivo) VALUES (2, 'UND', 1)
 
 SET IDENTITY_INSERT UnidadMedida OFF 
-GO
+
 
 CREATE TABLE Clasificacion (
 	ClasificacionId INT PRIMARY KEY IDENTITY,
@@ -183,10 +179,10 @@ CREATE TABLE Clasificacion (
 	UNIQUE (Cantidad, UnidadMedidaId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT Clasificacion ON
-GO
+
 
 INSERT INTO Clasificacion (ClasificacionId, Cantidad, UnidadMedidaId, EstaActivo) VALUES (1, 0.5, 1, 1)
 INSERT INTO Clasificacion (ClasificacionId, Cantidad, UnidadMedidaId, EstaActivo) VALUES (2, 1, 1, 1)
@@ -194,24 +190,24 @@ INSERT INTO Clasificacion (ClasificacionId, Cantidad, UnidadMedidaId, EstaActivo
 INSERT INTO Clasificacion (ClasificacionId, Cantidad, UnidadMedidaId, EstaActivo) VALUES (4, 3, 1, 1)
 
 SET IDENTITY_INSERT Clasificacion OFF 
-GO
+
 
 CREATE TABLE Prioridad (
 	PrioridadId INT PRIMARY KEY IDENTITY,
 	Descripcion VARCHAR(10) NOT NULL UNIQUE,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT Prioridad ON
-GO
+
 
 INSERT INTO Prioridad (PrioridadId, Descripcion, EstaActivo) VALUES (1, 'Alta', 1)
 INSERT INTO Prioridad (PrioridadId, Descripcion, EstaActivo) VALUES (2, 'Media', 1)
 INSERT INTO Prioridad (PrioridadId, Descripcion, EstaActivo) VALUES (3, 'Baja', 1)
 
 SET IDENTITY_INSERT Prioridad OFF 
-GO
+
 
 CREATE TABLE UnidadNegocio (
 	UnidadNegocioId INT PRIMARY KEY IDENTITY,
@@ -220,17 +216,17 @@ CREATE TABLE UnidadNegocio (
 	UNIQUE (Descripcion, ClienteId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT UnidadNegocio ON
-GO
+
 
 INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId, EstaActivo) VALUES (1, 'Zona Sur', 2001, 1)
 INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId, EstaActivo) VALUES (2, 'Zona Norte', 2001, 1)
 INSERT INTO UnidadNegocio (UnidadNegocioId, Descripcion, ClienteId, EstaActivo) VALUES (3, 'Zona Oriente', 2001, 1)
 
 SET IDENTITY_INSERT UnidadNegocio OFF 
-GO
+
 
 CREATE TABLE Gerencia (
 	GerenciaId INT PRIMARY KEY IDENTITY,
@@ -239,16 +235,16 @@ CREATE TABLE Gerencia (
 	UNIQUE (Descripcion, ClienteId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT Gerencia ON
-GO
+
 
 INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId, EstaActivo) VALUES (1, 'Frío', 2001, 1)
 INSERT INTO Gerencia (GerenciaId, Descripcion, ClienteId, EstaActivo) VALUES (2, 'Calor', 2001, 1)
 
 SET IDENTITY_INSERT Gerencia OFF
-GO
+
 
 
 
@@ -257,24 +253,24 @@ CREATE TABLE TipoDocumento (
 	Descripcion VARCHAR(255) NOT NULL UNIQUE,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT TipoDocumento ON
-GO
+
 
 INSERT INTO TipoDocumento (TipoDocumentoId, Descripcion, EstaActivo) VALUES (1, 'Boleta', 1)
 INSERT INTO TipoDocumento (TipoDocumentoId, Descripcion, EstaActivo) VALUES (2, 'Factura', 1)
 INSERT INTO TipoDocumento (TipoDocumentoId, Descripcion, EstaActivo) VALUES (3, 'Guía Despacho', 1)
 
 SET IDENTITY_INSERT TipoDocumento OFF
-GO
+
 
 CREATE TABLE Region (
 	RegionId INT IDENTITY(1,1) PRIMARY KEY,
 	Region VARCHAR(100) NULL,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 INSERT INTO Region (Region, EstaActivo) VALUES ('TARAPACÁ', 1)
 INSERT INTO Region (Region, EstaActivo) VALUES ('ANTOFAGASTA', 1)
@@ -300,7 +296,7 @@ CREATE TABLE Provincia (
 	Provincia VARCHAR(50) NOT NULL,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 INSERT INTO Provincia (RegionId, Orden, Provincia, EstaActivo) VALUES (1, 1,'IQUIQUE', 1)
 INSERT INTO Provincia (RegionId, Orden, Provincia, EstaActivo) VALUES (1, 2,'TAMARUGAL', 1)
@@ -366,7 +362,7 @@ CREATE TABLE Comuna(
 	Comuna VARCHAR(50) NULL,
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 INSERT INTO Comuna (RegionId, ProvinciaId, Comuna, EstaActivo) VALUES  (1, 1,'IQUIQUE', 1)
 INSERT INTO Comuna (RegionId, ProvinciaId, Comuna, EstaActivo) VALUES  (1, 1,'ALTO HOSPICIO', 1)
@@ -721,7 +717,7 @@ CREATE TABLE TipoPersonal (
 )
 
 SET IDENTITY_INSERT TipoPersonal ON
-GO
+
 
 INSERT INTO TipoPersonal (TipoPersonalId, Descripcion) VALUES (1, 'Pioneta')
 INSERT INTO TipoPersonal (TipoPersonalId, Descripcion) VALUES (2, 'Chofer')
@@ -740,27 +736,50 @@ CREATE TABLE Personal (
 	TipoPersonalId INT NOT NULL FOREIGN KEY REFERENCES TipoPersonal (TipoPersonalId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
+
+CREATE TABLE SeccionFormulario (
+	SeccionFormularioId INT PRIMARY KEY IDENTITY,
+	Descripcion VARCHAR(255) NOT NULL UNIQUE,
+	Clase VARCHAR(25) NOT NULL UNIQUE,
+	Vista VARCHAR(25) NOT NULL UNIQUE,
+	EstaActivo BIT NOT NULL
+)
+
+
+SET IDENTITY_INSERT SeccionFormulario ON
+
+
+INSERT INTO SeccionFormulario (SeccionFormularioId, Descripcion, Clase, Vista, EstaActivo) VALUES (1, 'Solicitud', 'seccion-solicitud', 'SeccionSolicitud', 1);
+INSERT INTO SeccionFormulario (SeccionFormularioId, Descripcion, Clase, Vista, EstaActivo) VALUES (2, 'Planificación', 'seccion-planificacion', 'SeccionPlanificacion', 1);
+INSERT INTO SeccionFormulario (SeccionFormularioId, Descripcion, Clase, Vista, EstaActivo) VALUES (3, 'Documentación', 'seccion-documentacion', 'SeccionDocumentacion', 1);
+INSERT INTO SeccionFormulario (SeccionFormularioId, Descripcion, Clase, Vista, EstaActivo) VALUES (4, 'Concreción', 'seccion-concrecion', 'SeccionConcrecion', 1);
+INSERT INTO SeccionFormulario (SeccionFormularioId, Descripcion, Clase, Vista, EstaActivo) VALUES (5, 'Aprobación', 'seccion-aprobacion', 'SeccionAprobacion', 0);
+
+SET IDENTITY_INSERT SeccionFormulario OFF
+
 
 CREATE TABLE EstadoSolicitud (
 	EstadoSolicitudId INT PRIMARY KEY IDENTITY,
 	Descripcion VARCHAR(255) NOT NULL UNIQUE,
+	SeccionFormularioId INT NOT NULL FOREIGN KEY REFERENCES SeccionFormulario (SeccionFormularioId),
 	EstaActivo BIT NOT NULL
 )
-GO
+
 
 SET IDENTITY_INSERT EstadoSolicitud ON
-GO
 
-INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (1, 'Solicitud Ingresada', 1) -- CLIENTE
-INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (2, 'Placas Ingresadas', 1) -- BODEGA
-INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (3, 'Planificado', 1) -- PLANIFICADOR
-INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (4, 'Documentado', 1) -- CLIENTE
-INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (5, 'Concreción', 1) -- BODEGA
-INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, EstaActivo) VALUES (6, 'Aprobado por Cliente', 1) -- CLIENTE
+
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (0, 'Nueva Solicitud', 1, 1) -- CLIENTE
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (1, 'Solicitud Ingresada', 2, 1) -- CLIENTE
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (2, 'Solicitud Ingresada Sin Placas', 1, 1) -- BODEGA
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (3, 'Planificado', 3, 1) -- PLANIFICADOR
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (4, 'Documentado', 4, 1) -- CLIENTE
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (5, 'Concretado', 5, 1) -- BODEGA
+INSERT INTO EstadoSolicitud (EstadoSolicitudId, Descripcion, SeccionFormularioId, EstaActivo) VALUES (6, 'Aprobado por Cliente', 5, 0) -- CLIENTE
 
 SET IDENTITY_INSERT EstadoSolicitud OFF 
-GO
+
 
 CREATE TABLE SolicitudDespacho (
 	-- FASE 1 CLIENTE
@@ -804,13 +823,13 @@ CREATE TABLE SolicitudDespacho (
 	MotivoNoConcrecion VARCHAR(500) NULL,
 	SolicitanteId INT NOT NULL FOREIGN KEY REFERENCES Usuario(UsuarioId)
 )
-GO
+
 
 CREATE TABLE PersonalAsignado (
 	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho (SolicitudDespachoId),
 	PersonalId INT NOT NULL FOREIGN KEY REFERENCES Personal (PersonalId)
 )
-GO
+
 
 CREATE TABLE EquiposSolicitados (
 	EquipoSolicitadoId INT PRIMARY KEY IDENTITY,
@@ -819,14 +838,14 @@ CREATE TABLE EquiposSolicitados (
 	EstadoEquipoId INT NULL FOREIGN KEY REFERENCES EstadoEquipo(EstadoEquipoId),
 	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
 )
-GO
+
 
 CREATE TABLE EquiposRetirados (
 	EquipoRetiradoId INT PRIMARY KEY IDENTITY,
 	NumeroPlaca VARCHAR(50) NOT NULL,
 	SolicitudDespachoId INT NOT NULL FOREIGN KEY REFERENCES SolicitudDespacho(SolicitudDespachoId)
 )
-GO
+
 
 -- Se genera una carga masiva por cada archivo cargado
 CREATE TABLE CargaMasiva (
@@ -835,7 +854,7 @@ CREATE TABLE CargaMasiva (
 	FechaHora DATETIME NOT NULL,
 	Archivo VARCHAR(255) NOT NULL
 )
-GO
+
 
 -- Se genera un detalle de carga masiva por cada cliente en el archivo
 CREATE TABLE CargaMasivaDetalle (
@@ -859,7 +878,7 @@ CREATE TABLE CargaMasivaDetalle (
 	ObservacionAof VARCHAR(500) NOT NULL,
 	Prioridad VARCHAR(100) NOT NULL -- Enlaza por texto a tabla Prioridad
 	)
-GO
+
 
 -- Se crea un detalle de producto por cada numero de placa distinto en el archivo
 CREATE TABLE CargaMasivaDetalleProducto (
@@ -868,15 +887,10 @@ CREATE TABLE CargaMasivaDetalleProducto (
 	NumeroPlaca VARCHAR(20) NOT NULL, -- Enlaza por numero a tabla de Existencias
 	UNIQUE (CargaMasivaDetalleId, NumeroPlaca)
 )
-GO
 
-CREATE VIEW Existencia AS 
-SELECT * FROM MiLogistic.dbo.Existencia
-GO
 
 CREATE TABLE BinToEstadoEquipo (
 	Bintoestadoequipoid INT PRIMARY KEY IDENTITY(1, 1),
 	Estadoequipoid INT NOT NULL,
 	Bin VARCHAR(100) NOT NULL
 )
-GO

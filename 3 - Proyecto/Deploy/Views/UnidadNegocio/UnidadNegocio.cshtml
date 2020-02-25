@@ -1,0 +1,79 @@
+﻿@model Datos.Modelo.UnidadNegocio
+@{
+	ViewBag.SeccionTieneTitulo = true;
+	ViewBag.Pagina = 5;
+
+	if (Model.UnidadNegocioId == 0)
+	{
+		ViewBag.Title = "Despacho - Nueva Unidad de Negocio";
+		ViewBag.TituloSeccion = "Nueva Unidad de Negocio";
+	}
+	else
+	{
+		ViewBag.Title = "Despacho - " + Model.Descripcion;
+		ViewBag.TituloSeccion = Model.Descripcion;
+	}
+
+	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/unidadnegocio.less" />
+}
+
+@section Scripts{
+	@Scripts.Render("~/bundles/unidadnegocio")
+}
+
+<div class="m-portlet m-portlet--tab">
+	<!--begin::Form-->
+	<form class="m-form m-form--fit m-form--label-align-right">
+		<div class="m-portlet__body">
+			<input type="hidden" value="@Model.UnidadNegocioId" id="id">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
+				</div>
+			</div>
+			@if (usuario.ClienteId == null)
+			{
+				<div class="form-group m-form__group row">
+					<label for="example-text-input" class="col-2 col-form-label">Cliente</label>
+					<div class="col-lg-10 col-sm-12">
+						<select class="form-control m-select2" id="clienteid" name="clienteid">
+							@foreach (Datos.Modelo.Cliente cliente in clientes)
+							{
+								<option value="@cliente.ClienteId" @(Model.ClienteId == cliente.ClienteId ? "selected" : "")>@cliente.Nombre</option>
+							}
+						</select>
+					</div>
+				</div>
+			}
+			else
+			{
+				<input id="clienteid" type="hidden" value="@usuario.ClienteId" />
+			}
+		</div>
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions">
+				<div class="row">
+					<div class="col-2">
+					</div>
+					<div class="col-10">
+						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+						<a href="/UnidadNegocio/Index" class="btn btn-secondary">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+
+

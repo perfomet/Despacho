@@ -1,0 +1,69 @@
+﻿@model Datos.Modelo.Camion
+@{
+	ViewBag.SeccionTieneTitulo = true;
+	ViewBag.Pagina = 10;
+
+	if (Model.Patente == "")
+	{
+		ViewBag.Title = "Despacho - Camión Nuevo";
+		ViewBag.TituloSeccion = " Camión Nuevo";
+	}
+	else
+	{
+		ViewBag.Title = "Despacho - Camion";
+		ViewBag.TituloSeccion = Model.Patente + " - " + Model.Descripcion;
+	}
+
+	List<Datos.Modelo.EmpresaTransporte> empresas = Datos.Datos.EmpresaTransporte.ObtenerEmpresasdeTransportes();
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/camion.less" />
+}
+
+@section Scripts{
+	@Scripts.Render("~/bundles/camion")
+}
+
+<div class="m-portlet m-portlet--tab">
+	<!--begin::Form-->
+	<form class="m-form m-form--fit m-form--label-align-right">
+		<div class="m-portlet__body">
+			<input type="hidden" value="@Model.Patente" id="id">
+			<input type="hidden" value="@Model.EstaActivo" id="activo">
+
+			<div class="form-group m-form__group row">
+				<label for="example-text-input" class="col-2 col-form-label">Descripción</label>
+				<div class="col-10">
+					<input class="form-control m-input" type="text" value="@Model.Descripcion" id="descripcion" style="width: 50%">
+				</div>
+			</div>
+			<div class="form-group m-form__group row">
+				<label class="col-form-label col-lg-2 col-sm-12">Empresa de Transporte</label>
+				<div class="col-lg-10 col-sm-12">
+					<select class="form-control m-select2" id="empresatransporteid" name="empresatransporteid">
+						@foreach (Datos.Modelo.EmpresaTransporte empresa in empresas)
+						{
+							<option value="@empresa.EmpresaTransporteId" @(Model.Empresatransporteid == empresa.EmpresaTransporteId ? "selected" : "")>@empresa.Nombre</option>
+						}
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="m-portlet__foot m-portlet__foot--fit">
+			<div class="m-form__actions">
+				<div class="row">
+					<div class="col-2">
+					</div>
+					<div class="col-10">
+						<button type="button" class="btn btn-success" id="btnGuardar">Guardar</button>
+						<a href="/Camion/Index" class="btn btn-secondary">Volver</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+

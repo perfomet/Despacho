@@ -9,10 +9,10 @@ namespace Datos.Datos
 
 		public static List<Modelo.ModeloExistencia> ObtenerModelosExistencias(int clienteId)
 		{
-			string SELECTSentence = "SELECT DISTINCT E.Modelo";
-			string FROMSentence = " FROM Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string SELECTSentence = "SELECT DISTINCT E.CodArt";
+			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = (clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "");
-			string ORDERSentence = " ORDER BY E.Modelo;";
+			string ORDERSentence = " ORDER BY E.CodArt;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -31,10 +31,10 @@ namespace Datos.Datos
 		public static Modelo.ModeloExistencia ObtenerModeloExistencia(string codigo)
 		{
 
-			string SELECTSentence = "SELECT Modelo";
-			string FROMSentence = " FROM Existencia";
-			string WHERESentence = " WHERE Modelo = '" + codigo + "'";
-			string ORDERSentence = " ORDER BY Modelo;";
+			string SELECTSentence = "SELECT CodArt";
+			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia";
+			string WHERESentence = " WHERE CodArt = '" + codigo + "'";
+			string ORDERSentence = " ORDER BY CodArt;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			Modelo.ModeloExistencia modelo = new Modelo.ModeloExistencia();

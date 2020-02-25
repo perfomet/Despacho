@@ -15,4 +15,13 @@ namespace Datos.Modelo
 
 		}
 	}
+
+	public enum Perfiles
+	{
+		SuperUsuario = 1,
+		Administrador = 2,
+		Planificador = 3,
+		Cliente = 4,
+		Bodega = 5
+	}
 }

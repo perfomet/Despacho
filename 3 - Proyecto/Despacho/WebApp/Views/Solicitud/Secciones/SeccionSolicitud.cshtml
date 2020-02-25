@@ -12,7 +12,7 @@
 	List<Datos.Modelo.ModeloExistencia> modelos = Datos.Datos.ModeloExistencia.ObtenerModelosExistencias(usuario.Cliente != null ? usuario.ClienteId.Value : 0);
 }
 
-<div class="m-wizard__form-step @(Model.EstadoSolicitudId == 0 ? "m-wizard__form-step--current" : "")" id="seccion-solicitud">
+<div class="m-wizard__form-step" id="seccion-solicitud">
 
 	<input type="hidden" id="solicitudId" value="@Model.SolicitudDespachoId" />
 	<input type="hidden" id="estadoId" value="@Model.EstadoSolicitudId" />
@@ -24,9 +24,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Número de Solicitud:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="number" class="form-control m-input" value="@Model.NumeroSolicitud" id="numeroSolicitud" />
+					<input type="number" class="form-control m-input campo-requerido" data-campo="Número de Solicitud" value="@Model.NumeroSolicitud" id="numeroSolicitud" />
 				}
 				else
 				{
@@ -38,9 +38,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Tipo Solicitud:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<select id="tipoSolicitudId" class="form-control m-select2" placeholder="">
+					<select id="tipoSolicitudId" class="form-control m-select2 campo-requerido" placeholder="" data-campo="Tipo Solicitud">
 						<option value="0" selected disabled>Seleccione un tipo de solicitud</option>
 						@foreach (Datos.Modelo.TipoSolicitud tipo in tiposSolicitud)
 						{
@@ -58,10 +58,10 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Recepción:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<div class='input-group date pull-right'>
-						<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcion" value="@Model.FechaRecepcion">
+						<input type="text" class="form-control m-input campo-requerido" data-campo="Fecha Recepción" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcion" value="@Model.FechaRecepcion">
 						<div class="input-group-append">
 							<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
 						</div>
@@ -77,9 +77,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Número de Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="text" class="form-control m-input" value="@Model.NumeroCliente" id="numeroCliente" />
+					<input type="text" class="form-control m-input campo-requerido" data-campo="Número de Cliente" value="@Model.NumeroCliente" id="numeroCliente" />
 				}
 				else
 				{
@@ -91,9 +91,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Nombre del Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="text" class="form-control m-input" value="@Model.NombreCliente" id="nombreCliente" />
+					<input type="text" class="form-control m-input campo-requerido" data-campo="Nombre del Cliente" value="@Model.NombreCliente" id="nombreCliente" />
 				}
 				else
 				{
@@ -105,9 +105,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Calle Dirección Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="text" class="form-control m-input" value="@Model.CalleDireccionCliente" id="calleDireccionCliente" />
+					<input type="text" class="form-control m-input campo-requerido" data-campo="Calle Dirección Cliente" value="@Model.CalleDireccionCliente" id="calleDireccionCliente" />
 				}
 				else
 				{
@@ -119,9 +119,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Número Dirección Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="number" class="form-control m-input" value="@Model.NumeroDireccionCliente" id="numeroDireccionCliente" />
+					<input type="number" class="form-control m-input campo-requerido" data-campo="Número Dirección Cliente" value="@Model.NumeroDireccionCliente" id="numeroDireccionCliente" />
 				}
 				else
 				{
@@ -131,11 +131,11 @@
 			</div>
 		</div>
 		<div class="form-group m-form__group row">
-			<label class="col-xl-3 col-lg-3 col-form-label">* Comuna del Cliente:</label>
+			<label class="col-xl-3 col-lg-3 col-form-label">* Región del Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<select id="regionClienteId" class="form-control m-select2" placeholder="">
+					<select id="regionClienteId" class="form-control m-select2 campo-requerido" data-campo="Región del Cliente" placeholder="">
 						<option value="0" selected disabled>Seleccione una región</option>
 						@{
 							Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
@@ -157,11 +157,11 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Comuna del Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
 
-					<select id="comunaClienteId" class="form-control m-select2" placeholder="" @(comuna != null ? "" : "disabled")>
+					<select id="comunaClienteId" class="form-control m-select2 campo-requerido" data-campo="Comuna del Cliente" placeholder="" @(comuna != null ? "" : "disabled")>
 						<option value="0" selected disabled>Seleccione una comuna</option>
 						@if (comuna != null)
 						{
@@ -185,9 +185,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Teléfono Contacto Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="tel" class="form-control m-input" value="@Model.NumeroTelefonoContacto" id="telefonoContacto" />
+					<input type="tel" class="form-control m-input campo-requerido" data-campo="Teléfono Contacto Cliente" value="@Model.NumeroTelefonoContacto" id="telefonoContacto" />
 				}
 				else
 				{
@@ -199,7 +199,7 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">Teléfono Contacto Adicional Cliente:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<input type="tel" class="form-control m-input" value="@Model.NumeroTelefonoContactoAdicional" id="telefonoContactoAdicional" />
 				}
@@ -213,9 +213,9 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* RUT Cliente:</label>
 			<div class="col-xl-9 col-lg-9 d-flex" style="align-items: center;">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="text" class="form-control m-input" value="@((Model.RutCliente == null || Model.RutCliente.Equals(string.Empty)) && (Model.VRutCliente == null || Model.VRutCliente.Equals(string.Empty)) ? "" : Model.RutCliente+"-"+Model.VRutCliente)" id="rutCliente" maxlength="12" />
+					<input type="text" class="form-control m-input campo-requerido" data-campo="RUT Cliente" value="@((Model.RutCliente == null || Model.RutCliente.Equals(string.Empty)) && (Model.VRutCliente == null || Model.VRutCliente.Equals(string.Empty)) ? "" : Model.RutCliente+"-"+Model.VRutCliente)" id="rutCliente" maxlength="12" />
 				}
 				else
 				{
@@ -227,7 +227,7 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Prioridad:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<select id="prioridadId" class="form-control m-select2" placeholder="">
 						<option value="0" selected disabled>Seleccione una prioridad</option>
@@ -247,7 +247,7 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Unidad de Negocio:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<select id="unidadNegocioId" class="form-control m-select2" placeholder="">
 						<option value="0" selected disabled>Seleccione una unidad de negocio</option>
@@ -262,16 +262,15 @@
 				}
 				else
 				{
-					Datos.Modelo.UnidadNegocio unidadnegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(Model.UnidadNegocioId);
 					<input type="hidden" value="@Model.UnidadNegocioId" id="unidadNegocioId" />
-					@unidadnegocio.Descripcion
+					@Model.UnidadNegocio.Descripcion
 				}
 			</div>
 		</div>
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">* Gerencia:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<select id="gerenciaId" class="form-control m-select2" placeholder="">
 						<option value="0" selected disabled>Seleccione una gerencia</option>
@@ -295,7 +294,7 @@
 		<div class="form-group m-form__group row">
 			<label class="col-xl-3 col-lg-3 col-form-label">Observaciones:</label>
 			<div class="col-xl-9 col-lg-9">
-				@if (Model.EstadoSolicitudId == 0)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<textarea class="form-control m-input" id="observaciones" maxlength="500">@Model.ObservacionAof</textarea>
 				}
@@ -312,7 +311,7 @@
 		<div class="m-form__heading">
 			<div style="display: flex;justify-content: end;">
 				<h3 class="m-form__heading-title" style="width: 100%;">Equipos a Solicitar</h3>
-				@if (Model.EstadoSolicitudId < 2)
+				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
 					<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modalEquipoSolicitado">
 						<span>

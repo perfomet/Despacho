@@ -1,10 +1,7 @@
-﻿using System;
-using System.Data;
-using Datos.DB;
+﻿using Datos.DB;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Datos.Datos
 {
@@ -51,23 +48,23 @@ namespace Datos.Datos
 		public static bool Crear(Modelo.EstadoSolicitud estado)
 		{
 			string INSERTSentence = "INSERT INTO EstadoSolicitud";
-			string VALUESSentence = " VALUES('{1}', 1);";
+			string VALUESSentence = " VALUES('{0}', {1}, 1);";
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 
-			builder.AppendFormat(SQLSentence, estado.Descripcion);
+			builder.AppendFormat(SQLSentence, estado.Descripcion, estado.SeccionFormularioId);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 
 		public static bool Modificar(Modelo.EstadoSolicitud estado)
 		{
 			string UPDATESentence = "UPDATE EstadoSolicitud";
-			string SETSentence = " SET Descripcion = '{1}'";
+			string SETSentence = " SET Descripcion = '{1}', SeccionFormularioId = {2}";
 			string WHERESentence = " WHERE EstadoSolicitudId = {0}";
 
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, estado.EstadoSolicitudId, estado.Descripcion);
+			builder.AppendFormat(SQLSentence, estado.EstadoSolicitudId, estado.Descripcion, estado.SeccionFormularioId);
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}

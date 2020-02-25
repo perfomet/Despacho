@@ -1,0 +1,46 @@
+﻿@{
+	ViewBag.Title = "Login";
+	Layout = "/Views/Shared/_LoginLayout.cshtml";
+}
+
+@section Less{
+	<link rel="stylesheet/less" type="text/css" href="~/Content/less/login.less" />
+}
+
+@section Scripts{
+	@Scripts.Render("~/bundles/login")
+}
+
+<div class="fondo-login">
+	<div class="imagen-camion"></div>
+	<div class="form-login">
+		<div class="form-login-body">
+			<img src="~/Content/img/logo.svg" />
+			<div class="div-usuario">
+				<i class="fas fa-user"></i>
+				<div>
+					<label>Usuario</label>
+					<input id="usuario" name="usuario" type="text" placeholder="Ingrese su usuario" />
+				</div>
+			</div>
+			<div class="div-continuar">
+				<button type="button" id="continuar">CONTINUAR</button>
+			</div>
+			<div class="div-usuario-ok">
+				<i class="fas fa-user-circle"></i>
+				<label class="usuario-ok">Nombre Usuario</label>
+			</div>
+			<div class="div-clave">
+				<i class="fas fa-user-alt"></i>
+				<div>
+					<label>Clave</label>
+					<input id="clave" name="clave" type="password" placeholder="Ingrese su clave" />
+				</div>
+			</div>
+			<div class="div-ingresar">
+				<button type="button" id="volver">VOLVER</button>
+				<button type="button" id="ingresar">INGRESAR</button>
+			</div>
+		</div>
+	</div>
+</div>
