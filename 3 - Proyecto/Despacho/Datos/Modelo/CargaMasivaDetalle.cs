@@ -24,18 +24,14 @@ namespace Datos.Modelo
 		public string Gerencia { get; set; }
 		public string ObservacionAof { get; set; }
 		public string Prioridad { get; set; }
-		
+		public string NumeroPlaca { get; set; }
 
 		public CargaMasiva CargaMasiva
 		{
 			get { return new CargaMasiva(); }
 		}
 
-		public List<CargaMasivaDetalleProducto> Productos
-		{
-			get { return new List<CargaMasivaDetalleProducto>(); }
-		}
-
+		
 		public void FromDataRow(DataRow fila)
 		{
 			//CAMBIO DE PRUEBA
@@ -58,6 +54,7 @@ namespace Datos.Modelo
 			this.Gerencia = fila[16].ToString();
 			this.ObservacionAof = fila[17].ToString();
 			this.Prioridad = fila[18].ToString();
+			this.NumeroPlaca = fila[19].ToString();
 			
 		}
 	}

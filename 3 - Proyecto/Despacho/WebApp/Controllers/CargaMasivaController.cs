@@ -26,7 +26,7 @@ namespace Despacho.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva, List<Datos.Modelo.CargaMasivaDetalleProducto> cargaMasivaDetalleProductos)
+		public ActionResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva, List<Datos.Modelo.CargaMasivaDetalle> cargaMasivaDetalle)
 		{
 			int idcargamasiva = Datos.Datos.CargaMasiva.Crear(cargamasiva);
 			
@@ -44,7 +44,7 @@ namespace Despacho.Controllers
 
 				List<Datos.Modelo.EquipoSolicitado> equipos = new List<Datos.Modelo.EquipoSolicitado>();
 
-				cargaMasivaDetalleProductos.ForEach((producto) =>
+				cargaMasivaDetalle.ForEach((producto) =>
 				{
 					if (producto.NumeroSolicitud == detalle.NumeroSolicitud)
 					{

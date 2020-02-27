@@ -2534,7 +2534,6 @@
     <Content Include="Views\Solicitud\Detalle.cshtml" />
     <Content Include="Views\CargaMasiva\CargaMasiva.cshtml" />
     <Content Include="Views\CargaMasiva\CargaMasivaDetalle.cshtml" />
-    <Content Include="Views\CargaMasiva\CargaMasivaDetalleProducto.cshtml" />
     <Content Include="Views\Solicitud\Secciones\SeccionSolicitud.cshtml" />
     <Content Include="Views\Solicitud\Secciones\SeccionPlanificacion.cshtml" />
     <Content Include="Views\Solicitud\Secciones\SeccionDocumentacion.cshtml" />

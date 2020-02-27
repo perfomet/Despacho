@@ -1,7 +1,142 @@
-﻿
+﻿@model IEnumerable<Datos.Modelo.CargaMasivaDetalle>
+
 @{
-    ViewBag.Title = "CargaMasivaDetalle";
+  ViewBag.Title = "Carga Masiva Detalle";
 }
 
-<h2>CargaMasivaDetalle</h2>
+<h2>Carga Masiva Detalle</h2>
 
+<p>
+  @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+  <tr>
+    <th>
+      @Html.DisplayNameFor(model => model.CargaMasivaDetalleId)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NumeroSolicitud)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.TipoSolicitud)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.FechaSolicitud)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.FechaRecepcion)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NumeroCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NombreCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.CalleDireccionCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NumeroDireccionCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.RegionCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.ComunaCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NumeroTelefonoContacto)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NumeroTelefonoContactoAdicional)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.RutCliente)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.UnidadNegocio)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.Gerencia)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.ObservacionAof)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.Prioridad)
+    </th>
+    <th>
+      @Html.DisplayNameFor(model => model.NumeroPlaca)
+    </th>
+    <th></th>
+  </tr>
+
+  @foreach (var item in Model)
+  {
+<tr>
+  <td>
+    @Html.DisplayFor(modelItem => item.CargaMasivaDetalleId)
+  </td>
+  <th>
+    @Html.DisplayFor(modelItem => item.NumeroSolicitud)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.TipoSolicitud)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.FechaSolicitud)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.FechaRecepcion)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.NumeroCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.NombreCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.CalleDireccionCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.NumeroDireccionCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.RegionCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.ComunaCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.NumeroTelefonoContacto)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.NumeroTelefonoContactoAdicional)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.RutCliente)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.UnidadNegocio)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.Gerencia)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.ObservacionAof)
+  </th>
+  <th>
+    @Html.DisplayFor(modelItem => item.Prioridad)
+  </th>
+  <td>
+    @Html.DisplayFor(modelItem => item.NumeroPlaca)
+  </td>
+  <td>
+    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+  </td>
+</tr>
+  }
+
+</table>
