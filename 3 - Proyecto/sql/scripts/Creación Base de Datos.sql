@@ -876,19 +876,11 @@ CREATE TABLE CargaMasivaDetalle (
 	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
 	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
 	ObservacionAof VARCHAR(500) NOT NULL,
-	Prioridad VARCHAR(100) NOT NULL -- Enlaza por texto a tabla Prioridad
+	Prioridad VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Prioridad
+	NumeroPlaca VARCHAR(20) NOT NULL,
+	UNIQUE (NumeroSolicitud, NumeroPlaca)
 	)
-
-
--- Se crea un detalle de producto por cada numero de placa distinto en el archivo
-CREATE TABLE CargaMasivaDetalleProducto (
-	CargaMasivaDetalleId INT NOT NULL FOREIGN KEY REFERENCES CargaMasivaDetalle (CargaMasivaDetalleId),
-	NumeroSolicitud INT NOT NULL, 
-	NumeroPlaca VARCHAR(20) NOT NULL, -- Enlaza por numero a tabla de Existencias
-	UNIQUE (CargaMasivaDetalleId, NumeroPlaca)
-)
-
-
+	
 CREATE TABLE BinToEstadoEquipo (
 	Bintoestadoequipoid INT PRIMARY KEY IDENTITY(1, 1),
 	Estadoequipoid INT NOT NULL,
