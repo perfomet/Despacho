@@ -36,25 +36,20 @@ let acciones = {
 };
 
 let CargaMasiva = function () {
-  let tabla;
-  let registros = [];
-  
+  let cargasmasivas = [];
+
   let InitCargaMasiva = function () {
-    CapaDatos.init(() => {
-      InitElementos();
-    });
+    InitElementos();
   };
 
   let InitElementos = function () {
-    
-    let cargasmasivas;
 
     $('.m-select2').select2();
 
     if ($("#listacargasmasivas").length > 0) {
       window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
 
-      $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
+      $.post("/CargaMasiva/Listar", { clienteId: 0 }, function (data) {
         cargasmasivas = data;
 
         CargarLista();
@@ -65,17 +60,80 @@ let CargaMasiva = function () {
         //Filtrar();
       });
     }
-    else
-    {
+  }
 
+  let CargarLista = function () {
+    let picker = $('#filtro-fechacarga').data('daterangepicker');
+
+    $('#listacargasmasivas').mDatatable({
+      data: {
+        type: "local",
+        source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
+        pageSize: 10
+      },
+      layout: {
+        theme: "default",
+        class: "",
+        scroll: false,
+        footer: false
+      },
+      sortable: true,
+      pagination: true,
+      search: {
+        input: $('#buscarCargaMasiva')
+      },
+      columns: [
+        { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
+        { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+        { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+      ],
+      translate: {
+        records: {
+          processing: "Cargando...",
+          noRecords: "No se encontraron registros"
+        },
+        toolbar: {
+          pagination: {
+            items: {
+              default: {
+                first: "Primero",
+                prev: "Anterior",
+                next: "Siguiente",
+                last: "Último",
+                more: "Más páginas",
+                input: "Número de página",
+                select: "Seleccionar tamaño de página"
+              },
+              info: "Viendo {{start}} - {{end}} de {{total}} registros"
+            }
+          }
+        }
+      }
+    });
+  };
+
+  return {
+    init: function () {
+      InitCargaMasiva();
     }
+  };
+}();
 
-    let CargarLista = function () {
-      let picker = $('#filtro-fechacarga').data('daterangepicker');
-      $('#listacargasmasivas').mDatatable({
+let CargaMasivaDetalle = function () {
+  let tabla;
+  let registros = [];
+
+  let _Init = function () {
+    _InitElementos();
+  }
+
+  let _InitElementos = function () {
+    if ($('#tabla').length > 0) {
+      tabla = $('#tabla').mDatatable({
         data: {
           type: "local",
-          source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
+          source: [],
           pageSize: 10
         },
         layout: {
@@ -90,10 +148,78 @@ let CargaMasiva = function () {
           input: $('#buscarCargaMasiva')
         },
         columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+          {
+            field: "", title: "", width: 50, selector: !1, textAlign: "center", template: function (e, a, i) {
+              let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
+              let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+
+              return e[2].filter((x) => { return x.tipo == 'danger'; }).length > 0 ? error : correcto;
+            }
+          },
+          {
+            field: "", title: "Resultados", width: 50, selector: !1, textAlign: "center", template: function (e, a, i) {
+              let div = $('<div></div>');
+              let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
+              let estados = t[2];
+              let actions = t[0];
+
+              let tooltip = $('<div></div>');
+
+              if (estados.length > 0) {
+                if (estados.length > 1) {
+                  boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
+                } else {
+                  boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
+                }
+
+                estados.forEach((e) => {
+                  tooltip.append('<li>' + e.title + '</li>');
+                });
+              } else {
+                if (actions.length > 1) {
+                  boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
+                } else {
+                  boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
+                }
+
+                actions.forEach((a) => {
+                  if (a == acciones.crearPaciente) {
+                    tooltip.append('<li>Se creó el paciente</li>');
+                  }
+
+                  if (a == acciones.ingresarDispositivo) {
+                    tooltip.append('<li>Se agregó el dispositivo al paciente</li>');
+                  }
+
+                  if (a == acciones.agregarProcedimientos) {
+                    tooltip.append('<li>Se agregaron los procedimientos al dispositivo</li>');
+                  }
+                });
+              }
+
+              boton.attr('title', tooltip.html());
+              div.html(boton);
+              return div.html();
+            }
+          },
+          { field: "NumeroSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "TipoSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "FechaSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "FechaRecepcion", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "NumeroCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "NombreCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "CalleDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "NumeroDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "RegionCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "ComunaCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "NumeroTelefonoContacto", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "NumeroTelefonoContactoAdicional", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "RutCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "UnidadNegocio", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "Gerencia", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "ObservacionAof", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "Prioridad", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "Placa", title: "#", width: 50, selector: !1, textAlign: "center" }
         ],
         translate: {
           records: {
@@ -118,32 +244,10 @@ let CargaMasiva = function () {
           }
         }
       });
-    };
-    $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
-      $(".m_datatable").mDatatable({
-        data: {
-          type: "local",
-          source: cargas,
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: !1,
-          footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        search: {
-          input: $("#buscarCargaMasiva")
-        },
-        columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-        ], true, true);
-    });
+    }
+
+    let nombreArchivo;
+
     $('#archivoCarga').change((oEvent) => {
       // Get The File From The Input
       let archivo = oEvent.target.files[0];
@@ -156,7 +260,7 @@ let CargaMasiva = function () {
         let reader = new FileReader();
 
         reader.onload = function (e) {
-          ModuloVigilancia.MostrarCargando();
+          //MOSTRAR CARGANDO
 
           try {
             let data = e.target.result;
@@ -168,40 +272,40 @@ let CargaMasiva = function () {
             let columnas = _ObtenerColumnas(workbook.Sheets[workbook.SheetNames[0]]);
 
             if (!_VerificarFormato(columnas)) {
-              ModuloVigilancia.OcultarCargando();
-              ModuloVigilancia.AlertaError('El formato del archivo seleccionado no es correcto, verifique el archivo.', '¡Atención!');
+              //OCULTAR CARGANDO
+              alert('El formato del archivo seleccionado no es correcto, verifique el archivo.');
               return;
             }
 
             if (filas && filas.length == 0) {
-              ModuloVigilancia.OcultarCargando();
-              ModuloVigilancia.AlertaError('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.', '¡Atención!');
+              //OCULTAR CARGANDO
+              alert('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.');
               return;
             }
 
             registros = [];
 
-
             filas.forEach((objeto) => {
               registros.push({
-                numeroSolicitud: objet['NumeroSolicitud'],
-                tiposolicitud: objeto['TipoSolicitud'],
-                fechasolicitud: objecto['FechaSolicitud'],
-                fecharecepcion: objecto['FechaRecepcion'],
-                numerocliente: objeto['NumeroCliente'],
-                nombrecliente: objeto['NombreCliente'],
-                calledireccioncliente: objeto['CalleDireccionCliente'],
-                numerodireccioncliente: objeto['NumeroDireccionCliente'],
-                regioncliente: objeto['RegionCliente'],
-                comunacliente: objeto['ComunaCliente'],
-                numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
-                numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
-                rutcliente: objeto['RutCliente'],
-                unidadnegocion: objeto['UnidadNegocio'],
-                gerencia: objeto['Gerencia'],
-                observacionaof: objeto['ObservacionAof'],
-                prioridad: objeto['Prioridad'],
-                placa: objecto['Placa']
+                /* tarea escrbir los nombres de los registros igual que cómo están en el objeto*/
+                NumeroSolicitud: objeto['NumeroSolicitud'],
+                TipoSolicitud: objeto['TipoSolicitud'],
+                FechaSolicitud: objeto['FechaSolicitud'],
+                FechaRecepcion: objeto['FechaRecepcion'],
+                NumeroCliente: objeto['NumeroCliente'],
+                NombreCliente: objeto['NombreCliente'],
+                CalleDireccionCliente: objeto['CalleDireccionCliente'],
+                NumeroDireccionCliente: objeto['NumeroDireccionCliente'],
+                RegionCliente: objeto['RegionCliente'],
+                ComunaCliente: objeto['ComunaCliente'],
+                NumeroTelefonoContacto: objeto['NumeroTelefonoContacto'],
+                NumeroTelefonoContactoAdicional: objeto['NumeroTelefonoContactoAdicional'],
+                RutCliente: objeto['RutCliente'],
+                UnidadNegocio: objeto['UnidadNegocio'],
+                Gerencia: objeto['Gerencia'],
+                ObservacionAof: objeto['ObservacionAof'],
+                Prioridad: objeto['Prioridad'],
+                Placa: objeto['Placa']
               });
             });
 
@@ -209,17 +313,17 @@ let CargaMasiva = function () {
             $('#alertaProcesar').show();
           } catch (ex) {
             console.log(ex);
-            ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
+            alert('No se pudo obtener la información del archivo seleccionado, verifique el archivo.');
           }
 
           $('#archivoCarga').val(null);
-          ModuloVigilancia.OcultarCargando();
+          //OCULTAR CARGANDO
         };
 
         reader.onerror = function (ex) {
           console.log(ex);
-          ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
-          ModuloVigilancia.OcultarCargando();
+          alert('No se pudo obtener la información del archivo seleccionado, verifique el archivo.');
+          //OCULTAR CARGANDO
           $('#archivoCarga').val(null);
         };
 
@@ -227,96 +331,6 @@ let CargaMasiva = function () {
       }
     });
 
-    
-
-    
-
-  return {
-    init: function () {
-      InitCargaMasiva();
-    }
-  };
-}();
-
-let CargaMasivaDetalle = function () {
-  let _Init = function () {
-    _InitElementos();
-  }
-  let _InitElementos = function () {
-    let nombreArchivo;
-
-    tabla = $("#tabla").DataTable({
-      pageLength: 5,
-      lengthChange: false,
-      language: {
-        decimal: ",",
-        emptyTable: "No hay información",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
-        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-        infoFiltered: "(Filtrado de _MAX_ total entradas)",
-        thousands: ".",
-        lengthMenu: "Ver _MENU_",
-        loadingRecords: "Cargando...",
-        processing: "Procesando...",
-        search: "Buscar:",
-        zeroRecords: "Sin resultados encontrados",
-        paginate: {
-          first: "Primero",
-          last: "Ultimo",
-          next: "Siguiente",
-          previous: "Anterior"
-        }
-      },
-      columnDefs: [
-        { targets: 0, visible: false },
-        {
-          targets: 1,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
-            let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
-
-            return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
-          }
-        },
-        {
-          targets: 2,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let div = $('<div></div>');
-            let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
-            let estados = t[2];
-            let actions = t[0];
-
-            let tooltip = $('<div></div>');
-
-            if (estados.length > 0) {
-              if (estados.length > 1) {
-                boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
-              } else {
-                boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
-              }
-
-              estados.forEach((e) => {
-                tooltip.append('<li>' + e.title + '</li>');
-              });
-            } else {
-              if (actions.length > 1) {
-                boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
-              } else {
-                boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
-              }
-
-
-            }
-
-            boton.attr('title', tooltip.html());
-            div.html(boton);
-            return div.html();
-          }
-        }
-      ]
-    });
     $('#btnProcesarRegistros').click(() => {
       _ProcesarRegistros(nombreArchivo);
 
@@ -324,6 +338,7 @@ let CargaMasivaDetalle = function () {
       $('label[for="archivoCarga"]').html('Seleccione un archivo...');
       $('#alertaProcesar').hide();
     });
+
     $(document).on('click', '#listacargasmasivas tbody tr', function () {
       let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
       location.href = "/CargaMasiva/CargaMasiva/" + id;
@@ -345,7 +360,7 @@ let CargaMasivaDetalle = function () {
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
-        ModuloVigilancia.AlertaInfo('Debe cargar un archivo primero', '¡Atención!');
+        alert('Debe cargar un archivo primero');
         return;
       }
 
@@ -357,156 +372,195 @@ let CargaMasivaDetalle = function () {
         registro.acciones = [];
 
         // VALIDA QUE EL TIPO DE SOLICITUD EXISTA Y SEA VÁLIDO
-        {
+        if (!registro.NumeroSolicitud) {
           registro.estados.push(estados.numeroSolicitud);
         }
-        {
+        else {
+
+        }
+        if (!registro.TipoSolicitud) {
           registro.estados.push(estados.tipoSolicitud);
         }
+        else {
+
+        }
         // VALIDA QUE LA FECHA DE SOLICITUD EXISTA Y SEA VÁLIDO
-        {
+        if (!registro.FechaSolicitud) {
           registro.estados.push(estados.FechaSolicitud);
         }
+        else {
+
+        }
         // VALIDA QUE LA FECHA DE RECEPCIÓN EXISTA Y SEA VÁLIDO
-        {
+        if (!registro.FechaRecepcion) {
           registro.estados.push(estados.FechaRecepcion);
         }
+        else {
 
+        }
         // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
-        {
+        if (!registro.TipoNumeroCliente) {
           registro.estados.push(estados.tipoNumeroCliente);
         }
+        else {
 
+        }
         // VALIDA QUE EL NUMERO DE CLIENTE EXISTA
-        if (!registro.tipoNumeroCliente) {
+        if (!registro.TipoNumeroCliente) {
           registro.estados.push(estados.tipoNumeroCliente);
         }
+        else {
 
+        }
         // SI EL TIPO DE NOMBRE DE CLIENTE ES VALIDO 
-        {
+        if (!registro.TipoNombreCliente) {
           registro.estados.push(estados.tipoNombreCliente);
         }
+        else {
 
+        }
         // VALIDA QUE EL NOMBRE DE CLIENTE EXISTA
-        if (!registro.tipoNombreCliente) {
+        if (!registro.TipoNombreCliente) {
           registro.estados.push(estados.tipoNombreCliente);
+        }
+        else {
+
         }
         // SI EL TIPO DE REGION ES VALIDO 
-        {
+        if (!registro.RegionCliente) {
           registro.estados.push(estados.tipoRegionCliente);
         }
 
-        // VALIDA QUE LA COMUNA EXISTA
-        if (!registro.tipoRegionCliente) {
+        // VALIDA QUE LA REGION EXISTA
+        if (!registro.RegionCliente) {
           registro.estados.push(estados.faltaRegionCliente);
         }
+        else {
 
-        // SI EL TIPO DE COMUNA ES VALIDO 
-        {
-          registro.estados.push(estados.tipoComunaCliente);
         }
-
-        // VALIDA QUE LA COMUNA EXISTA
-        if (!registro.tipoComunaCliente) {
+        // SI EL TIPO DE COMUNA ES VALIDO 
+        if (!registro.ComunaCliente) {
           registro.estados.push(estados.faltaComunaCliente);
         }
+        else {
 
+        }
+        // VALIDA QUE LA COMUNA EXISTA
+        if (!registro.ComunaCliente) {
+          registro.estados.push(estados.tipoComunaCliente);
+        }
+        else {
+
+        }
         // SI EL TIPO DE GERENCIA ES VALIDO 
-        if (!registro.gerencia) {
+        if (!registro.Gerencia) {
           registro.estados.push(estados.tipoGerencia);
         }
+        else {
 
+        }
         // VALIDA QUE LA GERENCIA EXISTA
-        if (!registro.tipoGerencia) {
+        if (!registro.Gerencia) {
           registro.estados.push(estados.tipoGerencia);
         }
+        else {
 
+        }
         // SI EL TIPO DE PRIORIDAD ES VALIDO 
-        {
+        if (!registro.Prioridad) {
           registro.estados.push(estados.tipoPrioridad);
         }
+        else {
 
+        }
         // VALIDA QUE LA PRIORIDAD EXISTA
-        if (!registro.tipoPrioridad) {
+        if (!registro.Prioridad) {
           registro.estados.push(estados.tipoPrioridad);
         }
+        else {
 
+        }
         // SI EL TIPO DE PLACA ES VALIDO 
-        {
+        if (!registro.Placa) {
           registro.estados.push(estados.tipoPlaca);
         }
+        else {
 
+        }
         // VALIDA QUE LA PLACA EXISTA
-        if (!registro.tipoPlaca) {
+        if (!registro.Placa) {
           registro.estados.push(estados.tipoPlaca);
+        }
+        else {
+
         }
 
         // SI EL TIPO DE IDENTIFICADOR ES 'RUT', Y EXISTEN LOS DATOS DE IDENTIFICACIÓN, VALIDA QUE EL RUT SEA VÁLIDO
         if (
-          !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
-          !registro.estados.contiene(estados.faltaTipoSolicitud) &&
-          !registro.estados.contiene(estados.faltaFechaSolicitud) &&
-          !registro.estados.contiene(estados.faltaFechaRecepcion) &&
-          !registro.estados.contiene(estados.faltaNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaNombreCliente) &&
-          !registro.estados.contiene(estados.faltaCalleDireccionCliente) &&
-          !registro.estados.contiene(estados.faltaNumeroDireccionCliente) &&
-          !registro.estados.contiene(estados.faltaRegionCliente) &&
-          !registro.estados.contiene(estados.faltaComunaCliente) &&
-          !registro.estados.contiene(estados.faltaNumeroTelefonoContacto) &&
-          !registro.estados.contiene(estados.faltaNumeroTelefonoContactoAdicional) &&
-          !registro.estados.contiene(estados.faltaRUTCliente) &&
-          !registro.estados.contiene(estados.faltaUnidadNegocio) &&
-          !registro.estados.contiene(estados.faltaGerencia) &&
-          !registro.estados.contiene(estados.faltaObservacionAof) &&
-          !registro.estados.contiene(estados.faltaPrioridad) &&
-          !registro.estados.contiene(estados.faltaPlaca) &&
-          !registro.estados.contiene(estados.tipoSolicitud) &&
-          !registro.estados.contiene(estados.tipoRegionCliente) &&
-          !registro.estados.contiene(estados.tipoComunaCliente) &&
-          !registro.estados.contiene(estados.tipoUnidadNegocio) &&
-          !registro.estados.contiene(estados.tipoGerencia) &&
-          !registro.estados.contiene(estados.tipoPrioridad) &&
-          !registro.estados.contiene(estados.tipoPlaca)
+          (registro.estados.indexOf(estados.faltaNumeroSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaTipoSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaFechaSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaFechaRecepcion) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaCalleDireccionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroDireccionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroTelefonoContacto) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroTelefonoContactoAdicional) < 0) &&
+          (registro.estados.indexOf(estados.faltaRUTCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaUnidadNegocio) < 0) &&
+          (registro.estados.indexOf(estados.faltaGerencia) < 0) &&
+          (registro.estados.indexOf(estados.faltaObservacionAof) < 0) &&
+          (registro.estados.indexOf(estados.faltaPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.faltaPlaca) < 0) &&
+          (registro.estados.indexOf(estados.tipoSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoUnidadNegocio) < 0) &&
+          (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
+          (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.tipoPlaca) < 0)
 
         ) {
-          let rutcliente = registro.rutcliente;
-          if (!ModuloVigilancia.ValidaRut(rutcliente)) {
+          let rutcliente = registro.RutCliente;
+          if (!_ValidaRut(rutcliente)) {
             registro.estados.push(estados.rutInvalido);
           }
         }
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
         if (
-          !registro.estados.contiene(estados.tipoNumeroCliente) &&
-          !registro.estados.contiene(estados.tipoNombreCliente) &&
-          !registro.estados.contiene(estados.tipoRegionCliente) &&
-          !registro.estados.contiene(estados.tipoComunaCliente) &&
-          !registro.estados.contiene(estados.tipoGerencia) &&
-          !registro.estados.contiene(estados.tipoPrioridad) &&
-          !registro.estados.contiene(estados.tipoPlaca) &&
-          !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
-          !registro.estados.contiene(estados.faltaNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaNombreCliente) &&
-          !registro.estados.contiene(estados.faltaRUT) &&
-          !registro.estados.contiene(estados.faltaDireccionCalleCliente) &&
-          !registro.estados.contiene(estados.faltaDireccionNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaRegionCliente) &&
-          !registro.estados.contiene(estados.faltaComunaCliente) &&
-          !registro.estados.contiene(estados.faltaGerencia) &&
-          !registro.estados.contiene(estados.faltaPrioridad) &&
-          !registro.estados.contiene(estados.faltaObservacionAof) &&
-          !registro.estados.contiene(estados.faltaPlaca) &&
+          (registro.estados.indexOf(estados.tipoNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
+          (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.tipoPlaca) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaRUT) < 0) &&
+          (registro.estados.indexOf(estados.faltaDireccionCalleCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaDireccionNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaGerencia) < 0) &&
+          (registro.estados.indexOf(estados.faltaPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.faltaObservacionAof) < 0) &&
+          (registro.estados.indexOf(estados.faltaPlaca) < 0) &&
           numeroSolicitudActual != registro.numeroSolicitud
         ) {
           // SI NO HAY ERRORES DE VALIDACIÓN, AGREGA LA ACCIÓN DE CREAR SOLICITUD AL REGISTRO
           registro.acciones.push(acciones.crearSolicitud);
-        } else if (!registro.estados.contiene(estados.faltaPlaca) && registro.numeroSolicitud == numeroSolicitudActual) {
+        } else if ((registro.estados.indexOf(estados.faltaPlaca) < 0) && registro.numeroSolicitud == numeroSolicitudActual) {
           // SI SOLO TENGO LA PLACA
           registro.acciones.push(acciones.agregarPlaca);
         }
 
-        numeroSolicitudActual = registro.numeroSolicitud;
+        numeroSolicitudActual = registro.NumeroSolicitud;
       });
 
       _CargarTabla();
@@ -515,10 +569,10 @@ let CargaMasivaDetalle = function () {
 
       $('#divTablaResultado').show();
 
-      ModuloVigilancia.AlertaExito('Archivo procesado, para ver detalle ir a histórico de cargas', '¡Atención!');
+      alert('Archivo procesado, para ver detalle ir a histórico de cargas');
     } catch (ex) {
       console.log(ex);
-      ModuloVigilancia.AlertaError('No se pudo procesar la información, verifique el archivo.', '¡Atención!');
+      alert('No se pudo procesar la información, verifique el archivo.');
     }
 
     $('#btnProcesarRegistros').removeClass('pulso-guardar');
@@ -625,81 +679,107 @@ let CargaMasivaDetalle = function () {
   };
 
   let _VerificarFormato = function (columnas) {
-    if (!columnas || columnas.length != 12) {
+    if (!columnas || columnas.length != 18) {
       return false;
     }
 
-    if (!columnas.contiene('NumeroSolicitud')) {
+    if (columnas.indexOf('NumeroSolicitud') < 0) {
       return false;
     }
-    if (!columnas.contiene('TipoSolicitud')) {
-      return false;
-    }
-
-    if (!columnas.contiene('FechaSolicitud')) {
+    if (columnas.indexOf('TipoSolicitud') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('FechaRecepcion')) {
+    if (columnas.indexOf('FechaSolicitud') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('NumeroCliente')) {
+    if (columnas.indexOf('FechaRecepcion') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('NombreCliente')) {
+    if (columnas.indexOf('NumeroCliente') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('CalleDireccionCliente')) {
+    if (columnas.indexOf('NombreCliente') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('NumeroDireccionCliente')) {
+    if (columnas.indexOf('CalleDireccionCliente') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('RegionCliente')) {
+    if (columnas.indexOf('NumeroDireccionCliente') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('ComunaCliente')) {
+    if (columnas.indexOf('RegionCliente') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('NumeroTelefonoContacto')) {
+    if (columnas.indexOf('ComunaCliente') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('NumeroTelefonoContactoAdicional')) {
+    if (columnas.indexOf('NumeroTelefonoContacto') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('RutCliente')) {
+    if (columnas.indexOf('NumeroTelefonoContactoAdicional') < 0) {
       return false;
     }
 
-    if (!columnas.contiene('UnidadNegocio')) {
+    if (columnas.indexOf('RutCliente') < 0) {
       return false;
     }
-    if (!columnas.contiene('Gerencia')) {
+
+    if (columnas.indexOf('UnidadNegocio') < 0) {
       return false;
     }
-    if (!columnas.contiene('ObservacionAof')) {
+    if (columnas.indexOf('Gerencia') < 0) {
       return false;
     }
-    if (!columnas.contiene('Prioridad')) {
+    if (columnas.indexOf('ObservacionAof') < 0) {
       return false;
     }
-    if (!columnas.contiene('Placa')) {
+    if (columnas.indexOf('Prioridad') < 0) {
+      return false;
+    }
+    if (columnas.indexOf('Placa') < 0) {
       return false;
     }
     return true;
   };
+  /*
+  let _ValidaRut = function (rutCompleto) {
+    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
+      return false;
+    var tmp = rutCompleto.split('-');
+    var digv = tmp[1];
+    var rut = tmp[0];
+    if (digv == 'K') digv = 'k';
+    return (_ObtenerDV(rut) == digv);
+  };
+
+  let _ObtenerDV = function (T) {
+    var M = 0, S = 1;
+    for (; T; T = Math.floor(T / 10))
+      S = (S + T % 10 * (9 - M++ % 6)) % 11;
+    return S ? S - 1 : 'k';
+  };
+  */
+  return {
+    init: function () {
+      _Init();
+    },
+    Registros: function () {
+      return registros;
+    }
   };
 }();
- 
+
 $(() => {
   CargaMasiva.init();
+  CargaMasivaDetalle.init();
 });

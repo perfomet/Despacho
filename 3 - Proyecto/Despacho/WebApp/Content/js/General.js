@@ -1,5 +1,20 @@
 ﻿let General = function () {
+  let _ValidaRut = function (rutCompleto) {
+    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
+      return false;
+    var tmp = rutCompleto.split('-');
+    var digv = tmp[1];
+    var rut = tmp[0];
+    if (digv == 'K') digv = 'k';
+    return (_ObtenerDV(rut) == digv);
+  };
 
+  let _ObtenerDV = function (T) {
+    var M = 0, S = 1;
+    for (; T; T = Math.floor(T / 10))
+      S = (S + T % 10 * (9 - M++ % 6)) % 11;
+    return S ? S - 1 : 'k';
+  };
     let Init = function () {
         InitElementos();
     };
@@ -134,21 +149,24 @@
             $(idSelector + " .form-control").val(inicio.format("DD/MM/YYYY") + " - " + fin.format("DD/MM/YYYY"))
 
             $(idSelector).daterangepicker({
-                buttonClasses: "m-btn btn",
-                applyClass: "btn-primary",
-                cancelClass: "btn-secondary",
-                cancelButtonText: "Cerrar",
-                startDate: inicio,
-                endDate: fin,
-                ranges: {
-                    Todo: [moment('01/01/1900', 'DD/MM/YYYY'), moment()],
-                    Hoy: [moment(), moment()],
-                    Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-                    "Últimos 7 Días": [moment().subtract(6, "days"), moment()],
-                    "Últimos 30 Días": [moment().subtract(29, "days"), moment()],
-                    "Este Mes": [moment().startOf("month"), moment().endOf("month")],
-                    "El Mes Pasado": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
-                }
+              buttonClasses: "m-btn btn",
+              applyLabel: "Aplicar",
+              applyClass: "btn-primary",
+              cancelClass: "btn-secondary",
+              cancelLabel: "Cerrar",
+              customRangeLabel: "Rango Personalizado",
+              startDate: inicio,
+              endDate: fin,
+              ranges: {
+                 Todo: [moment('01/01/1900', 'DD/MM/YYYY'), moment()],
+                  Hoy: [moment(), moment()],
+                  Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                  "Últimos 7 Días": [moment().subtract(6, "days"), moment()],
+                  "Últimos 30 Días": [moment().subtract(29, "days"), moment()],
+                  "Este Mes": [moment().startOf("month"), moment().endOf("month")],
+                "El Mes Pasado": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+
+                  }
             }, function (a, t, n) {
                 $(idSelector + " .form-control").val(a.format("DD/MM/YYYY") + " - " + t.format("DD/MM/YYYY"))
             });
