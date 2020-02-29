@@ -1,4 +1,4 @@
-﻿import { isNumber } from "util";
+﻿//import { isNumber } from "util";
 
 let estados = {
   faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", class: "m-badge--danger", tipo: 'danger' },
