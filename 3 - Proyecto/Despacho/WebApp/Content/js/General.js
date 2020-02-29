@@ -1,40 +1,5 @@
 ﻿let General = function () {
-  /*
-  let _ValidaRut = function (rutCompleto) {
-    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
-      return false;
-    var tmp = rutCompleto.split('-');
-    var digv = tmp[1];
-    var rut = tmp[0];
-    if (digv == 'K') digv = 'k';
-    return (_ObtenerDV(rut) == digv);
-  };
-
-  let _ObtenerDV = function (T) {
-    var M = 0, S = 1;
-    for (; T; T = Math.floor(T / 10))
-      S = (S + T % 10 * (9 - M++ % 6)) % 11;
-    return S ? S - 1 : 'k';
-  };
-  let _ObtenerColumnas = function (hoja) {
-    let headers = [];
-
-    if (!hoja['!ref']) {
-      return [];
-    }
-
-    let range = XLSX.utils.decode_range(hoja['!ref']);
-    let C, R = range.s.r;
-
-    for (C = range.s.c; C <= range.e.c; ++C) {
-      let cell = hoja[XLSX.utils.encode_cell({ c: C, r: R })];
-
-      if (cell && cell.t) headers.push(XLSX.utils.format_cell(cell));
-    }
-
-    return headers;
-  };
-  */
+ 
     let Init = function () {
         InitElementos();
     };

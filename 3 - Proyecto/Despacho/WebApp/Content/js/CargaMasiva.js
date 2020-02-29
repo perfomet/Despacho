@@ -1,4 +1,6 @@
-﻿let estados = {
+﻿import { isNumber } from "util";
+
+let estados = {
   faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", class: "m-badge--danger", tipo: 'danger' },
   faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", class: "m-badge--danger", tipo: 'danger' },
   faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", class: "m-badge--danger", tipo: 'danger' },
@@ -371,13 +373,21 @@ let CargaMasivaDetalle = function () {
         registro.estados = [];
         registro.acciones = [];
 
-        // VALIDA QUE EL TIPO DE SOLICITUD EXISTA Y SEA VÁLIDO
+        // VALIDA QUE EL NUMERO DE SOLICITUD EXISTA Y SEA VÁLIDO
         if (!registro.NumeroSolicitud) {
           
         }
         else {
           registro.estados.push(estados.numeroSolicitud);
         }
+        
+        if (isNumber(!registro.NumeroSolicitud)) {
+
+        }
+        else {
+
+        }
+        
         if (!registro.TipoSolicitud) {
           
         }
