@@ -373,17 +373,18 @@ let CargaMasivaDetalle = function () {
 
         // VALIDA QUE EL TIPO DE SOLICITUD EXISTA Y SEA VÁLIDO
         if (!registro.NumeroSolicitud) {
+          
+        }
+        else {
           registro.estados.push(estados.numeroSolicitud);
         }
-        else {
-
-        }
         if (!registro.TipoSolicitud) {
-          registro.estados.push(estados.tipoSolicitud);
+          
         }
         else {
-
+          registro.estados.push(estados.faltaTipoSolicitud);
         }
+
         // VALIDA QUE LA FECHA DE SOLICITUD EXISTA Y SEA VÁLIDO
         if (!registro.FechaSolicitud) {
           registro.estados.push(estados.FechaSolicitud);
@@ -528,6 +529,9 @@ let CargaMasivaDetalle = function () {
           if (!_ValidaRut(rutcliente)) {
             registro.estados.push(estados.rutInvalido);
           }
+          else {
+
+          }
         }
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
@@ -659,6 +663,7 @@ let CargaMasivaDetalle = function () {
     $('.detalle-estados').tooltip();
   };
 
+  
   let _ObtenerColumnas = function (hoja) {
     let headers = [];
 
@@ -677,7 +682,7 @@ let CargaMasivaDetalle = function () {
 
     return headers;
   };
-
+  
   let _VerificarFormato = function (columnas) {
     if (!columnas || columnas.length != 18) {
       return false;
@@ -751,7 +756,7 @@ let CargaMasivaDetalle = function () {
     }
     return true;
   };
-  /*
+  
   let _ValidaRut = function (rutCompleto) {
     if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
       return false;
@@ -768,7 +773,7 @@ let CargaMasivaDetalle = function () {
       S = (S + T % 10 * (9 - M++ % 6)) % 11;
     return S ? S - 1 : 'k';
   };
-  */
+  
   return {
     init: function () {
       _Init();
