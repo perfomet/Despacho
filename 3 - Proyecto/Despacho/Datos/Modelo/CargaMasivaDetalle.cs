@@ -25,13 +25,14 @@ namespace Datos.Modelo
 		public string ObservacionAof { get; set; }
 		public string Prioridad { get; set; }
 		public string NumeroPlaca { get; set; }
+		public List<EstadoCargaMasivaDetalle> estados { get; set; }
 
 		public CargaMasiva CargaMasiva
 		{
 			get { return new CargaMasiva(); }
 		}
 
-		
+
 		public void FromDataRow(DataRow fila)
 		{
 			//CAMBIO DE PRUEBA
@@ -55,7 +56,7 @@ namespace Datos.Modelo
 			this.ObservacionAof = fila[17].ToString();
 			this.Prioridad = fila[18].ToString();
 			this.NumeroPlaca = fila[19].ToString();
-			
+
 		}
 	}
 }

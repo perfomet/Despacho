@@ -10,7 +10,50 @@ namespace Datos.Datos
 	{
 		public const int sdominicana = 1;
 		public const int schile = 0;
+		public const int snumero = 0;
+		public const int stexto = 1;
+		public static bool ExisteContenido(string TableName, string FieldName, string Content, int tipo)
+		{
+			int filas = 0;
+			string SELECTSentence = "";
+			string FROMSentence = "";
+			string WHERESentence = "";
+			if (FieldName == "Placa"){
+				SELECTSentence = "SELECT [MiLogistic].[dbo]." + TableName + "." + FieldName;
+				FROMSentence = " FROM [MiLogistic].[dbo]." + TableName;
+				WHERESentence = " WHERE [MiLogistic].[dbo]." + TableName + "." + FieldName;
+			}
+			else { 
+				SELECTSentence = "SELECT " + TableName + "." + FieldName;
+				FROMSentence = " FROM " + TableName;
+				WHERESentence = " WHERE " + TableName + "." + FieldName;
+			}
+			if (tipo==snumero)
+				{
+					WHERESentence = WHERESentence + " = " + Content;
+				}
+					else
+				{
+					if (FieldName == "Placa")
+					{
+						WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR " + "[MiLogistic].[dbo]."+ TableName + "." + FieldName + " LIKE '" + Content + "'";
+					}
+					else
+					{
+						WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR " + TableName + "." + FieldName + " LIKE '" + Content + "'";
+					}
+					
+				}
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+			filas = dataTable.Rows.Count;
+			return ( filas == 1);
 
+		}
+		public static bool Existe(int Valor)
+		{
+			return true;
+		}
 		public static bool ExisteTabla(string nombretabla)
 		{
 			string SELECTSentence = "SELECT COUNT(*)";

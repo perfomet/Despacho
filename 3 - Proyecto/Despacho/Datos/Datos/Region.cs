@@ -45,6 +45,7 @@ namespace Datos.Datos
 
 			return region;
 		}
+
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Region";

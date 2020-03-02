@@ -29,7 +29,7 @@ namespace Despacho.Controllers
 		public ActionResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva, List<Datos.Modelo.CargaMasivaDetalle> cargaMasivaDetalle)
 		{
 			int idcargamasiva = Datos.Datos.CargaMasiva.Crear(cargamasiva);
-			
+
 			detallecargamasiva.ForEach((detalle) =>
 			{
 				detalle.CargaMasivaId = idcargamasiva;
@@ -99,6 +99,61 @@ namespace Despacho.Controllers
 			{
 				return Json(Datos.Datos.Cliente.ObtenerClientes());
 			}
+		}
+
+		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
+		{
+			detalles.ForEach((detalle) =>
+			{
+				if (Datos.Datos.Internos.Existe(detalle.NumeroSolicitud))
+				{
+					//YA EXISTE ESTA CAGADA
+				}
+				// VALIDA NUMERO DE SOLICITUD
+
+				// VALIDA TIPO DE SOLICITUD
+				if (!Datos.Datos.Internos.ExisteContenido("TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoSolicitud);
+				}
+				else
+				{
+				}
+				//
+				//VALIDA REGION
+				if (!Datos.Datos.Internos.ExisteContenido("Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+				}
+				
+				//VALIDA COMUNA
+				if (!Datos.Datos.Internos.ExisteContenido("Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+				}
+				//VALIDA UNIDAD DE NEGOCIO
+				if (!Datos.Datos.Internos.ExisteContenido("UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoUnidadNegocio);
+				}
+				//VALIDA GERENCIA
+				if (!Datos.Datos.Internos.ExisteContenido("Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoGerencia);
+				}
+				//VALIDA PRIORIDAD
+				if (!Datos.Datos.Internos.ExisteContenido("Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPrioridad);
+				}
+				//VALIDA PLACA
+				if (!Datos.Datos.Internos.ExisteContenido("Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
+				{
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPlaca);
+				}
+			});
+
+			return Json(detalles);
 		}
 	}
 }

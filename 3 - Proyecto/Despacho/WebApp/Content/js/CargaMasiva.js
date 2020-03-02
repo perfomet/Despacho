@@ -1,41 +1,44 @@
-﻿//import { isNumber } from "util";
-
-let estados = {
-  faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaFechaRecepcion: { id: 4, title: "Falta el campo 'FechaRecepcion'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroCliente: { id: 5, title: "Falta el campo 'NumeroCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNombreCliente: { id: 6, title: "Falta el campo 'NombreCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaCalleDireccionCliente: { id: 7, title: "Falta el campo 'CalleDireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroDireccionCliente: { id: 8, title: "Falta el campo 'NumeroDireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRegionCliente: { id: 9, title: "Falta el campo 'RegionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaComunaCliente: { id: 10, title: "Falta el campo 'ComunaCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroTelefonoContacto: { id: 11, title: "Falta el campo 'NumeroTelefonoContacto'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroTelefonoContactoAdicional: { id: 12, title: "Falta el campo 'NumeroTelefonoContactoAdicional'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRUTCliente: { id: 13, title: "Falta el campo 'RUTCliente'", class: "m-badge--danger", tipo: 'danger' },
-  rutInvalido: { id: 14, title: "El RUT ingresado no es válido", class: "m-badge--danger", tipo: 'danger' },
-  faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", class: "m-badge--danger", tipo: 'danger' },
-  faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", class: "m-badge--danger", tipo: 'danger' },
-  faltaObservacionAof: { id: 17, title: "Falta el campo 'ObservacionAof'", class: "m-badge--danger", tipo: 'danger' },
-  faltaPrioridad: { id: 18, title: "Falta el campo 'Prioridad'", class: "m-badge--danger", tipo: 'danger' },
-  faltaPlaca: { id: 19, title: "Falta el campo 'Placa'", class: "m-badge--danger", tipo: 'danger' },
-  tipoSolicitud: { id: 20, title: "Tipo de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoFechaSolicitud: { id: 21, title: "Fecha de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoFechaRecepcion: { id: 22, title: "Fecha de Recepción incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoNumeroCliente: { id: 23, title: "Numero Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoNombreCliente: { id: 24, title: "Nombre Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoRegionCliente: { id: 25, title: "Nombre Región incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoComunaCliente: { id: 26, title: "ComunaCliente incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoGerencia: { id: 27, title: "Gerencia incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoPrioridad: { id: 28, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoPlaca: { id: 29, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
+﻿let estados = {
+  faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaFechaRecepcion: { id: 4, title: "Falta el campo 'FechaRecepcion'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroCliente: { id: 5, title: "Falta el campo 'NumeroCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNombreCliente: { id: 6, title: "Falta el campo 'NombreCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaCalleDireccionCliente: { id: 7, title: "Falta el campo 'CalleDireccionCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroDireccionCliente: { id: 8, title: "Falta el campo 'NumeroDireccionCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaRegionCliente: { id: 9, title: "Falta el campo 'RegionCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaComunaCliente: { id: 10, title: "Falta el campo 'ComunaCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroTelefonoContacto: { id: 11, title: "Falta el campo 'NumeroTelefonoContacto'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroTelefonoContactoAdicional: { id: 12, title: "Falta el campo 'NumeroTelefonoContactoAdicional'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaRUTCliente: { id: 13, title: "Falta el campo 'RUTCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  rutInvalido: { id: 14, title: "El RUT ingresado no es válido", clase: "m-badge--danger", tipo: 'danger' },
+  faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaObservacionAof: { id: 17, title: "Falta el campo 'ObservacionAof'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaPrioridad: { id: 18, title: "Falta el campo 'Prioridad'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaPlaca: { id: 19, title: "Falta el campo 'Placa'", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroSolicitud: { id: 20, title: "Número de Solicitud incorrecta (debe ser numérica)", clase: "m-badge--danger", tipo: 'danger' },
+  tipoSolicitud: { id: 21, title: "Tipo de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoFechaSolicitud: { id: 22, title: "Fecha de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoFechaRecepcion: { id: 23, title: "Fecha de Recepción incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroCliente: { id: 24, title: "Numero Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNombreCliente: { id: 25, title: "Nombre Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoRegionCliente: { id: 26, title: "Nombre Región incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoComunaCliente: { id: 27, title: "ComunaCliente incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoGerencia: { id: 28, title: "Gerencia incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoPrioridad: { id: 29, title: "Prioridad incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoPlaca: { id: 30, title: "Placa incorrecta", clase: "m-badge--danger", tipo: 'danger' }
 };
 
 let acciones = {
   crearSolicitud: 1,
   agregarPlaca: 2
 };
+
+const snumero = 0;
+const stexto = 1;
+
 
 let CargaMasiva = function () {
   let cargasmasivas = [];
@@ -205,22 +208,22 @@ let CargaMasivaDetalle = function () {
             }
           },
           { field: "NumeroSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "TipoSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "FechaSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "FechaRecepcion", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "NumeroCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "NombreCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "CalleDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "NumeroDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "RegionCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "ComunaCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "NumeroTelefonoContacto", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "NumeroTelefonoContactoAdicional", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "RutCliente", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "UnidadNegocio", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "Gerencia", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "ObservacionAof", title: "#", width: 50, selector: !1, textAlign: "center" }, 
-          { field: "Prioridad", title: "#", width: 50, selector: !1, textAlign: "center" }, 
+          { field: "TipoSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "FechaSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "FechaRecepcion", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NombreCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "CalleDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "RegionCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "ComunaCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroTelefonoContacto", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroTelefonoContactoAdicional", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "RutCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "UnidadNegocio", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "Gerencia", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "ObservacionAof", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "Prioridad", title: "#", width: 50, selector: !1, textAlign: "center" },
           { field: "Placa", title: "#", width: 50, selector: !1, textAlign: "center" }
         ],
         translate: {
@@ -289,7 +292,6 @@ let CargaMasivaDetalle = function () {
 
             filas.forEach((objeto) => {
               registros.push({
-                /* tarea escrbir los nombres de los registros igual que cómo están en el objeto*/
                 NumeroSolicitud: objeto['NumeroSolicitud'],
                 TipoSolicitud: objeto['TipoSolicitud'],
                 FechaSolicitud: objeto['FechaSolicitud'],
@@ -359,6 +361,7 @@ let CargaMasivaDetalle = function () {
     });
   };
 
+  
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
@@ -368,142 +371,116 @@ let CargaMasivaDetalle = function () {
 
       let numeroSolicitudActual = 0;
 
+
       registros.forEach((registro) => {
         // VACÍA LAS LISTAS DE ESTADOS Y ACCIONES
         registro.estados = [];
         registro.acciones = [];
 
-        // VALIDA QUE EL NUMERO DE SOLICITUD EXISTA Y SEA VÁLIDO
-        if (!registro.NumeroSolicitud) {
-          
-        }
-        else {
-          registro.estados.push(estados.numeroSolicitud);
-        }
         
-        if (isNumber(!registro.NumeroSolicitud)) {
-
-        }
-        else {
-
-        }
-        
+        // VALIDA TIPO DE SOLICITUD
         if (!registro.TipoSolicitud) {
-          
-        }
-        else {
           registro.estados.push(estados.faltaTipoSolicitud);
         }
-
-        // VALIDA QUE LA FECHA DE SOLICITUD EXISTA Y SEA VÁLIDO
+        else {
+          
+        }
+        
+        // VALIDA LA FECHA DE SOLICITUD 
         if (!registro.FechaSolicitud) {
-          registro.estados.push(estados.FechaSolicitud);
+          registro.estados.push(estados.faltaFechaSolicitud);
         }
         else {
-
+          var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+          if ((registro.FechaSolicitud.match(RegExPattern)) && (registro.FechaSolicitud != '')) {
+            
+          } else {
+            registro.estados.push(estados.tipoFechaSolicitud);
+          }
         }
-        // VALIDA QUE LA FECHA DE RECEPCIÓN EXISTA Y SEA VÁLIDO
+        // VALIDA LA FECHA DE RECEPCIÓN 
         if (!registro.FechaRecepcion) {
-          registro.estados.push(estados.FechaRecepcion);
+          registro.estados.push(estados.faltaFechaRecepcion);
         }
         else {
+          var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+          if ((registro.FechaRecepcion.match(RegExPattern)) && (registro.FechaRecepcion != '')) {
 
+          } else {
+            registro.estados.push(estados.tipoFechaRecepcion);
+          }
         }
-        // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
-        if (!registro.TipoNumeroCliente) {
-          registro.estados.push(estados.tipoNumeroCliente);
+        // VALIDA EL NUMERO DE CLIENTE  
+        if (!registro.NumeroCliente) {
+          registro.estados.push(estados.faltaNumeroCliente);
         }
         else {
+          if (isNaN(registro.NumeroCliente)) {
+            registro.estados.push(estados.tipoNumeroCliente)
+          }
+          else {
+           
+          }
 
         }
-        // VALIDA QUE EL NUMERO DE CLIENTE EXISTA
-        if (!registro.TipoNumeroCliente) {
-          registro.estados.push(estados.tipoNumeroCliente);
+
+        // VALIDA NOMBRE DE CLIENTE  
+        if (!registro.NombreCliente) {
+          registro.estados.push(estados.faltaNombreCliente);
         }
         else {
-
-        }
-        // SI EL TIPO DE NOMBRE DE CLIENTE ES VALIDO 
-        if (!registro.TipoNombreCliente) {
-          registro.estados.push(estados.tipoNombreCliente);
-        }
-        else {
-
-        }
-        // VALIDA QUE EL NOMBRE DE CLIENTE EXISTA
-        if (!registro.TipoNombreCliente) {
-          registro.estados.push(estados.tipoNombreCliente);
-        }
-        else {
-
-        }
-        // SI EL TIPO DE REGION ES VALIDO 
-        if (!registro.RegionCliente) {
-          registro.estados.push(estados.tipoRegionCliente);
+          
         }
 
-        // VALIDA QUE LA REGION EXISTA
+        // VALIDA LA  REGION 
         if (!registro.RegionCliente) {
           registro.estados.push(estados.faltaRegionCliente);
         }
         else {
-
+          
         }
-        // SI EL TIPO DE COMUNA ES VALIDO 
+
+        // VALIDA COMUNA 
         if (!registro.ComunaCliente) {
           registro.estados.push(estados.faltaComunaCliente);
         }
         else {
+          
+        }
 
-        }
-        // VALIDA QUE LA COMUNA EXISTA
-        if (!registro.ComunaCliente) {
-          registro.estados.push(estados.tipoComunaCliente);
-        }
-        else {
-
-        }
-        // SI EL TIPO DE GERENCIA ES VALIDO 
+        // VALIDA GERENCIA 
         if (!registro.Gerencia) {
-          registro.estados.push(estados.tipoGerencia);
+          registro.estados.push(estados.faltaGerencia);
+        }
+        else {
+          
+        }
+        // VALIDA OBSERVACIONAOF 
+        if (!registro.ObservacionAof) {
+          registro.estados.push(estados.faltaObservacionAof);
         }
         else {
 
         }
-        // VALIDA QUE LA GERENCIA EXISTA
-        if (!registro.Gerencia) {
-          registro.estados.push(estados.tipoGerencia);
-        }
-        else {
 
-        }
-        // SI EL TIPO DE PRIORIDAD ES VALIDO 
+        // VALIDA PRIORIDAD 
         if (!registro.Prioridad) {
-          registro.estados.push(estados.tipoPrioridad);
+          registro.estados.push(estados.faltaPrioridad);
         }
         else {
-
+          
         }
-        // VALIDA QUE LA PRIORIDAD EXISTA
-        if (!registro.Prioridad) {
-          registro.estados.push(estados.tipoPrioridad);
-        }
-        else {
-
-        }
-        // SI EL TIPO DE PLACA ES VALIDO 
+        //VALIDA PLACA
         if (!registro.Placa) {
-          registro.estados.push(estados.tipoPlaca);
+          registro.estados.push(estados.faltaPlaca);
         }
         else {
-
-        }
-        // VALIDA QUE LA PLACA EXISTA
-        if (!registro.Placa) {
-          registro.estados.push(estados.tipoPlaca);
-        }
-        else {
-
+          if (isNaN(registro.Placa)) {
+            registro.estados.push(estados.tipoPlaca)
+          }
+          else {
+            
+          }
         }
 
         // SI EL TIPO DE IDENTIFICADOR ES 'RUT', Y EXISTEN LOS DATOS DE IDENTIFICACIÓN, VALIDA QUE EL RUT SEA VÁLIDO
@@ -577,13 +554,20 @@ let CargaMasivaDetalle = function () {
         numeroSolicitudActual = registro.NumeroSolicitud;
       });
 
-      _CargarTabla();
+      console.log(registros);
 
-      $('.detalle-estados').tooltip();
+      // VALIDACIÓN EN EL SERVIDOR
+      $.post('/CargaMasiva/Validar', { detalles: registros }, function (data) {
+        registros = data;
 
-      $('#divTablaResultado').show();
+        _CargarTabla();
 
-      alert('Archivo procesado, para ver detalle ir a histórico de cargas');
+        $('.detalle-estados').tooltip();
+
+        $('#divTablaResultado').show();
+
+        alert('Archivo procesado, para ver detalle ir a histórico de cargas');
+      });
     } catch (ex) {
       console.log(ex);
       alert('No se pudo procesar la información, verifique el archivo.');
@@ -673,7 +657,7 @@ let CargaMasivaDetalle = function () {
     $('.detalle-estados').tooltip();
   };
 
-  
+
   let _ObtenerColumnas = function (hoja) {
     let headers = [];
 
@@ -692,7 +676,7 @@ let CargaMasivaDetalle = function () {
 
     return headers;
   };
-  
+
   let _VerificarFormato = function (columnas) {
     if (!columnas || columnas.length != 18) {
       return false;
@@ -701,72 +685,114 @@ let CargaMasivaDetalle = function () {
     if (columnas.indexOf('NumeroSolicitud') < 0) {
       return false;
     }
+    else {
+
+    }
     if (columnas.indexOf('TipoSolicitud') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('FechaSolicitud') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('FechaRecepcion') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('NumeroCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('NombreCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('CalleDireccionCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('NumeroDireccionCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('RegionCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('ComunaCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('NumeroTelefonoContacto') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('NumeroTelefonoContactoAdicional') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('RutCliente') < 0) {
       return false;
     }
+    else {
 
+    }
     if (columnas.indexOf('UnidadNegocio') < 0) {
       return false;
+    }
+    else {
+
     }
     if (columnas.indexOf('Gerencia') < 0) {
       return false;
     }
+    else {
+
+    }
     if (columnas.indexOf('ObservacionAof') < 0) {
       return false;
+    }
+    else {
+
     }
     if (columnas.indexOf('Prioridad') < 0) {
       return false;
     }
+    else {
+
+    }
     if (columnas.indexOf('Placa') < 0) {
       return false;
     }
+    else {
+
+    }
     return true;
   };
-  
+
   let _ValidaRut = function (rutCompleto) {
     if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
       return false;
@@ -783,7 +809,7 @@ let CargaMasivaDetalle = function () {
       S = (S + T % 10 * (9 - M++ % 6)) % 11;
     return S ? S - 1 : 'k';
   };
-  
+
   return {
     init: function () {
       _Init();
