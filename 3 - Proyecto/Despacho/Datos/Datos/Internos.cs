@@ -18,7 +18,7 @@ namespace Datos.Datos
 		public static bool IsNullOrEmpty(string s)
 		{
 			bool result;
-			result = s == null || s == string.Empty;
+			result = ((s == null) || (s == string.Empty) || (s == "0"));
 			return result;
 		}
 		public static Boolean IsDate(String fecha)

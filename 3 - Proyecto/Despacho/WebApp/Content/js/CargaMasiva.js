@@ -381,6 +381,8 @@ let CargaMasivaDetalle = function () {
         registro.estados = [];
         registro.acciones = [];
 
+        //VALIDA NUMERO DE SOLICITUD
+
         
         // VALIDA TIPO DE SOLICITUD
         if (!registro.TipoSolicitud) {
@@ -612,13 +614,7 @@ let CargaMasivaDetalle = function () {
           (registro.estados.indexOf(estados.tipoPlaca) < 0)
 
         ) {
-          /*let rutcliente = registro.RutCliente;
-          if (!_ValidaRut(rutcliente)) {
-            registro.estados.push(estados.rutInvalido);
-          }
-          else {
-
-          }*/
+         
         }
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
