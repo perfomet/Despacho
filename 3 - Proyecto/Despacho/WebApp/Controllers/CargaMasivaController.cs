@@ -107,13 +107,13 @@ namespace Despacho.Controllers
 			{
 				
 				// VALIDA NUMERO DE SOLICITUD
-				if (detalle.NumeroSolicitud == null)
+				if (detalle.NumeroSolicitud.ToString() == null)
 				{
-
+					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaNumeroSolicitud);
 				}
 				else
 				{
-					if (Datos.Datos.Internos.ExisteContenido("CargaMasivaDetalle","NumeroSolicitud",detalle.NumeroSolicitud.ToString(),Datos.Datos.Internos.snumero))
+					
 					{
 						//YA EXISTE ESTA CAGADA
 					}
@@ -159,13 +159,13 @@ namespace Despacho.Controllers
 						else
 						{
 							if (Datos.Datos.Internos.RelacionFechaSolicitudFechaRecepcion(detalle.FechaRecepcion.ToString(), detalle.FechaSolicitud.ToString()))
-								{
-									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.fechaRecepcionmenorFechaSolicitud);
-								}
+							{
+								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.fechaRecepcionmenorFechaSolicitud);
+							}
 							else
-								{
+							{
 
-								}
+							}
 						}
 					}
 				}

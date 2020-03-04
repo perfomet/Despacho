@@ -50,6 +50,10 @@ namespace Datos.Datos
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			return (dataTable.Rows.Count == 1);
 			}
+		public static bool ExisteNumeroSolicitud(int Valor)
+		{
+			return (ExisteContenido("CargaMasivaDetalle", "NumeroSolicitud", Valor.ToString(), snumero));
+		}
 		public static bool ExisteContenido(string TableName, string FieldName, string Content, int tipo)
 		{
 			int filas = 0;
@@ -88,10 +92,7 @@ namespace Datos.Datos
 			return ( filas == 1);
 
 		}
-		public static bool Existe(int Valor)
-		{
-			return true;
-		}
+		
 		public static bool ExisteTabla(string nombretabla)
 		{
 			string SELECTSentence = "SELECT COUNT(*)";
