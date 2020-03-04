@@ -26,7 +26,7 @@
 			<div class="col-xl-9 col-lg-9">
 				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="number" class="form-control m-input campo-requerido" data-campo="Número de Solicitud" value="@Model.NumeroSolicitud" id="numeroSolicitud" />
+					<input type="number" class="form-control m-input campo-requerido" data-campo="Número de Solicitud" value="@(Model.NumeroSolicitud > 0 ? Model.NumeroSolicitud.ToString() : "")" id="numeroSolicitud" />
 				}
 				else
 				{
@@ -51,7 +51,7 @@
 				else
 				{
 					<input type="hidden" value="@Model.TipoSolicitudId" id="tipoSolicitudId" />
-					@Model.TipoSolicitud
+					@Model.TipoSolicitud.Descripcion
 				}
 			</div>
 		</div>
@@ -121,7 +121,7 @@
 			<div class="col-xl-9 col-lg-9">
 				@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Solicitud && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
 				{
-					<input type="number" class="form-control m-input campo-requerido" data-campo="Número Dirección Cliente" value="@Model.NumeroDireccionCliente" id="numeroDireccionCliente" />
+					<input type="number" class="form-control m-input campo-requerido" data-campo="Número Dirección Cliente" value="@(Model.NumeroDireccionCliente > 0 ? Model.NumeroDireccionCliente.ToString() : "")" id="numeroDireccionCliente" />
 				}
 				else
 				{
@@ -150,7 +150,7 @@
 				{
 					Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(Model.ComunaClienteId);
 					<input type="hidden" value="@comuna.RegionId" id="regionClienteId" />
-					@comuna.Region
+					@comuna.Region.Nombre
 				}
 			</div>
 		</div>
@@ -240,7 +240,7 @@
 				else
 				{
 					<input type="hidden" value="@Model.PrioridadId" id="prioridadId" />
-					@Model.Prioridad
+					@Model.Prioridad.descripcion
 				}
 			</div>
 		</div>
@@ -371,6 +371,22 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 				<button type="button" class="btn btn-success" id="solicitarEquipos">Solicitar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end::Modal-->
+<!--begin::Modal-->
+<div class="modal fade" id="modalSeleccionPlaca" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 50%;" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				@Html.Partial("~/Views/Existencia/Bodega.cshtml", new ViewDataDictionary {
+					new KeyValuePair<string, object>("MuestraFiltros", true)
+				})
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>

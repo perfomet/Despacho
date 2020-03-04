@@ -1,0 +1,115 @@
+﻿@{
+	ViewBag.Title = "Despacho - Bodega";
+
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
+	if (usuario == null) { Response.Redirect("/Login/Login"); return; }
+
+	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas(usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
+	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
+
+	object muestraFiltros = false;
+
+	ViewData.TryGetValue("MuestraFiltros", out muestraFiltros);
+}
+
+@if ((bool)muestraFiltros)
+{
+	<div class="m-portlet m-portlet--metal m-portlet--head-solid-bg m-portlet--head-sm" m-portlet="true" id="m_portlet_tools_1">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head-title">
+					<span class="m-portlet__head-icon">
+						<i class="flaticon-search-magnifier-interface-symbol"></i>
+					</span>
+					<h3 class="m-portlet__head-text">
+						Filtros
+					</h3>
+				</div>
+			</div>
+			<div class="m-portlet__head-tools">
+				<ul class="m-portlet__nav">
+					<li class="m-portlet__nav-item">
+						<a href="#" id="filtro-filtrar" class="btn btn-secondary m-btn--md m--margin-right-10">
+							<span>
+								<span>Filtrar</span>&nbsp;&nbsp;
+								<i class="la la-refresh"></i>
+							</span>
+						</a>
+					</li>
+					<li class="m-portlet__nav-item">
+						<a id="filtro-ocultar" href="#" m-portlet-tool="toggle" class="m-portlet__nav-link m-portlet__nav-link--icon">
+							<i class="la la-angle-down"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+				<div class="row">
+					<div class="col-lg-6 col-xs-12 mt-2">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">Bodega</label>
+							<div class="col-lg-9 col-sm-12">
+								<select class="form-control m-select2" id="filtro-bodega" name="filtro-bodega">
+									<option value="" selected>Todas</option>
+									@foreach (Datos.Modelo.Bodega bodega in bodegas)
+									{
+										<option value="@bodega.Codigo">@bodega.Nombre</option>
+									}
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-xs-12 mt-2">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">Bin</label>
+							<div class="col-lg-9 col-sm-12">
+								<select class="form-control m-select2" id="filtro-bin" name="filtro-bin" disabled>
+									<option value="" selected>Todas</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-xs-12 mt-2">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">Fecha Almacenaje</label>
+							<div class="col-lg-9 col-sm-12">
+								<div class='input-group pull-right' id='filtro-fecha-almacenaje'>
+									<input type='text' class="form-control m-input" readonly placeholder="Seleccione la fecha de inicio y fin" />
+									<div class="input-group-append">
+										<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					@if (usuario.ClienteId == null || usuario.ClienteId == 0)
+					{
+						<div class="col-lg-6 col-xs-12 mt-2">
+							<div class="form-group m-form__group row">
+								<label class="col-form-label col-lg-3 col-sm-12">Cliente</label>
+								<div class="col-lg-9 col-sm-12">
+									<select class="form-control m-select2" id="filtro-cliente" name="filtro-cliente">
+										<option value="" selected>Todos</option>
+										@foreach (Datos.Modelo.Cliente cliente in clientes)
+										{
+											<option value="@cliente.Nombre">@cliente.Nombre</option>
+										}
+									</select>
+								</div>
+							</div>
+						</div>
+					}
+					else
+					{
+						<input type="hidden" id="filtro-cliente" name="filtro-cliente" value="@usuario.Cliente.Nombre" />
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<div id="seccion-dibujo-bodega"></div>

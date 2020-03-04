@@ -9,19 +9,29 @@ namespace Despacho.Controllers
 			return View();
 		}
 
+		public ActionResult Bodega()
+		{
+			return View("Bodega");
+		}
+
 		[HttpPost]
 		public JsonResult Listar(string serie)
 		{
 			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+			JsonResult result;
 
 			if (!serie.Equals(string.Empty))
 			{
-				return Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
+				result = Json(Datos.Datos.Existencia.ObtenerExistencia(serie));
 			}
 			else
 			{
-				 return Json(Datos.Datos.Existencia.ObtenerExistencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
+				result = Json(Datos.Datos.Existencia.ObtenerExistencias(usuario.ClienteId != null ? usuario.ClienteId.Value : 0));
 			}
+
+			result.MaxJsonLength = 10000000;
+
+			return result;
 		}
 
 		[HttpPost]

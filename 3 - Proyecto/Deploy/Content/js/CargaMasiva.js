@@ -1,139 +1,255 @@
 ﻿let estados = {
-  faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", class: "m-badge--danger", tipo: 'danger' },
-  faltaFechaRecepcion: { id: 4, title: "Falta el campo 'FechaRecepcion'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroCliente: { id: 5, title: "Falta el campo 'NumeroCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNombreCliente: { id: 6, title: "Falta el campo 'NombreCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaCalleDireccionCliente: { id: 7, title: "Falta el campo 'CalleDireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroDireccionCliente: { id: 8, title: "Falta el campo 'NumeroDireccionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRegionCliente: { id: 9, title: "Falta el campo 'RegionCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaComunaCliente: { id: 10, title: "Falta el campo 'ComunaCliente'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroTelefonoContacto: { id: 11, title: "Falta el campo 'NumeroTelefonoContacto'", class: "m-badge--danger", tipo: 'danger' },
-  faltaNumeroTelefonoContactoAdicional: { id: 12, title: "Falta el campo 'NumeroTelefonoContactoAdicional'", class: "m-badge--danger", tipo: 'danger' },
-  faltaRUTCliente: { id: 13, title: "Falta el campo 'RUTCliente'", class: "m-badge--danger", tipo: 'danger' },
-  rutInvalido: { id: 14, title: "El RUT ingresado no es válido", class: "m-badge--danger", tipo: 'danger' },
-  faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", class: "m-badge--danger", tipo: 'danger' },
-  faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", class: "m-badge--danger", tipo: 'danger' },
-  faltaObservacionAof: { id: 17, title: "Falta el campo 'ObservacionAof'", class: "m-badge--danger", tipo: 'danger' },
-  faltaPrioridad: { id: 18, title: "Falta el campo 'Prioridad'", class: "m-badge--danger", tipo: 'danger' },
-  faltaPlaca: { id: 19, title: "Falta el campo 'Placa'", class: "m-badge--danger", tipo: 'danger' },
-  tipoSolicitud: { id: 20, title: "Tipo de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoFechaSolicitud: { id: 21, title: "Fecha de Solicitud incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoFechaRecepcion: { id: 22, title: "Fecha de Recepción incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoNumeroCliente: { id: 23, title: "Numero Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoNombreCliente: { id: 24, title: "Nombre Cliente incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoRegionCliente: { id: 25, title: "Nombre Región incorrecto", class: "m-badge--danger", tipo: 'danger' },
-  tipoComunaCliente: { id: 26, title: "ComunaCliente incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoGerencia: { id: 27, title: "Gerencia incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoPrioridad: { id: 28, title: "Prioridad incorrecta", class: "m-badge--danger", tipo: 'danger' },
-  tipoPlaca: { id: 29, title: "Placa incorrecta", class: "m-badge--danger", tipo: 'danger' }
+  faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaFechaRecepcion: { id: 4, title: "Falta el campo 'FechaRecepcion'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroCliente: { id: 5, title: "Falta el campo 'NumeroCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNombreCliente: { id: 6, title: "Falta el campo 'NombreCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaCalleDireccionCliente: { id: 7, title: "Falta el campo 'CalleDireccionCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroDireccionCliente: { id: 8, title: "Falta el campo 'NumeroDireccionCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaRegionCliente: { id: 9, title: "Falta el campo 'RegionCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaComunaCliente: { id: 10, title: "Falta el campo 'ComunaCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroTelefonoContacto: { id: 11, title: "Falta el campo 'NumeroTelefonoContacto'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaNumeroTelefonoContactoAdicional: { id: 12, title: "Falta el campo 'NumeroTelefonoContactoAdicional'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaRUTCliente: { id: 13, title: "Falta el campo 'RUTCliente'", clase: "m-badge--danger", tipo: 'danger' },
+  rutInvalido: { id: 14, title: "El RUT ingresado no es válido", clase: "m-badge--danger", tipo: 'danger' },
+  faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaObservacionAof: { id: 17, title: "Falta el campo 'ObservacionAof'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaPrioridad: { id: 18, title: "Falta el campo 'Prioridad'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaPlaca: { id: 19, title: "Falta el campo 'Placa'", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroSolicitud: { id: 20, title: "Número de Solicitud incorrecta (debe ser numérica)", clase: "m-badge--danger", tipo: 'danger' },
+  tipoSolicitud: { id: 21, title: "Tipo de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoFechaSolicitud: { id: 22, title: "Fecha de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoFechaRecepcion: { id: 23, title: "Fecha de Recepción incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroCliente: { id: 24, title: "Numero Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNombreCliente: { id: 25, title: "Nombre Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoRegionCliente: { id: 26, title: "Nombre Región incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoComunaCliente: { id: 27, title: "ComunaCliente incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoGerencia: { id: 28, title: "Gerencia incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoPrioridad: { id: 29, title: "Prioridad incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoPlaca: { id: 30, title: "Placa incorrecta", clase: "m-badge--danger", tipo: 'danger' }
 };
-
-
 
 let acciones = {
   crearSolicitud: 1,
   agregarPlaca: 2
 };
 
+const snumero = 0;
+const stexto = 1;
+
+
 let CargaMasiva = function () {
-  let tabla;
-  let registros = [];
+  let cargasmasivas = [];
 
   let InitCargaMasiva = function () {
-    CapaDatos.init(() => {
-      InitElementos();
-    });
+    InitElementos();
   };
 
   let InitElementos = function () {
-    tabla = $("#tabla").DataTable({
-      pageLength: 5,
-      lengthChange: false,
-      language: {
-        decimal: ",",
-        emptyTable: "No hay información",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ Elementos",
-        infoEmpty: "Mostrando 0 to 0 of 0 Entradas",
-        infoFiltered: "(Filtrado de _MAX_ total entradas)",
-        thousands: ".",
-        lengthMenu: "Ver _MENU_",
-        loadingRecords: "Cargando...",
-        processing: "Procesando...",
-        search: "Buscar:",
-        zeroRecords: "Sin resultados encontrados",
-        paginate: {
-          first: "Primero",
-          last: "Ultimo",
-          next: "Siguiente",
-          previous: "Anterior"
-        }
+
+    $('.m-select2').select2();
+
+    if ($("#listacargasmasivas").length > 0) {
+      window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
+
+      $.post("/CargaMasiva/Listar", { clienteId: 0 }, function (data) {
+        cargasmasivas = data;
+
+        CargarLista();
+      });
+
+      $('#filtro-filtrar').click(function () {
+        let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
+        //Filtrar();
+      });
+    }
+  }
+
+  let CargarLista = function () {
+    let picker = $('#filtro-fechacarga').data('daterangepicker');
+
+    $('#listacargasmasivas').mDatatable({
+      data: {
+        type: "local",
+        source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
+        pageSize: 10
       },
-      columnDefs: [
-        { targets: 0, visible: false },
-        {
-          targets: 1,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
-            let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
-
-            return t[2].filter((e) => { return e.tipo == 'danger'; }).length > 0 ? error : correcto;
-          }
+      layout: {
+        theme: "default",
+        class: "",
+        scroll: false,
+        footer: false
+      },
+      sortable: true,
+      pagination: true,
+      search: {
+        input: $('#buscarCargaMasiva')
+      },
+      columns: [
+        { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
+        { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
+        { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
+        { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+      ],
+      translate: {
+        records: {
+          processing: "Cargando...",
+          noRecords: "No se encontraron registros"
         },
-        {
-          targets: 2,
-          orderable: false,
-          render: function (e, a, t, n) {
-            let div = $('<div></div>');
-            let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
-            let estados = t[2];
-            let actions = t[0];
-
-            let tooltip = $('<div></div>');
-
-            if (estados.length > 0) {
-              if (estados.length > 1) {
-                boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
-              } else {
-                boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
-              }
-
-              estados.forEach((e) => {
-                tooltip.append('<li>' + e.title + '</li>');
-              });
-            } else {
-              if (actions.length > 1) {
-                boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
-              } else {
-                boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
-              }
-
-              /*
-              actions.forEach((a) => {
-                if (a == acciones.crearPaciente) {
-                  tooltip.append('<li>Se creó el paciente</li>');
-                }
-
-                if (a == acciones.ingresarDispositivo) {
-                  tooltip.append('<li>Se agregó el dispositivo al paciente</li>');
-                }
-
-                if (a == acciones.agregarProcedimientos) {
-                  tooltip.append('<li>Se agregaron los procedimientos al dispositivo</li>');
-                }
-              });
-              */
+        toolbar: {
+          pagination: {
+            items: {
+              default: {
+                first: "Primero",
+                prev: "Anterior",
+                next: "Siguiente",
+                last: "Último",
+                more: "Más páginas",
+                input: "Número de página",
+                select: "Seleccionar tamaño de página"
+              },
+              info: "Viendo {{start}} - {{end}} de {{total}} registros"
             }
-
-            boton.attr('title', tooltip.html());
-            div.html(boton);
-            return div.html();
           }
         }
-      ]
+      }
     });
+  };
+
+  return {
+    init: function () {
+      InitCargaMasiva();
+    }
+  };
+}();
+
+let CargaMasivaDetalle = function () {
+  let tabla;
+  let registros = [];
+
+  let _Init = function () {
+    _InitElementos();
+  }
+
+  let _InitElementos = function () {
+    if ($('#tabla').length > 0) {
+      tabla = $('#tabla').mDatatable({
+        data: {
+          type: "local",
+          source: [],
+          pageSize: 10
+        },
+        layout: {
+          theme: "default",
+          class: "",
+          scroll: false,
+          footer: false
+        },
+        sortable: true,
+        pagination: true,
+        search: {
+          input: $('#buscarCargaMasiva')
+        },
+        columns: [
+          {
+            field: "", title: "", width: 50, selector: !1, textAlign: "center", template: function (e, a, i) {
+              let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
+              let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+
+              return e[2].filter((x) => { return x.tipo == 'danger'; }).length > 0 ? error : correcto;
+            }
+          },
+          {
+            field: "", title: "Resultados", width: 50, selector: !1, textAlign: "center", template: function (e, a, i) {
+              let div = $('<div></div>');
+              let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
+              let estados = t[2];
+              let actions = t[0];
+
+              let tooltip = $('<div></div>');
+
+              if (estados.length > 0) {
+                if (estados.length > 1) {
+                  boton.html('Se encontraron <b>' + estados.length + '</b> errors <b>ver aquí</b>');
+                } else {
+                  boton.html('Se encontró <b>' + estados.length + '</b> error <b>ver aquí</b>');
+                }
+
+                estados.forEach((e) => {
+                  tooltip.append('<li>' + e.title + '</li>');
+                });
+              } else {
+                if (actions.length > 1) {
+                  boton.html('Se realizaron <b>' + actions.length + '</b> procesos <b>ver aquí</b>');
+                } else {
+                  boton.html('Se realizó <b>' + actions.length + '</b> proceso <b>ver aquí</b>');
+                }
+
+                actions.forEach((a) => {
+                  if (a == acciones.crearPaciente) {
+                    tooltip.append('<li>Se creó el paciente</li>');
+                  }
+
+                  if (a == acciones.ingresarDispositivo) {
+                    tooltip.append('<li>Se agregó el dispositivo al paciente</li>');
+                  }
+
+                  if (a == acciones.agregarProcedimientos) {
+                    tooltip.append('<li>Se agregaron los procedimientos al dispositivo</li>');
+                  }
+                });
+              }
+
+              boton.attr('title', tooltip.html());
+              div.html(boton);
+              return div.html();
+            }
+          },
+          { field: "NumeroSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "TipoSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "FechaSolicitud", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "FechaRecepcion", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NombreCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "CalleDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroDireccionCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "RegionCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "ComunaCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroTelefonoContacto", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "NumeroTelefonoContactoAdicional", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "RutCliente", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "UnidadNegocio", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "Gerencia", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "ObservacionAof", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "Prioridad", title: "#", width: 50, selector: !1, textAlign: "center" },
+          { field: "Placa", title: "#", width: 50, selector: !1, textAlign: "center" }
+        ],
+        translate: {
+          records: {
+            processing: "Cargando...",
+            noRecords: "No se encontraron registros"
+          },
+          toolbar: {
+            pagination: {
+              items: {
+                default: {
+                  first: "Primero",
+                  prev: "Anterior",
+                  next: "Siguiente",
+                  last: "Último",
+                  more: "Más páginas",
+                  input: "Número de página",
+                  select: "Seleccionar tamaño de página"
+                },
+                info: "Viendo {{start}} - {{end}} de {{total}} registros"
+              }
+            }
+          }
+        }
+      });
+    }
 
     let nombreArchivo;
 
@@ -149,7 +265,7 @@ let CargaMasiva = function () {
         let reader = new FileReader();
 
         reader.onload = function (e) {
-          ModuloVigilancia.MostrarCargando();
+          //MOSTRAR CARGANDO
 
           try {
             let data = e.target.result;
@@ -161,40 +277,39 @@ let CargaMasiva = function () {
             let columnas = _ObtenerColumnas(workbook.Sheets[workbook.SheetNames[0]]);
 
             if (!_VerificarFormato(columnas)) {
-              ModuloVigilancia.OcultarCargando();
-              ModuloVigilancia.AlertaError('El formato del archivo seleccionado no es correcto, verifique el archivo.', '¡Atención!');
+              //OCULTAR CARGANDO
+              alert('El formato del archivo seleccionado no es correcto, verifique el archivo.');
               return;
             }
 
             if (filas && filas.length == 0) {
-              ModuloVigilancia.OcultarCargando();
-              ModuloVigilancia.AlertaError('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.', '¡Atención!');
+              //OCULTAR CARGANDO
+              alert('El archivo cargado está vacío, ingrese información y cárguelo nuevamente.');
               return;
             }
 
             registros = [];
 
-
             filas.forEach((objeto) => {
               registros.push({
-                numeroSolicitud:objet['NumeroSolicitud'],
-                tiposolicitud: objeto['TipoSolicitud'],
-                fechasolicitud: objecto['FechaSolicitud'],
-                fecharecepcion: objecto['FechaRecepcion'],
-                numerocliente: objeto['NumeroCliente'],
-                nombrecliente: objeto['NombreCliente'],
-                calledireccioncliente: objeto['CalleDireccionCliente'],
-                numerodireccioncliente: objeto['NumeroDireccionCliente'],
-                regioncliente: objeto['RegionCliente'],
-                comunacliente: objeto['ComunaCliente'],
-                numerotelefonocontacto: objeto['NumeroTelefonoContacto'],
-                numerotelefonocontactoadicional: objeto['NumeroTelefonoContactoAdicional'],
-                rutcliente: objeto['RutCliente'],
-                unidadnegocion: objeto['UnidadNegocio'],
-                gerencia: objeto['Gerencia'],
-                observacionaof: objeto['ObservacionAof'],
-                prioridad: objeto['Prioridad'],
-                placa: objecto['Placa']
+                NumeroSolicitud: objeto['NumeroSolicitud'],
+                TipoSolicitud: objeto['TipoSolicitud'],
+                FechaSolicitud: objeto['FechaSolicitud'],
+                FechaRecepcion: objeto['FechaRecepcion'],
+                NumeroCliente: objeto['NumeroCliente'],
+                NombreCliente: objeto['NombreCliente'],
+                CalleDireccionCliente: objeto['CalleDireccionCliente'],
+                NumeroDireccionCliente: objeto['NumeroDireccionCliente'],
+                RegionCliente: objeto['RegionCliente'],
+                ComunaCliente: objeto['ComunaCliente'],
+                NumeroTelefonoContacto: objeto['NumeroTelefonoContacto'],
+                NumeroTelefonoContactoAdicional: objeto['NumeroTelefonoContactoAdicional'],
+                RutCliente: objeto['RutCliente'],
+                UnidadNegocio: objeto['UnidadNegocio'],
+                Gerencia: objeto['Gerencia'],
+                ObservacionAof: objeto['ObservacionAof'],
+                Prioridad: objeto['Prioridad'],
+                Placa: objeto['Placa']
               });
             });
 
@@ -202,17 +317,17 @@ let CargaMasiva = function () {
             $('#alertaProcesar').show();
           } catch (ex) {
             console.log(ex);
-            ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
+            alert('No se pudo obtener la información del archivo seleccionado, verifique el archivo.');
           }
 
           $('#archivoCarga').val(null);
-          ModuloVigilancia.OcultarCargando();
+          //OCULTAR CARGANDO
         };
 
         reader.onerror = function (ex) {
           console.log(ex);
-          ModuloVigilancia.AlertaError('No se pudo obtener la información del archivo seleccionado, verifique el archivo.', '¡Atención!');
-          ModuloVigilancia.OcultarCargando();
+          alert('No se pudo obtener la información del archivo seleccionado, verifique el archivo.');
+          //OCULTAR CARGANDO
           $('#archivoCarga').val(null);
         };
 
@@ -228,6 +343,11 @@ let CargaMasiva = function () {
       $('#alertaProcesar').hide();
     });
 
+    $(document).on('click', '#listacargasmasivas tbody tr', function () {
+      let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
+      location.href = "/CargaMasiva/CargaMasiva/" + id;
+    });
+
     $(document).on('click', '.page-link', function () {
       $('.detalle-estados').tooltip();
     });
@@ -241,187 +361,259 @@ let CargaMasiva = function () {
     });
   };
 
+  
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
-        ModuloVigilancia.AlertaInfo('Debe cargar un archivo primero', '¡Atención!');
+        alert('Debe cargar un archivo primero');
         return;
       }
 
       let numeroSolicitudActual = 0;
+
 
       registros.forEach((registro) => {
         // VACÍA LAS LISTAS DE ESTADOS Y ACCIONES
         registro.estados = [];
         registro.acciones = [];
 
-        // VALIDA QUE EL TIPO DE SOLICITUD EXISTA Y SEA VÁLIDO
-        {
-          registro.estados.push(estados.numeroSolicitud);
+        
+        // VALIDA TIPO DE SOLICITUD
+        if (!registro.TipoSolicitud) {
+          registro.estados.push(estados.faltaTipoSolicitud);
         }
-        {
-          registro.estados.push(estados.tipoSolicitud);
-        }
-        // VALIDA QUE LA FECHA DE SOLICITUD EXISTA Y SEA VÁLIDO
-        {
-          registro.estados.push(estados.FechaSolicitud);
-        }
-        // VALIDA QUE LA FECHA DE RECEPCIÓN EXISTA Y SEA VÁLIDO
-        {
-          registro.estados.push(estados.FechaRecepcion);
+        else {
+          
         }
         
-        // SI EL TIPO DE NUMERO DE CLIENTE ES VALIDO 
-        {
-          registro.estados.push(estados.tipoNumeroCliente);
+        // VALIDA LA FECHA DE SOLICITUD 
+        if (!registro.FechaSolicitud) {
+          registro.estados.push(estados.faltaFechaSolicitud);
+        }
+        else {
+          var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+          if ((registro.FechaSolicitud.match(RegExPattern)) && (registro.FechaSolicitud != '')) {
+            
+          } else {
+            registro.estados.push(estados.tipoFechaSolicitud);
+          }
+        }
+        // VALIDA LA FECHA DE RECEPCIÓN 
+        if (!registro.FechaRecepcion) {
+          registro.estados.push(estados.faltaFechaRecepcion);
+        }
+        else {
+          var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+          if ((registro.FechaRecepcion.match(RegExPattern)) && (registro.FechaRecepcion != '')) {
+
+          } else {
+            registro.estados.push(estados.tipoFechaRecepcion);
+          }
+        }
+        // VALIDA EL NUMERO DE CLIENTE  
+        if (!registro.NumeroCliente) {
+          registro.estados.push(estados.faltaNumeroCliente);
+        }
+        else {
+          if (isNaN(registro.NumeroCliente)) {
+            registro.estados.push(estados.tipoNumeroCliente)
+          }
+          else {
+           
+          }
+
         }
 
-        // VALIDA QUE EL NUMERO DE CLIENTE EXISTA
-        if (!registro.tipoNumeroCliente) {
-          registro.estados.push(estados.tipoNumeroCliente);
+        // VALIDA NOMBRE DE CLIENTE  
+        if (!registro.NombreCliente) {
+          registro.estados.push(estados.faltaNombreCliente);
+        }
+        else {
+          
         }
 
-        // SI EL TIPO DE NOMBRE DE CLIENTE ES VALIDO 
-        {
-          registro.estados.push(estados.tipoNombreCliente);
-        }
-
-        // VALIDA QUE EL NOMBRE DE CLIENTE EXISTA
-        if (!registro.tipoNombreCliente) {
-          registro.estados.push(estados.tipoNombreCliente);
-        }
-        // SI EL TIPO DE REGION ES VALIDO 
-        {
-          registro.estados.push(estados.tipoRegionCliente);
-        }
-
-        // VALIDA QUE LA COMUNA EXISTA
-        if (!registro.tipoRegionCliente) {
+        // VALIDA LA  REGION 
+        if (!registro.RegionCliente) {
           registro.estados.push(estados.faltaRegionCliente);
         }
-
-        // SI EL TIPO DE COMUNA ES VALIDO 
-        {
-          registro.estados.push(estados.tipoComunaCliente);
+        else {
+          
         }
 
-        // VALIDA QUE LA COMUNA EXISTA
-        if (!registro.tipoComunaCliente) {
+        // VALIDA COMUNA 
+        if (!registro.ComunaCliente) {
           registro.estados.push(estados.faltaComunaCliente);
         }
-
-        // SI EL TIPO DE GERENCIA ES VALIDO 
-        if(!registro.gerencia){
-          registro.estados.push(estados.tipoGerencia);
+        else {
+          
         }
 
-        // VALIDA QUE LA GERENCIA EXISTA
-        if (!registro.tipoGerencia) {
-          registro.estados.push(estados.tipoGerencia);
+        // VALIDA GERENCIA 
+        if (!registro.Gerencia) {
+          registro.estados.push(estados.faltaGerencia);
+        }
+        else {
+          
+        }
+        // VALIDA OBSERVACIONAOF 
+        if (!registro.ObservacionAof) {
+          registro.estados.push(estados.faltaObservacionAof);
+        }
+        else {
+
         }
 
-        // SI EL TIPO DE PRIORIDAD ES VALIDO 
-        {
-          registro.estados.push(estados.tipoPrioridad);
+        // VALIDA PRIORIDAD 
+        if (!registro.Prioridad) {
+          registro.estados.push(estados.faltaPrioridad);
         }
-
-        // VALIDA QUE LA PRIORIDAD EXISTA
-        if (!registro.tipoPrioridad) {
-          registro.estados.push(estados.tipoPrioridad);
+        else {
+          
         }
-
-        // SI EL TIPO DE PLACA ES VALIDO 
-        {
-          registro.estados.push(estados.tipoPlaca);
+        //VALIDA PLACA
+        if (!registro.Placa) {
+          registro.estados.push(estados.faltaPlaca);
         }
-
-        // VALIDA QUE LA PLACA EXISTA
-        if (!registro.tipoPlaca) {
-          registro.estados.push(estados.tipoPlaca);
+        else {
+          if (isNaN(registro.Placa)) {
+            registro.estados.push(estados.tipoPlaca)
+          }
+          else {
+            
+          }
         }
 
         // SI EL TIPO DE IDENTIFICADOR ES 'RUT', Y EXISTEN LOS DATOS DE IDENTIFICACIÓN, VALIDA QUE EL RUT SEA VÁLIDO
         if (
-          !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
-          !registro.estados.contiene(estados.faltaTipoSolicitud) &&
-          !registro.estados.contiene(estados.faltaFechaSolicitud) &&
-          !registro.estados.contiene(estados.faltaFechaRecepcion) &&
-          !registro.estados.contiene(estados.faltaNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaNombreCliente) &&
-          !registro.estados.contiene(estados.faltaCalleDireccionCliente) &&
-          !registro.estados.contiene(estados.faltaNumeroDireccionCliente) &&
-          !registro.estados.contiene(estados.faltaRegionCliente) &&
-          !registro.estados.contiene(estados.faltaComunaCliente) &&
-          !registro.estados.contiene(estados.faltaNumeroTelefonoContacto) &&
-          !registro.estados.contiene(estados.faltaNumeroTelefonoContactoAdicional) &&
-          !registro.estados.contiene(estados.faltaRUTCliente) &&
-          !registro.estados.contiene(estados.faltaUnidadNegocio) &&
-          !registro.estados.contiene(estados.faltaGerencia) &&
-          !registro.estados.contiene(estados.faltaObservacionAof) &&
-          !registro.estados.contiene(estados.faltaPrioridad) &&
-          !registro.estados.contiene(estados.faltaPlaca) &&
-          !registro.estados.contiene(estados.tipoSolicitud) &&
-          !registro.estados.contiene(estados.tipoRegionCliente) &&
-          !registro.estados.contiene(estados.tipoComunaCliente) &&
-          !registro.estados.contiene(estados.tipoUnidadNegocio) &&
-          !registro.estados.contiene(estados.tipoGerencia) &&
-          !registro.estados.contiene(estados.tipoPrioridad) &&
-          !registro.estados.contiene(estados.tipoPlaca)
-                           
+          (registro.estados.indexOf(estados.faltaNumeroSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaTipoSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaFechaSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaFechaRecepcion) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaCalleDireccionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroDireccionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroTelefonoContacto) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroTelefonoContactoAdicional) < 0) &&
+          (registro.estados.indexOf(estados.faltaRUTCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaUnidadNegocio) < 0) &&
+          (registro.estados.indexOf(estados.faltaGerencia) < 0) &&
+          (registro.estados.indexOf(estados.faltaObservacionAof) < 0) &&
+          (registro.estados.indexOf(estados.faltaPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.faltaPlaca) < 0) &&
+          (registro.estados.indexOf(estados.tipoSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoUnidadNegocio) < 0) &&
+          (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
+          (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.tipoPlaca) < 0)
+
         ) {
-          let rutcliente = registro.rutcliente;
-          if (!ModuloVigilancia.ValidaRut(rutcliente)) {
+          let rutcliente = registro.RutCliente;
+          if (!_ValidaRut(rutcliente)) {
             registro.estados.push(estados.rutInvalido);
+          }
+          else {
+
           }
         }
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
         if (
-          !registro.estados.contiene(estados.tipoNumeroCliente) &&
-          !registro.estados.contiene(estados.tipoNombreCliente) &&
-          !registro.estados.contiene(estados.tipoRegionCliente) &&
-          !registro.estados.contiene(estados.tipoComunaCliente) &&
-          !registro.estados.contiene(estados.tipoGerencia) &&
-          !registro.estados.contiene(estados.tipoPrioridad) &&
-          !registro.estados.contiene(estados.tipoPlaca) &&
-          !registro.estados.contiene(estados.faltaNumeroSolicitud) &&
-          !registro.estados.contiene(estados.faltaNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaNombreCliente) &&
-          !registro.estados.contiene(estados.faltaRUT) &&
-          !registro.estados.contiene(estados.faltaDireccionCalleCliente) &&
-          !registro.estados.contiene(estados.faltaDireccionNumeroCliente) &&
-          !registro.estados.contiene(estados.faltaRegionCliente) &&
-          !registro.estados.contiene(estados.faltaComunaCliente) &&
-          !registro.estados.contiene(estados.faltaGerencia) &&
-          !registro.estados.contiene(estados.faltaPrioridad) &&
-          !registro.estados.contiene(estados.faltaObservacionAof) &&
-          !registro.estados.contiene(estados.faltaPlaca) &&
+          (registro.estados.indexOf(estados.tipoNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
+          (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.tipoPlaca) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.faltaNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaRUT) < 0) &&
+          (registro.estados.indexOf(estados.faltaDireccionCalleCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaDireccionNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.faltaGerencia) < 0) &&
+          (registro.estados.indexOf(estados.faltaPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.faltaObservacionAof) < 0) &&
+          (registro.estados.indexOf(estados.faltaPlaca) < 0) &&
           numeroSolicitudActual != registro.numeroSolicitud
         ) {
           // SI NO HAY ERRORES DE VALIDACIÓN, AGREGA LA ACCIÓN DE CREAR SOLICITUD AL REGISTRO
           registro.acciones.push(acciones.crearSolicitud);
-        } else if (!registro.estados.contiene(estados.faltaPlaca) && registro.numeroSolicitud == numeroSolicitudActual) {
+        } else if ((registro.estados.indexOf(estados.faltaPlaca) < 0) && registro.numeroSolicitud == numeroSolicitudActual) {
           // SI SOLO TENGO LA PLACA
           registro.acciones.push(acciones.agregarPlaca);
         }
 
-        numeroSolicitudActual = registro.numeroSolicitud;
+        numeroSolicitudActual = registro.NumeroSolicitud;
       });
 
-      _CargarTabla();
+      console.log(registros);
 
-      $('.detalle-estados').tooltip();
+      // VALIDACIÓN EN EL SERVIDOR
+      $.post('/CargaMasiva/Validar', { detalles: registros }, function (data) {
+        registros = data;
 
-      $('#divTablaResultado').show();
+        _CargarTabla();
 
-      ModuloVigilancia.AlertaExito('Archivo procesado, para ver detalle ir a histórico de cargas', '¡Atención!');
+        $('.detalle-estados').tooltip();
+
+        $('#divTablaResultado').show();
+
+        alert('Archivo procesado, para ver detalle ir a histórico de cargas');
+      });
     } catch (ex) {
       console.log(ex);
-      ModuloVigilancia.AlertaError('No se pudo procesar la información, verifique el archivo.', '¡Atención!');
+      alert('No se pudo procesar la información, verifique el archivo.');
     }
 
     $('#btnProcesarRegistros').removeClass('pulso-guardar');
   };
+
+  let _Guardar = function () {
+    let cargaMasiva = {
+      idCargaMasiva: CapaDatos.init,
+      fechaHora: moment().format('DD/MM/YYYY HH:mm'),
+      responsable: sessionStorage["usuarioLogueado"],
+      archivo: nombreArchivo
+    };
+
+    let detalle = [];
+    let productosDetalle = [];
+
+    registros.forEach((registro) => {
+      if (registro.acciones.contiene(acciones.crearSolicitud)) {
+        detalle.push({
+          //propiedades del detalle
+          numeroSolicitud: registro.numeroSolicitud
+        });
+
+        productosDetalle.push({
+          numeroPlaca: registro.numeroPlaca,
+          numeroSolicitud: registro.numeroSolicitud
+        });
+      } else if (registro.acciones.contiene(acciones.agregarPlaca)) {
+        productosDetalle.push({
+          numeroPlaca: registro.numeroPlaca,
+          numeroSolicitud: registro.numeroSolicitud
+        });
+      }
+    });
+
+    $.post("/CargaMasiva/Create", {
+      cargamasiva: cargaMasiva,
+      detallecargamasiva: detalle,
+      cargaMasivaDetalleProductos: productosDetalle
+    }, function (data) {
+
+    });
+  }
 
   let _ObtenerEstadosMalos = function (registro) {
     return registro.estados.filter((e) => { return e.tipo == 'danger'; });
@@ -465,6 +657,7 @@ let CargaMasiva = function () {
     $('.detalle-estados').tooltip();
   };
 
+
   let _ObtenerColumnas = function (hoja) {
     let headers = [];
 
@@ -485,242 +678,149 @@ let CargaMasiva = function () {
   };
 
   let _VerificarFormato = function (columnas) {
-    if (!columnas || columnas.length != 12) {
+    if (!columnas || columnas.length != 18) {
       return false;
     }
 
-    if (!columnas.contiene('NumeroSolicitud')) {
+    if (columnas.indexOf('NumeroSolicitud') < 0) {
       return false;
     }
-    if (!columnas.contiene('TipoSolicitud')) {
-      return false;
-    }
+    else {
 
-    if (!columnas.contiene('FechaSolicitud')) {
+    }
+    if (columnas.indexOf('TipoSolicitud') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('FechaRecepcion')) {
+    }
+    if (columnas.indexOf('FechaSolicitud') < 0) {
       return false;
     }
-    
-    if (!columnas.contiene('NumeroCliente')) {
-      return false;
-    }
+    else {
 
-    if (!columnas.contiene('NombreCliente')) {
+    }
+    if (columnas.indexOf('FechaRecepcion') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('CalleDireccionCliente')) {
+    }
+    if (columnas.indexOf('NumeroCliente') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('NumeroDireccionCliente')) {
+    }
+    if (columnas.indexOf('NombreCliente') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('RegionCliente')) {
+    }
+    if (columnas.indexOf('CalleDireccionCliente') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('ComunaCliente')) {
+    }
+    if (columnas.indexOf('NumeroDireccionCliente') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('NumeroTelefonoContacto')) {
+    }
+    if (columnas.indexOf('RegionCliente') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('NumeroTelefonoContactoAdicional')) {
+    }
+    if (columnas.indexOf('ComunaCliente') < 0) {
       return false;
     }
+    else {
 
-    if (!columnas.contiene('RutCliente')) {
+    }
+    if (columnas.indexOf('NumeroTelefonoContacto') < 0) {
       return false;
     }
-      
-    if (!columnas.contiene('UnidadNegocio')) {
+    else {
+
+    }
+    if (columnas.indexOf('NumeroTelefonoContactoAdicional') < 0) {
       return false;
     }
-    if (!columnas.contiene('Gerencia')) {
+    else {
+
+    }
+    if (columnas.indexOf('RutCliente') < 0) {
       return false;
     }
-    if (!columnas.contiene('ObservacionAof')) {
+    else {
+
+    }
+    if (columnas.indexOf('UnidadNegocio') < 0) {
       return false;
     }
-    if (!columnas.contiene('Prioridad')) {
+    else {
+
+    }
+    if (columnas.indexOf('Gerencia') < 0) {
       return false;
     }
-    if (!columnas.contiene('Placa')) {
+    else {
+
+    }
+    if (columnas.indexOf('ObservacionAof') < 0) {
       return false;
+    }
+    else {
+
+    }
+    if (columnas.indexOf('Prioridad') < 0) {
+      return false;
+    }
+    else {
+
+    }
+    if (columnas.indexOf('Placa') < 0) {
+      return false;
+    }
+    else {
+
     }
     return true;
   };
 
-  let _Guardar = function () {
-    let cargaMasiva = {
-      idCargaMasiva: CapaDatos.ObtenerMaxSecuencia(),
-      fechaHora: moment().format('DD/MM/YYYY HH:mm'),
-      responsable: sessionStorage["usuarioLogueado"],
-      archivo: nombreArchivo
-    };
+  let _ValidaRut = function (rutCompleto) {
+    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
+      return false;
+    var tmp = rutCompleto.split('-');
+    var digv = tmp[1];
+    var rut = tmp[0];
+    if (digv == 'K') digv = 'k';
+    return (_ObtenerDV(rut) == digv);
+  };
 
-    let detalle = [];
-    let productosDetalle = [];
-
-    registros.forEach((registro) => {
-      if (registro.acciones.contiene(acciones.crearSolicitud)) {
-        detalle.push({
-          //propiedades del detalle
-          numeroSolicitud: registro.numeroSolicitud
-        });
-
-        productosDetalle.push({
-          numeroPlaca: registro.numeroPlaca,
-          numeroSolicitud: registro.numeroSolicitud
-        });
-      } else if (registro.acciones.contiene(acciones.agregarPlaca)) {
-        productosDetalle.push({
-          numeroPlaca: registro.numeroPlaca,
-          numeroSolicitud: registro.numeroSolicitud
-        });
-      }
-    });
-
-    $.post("/CargaMasiva/Create", {
-      cargamasiva: cargaMasiva,
-      detallecargamasiva: detalle,
-      cargaMasivaDetalleProductos: productosDetalle
-    }, function (data) {
-
-    });
-  }
+  let _ObtenerDV = function (T) {
+    var M = 0, S = 1;
+    for (; T; T = Math.floor(T / 10))
+      S = (S + T % 10 * (9 - M++ % 6)) % 11;
+    return S ? S - 1 : 'k';
+  };
 
   return {
     init: function () {
-      InitCargaMasiva();
+      _Init();
+    },
+    Registros: function () {
+      return registros;
     }
   };
 }();
 
-//Antigua versión
-let CargaMasiva = function () {
-
-  let cargasmasivas;
-
-  let Init = function () {
-    InitElementos();
-  };
-
-  let InitElementos = function () {
-    $('.m-select2').select2();
-
-    f($("#lista-cargasmasivas").length > 0)
-    {
-      window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
-
-      $.post("/CargaMasiva/ObtenerCargasMasivas", { cargamasivaId: 0 }, function (data) {
-        cargasmasivas = data;
-
-        CargarLista();
-      });
-
-      $('#filtro-filtrar').click(function () {
-        Filtrar();
-      });
-
-      $(document).on('click', '#lista-cargasmasivas tbody tr', function () {
-        let id = $(this).find('.cargamasiva-usuario-id').attr('data-id');
-        location.href = "/CargaMasiva/CargaMasiva/" + id;
-      });
-    }
-
-    let CargarLista = function () {
-      let picker = $('#filtro-fechacarga').data('daterangepicker');
-      $('#lista-cargasmasivas').mDatatable({
-        data: {
-          type: "local",
-          source: cargasmasivas.filter((e) => { return moment(e.CargaMasiva, 'DD/MM/YYYY').isBetween(picker.startDate, picker.endDate); }),
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: false,
-          footer: false
-        },
-        sortable: true,
-        pagination: true,
-        search: {
-          input: $('#buscarCargaMasiva')
-        },
-        columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" }, 
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-        ],
-        translate: {
-          records: {
-            processing: "Cargando...",
-            noRecords: "No se encontraron registros"
-          },
-          toolbar: {
-            pagination: {
-              items: {
-                default: {
-                  first: "Primero",
-                  prev: "Anterior",
-                  next: "Siguiente",
-                  last: "Último",
-                  more: "Más páginas",
-                  input: "Número de página",
-                  select: "Seleccionar tamaño de página"
-                },
-                info: "Viendo {{start}} - {{end}} de {{total}} registros"
-              }
-            }
-          }
-        }
-      });
-    };
-    $.post("/CargaMasiva/Listar", { usuarioId: 0 }, function (cargas) {
-      $(".m_datatable").mDatatable({
-        data: {
-          type: "local",
-          source: cargas,
-          pageSize: 10
-        },
-        layout: {
-          theme: "default",
-          class: "",
-          scroll: !1,
-          footer: !1
-        },
-        sortable: !0,
-        pagination: !0,
-        search: {
-          input: $("#buscarCargaMasiva")
-        },
-        columns: [
-          { field: "CargaMasivaId", title: "#", width: 50, selector: !1, textAlign: "center" },
-          { field: "NombreUsuario", title: "Usuario", responsive: { visible: "lg" } },
-          { field: "FechaHora", title: "Realizada", responsive: { visible: "lg" }, type: "date", format: "DD/MM/YYYY" },
-          { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
-        ], true, true);
-
-    });
-  });
-};
-
-return {
-  init: function () {
-    Init();
-  }
-};
-  }();
-
 $(() => {
   CargaMasiva.init();
+  CargaMasivaDetalle.init();
 });

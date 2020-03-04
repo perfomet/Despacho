@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 3 - Proyecto/Despacho/WebApp/AppSettings.config
+/3 - Proyecto/Deploy/AppSettings.config

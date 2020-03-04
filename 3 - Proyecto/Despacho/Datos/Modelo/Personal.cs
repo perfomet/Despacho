@@ -10,10 +10,12 @@ namespace Datos.Modelo
 		public string Nombre { get; set; }
 		public string Primerapellido { get; set; }
 		public string Segundoapellido { get; set; }
+		public string NombreCompleto { get { return Nombre + (" " + Primerapellido).Trim() + (" " + Primerapellido).Trim(); } }
 		public string Email { get; set; }
 		public int Tipopersonalid { get; set; }
 		public string TipoPersonal { get; set; }
 		public bool EstaActivo { get; set; }
+
 		public void FromDataRow(DataRow fila)
 		{
 			this.Personalid = int.Parse(fila[0].ToString());

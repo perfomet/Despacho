@@ -37,7 +37,7 @@ namespace Despacho.Controllers
 
 				Datos.Modelo.Solicitud solicitud = new Datos.Modelo.Solicitud
 				{
-					//TipoSolicitudId = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(detalle.TipoSolicitud).Tiposolicitudid
+					TipoSolicitudId = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(detalle.TipoSolicitud).Tiposolicitudid
 				};
 
 				int solicitudId = Datos.Datos.Solicitud.Crear(solicitud);

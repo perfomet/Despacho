@@ -1,58 +1,109 @@
 ﻿@model Datos.Modelo.Solicitud
 @{
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
 	List<Datos.Modelo.TipoDocumento> tiposDocumento = Datos.Datos.TipoDocumento.ObtenerTiposdeDocumentos();
 }
 <div class="m-wizard__form-step @(Model.EstadoSolicitudId == 3 ? "m-wizard__form-step--current" : "")" id="seccion-documentacion">
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Número de Documento:</label>
 		<div class="col-xl-9 col-lg-9">
-			<input type="number" class="form-control m-input" value="@Model.NumeroDocumento" id="numeroDocumento" />
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Documentacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
+			{
+				<input type="number" class="form-control m-input" value="@Model.NumeroDocumento" id="numeroDocumento" />
+			}
+			else
+			{
+				<input type="hidden" value="@Model.NumeroDocumento" id="numeroDocumento" />
+				@Model.NumeroDocumento
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Número de Entrega:</label>
 		<div class="col-xl-9 col-lg-9">
-			<input type="number" class="form-control m-input" value="@Model.NumeroEntrega" id="numeroEntrega" />
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Documentacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
+			{
+				<input type="number" class="form-control m-input" value="@Model.NumeroEntrega" id="numeroEntrega" />
+			}
+			else
+			{
+				<input type="hidden" value="@Model.NumeroEntrega" id="numeroEntrega" />
+				@Model.NumeroEntrega
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Entrega Documento:</label>
 		<div class="col-xl-9 col-lg-9">
-			<div class='input-group date pull-right'>
-				<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de entrega" id="fechaEntregaDoc" value="@Model.FechaEntregaDocumento">
-				<div class="input-group-append">
-					<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Documentacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
+			{
+				<div class='input-group date pull-right'>
+					<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de entrega" id="fechaEntregaDoc" value="@Model.FechaEntregaDocumento">
+					<div class="input-group-append">
+						<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+					</div>
 				</div>
-			</div>
+			}
+			else
+			{
+				<input type="hidden" value="@Model.FechaEntregaDocumento" id="fechaEntregaDoc" />
+				@Model.FechaEntregaDocumento
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Recepcion Documento:</label>
 		<div class="col-xl-9 col-lg-9">
-			<div class='input-group date pull-right'>
-				<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcionDoc" value="@Model.FechaRecepcionDocumento">
-				<div class="input-group-append">
-					<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Documentacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
+			{
+				<div class='input-group date pull-right'>
+					<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de recepción" id="fechaRecepcionDoc" value="@Model.FechaRecepcionDocumento">
+					<div class="input-group-append">
+						<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+					</div>
 				</div>
-			</div>
+			}
+			else
+			{
+				<input type="hidden" value="@Model.FechaRecepcionDocumento" id="fechaRecepcionDoc" />
+				@Model.FechaRecepcionDocumento
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Folio:</label>
 		<div class="col-xl-9 col-lg-9">
-			<input type="number" class="form-control m-input" value="@Model.Folio" id="folio" />
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Documentacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
+			{
+				<input type="number" class="form-control m-input" value="@Model.Folio" id="folio" />
+			}
+			else
+			{
+				<input type="hidden" value="@Model.Folio" id="folio" />
+				@Model.Folio
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Tipo de Documento:</label>
 		<div class="col-xl-9 col-lg-9">
-			<select id="tipoDocumentoId" class="form-control m-select2" placeholder="">
-				<option value="0" selected disabled>Seleccione un tipo de documento</option>
-				@foreach (Datos.Modelo.TipoDocumento tipo in tiposDocumento)
-				{
-					<option value="@tipo.Tipodocumentoid" @(tipo.Tipodocumentoid == Model.TipoDocumentoId ? "selected" : "")>@tipo.Descripcion</option>
-				}
-			</select>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Documentacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Cliente)
+			{
+				<select id="tipoDocumentoId" class="form-control m-select2" placeholder="">
+					<option value="0" selected disabled>Seleccione un tipo de documento</option>
+					@foreach (Datos.Modelo.TipoDocumento tipo in tiposDocumento)
+					{
+						<option value="@tipo.Tipodocumentoid" @(tipo.Tipodocumentoid == Model.TipoDocumentoId ? "selected" : "")>@tipo.Descripcion</option>
+					}
+				</select>
+			}
+			else
+			{
+				Datos.Modelo.TipoDocumento tipoDoc = Datos.Datos.TipoDocumento.ObtenerTipoDocumento(@Model.TipoDocumentoId);
+				<input type="hidden" value="@Model.TipoDocumentoId" id="tipoDocumentoId" />
+				@tipoDoc.Descripcion
+			}
 		</div>
 	</div>
 </div>

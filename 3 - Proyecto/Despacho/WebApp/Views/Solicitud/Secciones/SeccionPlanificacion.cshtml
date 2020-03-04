@@ -1,5 +1,7 @@
 ﻿@model Datos.Modelo.Solicitud
 @{
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
 	List<Datos.Modelo.Camion> camiones = Datos.Datos.Camion.ObtenerCamiones();
 	List<Datos.Modelo.Personal> personales = Datos.Datos.Personal.ObtenerPersonal();
 
@@ -13,45 +15,77 @@
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Fecha Despacho:</label>
 		<div class="col-xl-9 col-lg-9">
-			<div class='input-group date pull-right'>
-				<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de despacho" id="fechaDespacho" value="@Model.FechaDespacho">
-				<div class="input-group-append">
-					<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Planificacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Planificador)
+			{
+				<div class='input-group date pull-right'>
+					<input type="text" class="form-control m-input" readonly="" placeholder="Seleccione la fecha de despacho" id="fechaDespacho" value="@Model.FechaDespacho">
+					<div class="input-group-append">
+						<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
+					</div>
 				</div>
-			</div>
+			}
+			else
+			{
+				<input type="hidden" value="@Model.FechaDespacho.Replace("01/01/1900 0:00:00", "")" id="fechaDespacho" />
+				@Model.FechaDespacho.Replace("01/01/1900 0:00:00", "")
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Camión:</label>
 		<div class="col-xl-9 col-lg-9">
-			<select id="patenteCamion" class="form-control m-select2" placeholder="">
-				<option value="0" selected disabled>Seleccione un camión</option>
-				@foreach (Datos.Modelo.Camion camion in camiones)
-				{
-					<option value="@camion.Patente" @(camion.Patente == Model.PatenteCamion ? "selected" : "")>@camion.Descripcion</option>
-				}
-			</select>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Planificacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Planificador)
+			{
+				<select id="patenteCamion" class="form-control m-select2" placeholder="">
+					<option value="0" selected disabled>Seleccione un camión</option>
+					@foreach (Datos.Modelo.Camion camion in camiones)
+					{
+						<option value="@camion.Patente" @(camion.Patente == Model.PatenteCamion ? "selected" : "")>@camion.Descripcion</option>
+					}
+				</select>
+			}
+			else
+			{
+				<input type="hidden" value="@Model.PatenteCamion" id="patenteCamion" />
+				@Model.PatenteCamion
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">* Llamada día Anterior:</label>
 		<div class="col-xl-9 col-lg-9">
-			<div class="m-radio-inline">
-				<label class="m-radio">
-					<input type="radio" name="llamada" value="1"> Si
-					<span></span>
-				</label>
-				<label class="m-radio">
-					<input type="radio" name="llamada" value="0"> No
-					<span></span>
-				</label>
-			</div>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Planificacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Planificador)
+			{
+				<div class="m-radio-inline">
+					<label class="m-radio">
+						<input type="radio" name="llamada" value="1"> Si
+						<span></span>
+					</label>
+					<label class="m-radio">
+						<input type="radio" name="llamada" value="0"> No
+						<span></span>
+					</label>
+				</div>
+			}
+			else
+			{
+				<input type="hidden" value="@(Model.LlamadaDiaAnterior ? 1 : 0)" id="llamada" name="llamada" />
+				@(Model.LlamadaDiaAnterior ? "Si" : "No")
+			}
 		</div>
 	</div>
 	<div class="form-group m-form__group row">
 		<label class="col-xl-3 col-lg-3 col-form-label">Comentarios:</label>
 		<div class="col-xl-9 col-lg-9">
-			<textarea class="form-control m-input" id="comentarios" maxlength="255">@Model.ComentariosLlamada</textarea>
+			@if (Model.EstadoSolicitud.SeccionFormularioId == (int)Datos.Modelo.SeccionesFormulario.Planificacion && usuario.PerfilId == (int)Datos.Modelo.Perfiles.Planificador)
+			{
+				<textarea class="form-control m-input" id="comentarios" maxlength="255">@Model.ComentariosLlamada</textarea>
+			}
+			else
+			{
+				<input type="hidden" value="@Model.ComentariosLlamada" id="comentarios" />
+				@Model.ComentariosLlamada
+			}
 		</div>
 	</div>
 	<div class="m-separator m-separator--dashed m-separator--lg"></div>
@@ -59,7 +93,7 @@
 		<div class="m-form__heading">
 			<div style="display: flex;justify-content: end;">
 				<h3 class="m-form__heading-title" style="width: 100%;">Personal Asignado</h3>
-				<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modalEquipoSolicitado">
+				<a href="#" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill" data-toggle="modal" data-target="#modalPersonalAsignado">
 					<span>
 						<i class="flaticon-add"></i>
 						<span>Asignar Personal</span>
@@ -89,7 +123,7 @@
 							<option value="0" selected disabled>Seleccione un miembro del personal</option>
 							@foreach (Datos.Modelo.Personal personal in personales)
 							{
-								<option value="@personal.Personalid">@(personal.TipoPersonal + " - " + personal.Nombre)</option>
+								<option data-tipo="@personal.TipoPersonal" data-nombre="@personal.Nombre" value="@personal.Personalid">@(personal.TipoPersonal + " - " + personal.Nombre)</option>
 							}
 						</select>
 					</div>
@@ -97,7 +131,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-success" id="solicitarEquipos">Asignar</button>
+				<button type="button" class="btn btn-success" id="solicitarPersonal">Asignar</button>
 			</div>
 		</div>
 	</div>

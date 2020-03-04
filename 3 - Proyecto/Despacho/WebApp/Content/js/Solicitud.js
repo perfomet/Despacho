@@ -12,8 +12,18 @@
         if ($("#lista-solicitudes").length > 0) {
             window.crearSelectorFecha("#filtro-fecha-solicitud", moment().subtract(6, 'days'), moment());
 
+            let perfil = $('#perfil-usuario').val();
+
             $.post("/Solicitud/ObtenerSolicitudes", { solicitudId: 0 }, function (data) {
-                solicitudes = data;
+                solicitudes = data.filter((s) => {
+                    let cuenta = false;
+
+                    cuenta = cuenta || ((perfil == 1 || perfil == 4) && s.EstadoSolicitudId > 0);
+                    cuenta = cuenta || (perfil == 2 && (s.EstadoSolicitudId == 2 || s.EstadoSolicitud.SeccionFormularioId == 4));
+                    cuenta = cuenta || (perfil == 3 && s.EstadoSolicitud.SeccionFormularioId == 2);
+
+                    return cuenta;
+                });
 
                 _CargarLista();
             });
@@ -121,6 +131,18 @@ let DetalleSolicitud = function () {
     };
 
     let _InitElementos = function () {
+        $("#rutCliente").inputmask({
+            mask: "99999999-*", definitions: {
+                '*': {
+                    validator: "[0-9Kk]",
+                    casing: "upper"
+                }
+            }
+        });
+
+        $("#telefonoContacto").inputmask({ mask: "+(56) 999999999" });
+        $("#telefonoContactoAdicional").inputmask({ mask: "+(56) 999999999" });
+
         if ($('#formulario-solicitud').length > 0) {
             new mWizard("formulario-solicitud", {
                 startStep: $('#seccionActual').val()
@@ -146,6 +168,8 @@ let DetalleSolicitud = function () {
     };
 
     let _Guardar = function () {
+        if (!_Validar()) return false;
+
         let partesRutCliente = $('#rutCliente').val().replace(/\./g, '').split('-');
 
         let solicitudId = $('#solicitudId').val();
@@ -263,6 +287,67 @@ let DetalleSolicitud = function () {
         return proximoEstado;
     };
 
+    let _Validar = function () {
+        let errores = [];
+
+        errores = errores.concat(_ValidarSolicitud());
+        errores = errores.concat(_ValidarPlanificacion());
+        errores = errores.concat(_ValidarDocumentacion());
+        errores = errores.concat(_ValidarConcrecion());
+        errores = errores.concat(_ValidarAprobacion());
+
+        console.log(errores);
+
+        if (errores.length > 0) {
+            alert("Hay errores");
+        }
+
+        return errores.length == 0;
+    };
+
+    let _ValidarSolicitud = function () {
+        let errores = [];
+
+        if ($('#numeroSolicitud').length > 0 && !$('#numeroSolicitud').val()) errores.push("Debe ingresar el número de solicitud.");
+        if ($('#tipoSolicitudId').length > 0 && !$('#tipoSolicitudId').val()) errores.push("Debe seleccionar el tipo de solicitud.");
+        if ($('#fechaRecepcion').length > 0 && !$('#fechaRecepcion').val()) errores.push("Debe ingresar la fecha de recepción.");
+        if ($('#numeroCliente').length > 0 && !$('#numeroCliente').val()) errores.push("Debe ingresar el número del cliente.");
+        if ($('#nombreCliente').length > 0 && !$('#nombreCliente').val()) errores.push("Debe ingresar el nombre del cliente.");
+        if ($('#calleDireccionCliente').length > 0 && !$('#calleDireccionCliente').val()) errores.push("Debe ingresar la calle de la dirección del cliente.");
+        if ($('#numeroDireccionCliente').length > 0 && !$('#numeroDireccionCliente').val()) errores.push("Debe ingresar el número de la dirección del cliente.");
+        if ($('#regionClienteId').length > 0 && !$('#regionClienteId').val()) errores.push("Debe seleccionar la región del cliente.");
+        if ($('#comunaClienteId').length > 0 && !$('#comunaClienteId').val()) errores.push("Debe seleccionar la comuna del cliente.");
+        if ($('#telefonoContacto').length > 0 && !$('#telefonoContacto').val()) errores.push("Debe ingresar el teléfono de contacto.");
+        if ($('#rutCliente').length > 0 && !General.ValidaRut($('#rutCliente').val())) errores.push("El RUT del cliente es inválido.");
+        if ($('#prioridadId').length > 0 && !$('#prioridadId').val()) errores.push("Debe seleccionar una prioridad.");
+        if ($('#unidadNegocioId').length > 0 && !$('#unidadNegocioId').val()) errores.push("Debe seleccionar una unidad de negocio.");
+        if ($('#gerenciaId').length > 0 && !$('#gerenciaId').val()) errores.push("Debe seleccionar una gerencia.");
+        if (EquiposSolicitados.getEquipos().length == 0) errores.push("Debe solicitar al menos un equipo.");
+        if ($('#estadoId').val() == '2' && !EquiposSolicitados.Validar()) errores.push("Debe ingresar las placas de todos los equipos.");
+
+        return errores;
+    };
+
+    let _ValidarPlanificacion = function () {
+        let errores = [];
+        return errores;
+    };
+
+    let _ValidarDocumentacion = function () {
+        let errores = [];
+        return errores;
+    };
+
+    let _ValidarConcrecion = function () {
+        let errores = [];
+        return errores;
+    };
+
+    let _ValidarAprobacion = function () {
+        let errores = [];
+        return errores;
+    };
+
     return {
         init: function () {
             _Init();
@@ -290,6 +375,31 @@ let EquiposSolicitados = function () {
                 _AgregarEquipos();
             });
         }
+
+        let input;
+        let modelo;
+
+        $(document).on('click', '.numero-placa', function (e) {
+            input = $(e.target);
+            modelo = $(e.target).parents('tr').find('.modelo').val();
+
+            //Bodega.Filtrar(null, null, null, modelo);
+            //Bodega.DibujarBodegas();
+
+            $('#modalSeleccionPlaca').modal('show');
+        });
+
+        $(document).on('click', '#modalSeleccionPlaca .producto', function () {
+            let prod = $(this);
+
+            input.val(prod.find('.placa').text());
+
+            $('#modalSeleccionPlaca').modal('hide');
+        });
+
+        $('#modalSeleccionPlaca').on('hidden.bs.modal', function () {
+            Bodega.DibujarBodegas();
+        });
     };
 
     let _CargarLista = function () {
@@ -459,8 +569,8 @@ let PersonalAsignado = function () {
             });
         }
 
-        if ($('#solicitarEquipos').length > 0) {
-            $('#solicitarEquipos').click(function () {
+        if ($('#solicitarPersonal').length > 0) {
+            $('#solicitarPersonal').click(function () {
                 _AgregarEquipos();
             });
         }
@@ -470,7 +580,7 @@ let PersonalAsignado = function () {
         $('#lista-personal-asignado').mDatatable({
             data: {
                 type: "local",
-                source: equipos,
+                source: personal,
                 pageSize: 10
             },
             layout: {
@@ -485,21 +595,8 @@ let PersonalAsignado = function () {
             //    input: $('#buscarExistencia')
             //},
             columns: [
-                {
-                    field: "NumeroPlaca", title: "Placa", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        let id = '<input type="hidden" class="form-control id" value="' + (e.EquipoSolicitadoId || '0') + '" />';
-                        let placa = e.NumeroPlaca ? '<input type="hidden" class="form-control numero-placa" value="' + e.NumeroPlaca + '" />' + e.NumeroPlaca : '<input type="text" class="form-control numero-placa" value="' + (e.NumeroPlaca || '') + '" />';
-                        return id + placa
-                    }
-                },
-                { field: "Marca", title: "Marca", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control marca" value="' + (e.Marca || '') + '" />' + (e.Marca || '') } },
-                { field: "Modelo", title: "Modelo", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control modelo" value="' + (e.Modelo || '') + '" />' + (e.Modelo || '') } },
-                { field: "EstadoEquipo", title: "Estado", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control estado" value="' + (e.EstadoEquipo || '') + '" />' + (e.EstadoEquipo || '') } },
-                {
-                    field: "Eliminar", title: "Eliminar", responsive: { visible: "lg" }, template: function (e, a, i) {
-                        return /*e.NumeroPlaca ? '' : */'<a href="#lista-equipos-solicitados" onclick="EquiposSolicitados.Eliminar(' + e.EquipoSolicitadoId + ')" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Eliminar"><i class="la la-trash"></i></a>';
-                    }
-                }
+                { field: "Personal.Nombre", title: "Nombre", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control personalid" value="' + (e.PersonalId || '') + '" />' + (e.Personal.NombreCompleto || '') } },
+                { field: "Personal.TipoPersonal", title: "Tipo de Personal", responsive: { visible: "lg" }, template: function (e, a, i) { return '<input type="hidden" class="form-control tipopersonalid" value="' + (e.Tipopersonalid || '') + '" />' + (e.Personal.TipoPersonal || '') } }
             ],
             translate: {
                 records: {

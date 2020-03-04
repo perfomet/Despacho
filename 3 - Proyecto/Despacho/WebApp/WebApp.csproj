@@ -2540,6 +2540,7 @@
     <Content Include="Views\Solicitud\Secciones\SeccionConcrecion.cshtml" />
     <Content Include="Views\Solicitud\Secciones\SeccionAprobacion.cshtml" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
+    <Content Include="Views\Existencia\Bodega.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

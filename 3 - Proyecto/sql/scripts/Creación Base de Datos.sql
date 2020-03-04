@@ -3,14 +3,17 @@
 * FECHA Y HORA: 07/01/2020 23:00 ************************
 ********************************************************/
 USE MASTER
+GO
 
 IF EXISTS(SELECT 1 FROM sys.databases WHERE name LIKE 'Despacho') BEGIN
 	DROP DATABASE Despacho
 END
 
 CREATE DATABASE Despacho
+GO
 
 USE Despacho
+GO
 
 CREATE TABLE Cliente (
 	ClienteId INT PRIMARY KEY IDENTITY(2001, 1),
@@ -736,6 +739,10 @@ CREATE TABLE Personal (
 	TipoPersonalId INT NOT NULL FOREIGN KEY REFERENCES TipoPersonal (TipoPersonalId),
 	EstaActivo BIT NOT NULL
 )
+
+INSERT INTO Personal VALUES(1, '9', 'Personal', 'Pioneta', '', 'pruebas@pruebas.cl', 1, 1);
+INSERT INTO Personal VALUES(2, '7', 'Personal', 'Chofer', '', 'pruebas@pruebas.cl', 2, 1);
+INSERT INTO Personal VALUES(3, '5', 'Personal', 'Enlace', '', 'pruebas@pruebas.cl', 3, 1);
 
 
 CREATE TABLE SeccionFormulario (

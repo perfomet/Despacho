@@ -6,7 +6,10 @@
 
 	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 
+	if (usuario == null) { Response.Redirect("/Login/Login"); return; }
+
 	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas(usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
+	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();
 }
 
 @section Less {
@@ -67,6 +70,16 @@
 				</div>
 				<div class="col-lg-6 col-xs-12 mt-2">
 					<div class="form-group m-form__group row">
+						<label class="col-form-label col-lg-3 col-sm-12">Bin</label>
+						<div class="col-lg-9 col-sm-12">
+							<select class="form-control m-select2" id="filtro-bin" name="filtro-bin" disabled>
+								<option value="" selected>Todas</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xs-12 mt-2">
+					<div class="form-group m-form__group row">
 						<label class="col-form-label col-lg-3 col-sm-12">Fecha Almacenaje</label>
 						<div class="col-lg-9 col-sm-12">
 							<div class='input-group pull-right' id='filtro-fecha-almacenaje'>
@@ -78,16 +91,27 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 col-xs-12 mt-2">
-					<div class="form-group m-form__group row">
-						<label class="col-form-label col-lg-3 col-sm-12">Bin</label>
-						<div class="col-lg-9 col-sm-12">
-							<select class="form-control m-select2" id="filtro-bin" name="filtro-bin" disabled>
-								<option value="" selected>Todas</option>
-							</select>
+				@if (usuario.ClienteId == null || usuario.ClienteId == 0)
+				{
+					<div class="col-lg-6 col-xs-12 mt-2">
+						<div class="form-group m-form__group row">
+							<label class="col-form-label col-lg-3 col-sm-12">Cliente</label>
+							<div class="col-lg-9 col-sm-12">
+								<select class="form-control m-select2" id="filtro-cliente" name="filtro-cliente">
+									<option value="" selected>Todos</option>
+									@foreach (Datos.Modelo.Cliente cliente in clientes)
+									{
+										<option value="@cliente.Nombre">@cliente.Nombre</option>
+									}
+								</select>
+							</div>
 						</div>
 					</div>
-				</div>
+				}
+				else
+				{
+					<input type="hidden" id="filtro-cliente" name="filtro-cliente" value="@usuario.Cliente.Nombre" />
+				}
 			</div>
 		</div>
 	</div>
@@ -142,7 +166,9 @@
 				<div class="m_datatable" id="lista-existencia"></div>
 			</div>
 			<div class="tab-pane" id="seccion-bodega" role="tabpanel">
-				<div id="seccion-bodega"></div>
+				@Html.Partial("Bodega", new ViewDataDictionary {
+					new KeyValuePair<string, object>("MuestraFiltros", false)
+				})
 			</div>
 		</div>
 	</div>

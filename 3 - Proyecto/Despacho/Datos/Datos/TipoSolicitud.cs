@@ -46,6 +46,26 @@ namespace Datos.Datos
 			return tiposolicitud;
 		}
 
+		public static Modelo.TipoSolicitud ObtenerTipoSolicitud(string tipo)
+		{
+
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM TipoSolicitud";
+			string WHERESentence = " WHERE Descripcion = '" + tipo + "'";
+			string ORDERSentence = ";";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			Modelo.TipoSolicitud tiposolicitud = new Modelo.TipoSolicitud();
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				tiposolicitud.FromDataRow(fila);
+			}
+
+			return tiposolicitud;
+		}
+
 		public static bool Crear(Modelo.TipoSolicitud tiposolicitud)
 		{
 			string INSERTSentence = "INSERT INTO TipoSolicitud";

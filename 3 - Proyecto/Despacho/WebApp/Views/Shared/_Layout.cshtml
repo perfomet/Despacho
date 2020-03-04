@@ -10,11 +10,11 @@
 
 			List<Datos.Modelo.Solicitud> solicitudes = Datos.Datos.Solicitud.ObtenerSolicitudes(usuario.ClienteId != null ? usuario.ClienteId.Value : 0).Where((s) =>
 			{
-				bool cuenta = true;
+				bool cuenta = false;
 
-				cuenta = cuenta || ((usuario.PerfilId == 1 || usuario.PerfilId == 2) && s.EstadoSolicitudId > 0);
-				cuenta = cuenta || (usuario.PerfilId == 3 && (s.EstadoSolicitudId == 1 || s.EstadoSolicitudId == 2));
-				cuenta = cuenta || (usuario.PerfilId == 6 && (s.EstadoSolicitudId == 1 || s.EstadoSolicitudId == 4));
+				cuenta = cuenta || ((usuario.PerfilId == 1 || usuario.PerfilId == 4) && s.EstadoSolicitudId > 0);
+				cuenta = cuenta || (usuario.PerfilId == 2 && (s.EstadoSolicitudId == 2 || s.EstadoSolicitud.SeccionFormularioId == 4));
+				cuenta = cuenta || (usuario.PerfilId == 3 && s.EstadoSolicitud.SeccionFormularioId == 2);
 
 				return cuenta;
 			}).ToList();
@@ -513,6 +513,7 @@
 							}
 							<!-- END: Subheader -->
 							<div class="m-content">
+								<input type="hidden" id="perfil-usuario" value="@usuario.PerfilId" />
 								@RenderBody()
 							</div>
 						</div>
@@ -844,14 +845,14 @@
 				<script>less.watch();</script>
 			</body>
 		</html>
-		}
-		else
-		{
-			Response.Redirect("/Login/Login");
-		}
 	}
 	else
 	{
 		Response.Redirect("/Login/Login");
 	}
+}
+else
+{
+	Response.Redirect("/Login/Login");
+}
 }
