@@ -12,23 +12,27 @@
   faltaNumeroTelefonoContacto: { id: 11, title: "Falta el campo 'NumeroTelefonoContacto'", clase: "m-badge--danger", tipo: 'danger' },
   faltaNumeroTelefonoContactoAdicional: { id: 12, title: "Falta el campo 'NumeroTelefonoContactoAdicional'", clase: "m-badge--danger", tipo: 'danger' },
   faltaRUTCliente: { id: 13, title: "Falta el campo 'RUTCliente'", clase: "m-badge--danger", tipo: 'danger' },
-  rutInvalido: { id: 14, title: "El RUT ingresado no es válido", clase: "m-badge--danger", tipo: 'danger' },
-  faltaUnidadNegocio: { id: 15, title: "Falta el campo 'UnidadNegocio'", clase: "m-badge--danger", tipo: 'danger' },
-  faltaGerencia: { id: 16, title: "Falta el campo 'Gerencia'", clase: "m-badge--danger", tipo: 'danger' },
-  faltaObservacionAof: { id: 17, title: "Falta el campo 'ObservacionAof'", clase: "m-badge--danger", tipo: 'danger' },
-  faltaPrioridad: { id: 18, title: "Falta el campo 'Prioridad'", clase: "m-badge--danger", tipo: 'danger' },
-  faltaPlaca: { id: 19, title: "Falta el campo 'Placa'", clase: "m-badge--danger", tipo: 'danger' },
-  tipoNumeroSolicitud: { id: 20, title: "Número de Solicitud incorrecta (debe ser numérica)", clase: "m-badge--danger", tipo: 'danger' },
-  tipoSolicitud: { id: 21, title: "Tipo de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
-  tipoFechaSolicitud: { id: 22, title: "Fecha de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
-  tipoFechaRecepcion: { id: 23, title: "Fecha de Recepción incorrecta", clase: "m-badge--danger", tipo: 'danger' },
-  tipoNumeroCliente: { id: 24, title: "Numero Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
-  tipoNombreCliente: { id: 25, title: "Nombre Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
-  tipoRegionCliente: { id: 26, title: "Nombre Región incorrecto", clase: "m-badge--danger", tipo: 'danger' },
-  tipoComunaCliente: { id: 27, title: "ComunaCliente incorrecta", clase: "m-badge--danger", tipo: 'danger' },
-  tipoGerencia: { id: 28, title: "Gerencia incorrecta", clase: "m-badge--danger", tipo: 'danger' },
-  tipoPrioridad: { id: 29, title: "Prioridad incorrecta", clase: "m-badge--danger", tipo: 'danger' },
-  tipoPlaca: { id: 30, title: "Placa incorrecta", clase: "m-badge--danger", tipo: 'danger' }
+  faltaUnidadNegocio: { id: 14, title: "Falta el campo 'UnidadNegocio'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaGerencia: { id: 15, title: "Falta el campo 'Gerencia'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaObservacionAof: { id: 16, title: "Falta el campo 'ObservacionAof'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaPrioridad: { id: 17, title: "Falta el campo 'Prioridad'", clase: "m-badge--danger", tipo: 'danger' },
+  faltaPlaca: { id: 18, title: "Falta el campo 'Placa'", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroSolicitud: { id: 19, title: "Número de Solicitud incorrecta (debe ser numérica)", clase: "m-badge--danger", tipo: 'danger' },
+  tipoSolicitud: { id: 20, title: "Tipo de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoFechaSolicitud: { id: 21, title: "Fecha de Solicitud incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoFechaRecepcion: { id: 22, title: "Fecha de Recepción incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroCliente: { id: 23, title: "Numero Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNombreCliente: { id: 24, title: "Nombre Cliente incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoRegionCliente: { id: 25, title: "Nombre Región incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoComunaCliente: { id: 26, title: "ComunaCliente incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroTelefonoContacto: { id: 27, title: "NumeroTelefonoContacto incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  tipoNumeroTelefonoContactoAdicional: { id: 28, title: "NumeroTelefonoContactoAdicional incorrecto", clase: "m-badge--danger", tipo: 'danger' },
+  rutInvalido: { id: 29, title: "RUT inválido", clase: "m-badge--danger", tipo: 'danger' },
+  tipoUnidadNegocio: { id: 30, title: "Unidad de Negocio incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoGerencia: { id: 31, title: "Gerencia incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoPrioridad: { id: 32, title: "Prioridad incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  tipoPlaca: { id: 33, title: "Placa incorrecta", clase: "m-badge--danger", tipo: 'danger' },
+  fechaRecepcionmenorFechaSolicitud: { id: 34, title: "La Fecha de Solicitud es mayor que la Fecha de Recepción", clase: "m-badge--danger", tipo: 'danger' }
 };
 
 let acciones = {
@@ -406,8 +410,17 @@ let CargaMasivaDetalle = function () {
           var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
           if ((registro.FechaRecepcion.match(RegExPattern)) && (registro.FechaRecepcion != '')) {
 
-          } else {
-            registro.estados.push(estados.tipoFechaRecepcion);
+          }
+          else {
+            if (registro.FechaRecepcion >= registro.FechaSolicitud)
+            {
+
+            }
+            else
+            {
+              registro.estados.push(estados.fechaRecepcionmenorFechaSolicitud);
+            }
+            
           }
         }
         // VALIDA EL NUMERO DE CLIENTE  
@@ -415,6 +428,7 @@ let CargaMasivaDetalle = function () {
           registro.estados.push(estados.faltaNumeroCliente);
         }
         else {
+
           if (isNaN(registro.NumeroCliente)) {
             registro.estados.push(estados.tipoNumeroCliente)
           }
@@ -431,7 +445,26 @@ let CargaMasivaDetalle = function () {
         else {
           
         }
+        // VALIDA CalleDireccionCliente
+        if (!registro.CalleDireccionCliente) {
+          registro.estados.push(estados.faltaCalleDireccionCliente);
+        }
+        else {
 
+        }
+        // VALIDA NumeroDireccionCliente
+        if (!registro.NumeroDireccionCliente) {
+          registro.estados.push(estados.faltaNumeroDireccionCliente);
+        }
+        else {
+          if (!isNaN(registro.NumeroDireccionCliente)) {
+            registro.estados.push(estados.tipoNumeroDireccionCliente)
+          }
+          else {
+
+          }
+
+        }
         // VALIDA LA  REGION 
         if (!registro.RegionCliente) {
           registro.estados.push(estados.faltaRegionCliente);
@@ -447,13 +480,67 @@ let CargaMasivaDetalle = function () {
         else {
           
         }
+        //VALIDA NUMERO TELEFONO CONTACTO
+        if (!registro.NumeroTelefonoContacto) {
+            registro.estados.push(estados.faltaNumeroTelefonoContacto)
+        }
+        else {
+          if (!isNaN(registro.NumeroTelefonoContacto)) {
+            registro.estados.push(estados.tipoNumeroTelefonoContacto)
+          }
+          else {
 
+          }
+        }
+        //VALIDA NUMERO TELEFONO CONTACTO ADICIONAL
+        if (!registro.NumeroTelefonoContactoAdicional) {
+          registro.estados.push(estados.tipoNumeroTelefonoContactoAdicional)
+        }
+        else {
+          if (!isNaN(registro.NumeroTelefonoContactoAdicional)) {
+            registro.estados.push(estados.tipoNumeroTelefonoContactoAdicional)
+          }
+          else {
+
+          }
+        }
+        //VALIDA RUTCLIENTE
+        if (!registro.RutCliente) {
+          registro.estados.push(estados.faltaRUTCliente);
+        }
+        else {
+          if (!_ValidaRut(registro.rutcliente)) {
+            registro.estados.push(estados.rutInvalido);
+          }
+          else {
+
+          }
+
+        }
+        //VALIDA UNIDADNEGOCIO
+        if (!registro.UnidadNegocio) {
+          registro.estados.push(estados.faltaUnidadNegocio);
+        }
+        else {
+          if (isNaN(registro.UnidadNegocio)) {
+            registro.estados.push(estados.tipoUnidadNegocio)
+          }
+          else {
+
+          }
+
+        }
         // VALIDA GERENCIA 
         if (!registro.Gerencia) {
           registro.estados.push(estados.faltaGerencia);
         }
         else {
-          
+          if (isNaN(registro.Gerencia)) {
+            registro.estados.push(estados.tipoGerencia)
+          }
+          else {
+
+          }
         }
         // VALIDA OBSERVACIONAOF 
         if (!registro.ObservacionAof) {
@@ -468,14 +555,19 @@ let CargaMasivaDetalle = function () {
           registro.estados.push(estados.faltaPrioridad);
         }
         else {
-          
+          if (isNaN(registro.Prioridad)) {
+            registro.estados.push(estados.tipoPrioridad)
+          }
+          else {
+
+          }
         }
         //VALIDA PLACA
         if (!registro.Placa) {
           registro.estados.push(estados.faltaPlaca);
         }
         else {
-          if (isNaN(registro.Placa)) {
+          if (!isNaN(registro.Placa)) {
             registro.estados.push(estados.tipoPlaca)
           }
           else {
@@ -503,33 +595,34 @@ let CargaMasivaDetalle = function () {
           (registro.estados.indexOf(estados.faltaObservacionAof) < 0) &&
           (registro.estados.indexOf(estados.faltaPrioridad) < 0) &&
           (registro.estados.indexOf(estados.faltaPlaca) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroSolicitud) < 0) &&
           (registro.estados.indexOf(estados.tipoSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoFechaSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoFechaRecepcion) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoNombreCliente) < 0) &&
           (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
           (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroTelefonoContacto) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroTelefonoContactoAdicional) < 0) &&
+          (registro.estados.indexOf(estados.rutInvalido) < 0) &&
           (registro.estados.indexOf(estados.tipoUnidadNegocio) < 0) &&
           (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
           (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
           (registro.estados.indexOf(estados.tipoPlaca) < 0)
 
         ) {
-          let rutcliente = registro.RutCliente;
+          /*let rutcliente = registro.RutCliente;
           if (!_ValidaRut(rutcliente)) {
             registro.estados.push(estados.rutInvalido);
           }
           else {
 
-          }
+          }*/
         }
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
         if (
-          (registro.estados.indexOf(estados.tipoNumeroCliente) < 0) &&
-          (registro.estados.indexOf(estados.tipoNombreCliente) < 0) &&
-          (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
-          (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
-          (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
-          (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
-          (registro.estados.indexOf(estados.tipoPlaca) < 0) &&
           (registro.estados.indexOf(estados.faltaNumeroSolicitud) < 0) &&
           (registro.estados.indexOf(estados.faltaNumeroCliente) < 0) &&
           (registro.estados.indexOf(estados.faltaNombreCliente) < 0) &&
@@ -542,6 +635,21 @@ let CargaMasivaDetalle = function () {
           (registro.estados.indexOf(estados.faltaPrioridad) < 0) &&
           (registro.estados.indexOf(estados.faltaObservacionAof) < 0) &&
           (registro.estados.indexOf(estados.faltaPlaca) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoFechaSolicitud) < 0) &&
+          (registro.estados.indexOf(estados.tipoFechaRecepcion) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoNombreCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoRegionCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoComunaCliente) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroTelefonoContacto) < 0) &&
+          (registro.estados.indexOf(estados.tipoNumeroTelefonoContactoAdicional) < 0) &&
+          (registro.estados.indexOf(estados.rutInvalido) < 0) &&
+          (registro.estados.indexOf(estados.tipoUnidadNegocio) < 0) &&
+          (registro.estados.indexOf(estados.tipoGerencia) < 0) &&
+          (registro.estados.indexOf(estados.tipoPrioridad) < 0) &&
+          (registro.estados.indexOf(estados.tipoPlaca) < 0) &&
           numeroSolicitudActual != registro.numeroSolicitud
         ) {
           // SI NO HAY ERRORES DE VALIDACIÓN, AGREGA LA ACCIÓN DE CREAR SOLICITUD AL REGISTRO
@@ -553,7 +661,7 @@ let CargaMasivaDetalle = function () {
 
         numeroSolicitudActual = registro.NumeroSolicitud;
       });
-
+      //Tarea Guardar resultados del registro aen Validación en el Usuario 
       console.log(registros);
 
       // VALIDACIÓN EN EL SERVIDOR

@@ -185,57 +185,79 @@ namespace Datos.Modelo
       clase = "m-badge--danger",
       tipo = "danger"
     };
-    public static EstadoCargaMasivaDetalle rutInvalido = new EstadoCargaMasivaDetalle
-    {
-      id = 25,
-      title = "El RUT ingresado no es válido",
-      clase = "m-badge--danger",
-      tipo = "danger"
-    };
+    
     public static EstadoCargaMasivaDetalle tipoRegionCliente = new EstadoCargaMasivaDetalle
     {
-      id = 26,
+      id = 25,
       title = "Nombre Región " + msgerror,
       clase = "m-badge--danger",
       tipo = "danger"
     };
     public static EstadoCargaMasivaDetalle tipoComunaCliente = new EstadoCargaMasivaDetalle
     {
-      id = 27,
+      id = 26,
       title = "La Comuna ingresada " + msgerror,
       clase = "m-badge--danger",
       tipo = "danger"
     };
-    
-    public static EstadoCargaMasivaDetalle tipoGerencia = new EstadoCargaMasivaDetalle
+    public static EstadoCargaMasivaDetalle tipoNumeroTelefonoContacto = new EstadoCargaMasivaDetalle
+    {
+      id = 27,
+      title = "El Teléfono de Contacto " + msgerror,
+      clase = "m-badge--danger",
+      tipo = "danger"
+    };
+    public static EstadoCargaMasivaDetalle tipoNumeroTelefonoContactoAdicional = new EstadoCargaMasivaDetalle
     {
       id = 28,
-      title = "Gerencia ingresada " + msgerror,
+      title = "El Teléfono de Contacto Adicional " + msgerror,
+      clase = "m-badge--danger",
+      tipo = "danger"
+    };
+    public static EstadoCargaMasivaDetalle rutInvalido = new EstadoCargaMasivaDetalle
+    {
+      id = 29,
+      title = "El RUT ingresado no es válido",
       clase = "m-badge--danger",
       tipo = "danger"
     };
     public static EstadoCargaMasivaDetalle tipoUnidadNegocio = new EstadoCargaMasivaDetalle
     {
-      id = 29,
+      id = 30,
       title = "Unidad de Negocio " + msgerror,
       clase = "m-badge--danger",
       tipo = "danger"
     };
+    public static EstadoCargaMasivaDetalle tipoGerencia = new EstadoCargaMasivaDetalle
+    {
+      id = 31,
+      title = "Gerencia ingresada " + msgerror,
+      clase = "m-badge--danger",
+      tipo = "danger"
+    };
+    
     public static EstadoCargaMasivaDetalle tipoPrioridad = new EstadoCargaMasivaDetalle
     {
-      id = 30,
+      id = 32,
       title = "Prioridad " + msgerror,
       clase = "m-badge--danger",
       tipo = "danger"
     };
     public static EstadoCargaMasivaDetalle tipoPlaca = new EstadoCargaMasivaDetalle
     {
-      id = 31,
+      id = 33,
       title = "Placa " + msgerror,
       clase = "m-badge--danger",
       tipo = "danger"
     };
-    
-			
-	}
+
+    public static EstadoCargaMasivaDetalle fechaRecepcionmenorFechaSolicitud = new EstadoCargaMasivaDetalle
+    {
+      id = 34,
+      title = "La Fecha de Solicitud es mayor que la Fecha de Recepción",
+      clase = "m-badge--danger",
+      tipo = "danger"
+    };
+
+}
 }
