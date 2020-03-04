@@ -2,16 +2,54 @@
 using System;
 using System.Data;
 using Datos.DB;
-
+using System.Data.SqlClient;
 
 namespace Datos.Datos
 {
+	//public static SqlConnection ConexionSQL;
+
 	public static class Internos
 	{
 		public const int sdominicana = 1;
 		public const int schile = 0;
 		public const int snumero = 0;
 		public const int stexto = 1;
+
+		public static bool IsNullOrEmpty(string s)
+		{
+			bool result;
+			result = s == null || s == string.Empty;
+			return result;
+		}
+		public static Boolean IsDate(String fecha)
+		{
+			try
+			{
+				DateTime.Parse(fecha);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+		public static bool RelacionFechaSolicitudFechaRecepcion(string FechaSolicitud, string FechaRecepcion)
+		{
+			DateTime fechasolicitud = DateTime.Parse(FechaSolicitud);
+			DateTime fecharecepcion = DateTime.Parse(FechaSolicitud);
+					 
+			return ((fechasolicitud - fecharecepcion).Ticks >= 0);
+		}
+		public static bool CorrespondeaRegion(string NombreComuna, string NombreRegion)
+			{
+			string SELECTSentence = "SELECT Region.Region";
+			string FROMSentence = " FROM Comuna";
+			string JOINSentence=" INNER JOIN Region ON Comuna.RegionId = Region.RegionId";
+			string WHERESentence = " WHERE (Comuna.Comuna like '"+ NombreComuna.ToUpper() + ")' AND (Region.Region LIKE '" + NombreRegion.ToUpper() + "'))";
+			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+			return (dataTable.Rows.Count == 1);
+			}
 		public static bool ExisteContenido(string TableName, string FieldName, string Content, int tipo)
 		{
 			int filas = 0;
