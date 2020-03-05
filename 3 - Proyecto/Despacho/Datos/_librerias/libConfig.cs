@@ -1,38 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+﻿using System.Configuration;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Datos._librerias
 {
-    class libConfig
+    public static class LibConfig
     {
-        const string SERVER_KEY = "Server";
-        const string DB_KEY = "DB";
-        const string DB_EXISTENCIAS_KEY = "DBExistencias";
-        const string USER_KEY = "User";
-        const string PASSWORD_KEY = "Password";
+        private const string ServerKey = "Server";
+        const string DbKey = "DB";
+        const string DbExistenciasKey = "DBExistencias";
+        const string UserKey = "User";
+        const string PasswordKey = "Password";
 
-        public static string DB_EXISTENCIAS { get { return LeerTexto(DB_EXISTENCIAS_KEY); } }
-        public static string DB { get { return LeerTexto(DB_KEY); } }
+        public static string DbExistencias => LeerTexto(DbExistenciasKey);
+        public static string Db => LeerTexto(DbKey);
 
         static string LeerTexto(string key)
         {
-            return ConfigurationSettings.AppSettings.Get(key);
+            return ConfigurationManager.AppSettings.Get(key);
         }
 
         public static string ObtenerConnectionString()
         {
             StringBuilder builder = new StringBuilder();
 
-            string Server = LeerTexto(SERVER_KEY);
-            string DB = LeerTexto(DB_KEY);
-            string User = LeerTexto(USER_KEY);
-            string Password = LeerTexto(PASSWORD_KEY);
+            var server = LeerTexto(ServerKey);
+            var db = LeerTexto(DbKey);
+            var user = LeerTexto(UserKey);
+            var password = LeerTexto(PasswordKey);
 
-            builder.AppendFormat("Driver={{SQL Server}};Server={0};Database={1};UID={2};PWD={3};", Server, DB, User, Password);
+            builder.AppendFormat("Driver={{SQL Server}};Server={0};Database={1};UID={2};PWD={3};", server, db, user, password);
 
             return builder.ToString();
         }

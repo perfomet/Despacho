@@ -9,7 +9,7 @@ namespace Datos.Datos
 		public static List<Modelo.Bin> ObtenerBins(int clienteId)
 		{
 			string SELECTSentence = "SELECT DISTINCT E.Bin";
-			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
 			string ORDERSentence = " ORDER BY E.Bin;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -29,7 +29,7 @@ namespace Datos.Datos
 		public static List<Modelo.Bin> ObtenerBins(string codigoBodega, int clienteId)
 		{
 			string SELECTSentence = "SELECT DISTINCT E.Bin";
-			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = " WHERE E.Bodega = '" + codigoBodega + "'" + (clienteId > 0 ? (" AND C.ClienteId = " + clienteId) : "");
 			string ORDERSentence = " ORDER BY E.Bin;";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -51,7 +51,7 @@ namespace Datos.Datos
 		{
 
 			string SELECTSentence = "SELECT Bin";
-			string FROMSentence = " FROM " + _librerias.libConfig.DB_EXISTENCIAS + ".dbo.Existencia";
+			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo.Existencia";
 			string WHERESentence = " WHERE Bin = '" + codigo + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;

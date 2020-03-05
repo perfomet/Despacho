@@ -21,7 +21,7 @@ namespace Despacho.Controllers
 
 		public ActionResult Create()
 		{
-			return View("TipodeSolicitud", new Datos.Modelo.TipoSolicitud());
+			return View("TipoSolicitud", new Datos.Modelo.TipoSolicitud());
 		}
 
 		[HttpPost]

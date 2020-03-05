@@ -23,7 +23,7 @@ namespace Datos.DB
                     Con.Dispose();
                 }
 
-                Con = new OdbcConnection(libConfig.ObtenerConnectionString());
+                Con = new OdbcConnection(LibConfig.ObtenerConnectionString());
 
                 Con.Open();
 
