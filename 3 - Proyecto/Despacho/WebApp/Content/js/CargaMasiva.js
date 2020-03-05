@@ -372,9 +372,15 @@ let CargaMasivaDetalle = function () {
         alert('Debe cargar un archivo primero');
         return;
       }
-
+      else
+      {//tarea
+        $.post('/CargaMasiva/MakeCargaMasiva', { UsuarioId: usuarioLogueado, fechahora: Date, archivo: nombreArchivo }, function (data) {
+          cargasmasivas = data;
+          return;
+        }
+          });
       let numeroSolicitudActual = 0;
-
+      
 
       registros.forEach((registro) => {
         // VACÍA LAS LISTAS DE ESTADOS Y ACCIONES
@@ -657,7 +663,7 @@ let CargaMasivaDetalle = function () {
 
         numeroSolicitudActual = registro.NumeroSolicitud;
       });
-      //Tarea Guardar resultados del registro aen Validación en el Usuario 
+      //Tarea Guardar resultados del registro en Validación en el Usuario 
       console.log(registros);
 
       // VALIDACIÓN EN EL SERVIDOR
@@ -724,7 +730,8 @@ let CargaMasivaDetalle = function () {
   };
 
   let _CargarTabla = function () {
-    tabla.clear();
+    //tabla.clear();
+    let tabla;
     let data = [];
 
     registros.forEach((registro) => {

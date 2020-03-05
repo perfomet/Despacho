@@ -2,7 +2,8 @@
 using System.Web.Mvc;
 using Datos.DB;
 using System.Data;
-
+using System.Text;
+using System;
 
 namespace Despacho.Controllers
 {
@@ -51,6 +52,20 @@ namespace Despacho.Controllers
 			return resultado;
 		}
 
+		
+
+		[HttpPost]
+		public JsonResult MakeCargaMasiva(Datos.Modelo.CargaMasiva cargamasiva)
+		{
+			string INSERTSentence = "INSERT INTO CargaMasiva (UsuarioId, FechaHora, Archivo)";
+			string VALUESSentence = " VALUES({1}, '{2}', '{3}');";
+			string SQLSentence = INSERTSentence + VALUESSentence;
+			StringBuilder builder = new StringBuilder();
+			builder.AppendFormat(SQLSentence, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
+			DataBase.ExecuteNonQuery(builder.ToString());
+						
+			return Json(int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString()));
+		}
 		[HttpPost]
 		public ActionResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva, List<Datos.Modelo.CargaMasivaDetalle> cargaMasivaDetalle)
 		{
@@ -130,6 +145,7 @@ namespace Despacho.Controllers
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
 			bool ExisteNumeroSolicitud = false;
+
 			detalles.ForEach((detalle) =>
 			{
 				ExisteNumeroSolicitud = false;
@@ -147,7 +163,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaTipoSolicitud);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.TipoSolicitud =ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "TipoSolicitud");
+							detalle.TipoSolicitud = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "TipoSolicitud");
 						}
 						else
 						{
@@ -156,7 +172,7 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho","TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
 						{
 
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoSolicitud);
@@ -250,7 +266,7 @@ namespace Despacho.Controllers
 
 					}
 					//VALIDA REGION
-					if (detalle.RegionCliente == null )
+					if (detalle.RegionCliente == null)
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaRegionCliente);
 						if (ExisteNumeroSolicitud)
@@ -265,7 +281,7 @@ namespace Despacho.Controllers
 					{
 
 					}
-					if (detalle.RegionCliente==null)
+					if (detalle.RegionCliente == null)
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaRegionCliente);
 						if (ExisteNumeroSolicitud)
@@ -276,16 +292,16 @@ namespace Despacho.Controllers
 						{
 						}
 					}
-					else 
+					else
 					{
 					}
-					if  (detalle.RegionCliente == null)
+					if (detalle.RegionCliente == null)
 					{
 
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
 							if (ExisteNumeroSolicitud)
@@ -313,7 +329,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaComunaCliente);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.ComunaCliente= ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ComunaCliente");
+							detalle.ComunaCliente = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ComunaCliente");
 						}
 						else
 						{
@@ -322,7 +338,7 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
 							if (ExisteNumeroSolicitud)
@@ -336,7 +352,7 @@ namespace Despacho.Controllers
 						else
 						{
 
-							if (!Datos.Datos.Internos.ExisteContenido("Despacho","Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+							if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
 							{
 								if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 								{
@@ -348,7 +364,7 @@ namespace Despacho.Controllers
 
 								}
 							}
-							else 
+							else
 							{
 								if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 								{
@@ -439,7 +455,7 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho","UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoUnidadNegocio);
 							if (ExisteNumeroSolicitud)
@@ -464,7 +480,7 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoGerencia);
 							if (ExisteNumeroSolicitud)
@@ -507,7 +523,7 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPrioridad);
 							if (ExisteNumeroSolicitud)
@@ -531,9 +547,13 @@ namespace Despacho.Controllers
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPlaca);
 						}
 					}
+
 				}
-				
-			});
+
+			}
+			//Debo Guardar Registro
+			//GuardaRegistro(detalles)
+			); 
 
 			return Json(detalles);
 		}

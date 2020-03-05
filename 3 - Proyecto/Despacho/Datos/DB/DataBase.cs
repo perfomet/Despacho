@@ -15,8 +15,8 @@ namespace Datos.DB
 
         static OdbcConnection Conectar()
         {
-            try
-            {
+      try
+      {
                 if (Con != null)
                 {
                     Con.Close();
