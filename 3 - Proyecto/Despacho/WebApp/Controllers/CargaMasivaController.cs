@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using Datos.DB;
+using System.Data;
+
 
 namespace Despacho.Controllers
 {
+	
 	public class CargaMasivaController : Controller
 	{
 		public ActionResult Index()
@@ -19,10 +23,32 @@ namespace Despacho.Controllers
 		{
 			return View();
 		}
+	
 
 		public ActionResult Create()
 		{
 			return View("/CargaMasiva/Modificar", new { });
+		}
+
+		public static bool TieneNumeroSolicitud(int Valor)
+		{
+			return (Datos.Datos.Internos.ExisteContenido("Despacho","CargaMasivaDetalle", "NumeroSolicitud", Valor.ToString(), Datos.Datos.Internos.snumero));
+		}
+		public static string ValorCargaMasivaDetalle(int NumSolicitud, string NombreCampo)
+		{
+			string resultado = "";
+
+			string SELECTSentence = "SELECT CargaMasivaDetalle." + NombreCampo;
+			string FROMSentence = " FROM CargaMasivaDetalle";
+			string WHERESentence = " WHERE CargaMasivaDetalle.NumeroSolicitud = " + NumSolicitud.ToString();
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable datatable = DataBase.ExecuteReader(SQLSentence);
+			foreach (DataRow fila in datatable.Rows)
+			{
+				resultado = (fila[0]).ToString();
+			}
+
+			return resultado;
 		}
 
 		[HttpPost]
@@ -114,14 +140,14 @@ namespace Despacho.Controllers
 				}
 				else
 				{
-					ExisteNumeroSolicitud = Datos.Datos.Internos.ExisteNumeroSolicitud(detalle.NumeroSolicitud);
+					ExisteNumeroSolicitud = TieneNumeroSolicitud(detalle.NumeroSolicitud);
 					// VALIDA TIPO DE SOLICITUD
 					if (detalle.TipoSolicitud == null)
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaTipoSolicitud);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.TipoSolicitud = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "TipoSolicitud");
+							detalle.TipoSolicitud =ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "TipoSolicitud");
 						}
 						else
 						{
@@ -130,7 +156,7 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho","TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
 						{
 
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoSolicitud);
@@ -146,7 +172,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaFechaSolicitud);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.FechaSolicitud = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaSolicitud");
+							detalle.FechaSolicitud = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaSolicitud");
 						}
 						else
 						{
@@ -160,7 +186,7 @@ namespace Despacho.Controllers
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaSolicitud);
 							if (ExisteNumeroSolicitud)
 							{
-								detalle.FechaSolicitud = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaSolicitud");
+								detalle.FechaSolicitud = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaSolicitud");
 							}
 							else
 							{
@@ -173,7 +199,7 @@ namespace Despacho.Controllers
 								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaFechaRecepcion);
 								if (ExisteNumeroSolicitud)
 								{
-									detalle.FechaRecepcion = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
+									detalle.FechaRecepcion = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
 								}
 								else
 								{
@@ -186,7 +212,7 @@ namespace Despacho.Controllers
 									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaRecepcion);
 									if (ExisteNumeroSolicitud)
 									{
-										detalle.FechaRecepcion = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
+										detalle.FechaRecepcion = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
 									}
 									else
 									{
@@ -213,7 +239,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaRecepcion);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.FechaRecepcion = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
+							detalle.FechaRecepcion = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
 						}
 						else
 						{
@@ -224,12 +250,12 @@ namespace Despacho.Controllers
 
 					}
 					//VALIDA REGION
-					if (!Datos.Datos.Internos.ExisteContenido("Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+					if (detalle.RegionCliente == null )
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaRegionCliente);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.RegionCliente = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "RegionCliente");
+							detalle.RegionCliente = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "RegionCliente");
 						}
 						else
 						{
@@ -237,40 +263,105 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
+
+					}
+					if (detalle.RegionCliente==null)
+					{
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaRegionCliente);
+						if (ExisteNumeroSolicitud)
 						{
-							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+							detalle.RegionCliente = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "RegionCliente");
+						}
+						else
+						{
+						}
+					}
+					else 
+					{
+					}
+					if  (detalle.RegionCliente == null)
+					{
+
+					}
+					else
+					{
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
-
-						}
-					}
-					//VALIDA COMUNA
-					if (!Datos.Datos.Internos.ExisteContenido("Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
-					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
-						if (ExisteNumeroSolicitud)
-						{
-							detalle.ComunaCliente = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ComunaCliente");
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.RegionCliente = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "RegionCliente");
+							}
+							else
+							{
+							}
 						}
 						else
-						{
-						}
-					}
-					else
-					{
-
-						if (!Datos.Datos.Internos.ExisteContenido("Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
 						{
 							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 							{
 								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
 								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
-							}
-							else
-							{
 
 							}
 						}
+					}
+
+					//VALIDA COMUNA
+					if (detalle.ComunaCliente == null)
+					{
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaComunaCliente);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.ComunaCliente= ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ComunaCliente");
+						}
+						else
+						{
+
+						}
+					}
+					else
+					{
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
+						{
+							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.ComunaCliente = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ComunaCliente");
+							}
+							else
+							{
+							}
+						}
+						else
+						{
+
+							if (!Datos.Datos.Internos.ExisteContenido("Despacho","Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+							{
+								if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
+								{
+									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+								}
+								else
+								{
+
+								}
+							}
+							else 
+							{
+								if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
+								{
+									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+								}
+								else
+								{
+
+								}
+							}
+						}
+
 					}
 					//VALIDA NUMERO TELEFONO CONTACTO
 					if (detalle.NumeroTelefonoContacto == null)
@@ -278,7 +369,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaNumeroTelefonoContacto);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.NumeroTelefonoContacto = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContacto");
+							detalle.NumeroTelefonoContacto = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContacto");
 						}
 						else
 						{
@@ -287,6 +378,21 @@ namespace Despacho.Controllers
 					}
 					else
 					{
+						if (!Datos.Datos.Internos.IsNumeric(detalle.NumeroTelefonoContacto))
+						{
+							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoNumeroTelefonoContacto);
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.NumeroTelefonoContacto = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContacto");
+							}
+							else
+							{
+							}
+						}
+						else
+						{
+
+						}
 					}
 					//VALIDA NUMERO TELEFONO CONTACTO ADICIONAL
 					if (detalle.NumeroTelefonoContactoAdicional == null)
@@ -294,7 +400,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaNumeroTelefonoContactoAdicional);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.NumeroTelefonoContactoAdicional = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContactoAdicional");
+							detalle.NumeroTelefonoContactoAdicional = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContactoAdicional");
 						}
 						else
 						{
@@ -303,6 +409,21 @@ namespace Despacho.Controllers
 					}
 					else
 					{
+						if (!Datos.Datos.Internos.IsNumeric(detalle.NumeroTelefonoContactoAdicional))
+						{
+							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoNumeroTelefonoContactoAdicional);
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.NumeroTelefonoContacto = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContactoAdicional");
+							}
+							else
+							{
+							}
+						}
+						else
+						{
+
+						}
 					}
 					//VALIDA UNIDAD DE NEGOCIO
 					if (detalle.UnidadNegocio == null)
@@ -310,7 +431,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaUnidadNegocio);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.UnidadNegocio = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "UnidadNegocio");
+							detalle.UnidadNegocio = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "UnidadNegocio");
 						}
 						else
 						{
@@ -318,12 +439,12 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho","UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoUnidadNegocio);
 							if (ExisteNumeroSolicitud)
 							{
-								detalle.UnidadNegocio = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "UnidadNegocio");
+								detalle.UnidadNegocio = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "UnidadNegocio");
 							}
 							else
 							{
@@ -335,7 +456,7 @@ namespace Despacho.Controllers
 					{
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.Gerencia = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Gerencia");
+							detalle.Gerencia = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Gerencia");
 						}
 						else
 						{
@@ -343,12 +464,12 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoGerencia);
 							if (ExisteNumeroSolicitud)
 							{
-								detalle.Gerencia = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Gerencia");
+								detalle.Gerencia = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Gerencia");
 							}
 							else
 							{
@@ -361,7 +482,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaObservacionAof);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.ObservacionAof = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ObservacionAof");
+							detalle.ObservacionAof = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ObservacionAof");
 						}
 						else
 						{
@@ -378,7 +499,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaPrioridad);
 						if (ExisteNumeroSolicitud)
 						{
-							detalle.Prioridad = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Prioridad");
+							detalle.Prioridad = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Prioridad");
 						}
 						else
 						{
@@ -386,12 +507,12 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
+						if (!Datos.Datos.Internos.ExisteContenido("Despacho","Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPrioridad);
 							if (ExisteNumeroSolicitud)
 							{
-								detalle.Prioridad = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Prioridad");
+								detalle.Prioridad = ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Prioridad");
 							}
 							else
 							{
@@ -405,12 +526,13 @@ namespace Despacho.Controllers
 					}
 					else
 					{
-						if (!Datos.Datos.Internos.ExisteContenido("Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
+						if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPlaca);
 						}
 					}
 				}
+				
 			});
 
 			return Json(detalles);

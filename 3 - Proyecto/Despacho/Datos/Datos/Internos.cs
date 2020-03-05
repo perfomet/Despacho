@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using Datos.DB;
+using System.Globalization;
 using System.Data.SqlClient;
 
 namespace Datos.Datos
@@ -33,6 +34,19 @@ namespace Datos.Datos
 				return false;
 			}
 		}
+		public static bool IsNumeric(object Expression)
+
+		{
+
+			bool isNum;
+
+			double retNum;
+
+			isNum = Double.TryParse(Convert.ToString(Expression), NumberStyles.Any, NumberFormatInfo.InvariantInfo, out retNum);
+
+			return isNum;
+
+		}
 		public static bool RelacionFechaSolicitudFechaRecepcion(string FechaSolicitud, string FechaRecepcion)
 		{
 			DateTime fechasolicitud = DateTime.Parse(FechaSolicitud);
@@ -50,41 +64,22 @@ namespace Datos.Datos
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			return (dataTable.Rows.Count == 1);
 			}
-		public static bool ExisteNumeroSolicitud(int Valor)
-		{
-			return (ExisteContenido("CargaMasivaDetalle", "NumeroSolicitud", Valor.ToString(), snumero));
-		}
-		public static bool ExisteContenido(string TableName, string FieldName, string Content, int tipo)
+		
+		public static bool ExisteContenido(string BaseDatos, string TableName, string FieldName, string Content, int tipo)
 		{
 			int filas = 0;
-			string SELECTSentence = "";
-			string FROMSentence = "";
-			string WHERESentence = "";
-			if (FieldName == "Placa"){
-				SELECTSentence = "SELECT [MiLogistic].[dbo]." + TableName + "." + FieldName;
-				FROMSentence = " FROM [MiLogistic].[dbo]." + TableName;
-				WHERESentence = " WHERE [MiLogistic].[dbo]." + TableName + "." + FieldName;
-			}
-			else { 
-				SELECTSentence = "SELECT " + TableName + "." + FieldName;
-				FROMSentence = " FROM " + TableName;
-				WHERESentence = " WHERE " + TableName + "." + FieldName;
-			}
+			
+			string SELECTSentence = "SELECT [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
+			string FROMSentence = " FROM [" + BaseDatos + "].[dbo]." + TableName;
+			string WHERESentence = " WHERE [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
+			
 			if (tipo==snumero)
 				{
 					WHERESentence = WHERESentence + " = " + Content;
 				}
 					else
 				{
-					if (FieldName == "Placa")
-					{
-						WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR " + "[MiLogistic].[dbo]."+ TableName + "." + FieldName + " LIKE '" + Content + "'";
-					}
-					else
-					{
-						WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR " + TableName + "." + FieldName + " LIKE '" + Content + "'";
-					}
-					
+					WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR " + BaseDatos + "].[dbo]." + TableName + "." + FieldName + " LIKE '" + Content + "'";
 				}
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -95,22 +90,7 @@ namespace Datos.Datos
 
 		}
 		
-		public static string ValorCargaMasivaDetalle(int NumSolicitud, string NombreCampo)
-		{
-			string resultado = "";
-			
-			string SELECTSentence = "SELECT CargaMasivaDetalle." + NombreCampo;
-			string FROMSentence = " FROM CargaMasivaDetalle";
-			string WHERESentence = " WHERE CargaMasivaDetalle.NumeroSolicitud = " + NumSolicitud.ToString();
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-			DataTable datatable= DataBase.ExecuteReader(SQLSentence);
-			foreach (DataRow fila in datatable.Rows)
-			{
-				resultado = (fila[0]).ToString();
-			}
-
-			return resultado;
-		}
+		
 		public static bool ExisteTabla(string nombretabla)
 		{
 			string SELECTSentence = "SELECT COUNT(*)";

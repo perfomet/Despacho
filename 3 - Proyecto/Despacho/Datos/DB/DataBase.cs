@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Datos.DB
 {
-    class DataBase
+    public class DataBase
     {
         #region Conexión
 
