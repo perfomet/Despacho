@@ -878,11 +878,11 @@ CREATE TABLE CargaMasivaDetalle (
 	RegionCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Region
 	ComunaCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
 	NumeroTelefonoContacto VARCHAR(15) NOT NULL,
-	NumeroTelefonoContactoAdicional VARCHAR(15) NOT NULL,
+	NumeroTelefonoContactoAdicional VARCHAR(15),
 	RutCliente VARCHAR(12) NOT NULL,
 	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
 	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
-	ObservacionAof VARCHAR(500) NOT NULL,
+	ObservacionAof VARCHAR(500),
 	Prioridad VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Prioridad
 	NumeroPlaca VARCHAR(20) NOT NULL,
 	UNIQUE (NumeroSolicitud, NumeroPlaca)

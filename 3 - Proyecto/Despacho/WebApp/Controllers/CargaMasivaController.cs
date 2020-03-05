@@ -115,10 +115,18 @@ namespace Despacho.Controllers
 				else
 				{
 					ExisteNumeroSolicitud = Datos.Datos.Internos.ExisteNumeroSolicitud(detalle.NumeroSolicitud);
-				// VALIDA TIPO DE SOLICITUD
+					// VALIDA TIPO DE SOLICITUD
 					if (detalle.TipoSolicitud == null)
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaTipoSolicitud);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.TipoSolicitud = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "TipoSolicitud");
+						}
+						else
+						{
+
+						}
 					}
 					else
 					{
@@ -129,51 +137,87 @@ namespace Despacho.Controllers
 						}
 						else
 						{
-						
+
 						}
 					}
 					//VALIDA FECHA SOLICITUD Y FECHA RECEPCION
 					if (detalle.FechaSolicitud == null)
-				{
-					detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaFechaSolicitud);
-				}
-					else
-				{
-					if (!Datos.Datos.Internos.IsDate(detalle.FechaSolicitud))
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaSolicitud);
-					}
-				else
-					{
-						if (detalle.FechaRecepcion==null)
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaFechaSolicitud);
+						if (ExisteNumeroSolicitud)
 						{
-							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaFechaRecepcion);
+							detalle.FechaSolicitud = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaSolicitud");
 						}
 						else
-						{ 
-							if (!Datos.Datos.Internos.IsDate(detalle.FechaRecepcion))
+						{
+
+						}
+					}
+					else
+					{
+						if (!Datos.Datos.Internos.IsDate(detalle.FechaSolicitud))
+						{
+							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaSolicitud);
+							if (ExisteNumeroSolicitud)
 							{
-								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaRecepcion);
+								detalle.FechaSolicitud = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaSolicitud");
 							}
 							else
 							{
-								if (Datos.Datos.Internos.RelacionFechaSolicitudFechaRecepcion(detalle.FechaRecepcion.ToString(), detalle.FechaSolicitud.ToString()))
+							}
+						}
+						else
+						{
+							if (detalle.FechaRecepcion == null)
+							{
+								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaFechaRecepcion);
+								if (ExisteNumeroSolicitud)
 								{
-									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.fechaRecepcionmenorFechaSolicitud);
+									detalle.FechaRecepcion = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
 								}
 								else
 								{
+								}
+							}
+							else
+							{
+								if (!Datos.Datos.Internos.IsDate(detalle.FechaRecepcion))
+								{
+									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaRecepcion);
+									if (ExisteNumeroSolicitud)
+									{
+										detalle.FechaRecepcion = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
+									}
+									else
+									{
+									}
+								}
+								else
+								{
+									if (Datos.Datos.Internos.RelacionFechaSolicitudFechaRecepcion(detalle.FechaRecepcion.ToString(), detalle.FechaSolicitud.ToString()))
+									{
+										detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.fechaRecepcionmenorFechaSolicitud);
+									}
+									else
+									{
 
+									}
 								}
 							}
 						}
 					}
-				}
 
 					//VALIDA FECHA RECEPCION
 					if (!Datos.Datos.Internos.IsDate(detalle.FechaRecepcion))
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoFechaRecepcion);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.FechaRecepcion = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "FechaRecepcion");
+						}
+						else
+						{
+						}
 					}
 					else
 					{
@@ -183,6 +227,13 @@ namespace Despacho.Controllers
 					if (!Datos.Datos.Internos.ExisteContenido("Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.RegionCliente = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "RegionCliente");
+						}
+						else
+						{
+						}
 					}
 					else
 					{
@@ -190,19 +241,27 @@ namespace Despacho.Controllers
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+
 						}
 					}
 					//VALIDA COMUNA
 					if (!Datos.Datos.Internos.ExisteContenido("Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.ComunaCliente = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ComunaCliente");
+						}
+						else
+						{
+						}
 					}
 					else
 					{
 
 						if (!Datos.Datos.Internos.ExisteContenido("Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
 						{
-							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente,detalle.RegionCliente))
+							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 							{
 								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
 								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
@@ -213,40 +272,130 @@ namespace Despacho.Controllers
 							}
 						}
 					}
+					//VALIDA NUMERO TELEFONO CONTACTO
+					if (detalle.NumeroTelefonoContacto == null)
+					{
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaNumeroTelefonoContacto);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.NumeroTelefonoContacto = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContacto");
+						}
+						else
+						{
+						}
+
+					}
+					else
+					{
+					}
+					//VALIDA NUMERO TELEFONO CONTACTO ADICIONAL
+					if (detalle.NumeroTelefonoContactoAdicional == null)
+					{
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaNumeroTelefonoContactoAdicional);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.NumeroTelefonoContactoAdicional = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "NumeroTelefonoContactoAdicional");
+						}
+						else
+						{
+						}
+
+					}
+					else
+					{
+					}
 					//VALIDA UNIDAD DE NEGOCIO
 					if (detalle.UnidadNegocio == null)
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaUnidadNegocio);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.UnidadNegocio = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "UnidadNegocio");
+						}
+						else
+						{
+						}
 					}
 					else
 					{
 						if (!Datos.Datos.Internos.ExisteContenido("UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoUnidadNegocio);
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.UnidadNegocio = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "UnidadNegocio");
+							}
+							else
+							{
+							}
 						}
 					}
 					//VALIDA GERENCIA
 					if (detalle.Gerencia == null)
 					{
-
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.Gerencia = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Gerencia");
+						}
+						else
+						{
+						}
 					}
 					else
 					{
 						if (!Datos.Datos.Internos.ExisteContenido("Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoGerencia);
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.Gerencia = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Gerencia");
+							}
+							else
+							{
+							}
 						}
 					}
+					//VALIDA OBSERVACIONAOF
+					if (detalle.ObservacionAof == null)
+					{
+						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaObservacionAof);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.ObservacionAof = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "ObservacionAof");
+						}
+						else
+						{
+						}
+
+					}
+					else
+					{
+					}
+
 					//VALIDA PRIORIDAD
 					if (detalle.Prioridad == null)
 					{
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaPrioridad);
+						if (ExisteNumeroSolicitud)
+						{
+							detalle.Prioridad = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Prioridad");
+						}
+						else
+						{
+						}
 					}
 					else
 					{
 						if (!Datos.Datos.Internos.ExisteContenido("Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPrioridad);
+							if (ExisteNumeroSolicitud)
+							{
+								detalle.Prioridad = Datos.Datos.Internos.ValorCargaMasivaDetalle(detalle.NumeroSolicitud, "Prioridad");
+							}
+							else
+							{
+							}
 						}
 					}
 					//VALIDA PLACA
@@ -255,7 +404,7 @@ namespace Despacho.Controllers
 						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.faltaPlaca);
 					}
 					else
-					{ 
+					{
 						if (!Datos.Datos.Internos.ExisteContenido("Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
 						{
 							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPlaca);

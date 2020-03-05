@@ -14,7 +14,7 @@ namespace Datos.Datos
 		public const int schile = 0;
 		public const int snumero = 0;
 		public const int stexto = 1;
-
+		
 		public static bool IsNullOrEmpty(string s)
 		{
 			bool result;
@@ -88,11 +88,29 @@ namespace Datos.Datos
 				}
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+			
+
 			filas = dataTable.Rows.Count;
 			return ( filas == 1);
 
 		}
 		
+		public static string ValorCargaMasivaDetalle(int NumSolicitud, string NombreCampo)
+		{
+			string resultado = "";
+			
+			string SELECTSentence = "SELECT CargaMasivaDetalle." + NombreCampo;
+			string FROMSentence = " FROM CargaMasivaDetalle";
+			string WHERESentence = " WHERE CargaMasivaDetalle.NumeroSolicitud = " + NumSolicitud.ToString();
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable datatable= DataBase.ExecuteReader(SQLSentence);
+			foreach (DataRow fila in datatable.Rows)
+			{
+				resultado = (fila[0]).ToString();
+			}
+
+			return resultado;
+		}
 		public static bool ExisteTabla(string nombretabla)
 		{
 			string SELECTSentence = "SELECT COUNT(*)";
