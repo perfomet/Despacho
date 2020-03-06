@@ -1,0 +1,51 @@
+######## INICIO VALIDAR ########
+
+List<int> numerosCreados = new List<int>();
+
+foreach(detalle in detalles){
+	if(detalle.numeroSolicitud no existe en numerosCreados){
+		//VALIDA COMO SOLICITUD NUEVA Y AGREGAR ESTADOS A detalle
+		if(validaOk){
+			numerosCreados.add(detalle.numeroSolicitud);
+		}
+	}
+}
+
+return detalles
+
+######## FIN VALIDAR ########
+
+######## INICIO GUARDAR ########
+
+List<int> numerosCreados = new List<int>();
+
+detalles = Validar(detalles);
+
+foreach(detalle in detalles){
+	if(detalle.numeroSolicitud no existe en numerosCreados){
+		//CREA SOLICITUD NUEVA
+		numerosCreados.add(detalle.numeroSolicitud);
+	}else{
+		//AGREGAR PRODUCTO A ULTIMA SOLICITUD CREADA (numeroSolicitud)
+	}
+	
+	// INSERTA EN CARGA MASIVA DETALLE
+}
+
+######## FIN GUARDAR ########
+
+Validar en el JS
+todo lo que no se valida en el Servidor
+
+VALIDAR en el Servidor
+
+1. Que el número de solicitud no se halla utilizado antes
+2. Validar que el tipo de solicitud exista en la tabla
+3. Validar que la región exista en la tabla
+4. Validar que la comuna exista en la tabla
+5. Validar que la comuna pertenezca a la región
+6. Validar que la unidad de negocio exista en la tabla
+7. Validar que la gerencia exista en la tabla
+8. Validar que la prioridad exista en la tabla
+9. Validar que la Placa exista en la tabla Existencias de la DB MiLogistic
+

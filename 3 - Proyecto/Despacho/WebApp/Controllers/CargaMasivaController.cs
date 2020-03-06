@@ -54,20 +54,9 @@ namespace Despacho.Controllers
 
 		
 
+		
 		[HttpPost]
-		public JsonResult MakeCargaMasiva(Datos.Modelo.CargaMasiva cargamasiva)
-		{
-			string INSERTSentence = "INSERT INTO CargaMasiva (UsuarioId, FechaHora, Archivo)";
-			string VALUESSentence = " VALUES({1}, '{2}', '{3}');";
-			string SQLSentence = INSERTSentence + VALUESSentence;
-			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
-			DataBase.ExecuteNonQuery(builder.ToString());
-						
-			return Json(int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString()));
-		}
-		[HttpPost]
-		public ActionResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva, List<Datos.Modelo.CargaMasivaDetalle> cargaMasivaDetalle)
+		public JsonResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva)
 		{
 			int idcargamasiva = Datos.Datos.CargaMasiva.Crear(cargamasiva);
 
@@ -85,19 +74,6 @@ namespace Despacho.Controllers
 
 				List<Datos.Modelo.EquipoSolicitado> equipos = new List<Datos.Modelo.EquipoSolicitado>();
 
-				cargaMasivaDetalle.ForEach((producto) =>
-				{
-					if (producto.NumeroSolicitud == detalle.NumeroSolicitud)
-					{
-						producto.CargaMasivaDetalleId = detalleid;
-						equipos.Add(new Datos.Modelo.EquipoSolicitado
-						{
-							NumeroPlaca = producto.NumeroPlaca,
-							SolicitudDespachoId = solicitudId
-						});
-					}
-				});
-
 				//INSERTAS LOS DETALLE PRODUCTO
 				//INSERTAR EQUIPOS SOLICITADOS
 				Datos.Datos.EquipoSolicitado.Crear(equipos);
@@ -114,7 +90,7 @@ namespace Despacho.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Edit(Datos.Modelo.Cliente cliente)
+		public JsonResult Edit(Datos.Modelo.Cliente cliente)
 		{
 			bool exito = Datos.Datos.Cliente.Modificar(cliente);
 

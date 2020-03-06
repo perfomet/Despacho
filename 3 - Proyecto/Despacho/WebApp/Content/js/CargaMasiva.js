@@ -365,22 +365,27 @@ let CargaMasivaDetalle = function () {
     });
   };
 
-  
+
   let _ProcesarRegistros = function (nombreArchivo) {
     try {
       if (registros.length == 0) {
         alert('Debe cargar un archivo primero');
         return;
       }
-      else
-      {//tarea
-        $.post('/CargaMasiva/MakeCargaMasiva', { UsuarioId: usuarioLogueado, fechahora: Date, archivo: nombreArchivo }, function (data) {
+      else {//tarea
+        $.post('/CargaMasiva/Create', {
+          cargamasiva: {
+            FechaHora: new Date(),
+            Archivo: nombreArchivo
+          },
+          detallecargamasiva: registros
+        }, function (data) {
           cargasmasivas = data;
           return;
-        }
-          });
+        });
+      }
       let numeroSolicitudActual = 0;
-      
+
 
       registros.forEach((registro) => {
         // VACÍA LAS LISTAS DE ESTADOS Y ACCIONES
@@ -389,15 +394,15 @@ let CargaMasivaDetalle = function () {
 
         //VALIDA NUMERO DE SOLICITUD
 
-        
+
         // VALIDA TIPO DE SOLICITUD
         if (!registro.TipoSolicitud) {
           registro.estados.push(estados.faltaTipoSolicitud);
         }
         else {
-          
+
         }
-        
+
         // VALIDA LA FECHA DE SOLICITUD 
         if (!registro.FechaSolicitud) {
           registro.estados.push(estados.faltaFechaSolicitud);
@@ -405,7 +410,7 @@ let CargaMasivaDetalle = function () {
         else {
           var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
           if ((registro.FechaSolicitud.match(RegExPattern)) && (registro.FechaSolicitud != '')) {
-            
+
           } else {
             registro.estados.push(estados.tipoFechaSolicitud);
           }
@@ -420,15 +425,13 @@ let CargaMasivaDetalle = function () {
 
           }
           else {
-            if (registro.FechaRecepcion >= registro.FechaSolicitud)
-            {
+            if (registro.FechaRecepcion >= registro.FechaSolicitud) {
 
             }
-            else
-            {
+            else {
               registro.estados.push(estados.fechaRecepcionmenorFechaSolicitud);
             }
-            
+
           }
         }
         // VALIDA EL NUMERO DE CLIENTE  
@@ -441,7 +444,7 @@ let CargaMasivaDetalle = function () {
             registro.estados.push(estados.tipoNumeroCliente)
           }
           else {
-           
+
           }
 
         }
@@ -451,7 +454,7 @@ let CargaMasivaDetalle = function () {
           registro.estados.push(estados.faltaNombreCliente);
         }
         else {
-          
+
         }
         // VALIDA CalleDireccionCliente
         if (!registro.CalleDireccionCliente) {
@@ -478,7 +481,7 @@ let CargaMasivaDetalle = function () {
           registro.estados.push(estados.faltaRegionCliente);
         }
         else {
-          
+
         }
 
         // VALIDA COMUNA 
@@ -486,11 +489,11 @@ let CargaMasivaDetalle = function () {
           registro.estados.push(estados.faltaComunaCliente);
         }
         else {
-          
+
         }
         //VALIDA NUMERO TELEFONO CONTACTO
         if (!registro.NumeroTelefonoContacto) {
-            registro.estados.push(estados.faltaNumeroTelefonoContacto)
+          registro.estados.push(estados.faltaNumeroTelefonoContacto)
         }
         else {
           if (!isNaN(registro.NumeroTelefonoContacto)) {
@@ -579,7 +582,7 @@ let CargaMasivaDetalle = function () {
             registro.estados.push(estados.tipoPlaca)
           }
           else {
-            
+
           }
         }
 
@@ -620,7 +623,7 @@ let CargaMasivaDetalle = function () {
           (registro.estados.indexOf(estados.tipoPlaca) < 0)
 
         ) {
-         
+
         }
 
         // SI NO HAY ERRORES DE VALIDACIÓN, PROSIGUE CON LA VALIDACIÓN DE LA PLACA
