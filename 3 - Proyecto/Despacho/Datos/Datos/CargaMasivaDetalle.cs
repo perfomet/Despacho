@@ -54,13 +54,20 @@ namespace Datos.Datos
 
 		public static int Crear(Modelo.CargaMasivaDetalle cargamasivadetalle)
 		{
-			string INSERTSentence = "INSERT INTO CargaMasivaDetalle (CargaMasivaId, NumeroSolicitud, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, CalleDireccionCliente, NumeroDireccionCliente, RegionCliente, ComunaCliente, NumeroTelefonoContacto, NumeroTelefonoContactoAdicional, RutCliente, UnidadNegocio, Gerencia, ObservacionAof, Prioridad, NumeroPlaca)";
-			string VALUESSentence = " VALUES({1}, '{2}', '{3}', '{4)', '{5}', '{6}', '{7)', '{8}', '{9}', '{10)', '{11}', '{12}', '{13)', '{14}', '{15}', '{16)', '{17'}, '{18}', '{19}');";
-			string SQLSentence = INSERTSentence + VALUESSentence;
-			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cargamasivadetalle.CargaMasivaDetalleId, cargamasivadetalle.CargaMasivaId, cargamasivadetalle.NumeroSolicitud, cargamasivadetalle.TipoSolicitud, cargamasivadetalle.FechaSolicitud, cargamasivadetalle.FechaRecepcion, cargamasivadetalle.NumeroCliente, cargamasivadetalle.NombreCliente, cargamasivadetalle.CalleDireccionCliente, cargamasivadetalle.NumeroDireccionCliente, cargamasivadetalle.RegionCliente, cargamasivadetalle.ComunaCliente, cargamasivadetalle.NumeroTelefonoContacto, cargamasivadetalle.NumeroTelefonoContactoAdicional, cargamasivadetalle.RutCliente, cargamasivadetalle.UnidadNegocio, cargamasivadetalle.Gerencia, cargamasivadetalle.ObservacionAof, cargamasivadetalle.Prioridad, cargamasivadetalle.NumeroPlaca);
-			DataBase.ExecuteNonQuery(builder.ToString());
-			return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
+			if (cargamasivadetalle.CargaMasivaId > 0)
+			{
+				string INSERTSentence = "INSERT INTO CargaMasivaDetalle (CargaMasivaId, NumeroSolicitud, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, CalleDireccionCliente, NumeroDireccionCliente, RegionCliente, ComunaCliente, NumeroTelefonoContacto, NumeroTelefonoContactoAdicional, RutCliente, UnidadNegocio, Gerencia, ObservacionAof, Prioridad, NumeroPlaca)";
+				string VALUESSentence = " VALUES({1}, '{2}', '{3}', '{4)', '{5}', '{6}', '{7)', '{8}', '{9}', '{10)', '{11}', '{12}', '{13)', '{14}', '{15}', '{16)', '{17'}, '{18}', '{19}');";
+				string SQLSentence = INSERTSentence + VALUESSentence;
+				StringBuilder builder = new StringBuilder();
+				builder.AppendFormat(SQLSentence, cargamasivadetalle.CargaMasivaDetalleId, cargamasivadetalle.CargaMasivaId, cargamasivadetalle.NumeroSolicitud, cargamasivadetalle.TipoSolicitud, cargamasivadetalle.FechaSolicitud, cargamasivadetalle.FechaRecepcion, cargamasivadetalle.NumeroCliente, cargamasivadetalle.NombreCliente, cargamasivadetalle.CalleDireccionCliente, cargamasivadetalle.NumeroDireccionCliente, cargamasivadetalle.RegionCliente, cargamasivadetalle.ComunaCliente, cargamasivadetalle.NumeroTelefonoContacto, cargamasivadetalle.NumeroTelefonoContactoAdicional, cargamasivadetalle.RutCliente, cargamasivadetalle.UnidadNegocio, cargamasivadetalle.Gerencia, cargamasivadetalle.ObservacionAof, cargamasivadetalle.Prioridad, cargamasivadetalle.NumeroPlaca);
+				DataBase.ExecuteNonQuery(builder.ToString());
+				return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 		public static bool Crear(List<Modelo.CargaMasivaDetalle> cargamasivadetalles)

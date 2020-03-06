@@ -1,4 +1,4 @@
-﻿let estados = {
+let estados = {
   faltaNumeroSolicitud: { id: 1, title: "Falta el campo 'NumeroSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
   faltaTipoSolicitud: { id: 2, title: "Falta el campo 'TipoSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
   faltaFechaSolicitud: { id: 3, title: "Falta el campo 'FechaSolicitud'", clase: "m-badge--danger", tipo: 'danger' },
@@ -370,6 +370,7 @@ let CargaMasivaDetalle = function () {
     try {
       if (registros.length == 0) {
         alert('Debe cargar un archivo primero');
+        _ValidarNumeroSolicitud(registros);
         return;
       }
       else {
@@ -384,7 +385,6 @@ let CargaMasivaDetalle = function () {
           return;
         });
       }
-
       let numeroSolicitudActual = 0;
 
 
@@ -394,32 +394,21 @@ let CargaMasivaDetalle = function () {
         registro.acciones = [];
 
         //VALIDA NUMERO DE SOLICITUD
-        if (!registro.NumeroSolicitud) {
-          registro.estados.push(estados.faltaNumeroSolicitud);
-        }
-        else {
-          if (isNaN(registro.NumeroSolicitud)) {
-            registro.estados.push(estados.tipoNumeroSolicitud)
-          }
-        }
+
 
         // VALIDA TIPO DE SOLICITUD
-        if (!registro.TipoSolicitud)
-        {
+        if (!registro.TipoSolicitud) {
           registro.estados.push(estados.faltaTipoSolicitud);
         }
-        else
-        {
+        else {
 
         }
 
         // VALIDA LA FECHA DE SOLICITUD 
-        if (!registro.FechaSolicitud)
-        {
+        if (!registro.FechaSolicitud) {
           registro.estados.push(estados.faltaFechaSolicitud);
         }
-        else
-        {
+        else {
           var RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
           if ((registro.FechaSolicitud.match(RegExPattern)) && (registro.FechaSolicitud != '')) {
 
@@ -538,19 +527,32 @@ let CargaMasivaDetalle = function () {
           else {
 
           }
+
         }
         //VALIDA UNIDADNEGOCIO
         if (!registro.UnidadNegocio) {
           registro.estados.push(estados.faltaUnidadNegocio);
         }
         else {
+          if (isNaN(registro.UnidadNegocio)) {
+            registro.estados.push(estados.tipoUnidadNegocio)
+          }
+          else {
+
+          }
+
         }
         // VALIDA GERENCIA 
         if (!registro.Gerencia) {
           registro.estados.push(estados.faltaGerencia);
         }
         else {
-          
+          if (isNaN(registro.Gerencia)) {
+            registro.estados.push(estados.tipoGerencia)
+          }
+          else {
+
+          }
         }
         // VALIDA OBSERVACIONAOF 
         if (!registro.ObservacionAof) {
@@ -565,7 +567,12 @@ let CargaMasivaDetalle = function () {
           registro.estados.push(estados.faltaPrioridad);
         }
         else {
-          
+          if (isNaN(registro.Prioridad)) {
+            registro.estados.push(estados.tipoPrioridad)
+          }
+          else {
+
+          }
         }
         //VALIDA PLACA
         if (!registro.Placa) {
@@ -666,7 +673,7 @@ let CargaMasivaDetalle = function () {
       // VALIDACIÓN EN EL SERVIDOR
       $.post('/CargaMasiva/Validar', { detalles: registros }, function (data) {
         registros = data;
-
+        
         _CargarTabla();
 
         $('.detalle-estados').tooltip();
@@ -900,6 +907,18 @@ let CargaMasivaDetalle = function () {
     }
     return true;
   };
+
+  //tarea
+  let numerosolicitudescreadas = [];
+ 
+  let _ValidarNumeroSolicitud = function (Registros) {
+    Registros.forEach((registro) => {
+      if (!numerosolicitudescreadas.include(registro.NumeroSolicitud)) {
+        numerosolicitudescreadas.push(registro.NumeroSolicitud)
+      }
+      else {
+      }
+    };
 
   let _ValidaRut = function (rutCompleto) {
     if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))

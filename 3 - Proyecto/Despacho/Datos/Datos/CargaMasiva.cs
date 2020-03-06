@@ -54,6 +54,9 @@ namespace Datos.Datos
 
 		public static int Crear(Modelo.CargaMasiva cargamasiva)
 		{
+			if (cargamasiva.UsuarioId>0)
+			{
+							
 			string INSERTSentence = "INSERT INTO CargaMasiva (UsuarioId, FechaHora, Archivo)";
 			string VALUESSentence = " VALUES({1}, '{2}', '{3}');";
 			string SQLSentence = INSERTSentence + VALUESSentence;
@@ -61,6 +64,12 @@ namespace Datos.Datos
 			builder.AppendFormat(SQLSentence, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
 			DataBase.ExecuteNonQuery(builder.ToString());
 			return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
+			}
+			else
+			{
+				return  0;
+			}
+			
 		}
 
 		public static bool Modificar(Modelo.CargaMasiva cargamasiva)
