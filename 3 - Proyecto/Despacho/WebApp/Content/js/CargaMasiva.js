@@ -919,7 +919,7 @@ let CargaMasivaDetalle = function () {
       else {
       }
       return numerosolicitudescreadas;
-    }
+    };
 
   let _ValidaRut = function (rutCompleto) {
     if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
