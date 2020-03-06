@@ -35,17 +35,18 @@ foreach(detalle in detalles){
 ######## FIN GUARDAR ########
 
 Validar en el JS
-todo lo que no se valida en el Servidor
+todo lo que no se valida en el Servidor (listo)
 
 VALIDAR en el Servidor
 
 1. Que el número de solicitud no se halla utilizado antes
-2. Validar que el tipo de solicitud exista en la tabla
-3. Validar que la región exista en la tabla
-4. Validar que la comuna exista en la tabla
-5. Validar que la comuna pertenezca a la región
-6. Validar que la unidad de negocio exista en la tabla
-7. Validar que la gerencia exista en la tabla
-8. Validar que la prioridad exista en la tabla
-9. Validar que la Placa exista en la tabla Existencias de la DB MiLogistic
+
+2. Validar que el tipo de solicitud exista en la tabla (listo)
+3. Validar que la región exista en la tabla (listo)
+4. Validar que la comuna exista en la tabla (listo)
+5. Validar que la comuna pertenezca a la región (listo)
+6. Validar que la unidad de negocio exista en la tabla (listo)
+7. Validar que la gerencia exista en la tabla (listo)
+8. Validar que la prioridad exista en la tabla (listo)
+9. Validar que la Placa exista en la tabla Existencias de la DB MiLogistic (listo)
 
