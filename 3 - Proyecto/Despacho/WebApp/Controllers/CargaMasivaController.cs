@@ -144,52 +144,8 @@ namespace Despacho.Controllers
 				}
 
 				//VALIDA FECHA SOLICITUD Y FECHA RECEPCION
-				if (detalle.FechaSolicitud == null)
-				{
-
-				}
-				else
-				{
-					if (Datos.Datos.Internos.IsDate(detalle.FechaSolicitud))
-					{
-
-					}
-					else
-					{
-						if (detalle.FechaRecepcion == null)
-						{
-						}
-						else
-						{
-							if (!Datos.Datos.Internos.IsDate(detalle.FechaRecepcion))
-							{
-
-							}
-							else
-							{
-								if (Datos.Datos.Internos.RelacionFechaSolicitudFechaRecepcion(detalle.FechaRecepcion.ToString(), detalle.FechaSolicitud.ToString()))
-								{
-									detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.fechaRecepcionmenorFechaSolicitud);
-								}
-								else
-								{
-
-								}
-							}
-						}
-					}
-				}
-
-				//VALIDA FECHA RECEPCION
-				if (!Datos.Datos.Internos.IsDate(detalle.FechaRecepcion))
-				{
-
-				}
-				else
-				{
-
-				}
-
+				//VALIDADAS EN EL CLIENTE
+				
 				//VALIDA REGION
 				if (detalle.RegionCliente == null)
 				{
