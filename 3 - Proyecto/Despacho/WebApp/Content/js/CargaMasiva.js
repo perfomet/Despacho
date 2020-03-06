@@ -370,7 +370,7 @@ let CargaMasivaDetalle = function () {
     try {
       if (registros.length == 0) {
         alert('Debe cargar un archivo primero');
-        _ValidarNumeroSolicitud(registros);
+        ValidarNumeroSolicitud(registros);
         return;
       }
       else {
@@ -911,14 +911,15 @@ let CargaMasivaDetalle = function () {
   //tarea
   let numerosolicitudescreadas = [];
  
-  let _ValidarNumeroSolicitud = function (Registros) {
+  function ValidarNumeroSolicitud(Registros) {
     Registros.forEach((registro) => {
       if (!numerosolicitudescreadas.include(registro.NumeroSolicitud)) {
         numerosolicitudescreadas.push(registro.NumeroSolicitud)
       }
       else {
       }
-    };
+      return numerosolicitudescreadas;
+    }
 
   let _ValidaRut = function (rutCompleto) {
     if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
