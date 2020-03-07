@@ -920,7 +920,7 @@ let CargaMasivaDetalle = function () {
       else {
       }
       return numerosolicitudescreadas;
-    }
+    })
   };
 
   let _ValidaRut = function (rutCompleto) {

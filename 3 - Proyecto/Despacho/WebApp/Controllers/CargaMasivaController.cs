@@ -118,7 +118,17 @@ namespace Despacho.Controllers
 			}
 		}
 
-		
+		[HttpPost]
+		public JsonResult ValidaNumerosSolicitudes(List<Datos.Modelo.CargaMasivaDetalle> detalles)
+		{
+			List<int> numerosCreados = new List<int>();
+			detalles.ForEach((detalle) =>
+			{
+
+			});
+			return Json(numerosCreados);
+		}
+
 		[HttpPost]
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
