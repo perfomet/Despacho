@@ -38,7 +38,7 @@ namespace Datos.Modelo
 			//CAMBIO DE PRUEBA
 			this.CargaMasivaDetalleId = int.Parse(fila[0].ToString());
 			this.CargaMasivaId = int.Parse(fila[1].ToString());
-			this.NumeroSolicitud = int.Parse(fila[2].ToString());
+			this.NumeroSolicitud = fila[2].ToString();
 			this.TipoSolicitud = fila[3].ToString();
 			this.FechaSolicitud = fila[4].ToString();
 			this.FechaRecepcion = fila[5].ToString();
