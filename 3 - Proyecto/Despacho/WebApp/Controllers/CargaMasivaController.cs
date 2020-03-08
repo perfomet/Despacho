@@ -4,6 +4,7 @@ using Datos.DB;
 using System.Data;
 using System.Text;
 using System;
+using System.Linq;
 
 namespace Despacho.Controllers
 {
@@ -118,7 +119,7 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult ValidaNumerosSolicitudes(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
-			List<int> numerosCreados = new List<int>();
+			List<string> numerosCreados = new List<string>();
 			detalles.ForEach((detalle) =>
 			{
 				numerosCreados.Add(detalle.NumeroSolicitud);
@@ -129,14 +130,20 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
-			return Json(detalles);
 
 			detalles.ForEach((detalle) =>
 			{
 				if (detalle.Errores == null) detalle.Errores = new List<Datos.Modelo.CargaMasivaDetalleError>();
-
+				if (detalle.Acciones == null) detalle.Acciones = new List<int>();
 				//VALIDA NUMERO DE SOLICITUD
 				//VALIDADO EN EL CLIENTE//
+
+				/*
+				if(detalle.Acciones.Any(a => a == 1) && NumeroSolicitudDuplicadoEnBD(detalle.NumeroSolicitud))
+				{
+					detalle.Errores.Add(numeroSolicitudRepetida);
+				}
+				*/
 
 				// VALIDA TIPO DE SOLICITUD
 				if (detalle.TipoSolicitud != null && !Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
@@ -161,8 +168,7 @@ namespace Despacho.Controllers
 					{
 						if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 						{
-							detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
-							detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
+							detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
 						}
 					}
 				}
@@ -183,8 +189,7 @@ namespace Despacho.Controllers
 						{
 							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 							{
-								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
-								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
+								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
 							}
 							else
 							{
@@ -194,11 +199,7 @@ namespace Despacho.Controllers
 						{
 							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 							{
-								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
-								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
-							}
-							else
-							{
+								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
 							}
 						}
 					}
@@ -230,6 +231,7 @@ namespace Despacho.Controllers
 				{
 					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
 					{
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoGerencia);
 					}
 				}
 

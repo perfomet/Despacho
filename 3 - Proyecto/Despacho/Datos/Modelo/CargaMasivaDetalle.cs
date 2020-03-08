@@ -7,7 +7,7 @@ namespace Datos.Modelo
 	{
 		public int CargaMasivaDetalleId { get; set; }
 		public int CargaMasivaId { get; set; }
-		public int NumeroSolicitud { get; set; }
+		public string NumeroSolicitud { get; set; }
 		public string TipoSolicitud { get; set; }
 		public string FechaSolicitud { get; set; }
 		public string FechaRecepcion { get; set; }
@@ -26,7 +26,7 @@ namespace Datos.Modelo
 		public string Prioridad { get; set; }
 		public string NumeroPlaca { get; set; }
 		public List<CargaMasivaDetalleError> Errores { get; set; }
-
+		public List<int> Acciones { get; set; }
 		public CargaMasiva CargaMasiva
 		{
 			get { return new CargaMasiva(); }

@@ -3,7 +3,7 @@
 	public class CargaMasivaDetalleError
 	{
 		static string msgerror = "no existe o incorrecta";
-		static string msgfalta = "Falta el campo ";
+	
 		public int id { get; set; }
 		public string title { get; set; }
 		public string clase { get; set; }
@@ -11,7 +11,7 @@
 
 		public static CargaMasivaDetalleError tipoSolicitud = new CargaMasivaDetalleError
 		{
-			id = 20,
+			id = 24,
 			title = "Tipo de Solicitud incorrecta",
 			clase = "m-badge--danger",
 			tipo = "danger"
@@ -33,9 +33,17 @@
 			tipo = "danger"
 		};
 
+		public static CargaMasivaDetalleError tipoRegionComunaClientenomatch = new CargaMasivaDetalleError
+		{
+			id = 27,
+			title = "La Comuna ingresada no corresponde con la Región seleccionada" ,
+			clase = "m-badge--danger",
+			tipo = "danger"
+		};
+
 		public static CargaMasivaDetalleError tipoUnidadNegocio = new CargaMasivaDetalleError
 		{
-			id = 30,
+			id = 28,
 			title = "Unidad de Negocio " + msgerror,
 			clase = "m-badge--danger",
 			tipo = "danger"
@@ -43,7 +51,7 @@
 
 		public static CargaMasivaDetalleError tipoGerencia = new CargaMasivaDetalleError
 		{
-			id = 31,
+			id = 29,
 			title = "Gerencia ingresada " + msgerror,
 			clase = "m-badge--danger",
 			tipo = "danger"
@@ -51,7 +59,7 @@
 
 		public static CargaMasivaDetalleError tipoPrioridad = new CargaMasivaDetalleError
 		{
-			id = 32,
+			id = 30,
 			title = "Prioridad " + msgerror,
 			clase = "m-badge--danger",
 			tipo = "danger"
@@ -59,8 +67,15 @@
 
 		public static CargaMasivaDetalleError tipoPlaca = new CargaMasivaDetalleError
 		{
-			id = 33,
+			id = 31,
 			title = "Placa " + msgerror,
+			clase = "m-badge--danger",
+			tipo = "danger"
+		};
+		public static CargaMasivaDetalleError numeroSolicitudRepetida = new CargaMasivaDetalleError
+		{
+			id = 32,
+			title = "Número de Solicitud repetida " + msgerror,
 			clase = "m-badge--danger",
 			tipo = "danger"
 		};
