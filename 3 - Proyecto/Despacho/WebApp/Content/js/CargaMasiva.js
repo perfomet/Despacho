@@ -370,10 +370,11 @@ let CargaMasivaDetalle = function () {
     try {
       if (registros.length == 0) {
         alert('Debe cargar un archivo primero');
-        _ValidarNumeroSolicitud(registros);
+       
         return;
       }
       else {
+       
         $.post('/CargaMasiva/Create', {
           cargamasiva: {
             FechaHora: new Date(),
@@ -673,7 +674,7 @@ let CargaMasivaDetalle = function () {
       // VALIDACIÓN EN EL SERVIDOR
       $.post('/CargaMasiva/Validar', { detalles: registros }, function (data) {
         registros = data;
-        
+        _ValidarNumeroSolicitud(registros);
         _CargarTabla();
 
         $('.detalle-estados').tooltip();
@@ -912,12 +913,17 @@ let CargaMasivaDetalle = function () {
   let numerosolicitudescreadas = [];
  
   let _ValidarNumeroSolicitud = function (Registros) {
+    let existe = false;
     Registros.forEach((registro) =>
     {
-      if (!numerosolicitudescreadas.include(registro.NumeroSolicitud)) {
+      existe === numerosolicitudescreadas.include(registro.NumeroSolicitud)
+      if (!existe)
+      {
         numerosolicitudescreadas.push(registro.NumeroSolicitud)
       }
-      else {
+      else
+      {
+        console.log("espera")
       }
       return numerosolicitudescreadas;
     })

@@ -124,7 +124,7 @@ namespace Despacho.Controllers
 			List<int> numerosCreados = new List<int>();
 			detalles.ForEach((detalle) =>
 			{
-
+				numerosCreados.Add(detalle.NumeroSolicitud);
 			});
 			return Json(numerosCreados);
 		}
