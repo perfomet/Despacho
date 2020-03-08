@@ -2543,7 +2543,6 @@
     <Content Include="Views\Existencia\Bodega.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Archivos\" />
     <Folder Include="Content\librerias\metronic\assets\app\media\img\logos\logos-login\" />
     <Folder Include="Content\librerias\metronic\assets\vendors\base\fonts\font-awesome\" />
@@ -2558,7 +2557,6 @@
     <Folder Include="Content\librerias\metronic\components\forms\validation\" />
     <Folder Include="Content\librerias\metronic\components\forms\widgets\" />
     <Folder Include="Content\librerias\metronic\components\forms\wizard\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

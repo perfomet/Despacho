@@ -7,7 +7,7 @@ using System;
 
 namespace Despacho.Controllers
 {
-	
+
 	public class CargaMasivaController : Controller
 	{
 		public ActionResult Index()
@@ -24,7 +24,6 @@ namespace Despacho.Controllers
 		{
 			return View();
 		}
-	
 
 		public ActionResult Create()
 		{
@@ -33,8 +32,9 @@ namespace Despacho.Controllers
 
 		public static bool TieneNumeroSolicitud(int Valor)
 		{
-			return (Datos.Datos.Internos.ExisteContenido("Despacho","CargaMasivaDetalle", "NumeroSolicitud", Valor.ToString(), Datos.Datos.Internos.snumero));
+			return (Datos.Datos.Internos.ExisteContenido("Despacho", "CargaMasivaDetalle", "NumeroSolicitud", Valor.ToString(), Datos.Datos.Internos.snumero));
 		}
+
 		public static string ValorCargaMasivaDetalle(int NumSolicitud, string NombreCampo)
 		{
 			string resultado = "";
@@ -52,9 +52,6 @@ namespace Despacho.Controllers
 			return resultado;
 		}
 
-		
-
-		
 		[HttpPost]
 		public JsonResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva)
 		{
@@ -132,8 +129,12 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
+			return Json(detalles);
+
 			detalles.ForEach((detalle) =>
 			{
+				if (detalle.Errores == null) detalle.Errores = new List<Datos.Modelo.CargaMasivaDetalleError>();
+
 				//VALIDA NUMERO DE SOLICITUD
 				//VALIDADO EN EL CLIENTE//
 
@@ -146,7 +147,7 @@ namespace Despacho.Controllers
 				{
 					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoSolicitud);
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoSolicitud);
 					}
 					else
 					{
@@ -155,7 +156,7 @@ namespace Despacho.Controllers
 
 				//VALIDA FECHA SOLICITUD Y FECHA RECEPCION
 				//VALIDADAS EN EL CLIENTE
-				
+
 				//VALIDA REGION
 				if (detalle.RegionCliente == null)
 				{
@@ -170,8 +171,8 @@ namespace Despacho.Controllers
 					{
 						if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 						{
-							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
-							detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+							detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
+							detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
 						}
 					}
 				}
@@ -184,7 +185,7 @@ namespace Despacho.Controllers
 				{
 					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
 					}
 					else
 					{
@@ -192,8 +193,8 @@ namespace Despacho.Controllers
 						{
 							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 							{
-								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
-								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
+								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
 							}
 							else
 							{
@@ -203,8 +204,8 @@ namespace Despacho.Controllers
 						{
 							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
 							{
-								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoComunaCliente);
-								detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoRegionCliente);
+								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
+								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
 							}
 							else
 							{
@@ -227,7 +228,7 @@ namespace Despacho.Controllers
 				{
 					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoUnidadNegocio);
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoUnidadNegocio);
 					}
 				}
 
@@ -253,7 +254,7 @@ namespace Despacho.Controllers
 				{
 					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPrioridad);
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPrioridad);
 					}
 				}
 				//VALIDA PLACA
@@ -264,7 +265,7 @@ namespace Despacho.Controllers
 				{
 					if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
 					{
-						detalle.estados.Add(Datos.Modelo.EstadoCargaMasivaDetalle.tipoPlaca);
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPlaca);
 					}
 					else
 					{
@@ -275,7 +276,7 @@ namespace Despacho.Controllers
 			}
 			//Debo Guardar Registro
 			//GuardaRegistro(detalles)
-			); 
+			);
 
 			return Json(detalles);
 		}

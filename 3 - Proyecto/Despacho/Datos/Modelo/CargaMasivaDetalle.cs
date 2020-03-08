@@ -25,7 +25,7 @@ namespace Datos.Modelo
 		public string ObservacionAof { get; set; }
 		public string Prioridad { get; set; }
 		public string NumeroPlaca { get; set; }
-		public List<EstadoCargaMasivaDetalle> estados { get; set; }
+		public List<CargaMasivaDetalleError> Errores { get; set; }
 
 		public CargaMasiva CargaMasiva
 		{
