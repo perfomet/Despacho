@@ -139,19 +139,9 @@ namespace Despacho.Controllers
 				//VALIDADO EN EL CLIENTE//
 
 				// VALIDA TIPO DE SOLICITUD
-				if (detalle.TipoSolicitud == null)
+				if (detalle.TipoSolicitud != null && !Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
 				{
-
-				}
-				else
-				{
-					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
-					{
-						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoSolicitud);
-					}
-					else
-					{
-					}
+					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoSolicitud);
 				}
 
 				//VALIDA FECHA SOLICITUD Y FECHA RECEPCION
