@@ -867,7 +867,7 @@ CREATE TABLE CargaMasiva (
 CREATE TABLE CargaMasivaDetalle (
 	CargaMasivaDetalleId INT PRIMARY KEY IDENTITY(1, 1),
 	CargaMasivaId INT NOT NULL FOREIGN KEY REFERENCES CargaMasiva (CargaMasivaId),
-	NumeroSolicitud INT NOT NULL,
+	NumeroSolicitud VARCHAR(25) NOT NULL,
 	TipoSolicitud VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla TipoSolicitud
 	FechaSolicitud VARCHAR(20) NOT NULL,
 	FechaRecepcion VARCHAR(20) NOT NULL,
@@ -886,7 +886,15 @@ CREATE TABLE CargaMasivaDetalle (
 	Prioridad VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Prioridad
 	NumeroPlaca VARCHAR(20) NOT NULL,
 	UNIQUE (NumeroSolicitud, NumeroPlaca)
-	)
+)
+
+CREATE TABLE CargaMasivaDetalleError (
+	CargaMasivaDetalleErrorId INT PRIMARY KEY,
+	Title VARCHAR(500) NOT NULL,
+	Clase VARCHAR(100) NOT NULL,
+	Tipo VARCHAR(100) NOT NULL,
+	CargaMasivaDetalleId INT NOT NULL FOREIGN KEY REFERENCES CargaMasivaDetalle (CargaMasivaDetalleId),
+)
 	
 CREATE TABLE BinToEstadoEquipo (
 	Bintoestadoequipoid INT PRIMARY KEY IDENTITY(1, 1),
