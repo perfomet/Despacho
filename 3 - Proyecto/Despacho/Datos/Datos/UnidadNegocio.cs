@@ -32,7 +32,27 @@ namespace Datos.Datos
 
 			string SELECTSentence = "SELECT UnidadNegocio.UnidadNegocioId, UnidadNegocio.Descripcion, UnidadNegocio.ClienteId, Cliente.Nombre As Clientenombre, UnidadNegocio.EstaActivo";
 			string FROMSentence = " FROM Cliente INNER JOIN UnidadNegocio ON Cliente.ClienteId = UnidadNegocio.ClienteId";
-			string WHERESentence = " WHERE UnidadNegocioId = '" + unidadnegocioId.ToString() + "'";
+			string WHERESentence = " WHERE UnidadNegocioId = " + unidadnegocioId.ToString();
+			string ORDERSentence = ";";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			Modelo.UnidadNegocio unidadnegocio = new Modelo.UnidadNegocio();
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				unidadnegocio.FromDataRow(fila);
+			}
+
+			return unidadnegocio;
+		}
+
+		public static Modelo.UnidadNegocio ObtenerUnidadNegocio(string nombreUnidadNegocio)
+		{
+
+			string SELECTSentence = "SELECT UnidadNegocio.UnidadNegocioId, UnidadNegocio.Descripcion, UnidadNegocio.ClienteId, Cliente.Nombre As Clientenombre, UnidadNegocio.EstaActivo";
+			string FROMSentence = " FROM Cliente INNER JOIN UnidadNegocio ON Cliente.ClienteId = UnidadNegocio.ClienteId";
+			string WHERESentence = " WHERE UnidadNegocio.Descripcion = '" + nombreUnidadNegocio + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.UnidadNegocio unidadnegocio = new Modelo.UnidadNegocio();

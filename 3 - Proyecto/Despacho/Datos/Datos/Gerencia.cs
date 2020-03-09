@@ -30,7 +30,27 @@ namespace Datos.Datos
 
 			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Cliente.Nombre AS Clientenombre, Gerencia.EstaActivo";
 			string FROMSentence = " FROM Cliente INNER JOIN Gerencia ON Cliente.ClienteId = Gerencia.ClienteId";
-			string WHERESentence = " WHERE Gerencia.GerenciaId = '" + id.ToString() + "'";
+			string WHERESentence = " WHERE Gerencia.GerenciaId = " + id.ToString();
+			string ORDERSentence = ";";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
+			Modelo.Gerencia gerencia = new Modelo.Gerencia();
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				gerencia.FromDataRow(fila);
+			}
+
+			return gerencia;
+		}
+
+		public static Modelo.Gerencia ObtenerGerencia(string nombreGerencia)
+		{
+
+			string SELECTSentence = "SELECT Gerencia.GerenciaId, Gerencia.Descripcion, Gerencia.ClienteId, Cliente.Nombre AS Clientenombre, Gerencia.EstaActivo";
+			string FROMSentence = " FROM Cliente INNER JOIN Gerencia ON Cliente.ClienteId = Gerencia.ClienteId";
+			string WHERESentence = " WHERE Gerencia.Descripcion = '" + nombreGerencia + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 			Modelo.Gerencia gerencia = new Modelo.Gerencia();

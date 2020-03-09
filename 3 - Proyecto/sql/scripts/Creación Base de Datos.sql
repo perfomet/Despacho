@@ -867,33 +867,34 @@ CREATE TABLE CargaMasiva (
 CREATE TABLE CargaMasivaDetalle (
 	CargaMasivaDetalleId INT PRIMARY KEY IDENTITY(1, 1),
 	CargaMasivaId INT NOT NULL FOREIGN KEY REFERENCES CargaMasiva (CargaMasivaId),
-	NumeroSolicitud VARCHAR(25) NOT NULL,
-	TipoSolicitud VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla TipoSolicitud
-	FechaSolicitud VARCHAR(20) NOT NULL,
-	FechaRecepcion VARCHAR(20) NOT NULL,
-	NumeroCliente VARCHAR(50) NOT NULL,
-	NombreCliente VARCHAR(100) NOT NULL,
-	CalleDireccionCliente VARCHAR(255) NOT NULL,
-	NumeroDireccionCliente NUMERIC NOT NULL,
-	RegionCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Region
-	ComunaCliente VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Comuna
-	NumeroTelefonoContacto VARCHAR(15) NOT NULL,
+	NumeroSolicitud VARCHAR(25) NULL,
+	TipoSolicitud VARCHAR(100) NULL, -- Enlaza por texto a tabla TipoSolicitud
+	FechaSolicitud VARCHAR(20) NULL,
+	FechaRecepcion VARCHAR(20) NULL,
+	NumeroCliente VARCHAR(50) NULL,
+	NombreCliente VARCHAR(100) NULL,
+	CalleDireccionCliente VARCHAR(255) NULL,
+	NumeroDireccionCliente VARCHAR(10) NULL,
+	RegionCliente VARCHAR(100) NULL, -- Enlaza por texto a tabla Region
+	ComunaCliente VARCHAR(100) NULL, -- Enlaza por texto a tabla Comuna
+	NumeroTelefonoContacto VARCHAR(15) NULL,
 	NumeroTelefonoContactoAdicional VARCHAR(15),
-	RutCliente VARCHAR(12) NOT NULL,
-	UnidadNegocio VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla UnidadNegocio
-	Gerencia VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Gerencia
+	RutCliente VARCHAR(12) NULL,
+	UnidadNegocio VARCHAR(100) NULL, -- Enlaza por texto a tabla UnidadNegocio
+	Gerencia VARCHAR(100) NULL, -- Enlaza por texto a tabla Gerencia
 	ObservacionAof VARCHAR(500),
-	Prioridad VARCHAR(100) NOT NULL, -- Enlaza por texto a tabla Prioridad
-	NumeroPlaca VARCHAR(20) NOT NULL,
+	Prioridad VARCHAR(100) NULL, -- Enlaza por texto a tabla Prioridad
+	NumeroPlaca VARCHAR(20) NULL,
 	UNIQUE (NumeroSolicitud, NumeroPlaca)
 )
 
 CREATE TABLE CargaMasivaDetalleError (
-	CargaMasivaDetalleErrorId INT PRIMARY KEY,
+	CargaMasivaDetalleErrorId INT,
 	Title VARCHAR(500) NOT NULL,
 	Clase VARCHAR(100) NOT NULL,
 	Tipo VARCHAR(100) NOT NULL,
 	CargaMasivaDetalleId INT NOT NULL FOREIGN KEY REFERENCES CargaMasivaDetalle (CargaMasivaDetalleId),
+	UNIQUE(CargaMasivaDetalleErrorId, CargaMasivaDetalleId)
 )
 	
 CREATE TABLE BinToEstadoEquipo (

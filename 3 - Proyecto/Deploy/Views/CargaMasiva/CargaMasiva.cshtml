@@ -1,6 +1,4 @@
-﻿
-
-@model Datos.Modelo.CargaMasiva
+﻿@model Datos.Modelo.CargaMasiva
 @{
 	ViewBag.SeccionTieneTitulo = true;
 	ViewBag.Pagina = 2;
@@ -17,6 +15,7 @@
 	<script type="text/javascript" src="~/Content/librerias/XLS/xlsx.js"></script>
 	<script type="text/javascript" src="~/Content/js/CargaMasiva.js"></script>
 }
+
 <div class="m-portlet m-portlet--mobile">
 	<div class="m-portlet__head">
 		<div class="m-portlet__head-caption">
@@ -27,21 +26,21 @@
 	</div>
 	<div class="m-portlet__body">
 		<div class="row">
-			<div class="col-12 col-lg-5">
+			<div class="col-lg-6">
 				<div class="form-group m-form__group">
 					<div class="custom-file">
 						<input type="file" class="custom-file-input" lang="es-cl" id="archivoCarga" accept=".xls,.xlsx">
 						<label class="custom-file-label" for="archivocarga">Seleccione un archivo</label>
 					</div>
-					<div class="form-group m-form__group">
-						<a class="pull-right btn btn-sm btn-success col-8 col-lg-5 mb-3 mr-3" href="../Content/Archivos/Carga Masiva.xlsx" target="_blank" style="float: right;margin-top: 2.2rem;">Descargar Archivo Ejemplo</a>
-					</div>
+				</div>
+				<div class="form-group m-form__group">
+					<a class="pull-right btn btn-sm btn-success mb-3" href="../../Content/Archivos/Carga Masiva.xlsx" target="_blank">Descargar Archivo Ejemplo</a>
 				</div>
 			</div>
-			<div class="col-lg-5">
-				<button class="btn btn-sm btn-primary" id="btnProcesarRegistros" style="width: 100%; font-size: 1.4rem;margin-top: 2.2rem;">Procesar</button>
+			<div class="col-lg-6">
+				<button class="btn btn-sm btn-primary" id="btnProcesarRegistros" style="width: 100%; font-size: 1.4rem;">Procesar</button>
 			</div>
-			<div class="col-lg-7" id="alertaProcesar" style="display:none;">
+			<div class="col-lg-6" id="alertaProcesar" style="display:none;">
 				<div class="alert alert-warning">
 					<strong>¡Importante!</strong> Presione el botón <b>Procesar</b> para guardar la información.
 				</div>
@@ -49,61 +48,54 @@
 		</div>
 	</div>
 </div>
-<h3>CargaMasiva</h3>
 
-<div id="divTablaResultado" class="col-12" style="display: none;">
-
-	<hr />
-
-	<div class="row">
-		<div class="col-6">
-			<div class="row">
-				<div class="col-4">
-					<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
-						<input name="resutadoRegistro" type="checkbox" value="1" checked> Malos
-						<span></span>
-					</label>
-				</div>
-				<div class="col-4">
-					<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
-						<input name="resutadoRegistro" type="checkbox" value="2"> Buenos
-						<span></span>
-					</label>
-				</div>
+<div class="m-portlet m-portlet--mobile" id="divTablaResultado" style="display: none;">
+	<div class="m-portlet__head">
+		<div class="m-portlet__head-caption">
+			<div class="m-portlet__head-title">
+				<h3>Resultado</h3>
 			</div>
 		</div>
-		<div class="col-6">
-			<div class="form-group">
-				<div class="input-group">
-					<input class="form-control m-input" placeholder="Buscar" id="txtBuscar" />
-				</div>
-			</div>
+		<div class="m-portlet__head-tools">
+			<ul class="m-portlet__nav">
+				<li class="m-portlet__nav-item">
+					<a href="#" id="guardar-registros" class="m-portlet__nav-link btn btn-success m-btn m-btn--pill m-btn--air">
+						Guardar
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
+	<div class="m-portlet__body">
+		<div class="col-12">
+			<div class="row">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-4">
+							<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
+								<input name="resutadoRegistro" type="checkbox" value="1" checked> Malos
+								<span></span>
+							</label>
+						</div>
+						<div class="col-4">
+							<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
+								<input name="resutadoRegistro" type="checkbox" value="2"> Buenos
+								<span></span>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="form-group">
+						<div class="input-group">
+							<input class="form-control m-input" placeholder="Buscar" id="txtBuscar" />
+						</div>
+					</div>
+				</div>
+			</div>
 
-	<hr />
-
-	<table class="table table-striped- table-bordered table-hover table-checkable" id="tabla">
-		<thead>
-			<tr>
-				<th></th>
-				<th></th>
-				<th>Resultados</th>
-				<th>Tipo Iden.</th>
-				<th>Identificador</th>
-				<th>DV</th>
-				<th>Nombres</th>
-				<th>Apellido P.</th>
-				<th>Apellido M.</th>
-				<th>Fecha Nac.</th>
-				<th>Dispositivo</th>
-				<th>Fecha Inst.</th>
-				<th>Mes</th>
-				<th>Año</th>
-				<th>Cantidad Proc.</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
+			<div class="m_datatable" id="lista-registros"></div>
+		</div>
+	</div>
 </div>
 

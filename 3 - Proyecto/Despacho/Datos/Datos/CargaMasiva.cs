@@ -7,15 +7,14 @@ namespace Datos.Datos
 {
 	public class CargaMasiva
 	{
-		
+
 		public static List<Modelo.CargaMasiva> ObtenerCargasMasivas()
 		{
-			string SELECTSentence = "SELECT CargaMasiva.CargaMasivaId, CargaMasiva.UsuarioId, CargaMasiva.FechaHora, CargaMasiva.Archivo, Usuario.Username, Usuario.Nombres + ISNULL(' ' + Usuario.ApellidoPaterno, '') + ISNULL(' ' + Usuario.ApellidoMaterno, '') AS NombreUsuario, Perfil.Descripcion, Cliente.Codigo, Cliente.NombreCliente, Cliente.Prefijo";
-			string FROMSentence = " FROM Usuario";
-			string JOINSentence = " INNER JOIN CargaMasiva ON Usuario.UsuarioId = CargaMasiva.UsuarioId INNER JOIN Perfil ON Usuario.PerfilId = Perfil.PerfilId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId";
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM CargaMasiva";
 			string WHERESentence = "";
 			string ORDERSentence = ";";
-			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.CargaMasiva> listacargasmasivas = new List<Modelo.CargaMasiva>();
@@ -33,12 +32,11 @@ namespace Datos.Datos
 		public static Modelo.CargaMasiva ObtenerCargaMasiva(int id)
 		{
 
-			string SELECTSentence = "SELECT CargaMasiva.CargaMasivaId, CargaMasiva.UsuarioId, CargaMasiva.FechaHora, CargaMasiva.Archivo, Usuario.Username, Usuario.Nombres + ISNULL(' ' + Usuario.ApellidoPaterno, '') + ISNULL(' ' + Usuario.ApellidoMaterno, '') AS NombreUsuario, Perfil.Descripcion, Cliente.Codigo, Cliente.NombreCliente, Cliente.Prefijo";
-			string FROMSentence = " FROM Usuario";
-			string JOINSentence = " INNER JOIN CargaMasiva ON Usuario.UsuarioId = CargaMasiva.UsuarioId INNER JOIN Perfil ON Usuario.PerfilId = Perfil.PerfilId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId";
-			string WHERESentence = " WHERE CargaMasiva.CargaMasivaId = "+id.ToString();
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM CargaMasiva";
+			string WHERESentence = " WHERE CargaMasivaId = " + id.ToString();
 			string ORDERSentence = ";";
-			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			Modelo.CargaMasiva cargamasiva = new Modelo.CargaMasiva();
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
@@ -54,22 +52,21 @@ namespace Datos.Datos
 
 		public static int Crear(Modelo.CargaMasiva cargamasiva)
 		{
-			if (cargamasiva.UsuarioId>0)
+			if (cargamasiva.UsuarioId > 0)
 			{
-							
-			string INSERTSentence = "INSERT INTO CargaMasiva (UsuarioId, FechaHora, Archivo)";
-			string VALUESSentence = " VALUES({1}, '{2}', '{3}');";
-			string SQLSentence = INSERTSentence + VALUESSentence;
-			StringBuilder builder = new StringBuilder();
-			builder.AppendFormat(SQLSentence, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
-			DataBase.ExecuteNonQuery(builder.ToString());
-			return int.Parse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString());
+
+				string INSERTSentence = "INSERT INTO CargaMasiva (UsuarioId, FechaHora, Archivo)";
+				string VALUESSentence = " VALUES({0}, CONVERT(DATETIME, '{1}', 103), '{2}');";
+				string SQLSentence = INSERTSentence + VALUESSentence;
+				StringBuilder builder = new StringBuilder();
+				builder.AppendFormat(SQLSentence, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
+				return DataBase.ExecuteNonQueryId(builder.ToString());
 			}
 			else
 			{
-				return  0;
+				return 0;
 			}
-			
+
 		}
 
 		public static bool Modificar(Modelo.CargaMasiva cargamasiva)
@@ -80,7 +77,7 @@ namespace Datos.Datos
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, cargamasiva.CargaMasivaId, cargamasiva.UsuarioId, cargamasiva.FechaHora, cargamasiva.Archivo);
-				
+
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
 	}

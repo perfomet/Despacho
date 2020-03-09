@@ -55,7 +55,7 @@ namespace Datos.Datos
 			return ((fechasolicitud - fecharecepcion).Ticks >= 0);
 		}
 		public static bool CorrespondeaRegion(string NombreComuna, string NombreRegion)
-		{ 
+		{
 			int filas = 0;
 
 			if ((!IsNullOrEmpty(NombreComuna)) && (!IsNullOrEmpty(NombreRegion)))
@@ -63,20 +63,20 @@ namespace Datos.Datos
 				string SELECTSentence = "SELECT Region.Region";
 				string FROMSentence = " FROM Comuna";
 				string JOINSentence = " INNER JOIN Region ON Comuna.RegionId = Region.RegionId";
-				string WHERESentence = " WHERE (Comuna.Comuna like '" + NombreComuna.ToUpper() + ")' AND (Region.Region LIKE '" + NombreRegion.ToUpper() + "'))";
+				string WHERESentence = " WHERE (Comuna.Comuna like '" + NombreComuna + "') AND (Region.Region LIKE '" + NombreRegion + "')";
 				string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence;
-				DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-				filas= (dataTable.Rows.Count );
-			}	
-			return (filas == 1);
+
+				filas += DataBase.ExecuteReader(SQLSentence).Rows.Count;
+			}
+			return filas > 0;
 		}
-		
+
 		public static bool ExisteContenido(string BaseDatos, string TableName, string FieldName, string Content, int tipo)
 		{
 			int filas = 0;
-			
-			if (!IsNullOrEmpty(BaseDatos) && !IsNullOrEmpty(TableName) && !IsNullOrEmpty(FieldName) &&  !IsNullOrEmpty(Content))
-			{ 
+
+			if (!IsNullOrEmpty(BaseDatos) && !IsNullOrEmpty(TableName) && !IsNullOrEmpty(FieldName) && !IsNullOrEmpty(Content))
+			{
 				string SELECTSentence = "SELECT [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
 				string FROMSentence = " FROM [" + BaseDatos + "].[dbo]." + TableName;
 				string WHERESentence = " WHERE [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
@@ -92,18 +92,18 @@ namespace Datos.Datos
 				DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 				filas = dataTable.Rows.Count;
 			}
-			
-			return ( filas == 1);
+
+			return (filas == 1);
 
 		}
-		
-		
+
+
 		public static bool ExisteTabla(string nombretabla)
 
 		{
 			string SELECTSentence = "SELECT COUNT(*)";
-			string FROMSentence = " FROM INFORMATION_SCHEMA.TABLES "; 
-			string WHERESentence=" WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = @nombreTabla";
+			string FROMSentence = " FROM INFORMATION_SCHEMA.TABLES ";
+			string WHERESentence = " WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = @nombreTabla";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 
@@ -120,7 +120,7 @@ namespace Datos.Datos
 			{
 				return true;
 			}
-			
+
 		}
 		public static int CuentaCaracteres(string texto, string caracter)
 		{

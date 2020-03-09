@@ -76,6 +76,24 @@ namespace Datos.Datos
 			}
 			return comuna;
 		}
+
+		public static Modelo.Comuna ObtenerComuna(string nombreComuna)
+		{
+			Modelo.Comuna comuna = new Modelo.Comuna();
+			string SELECTSentence = "SELECT ComunaId, RegionId, ProvinciaId, Comuna, EstaActivo";
+			string FROMSentence = " FROM Comuna";
+			string WHERESentence = " WHERE Comuna = '" + nombreComuna + "'";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				comuna.FromDataRow(fila);
+			}
+			return comuna;
+		}
+
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Comuna";

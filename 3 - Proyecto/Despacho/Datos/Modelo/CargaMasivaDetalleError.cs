@@ -1,13 +1,26 @@
-﻿namespace Datos.Modelo
+﻿using System.Data;
+
+namespace Datos.Modelo
 {
 	public class CargaMasivaDetalleError
 	{
 		static string msgerror = "no existe o incorrecta";
-	
+
 		public int id { get; set; }
 		public string title { get; set; }
 		public string clase { get; set; }
 		public string tipo { get; set; }
+		public int CargaMasivaDetalleId { get; set; }
+
+		public void FromDataRow(DataRow fila)
+		{
+			//CAMBIO DE PRUEBA
+			this.id = int.Parse(fila[0].ToString());
+			this.title = fila[1].ToString();
+			this.clase = fila[3].ToString();
+			this.tipo = fila[3].ToString();
+			this.CargaMasivaDetalleId = int.Parse(fila[4].ToString());
+		}
 
 		public static CargaMasivaDetalleError tipoSolicitud = new CargaMasivaDetalleError
 		{
@@ -36,7 +49,7 @@
 		public static CargaMasivaDetalleError tipoRegionComunaClientenomatch = new CargaMasivaDetalleError
 		{
 			id = 27,
-			title = "La Comuna ingresada no corresponde con la Región seleccionada" ,
+			title = "La Comuna ingresada no corresponde con la Región seleccionada",
 			clase = "m-badge--danger",
 			tipo = "danger"
 		};

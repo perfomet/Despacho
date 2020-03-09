@@ -46,6 +46,25 @@ namespace Datos.Datos
 			return region;
 		}
 
+		public static Modelo.Region ObtenerRegion(string nombreRegion)
+		{
+
+			Modelo.Region region = new Modelo.Region();
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM Region";
+			string WHERESentence = " WHERE Region LIKE '" + nombreRegion + "'";
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				region.FromDataRow(fila);
+			}
+
+			return region;
+		}
+
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Region";

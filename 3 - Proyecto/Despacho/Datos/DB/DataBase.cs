@@ -72,6 +72,28 @@ namespace Datos.DB
         }
 
         /// <summary>
+        /// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera sincrónica
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns int></returns>
+        public static int ExecuteNonQueryId(string query)
+        {
+            try
+            {
+                query += " SELECT SCOPE_IDENTITY()";
+
+                OdbcCommand cmd;
+
+                cmd = new OdbcCommand(query, ObtenerConexion());
+
+                return int.Parse(cmd.ExecuteScalar().ToString());
+            }
+            catch (Exception ex) { }
+
+            return -1;
+        }
+
+        /// <summary>
         /// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera asincrónica
         /// </summary>
         /// <param name="query"></param>

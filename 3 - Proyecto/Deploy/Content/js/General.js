@@ -1,5 +1,5 @@
 ﻿let General = function () {
- 
+
     let Init = function () {
         InitElementos();
     };
@@ -45,7 +45,7 @@
 
             if (edita || desactiva) {
                 columnas.push({
-                    field: "Acciones", title: "Acciones", responsive: { visible: "lg" }, template: function (e, a, i) {
+                    field: "Acciones", title: "Acciones", responsive: {visible: "lg"}, template: function (e, a, i) {
                         let div = $('<div></div>');
 
                         let editar = $('<a href="/' + controlador + '/Edit/' + e[identificador] + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Editar"><i class="la la-edit"></i></a>');
@@ -109,9 +109,11 @@
                 if (estaActivo == true) {
                     confirmar("Desactivar", "¿Está seguro que desea desactivarlo?", "Si", "No", function (result) {
                         if (result) {
-                            $.post('/' + controlador + '/EstaActivo', { id: id }, function (data) {
+                            $.post('/' + controlador + '/EstaActivo', {id: id}, function (data) {
                                 if (data.exito) {
-                                    mensaje("Éxito", "Desactivado correctamente", "exito", function () { location.reload(); });
+                                    mensaje("Éxito", "Desactivado correctamente", "exito", function () {
+                                        location.reload();
+                                    });
                                 } else {
                                     mensaje("Error", "No se pudo desactivar", "error");
                                 }
@@ -119,9 +121,11 @@
                         }
                     });
                 } else {
-                    $.post('/' + controlador + '/EstaActivo', { id: id }, function (data) {
+                    $.post('/' + controlador + '/EstaActivo', {id: id}, function (data) {
                         if (data.exito) {
-                            mensaje("Éxito", "Activado correctamente", "exito", function () { location.reload(); });
+                            mensaje("Éxito", "Activado correctamente", "exito", function () {
+                                location.reload();
+                            });
                         } else {
                             mensaje("Error", "No se pudo desactivar", "error");
                         }
@@ -134,24 +138,24 @@
             $(idSelector + " .form-control").val(inicio.format("DD/MM/YYYY") + " - " + fin.format("DD/MM/YYYY"))
 
             $(idSelector).daterangepicker({
-              buttonClasses: "m-btn btn",
-              applyLabel: "Aplicar",
-              applyClass: "btn-primary",
-              cancelClass: "btn-secondary",
-              cancelLabel: "Cerrar",
-              customRangeLabel: "Rango Personalizado",
-              startDate: inicio,
-              endDate: fin,
-              ranges: {
-                 Todo: [moment('01/01/1900', 'DD/MM/YYYY'), moment()],
-                  Hoy: [moment(), moment()],
-                  Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-                  "Últimos 7 Días": [moment().subtract(6, "days"), moment()],
-                  "Últimos 30 Días": [moment().subtract(29, "days"), moment()],
-                  "Este Mes": [moment().startOf("month"), moment().endOf("month")],
-                "El Mes Pasado": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
+                buttonClasses: "m-btn btn",
+                applyLabel: "Aplicar",
+                applyClass: "btn-primary",
+                cancelClass: "btn-secondary",
+                cancelLabel: "Cerrar",
+                customRangeLabel: "Rango Personalizado",
+                startDate: inicio,
+                endDate: fin,
+                ranges: {
+                    Todo: [moment('01/01/1900', 'DD/MM/YYYY'), moment()],
+                    Hoy: [moment(), moment()],
+                    Ayer: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                    "Últimos 7 Días": [moment().subtract(6, "days"), moment()],
+                    "Últimos 30 Días": [moment().subtract(29, "days"), moment()],
+                    "Este Mes": [moment().startOf("month"), moment().endOf("month")],
+                    "El Mes Pasado": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
 
-                  }
+                }
             }, function (a, t, n) {
                 $(idSelector + " .form-control").val(a.format("DD/MM/YYYY") + " - " + t.format("DD/MM/YYYY"))
             });
@@ -180,6 +184,56 @@
             Init();
         },
         ValidaRut: _ValidaRut
+    };
+}();
+
+let Validaciones = function () {
+    let _Init = function () {
+        _InitElementos();
+    };
+
+    let _InitElementos = function () {
+
+    };
+
+    let _ValidaRut = function (rutCompleto) {
+        if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rutCompleto))
+            return false;
+        const tmp = rutCompleto.split('-');
+        let digv = tmp[1];
+        const rut = tmp[0];
+        if (digv == 'K') digv = 'k';
+        return (_ObtenerDV(rut) == digv);
+    };
+
+    let _ObtenerDV = function (T) {
+        let M = 0, S = 1;
+        for (; T; T = Math.floor(T / 10))
+            S = (S + T % 10 * (9 - M++ % 6)) % 11;
+        return S ? S - 1 : 'k';
+    };
+
+    let _ValidarCorreo = function (email) {
+        return true;
+    };
+
+    let _ValidarFecha = function (fecha) {
+        let patron = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+        return fecha.match(patron);
+    };
+
+    let _ValidaNumero = function (numero) {
+        return !isNaN(numero);
+    };
+
+    return {
+        init: function () {
+            _Init();
+        },
+        ValidaRut: _ValidaRut,
+        ValidarCorreo: _ValidarCorreo,
+        ValidarFecha: _ValidarFecha,
+        ValidaNumero: _ValidaNumero
     };
 }();
 

@@ -1,6 +1,8 @@
 ﻿using Datos.DB;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Despacho.Controllers
@@ -51,28 +53,98 @@ namespace Despacho.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> detallecargamasiva)
+		public JsonResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> registros)
 		{
+			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
+			cargamasiva.FechaHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+			cargamasiva.UsuarioId = usuario.UsuarioId;
+
 			int idcargamasiva = Datos.Datos.CargaMasiva.Crear(cargamasiva);
 
-			detallecargamasiva.ForEach((detalle) =>
+			registros.ForEach((registro) =>
 			{
-				detalle.CargaMasivaId = idcargamasiva;
-				int detalleid = Datos.Datos.CargaMasivaDetalle.Crear(detalle);
+				registro.CargaMasivaId = idcargamasiva;
+				int detalleid = Datos.Datos.CargaMasivaDetalle.Crear(registro);
 
-				Datos.Modelo.Solicitud solicitud = new Datos.Modelo.Solicitud
+				if (registro.Errores != null)
 				{
-					TipoSolicitudId = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(detalle.TipoSolicitud).Tiposolicitudid
-				};
+					registro.Errores.ForEach((error) =>
+					{
+						error.CargaMasivaDetalleId = detalleid;
+					});
 
-				int solicitudId = Datos.Datos.Solicitud.Crear(solicitud);
-
-				List<Datos.Modelo.EquipoSolicitado> equipos = new List<Datos.Modelo.EquipoSolicitado>();
-
-				//INSERTAS LOS DETALLE PRODUCTO
-				//INSERTAR EQUIPOS SOLICITADOS
-				Datos.Datos.EquipoSolicitado.Crear(equipos);
+					Datos.Datos.CargaMasivaDetalleError.Crear(registro.Errores);
+				}
 			});
+
+			List<Datos.Modelo.CargaMasivaDetalle> paraCrear = registros.Where(r => r.Acciones != null && r.Acciones.Any(a => a == 1)).ToList();
+
+			if (paraCrear != null && paraCrear.Count > 0)
+			{
+				paraCrear.ForEach((registro) =>
+				{
+					Datos.Modelo.TipoSolicitud tipoSolicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(registro.TipoSolicitud);
+					Datos.Modelo.Region region = Datos.Datos.Region.ObtenerRegion(registro.RegionCliente);
+					Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(registro.ComunaCliente);
+					Datos.Modelo.Prioridad prioridad = Datos.Datos.Prioridad.ObtenerPrioridad(registro.Prioridad);
+					Datos.Modelo.UnidadNegocio unidadNegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(registro.UnidadNegocio);
+					Datos.Modelo.Gerencia gerencia = Datos.Datos.Gerencia.ObtenerGerencia(registro.Gerencia);
+					string rut = registro.RutCliente.Replace(".", "");
+
+					Datos.Modelo.Solicitud solicitud = new Datos.Modelo.Solicitud
+					{
+						NumeroSolicitud = int.Parse(registro.NumeroSolicitud),
+						TipoSolicitudId = tipoSolicitud.Tiposolicitudid,
+						EstadoSolicitudId = 1,
+						FechaSolicitud = registro.FechaSolicitud,
+						FechaRecepcion = registro.FechaRecepcion,
+						NumeroCliente = registro.NumeroCliente,
+						NombreCliente = registro.NombreCliente,
+						CalleDireccionCliente = registro.CalleDireccionCliente,
+						NumeroDireccionCliente = int.Parse(registro.NumeroDireccionCliente),
+						RegionClienteId = region.RegionId,
+						ComunaClienteId = comuna.ComunaId,
+						NumeroTelefonoContacto = registro.NumeroTelefonoContacto,
+						NumeroTelefonoContactoAdicional = registro.NumeroTelefonoContactoAdicional,
+						RutCliente = rut.Split('-')[0],
+						VRutCliente = rut.IndexOf('-') > 0 ? rut.Split('-')[1] : "",
+						PrioridadId = prioridad.prioridadid,
+						UnidadNegocioId = unidadNegocio.UnidadNegocioId,
+						GerenciaId = gerencia.Gerenciaid,
+						ObservacionAof = registro.ObservacionAof,
+						SolicitanteId = usuario.UsuarioId
+					};
+
+					int solicitudId = Datos.Datos.Solicitud.Crear(solicitud);
+
+					Datos.Modelo.Existencia existencia = Datos.Datos.Existencia.ObtenerExistencia(registro.NumeroPlaca);
+
+					List<Datos.Modelo.EquipoSolicitado> solicitados = new List<Datos.Modelo.EquipoSolicitado> {
+						new Datos.Modelo.EquipoSolicitado
+						{
+							SolicitudDespachoId = solicitudId,
+							NumeroPlaca = registro.NumeroPlaca,
+							Modelo = existencia.CodArt
+						}
+					};
+
+					registros.Where(r => r.Acciones != null && r.Acciones.Any(a => a == 2) && r.NumeroSolicitud == registro.NumeroSolicitud).ToList().ForEach((reg) =>
+									{
+										Datos.Modelo.Existencia e = Datos.Datos.Existencia.ObtenerExistencia(reg.NumeroPlaca);
+
+										solicitados.Add(new Datos.Modelo.EquipoSolicitado
+										{
+											SolicitudDespachoId = solicitudId,
+											NumeroPlaca = reg.NumeroPlaca,
+											Modelo = e.CodArt
+
+										});
+									});
+
+					Datos.Datos.EquipoSolicitado.Crear(solicitados);
+				});
+			}
 
 			return Json(new { exito = idcargamasiva > 0 });
 		}
@@ -103,14 +175,7 @@ namespace Despacho.Controllers
 		[HttpPost]
 		public JsonResult Listar(int clienteId)
 		{
-			if (clienteId > 0)
-			{
-				return Json(Datos.Datos.Cliente.ObtenerCliente(clienteId));
-			}
-			else
-			{
-				return Json(Datos.Datos.Cliente.ObtenerClientes());
-			}
+			return Json(Datos.Datos.CargaMasiva.ObtenerCargasMasivas());
 		}
 
 		[HttpPost]
@@ -203,7 +268,7 @@ namespace Despacho.Controllers
 				}
 
 				//VALIDA PLACA
-				if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
+				if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Serie", detalle.NumeroPlaca, Datos.Datos.Internos.stexto))
 				{
 					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPlaca);
 				}
@@ -213,7 +278,7 @@ namespace Despacho.Controllers
 					//VALIDAR PLACA REPETIDA
 				}
 			}
-			
+
 			//Debo Guardar Registro
 			//GuardaRegistro(detalles)
 			);
