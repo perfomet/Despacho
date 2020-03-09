@@ -88,7 +88,14 @@ namespace Datos.Modelo
 		public static CargaMasivaDetalleError numeroSolicitudRepetida = new CargaMasivaDetalleError
 		{
 			id = 32,
-			title = "Número de Solicitud repetida " + msgerror,
+			title = "Número de Solicitud repetida ",
+			clase = "m-badge--danger",
+			tipo = "danger"
+		};
+		public static CargaMasivaDetalleError numeroPlacaRepetida = new CargaMasivaDetalleError
+		{
+			id = 33,
+			title = "Número de Placa repetida",
 			clase = "m-badge--danger",
 			tipo = "danger"
 		};

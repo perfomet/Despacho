@@ -182,6 +182,7 @@ namespace Despacho.Controllers
 		public JsonResult ValidaNumerosSolicitudes(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
 			List<string> numerosCreados = new List<string>();
+			
 			detalles.ForEach((detalle) =>
 			{
 				numerosCreados.Add(detalle.NumeroSolicitud);
@@ -189,12 +190,16 @@ namespace Despacho.Controllers
 			return Json(numerosCreados);
 		}
 
+
 		[HttpPost]
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
 
 			bool RegionExiste = false;
 			bool ComunaExiste = false;
+			List<string> placascreadas = new List<string>();
+
+			bool PlacaDuplicada = false;
 			detalles.ForEach((detalle) =>
 			{
 				if (detalle.Errores == null) detalle.Errores = new List<Datos.Modelo.CargaMasivaDetalleError>();
@@ -268,19 +273,27 @@ namespace Despacho.Controllers
 				}
 
 				//VALIDA PLACA
+
 				if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Serie", detalle.NumeroPlaca, Datos.Datos.Internos.stexto))
 				{
 					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPlaca);
 				}
 				else
 				{
-					//tarea
 					//VALIDAR PLACA REPETIDA
+					PlacaDuplicada = placascreadas.Contains(detalle.NumeroPlaca);
+					if (PlacaDuplicada)
+					{
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.numeroPlacaRepetida);
+					}
+					else
+					{
+						placascreadas.Add(detalle.NumeroPlaca);
+					}
+
 				}
 			}
 
-			//Debo Guardar Registro
-			//GuardaRegistro(detalles)
 			);
 
 			return Json(detalles);
