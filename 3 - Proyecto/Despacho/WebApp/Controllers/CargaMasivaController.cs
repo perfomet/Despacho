@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using Datos.DB;
+﻿using Datos.DB;
+using System.Collections.Generic;
 using System.Data;
-using System.Text;
-using System;
-using System.Linq;
+using System.Web.Mvc;
 
 namespace Despacho.Controllers
 {
@@ -131,6 +128,8 @@ namespace Despacho.Controllers
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
 
+			bool RegionExiste = false;
+			bool ComunaExiste = false;
 			detalles.ForEach((detalle) =>
 			{
 				if (detalle.Errores == null) detalle.Errores = new List<Datos.Modelo.CargaMasivaDetalleError>();
@@ -146,7 +145,7 @@ namespace Despacho.Controllers
 				*/
 
 				// VALIDA TIPO DE SOLICITUD
-				if (detalle.TipoSolicitud != null && !Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
+				if (!Datos.Datos.Internos.ExisteContenido("Despacho", "TipoSolicitud", "Descripcion", detalle.TipoSolicitud, Datos.Datos.Internos.stexto))
 				{
 					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoSolicitud);
 				}
@@ -154,56 +153,29 @@ namespace Despacho.Controllers
 				//VALIDA FECHA SOLICITUD Y FECHA RECEPCION
 				//VALIDADAS EN EL CLIENTE
 
-				//VALIDA REGION
-				if (detalle.RegionCliente == null)
-				{
+				//VALIDA REGION Y COMUNA
+				RegionExiste = Datos.Datos.Internos.ExisteContenido("Despacho", "Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto);
+				ComunaExiste = Datos.Datos.Internos.ExisteContenido("Despacho", "Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto);
 
+				if (RegionExiste && ComunaExiste)
+				{
+					if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
+					{
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
+					}
 				}
 				else
 				{
-					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
+					if (!RegionExiste && ComunaExiste)
 					{
+						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionCliente);
 					}
 					else
-					{
-						if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
-						{
-							detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
-						}
-					}
-				}
-
-				//VALIDA COMUNA
-				if (detalle.ComunaCliente == null)
-				{
-				}
-				else
-				{
-					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Comuna", "Comuna", detalle.ComunaCliente, Datos.Datos.Internos.stexto))
 					{
 						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoComunaCliente);
 					}
-					else
-					{
-						if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Region", "Region", detalle.RegionCliente, Datos.Datos.Internos.stexto))
-						{
-							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
-							{
-								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
-							}
-							else
-							{
-							}
-						}
-						else
-						{
-							if (!Datos.Datos.Internos.CorrespondeaRegion(detalle.ComunaCliente, detalle.RegionCliente))
-							{
-								detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoRegionComunaClientenomatch);
-							}
-						}
-					}
 				}
+
 				//VALIDA NUMERO TELEFONO CONTACTO
 				//VALIDADO EN EL CLIENTE
 
@@ -211,61 +183,37 @@ namespace Despacho.Controllers
 				//VALIDA EN EL CLIENTE
 
 				//VALIDA UNIDAD DE NEGOCIO
-				if (detalle.UnidadNegocio == null)
+				if (!Datos.Datos.Internos.ExisteContenido("Despacho", "UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
 				{
-
-				}
-				else
-				{
-					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "UnidadNegocio", "Descripcion", detalle.UnidadNegocio, Datos.Datos.Internos.stexto))
-					{
-						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoUnidadNegocio);
-					}
+					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoUnidadNegocio);
 				}
 
 				//VALIDA GERENCIA
-				if (detalle.Gerencia == null)
+				if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
 				{
+					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoGerencia);
 				}
-				else
-				{
-					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Gerencia", "Descripcion", detalle.Gerencia, Datos.Datos.Internos.stexto))
-					{
-						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoGerencia);
-					}
-				}
-
 				//VALIDA OBSERVACIONAOF
 				//VALIDADO EN EL CLIENTE
 
 				//VALIDA PRIORIDAD
-				if (detalle.Prioridad == null)
+				if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
 				{
+					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPrioridad);
 				}
-				else
-				{
-					if (!Datos.Datos.Internos.ExisteContenido("Despacho", "Prioridad", "Descripcion", detalle.Prioridad, Datos.Datos.Internos.stexto))
-					{
-						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPrioridad);
-					}
-				}
+
 				//VALIDA PLACA
-				if (detalle.NumeroPlaca == null)
+				if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
 				{
+					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPlaca);
 				}
 				else
 				{
-					if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Placa", detalle.NumeroPlaca, Datos.Datos.Internos.snumero))
-					{
-						detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPlaca);
-					}
-					else
-					{
-						//tarea
-						//VALIDAR PLACA REPETIDA
-					}
+					//tarea
+					//VALIDAR PLACA REPETIDA
 				}
 			}
+			
 			//Debo Guardar Registro
 			//GuardaRegistro(detalles)
 			);

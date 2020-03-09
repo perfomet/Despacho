@@ -15,7 +15,7 @@ namespace Datos.Datos
 		public const int schile = 0;
 		public const int snumero = 0;
 		public const int stexto = 1;
-		
+
 		public static bool IsNullOrEmpty(string s)
 		{
 			bool result;
@@ -51,47 +51,55 @@ namespace Datos.Datos
 		{
 			DateTime fechasolicitud = DateTime.Parse(FechaSolicitud);
 			DateTime fecharecepcion = DateTime.Parse(FechaSolicitud);
-					 
+
 			return ((fechasolicitud - fecharecepcion).Ticks >= 0);
 		}
 		public static bool CorrespondeaRegion(string NombreComuna, string NombreRegion)
+		{ 
+			int filas = 0;
+
+			if ((!IsNullOrEmpty(NombreComuna)) && (!IsNullOrEmpty(NombreRegion)))
 			{
-			string SELECTSentence = "SELECT Region.Region";
-			string FROMSentence = " FROM Comuna";
-			string JOINSentence=" INNER JOIN Region ON Comuna.RegionId = Region.RegionId";
-			string WHERESentence = " WHERE (Comuna.Comuna like '"+ NombreComuna.ToUpper() + ")' AND (Region.Region LIKE '" + NombreRegion.ToUpper() + "'))";
-			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence;
-			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-			return (dataTable.Rows.Count == 1);
-			}
+				string SELECTSentence = "SELECT Region.Region";
+				string FROMSentence = " FROM Comuna";
+				string JOINSentence = " INNER JOIN Region ON Comuna.RegionId = Region.RegionId";
+				string WHERESentence = " WHERE (Comuna.Comuna like '" + NombreComuna.ToUpper() + ")' AND (Region.Region LIKE '" + NombreRegion.ToUpper() + "'))";
+				string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence;
+				DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+				filas= (dataTable.Rows.Count );
+			}	
+			return (filas == 1);
+		}
 		
 		public static bool ExisteContenido(string BaseDatos, string TableName, string FieldName, string Content, int tipo)
 		{
 			int filas = 0;
 			
-			string SELECTSentence = "SELECT [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
-			string FROMSentence = " FROM [" + BaseDatos + "].[dbo]." + TableName;
-			string WHERESentence = " WHERE [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
-			
-			if (tipo==snumero)
+			if (!IsNullOrEmpty(BaseDatos) && !IsNullOrEmpty(TableName) && !IsNullOrEmpty(FieldName) &&  !IsNullOrEmpty(Content))
+			{ 
+				string SELECTSentence = "SELECT [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
+				string FROMSentence = " FROM [" + BaseDatos + "].[dbo]." + TableName;
+				string WHERESentence = " WHERE [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName;
+				if (tipo == snumero)
 				{
 					WHERESentence = WHERESentence + " = " + Content;
 				}
-					else
+				else
 				{
-					WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR " + BaseDatos + "].[dbo]." + TableName + "." + FieldName + " LIKE '" + Content + "'";
+					WHERESentence = WHERESentence + " LIKE '" + Content.ToUpper() + "' OR [" + BaseDatos + "].[dbo]." + TableName + "." + FieldName + " LIKE '" + Content + "'";
 				}
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+				string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+				DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+				filas = dataTable.Rows.Count;
+			}
 			
-
-			filas = dataTable.Rows.Count;
 			return ( filas == 1);
 
 		}
 		
 		
 		public static bool ExisteTabla(string nombretabla)
+
 		{
 			string SELECTSentence = "SELECT COUNT(*)";
 			string FROMSentence = " FROM INFORMATION_SCHEMA.TABLES "; 
@@ -103,6 +111,7 @@ namespace Datos.Datos
 		}
 		public static bool CreateTable(string nametable)
 		{
+
 			if (ExisteTabla(nametable) == true)
 			{
 				return false;
