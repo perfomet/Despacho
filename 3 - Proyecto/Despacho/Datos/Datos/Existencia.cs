@@ -10,7 +10,7 @@ namespace Datos.Datos
 		public static List<Modelo.Existencia> ObtenerExistencias(int clienteId)
 		{
 			string SELECTSentence = "SELECT E.*, C.Nombre";
-			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo." + _librerias.LibConfig.TablaExistencias + " E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = clienteId > 0 ? (" WHERE C.ClienteId = " + clienteId) : "";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
@@ -29,7 +29,7 @@ namespace Datos.Datos
 		public static Modelo.Existencia ObtenerExistencia(string serie)
 		{
 			string SELECTSentence = "SELECT E.*, C.Nombre";
-			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo.Existencia E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
+			string FROMSentence = " FROM " + _librerias.LibConfig.DbExistencias + ".dbo." + _librerias.LibConfig.TablaExistencias + " E INNER JOIN Cliente C ON C.Codigo = E.Propietario";
 			string WHERESentence = " WHERE E.Serie = '" + serie + "'";
 			string ORDERSentence = ";";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;

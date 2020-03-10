@@ -7,197 +7,269 @@ using System.Threading.Tasks;
 
 namespace Datos.DB
 {
-    public class DataBase
-    {
-        #region Conexión
+	public class DataBase
+	{
+		#region Conexión
 
-        static OdbcConnection Con;
+		static OdbcConnection Con;
 
-        static OdbcConnection Conectar()
-        {
-      try
-      {
-                if (Con != null)
-                {
-                    Con.Close();
-                    Con.Dispose();
-                }
+		static OdbcConnection Conectar()
+		{
+			try
+			{
+				if (Con != null)
+				{
+					Con.Close();
+					Con.Dispose();
+				}
 
-                Con = new OdbcConnection(LibConfig.ObtenerConnectionString());
+				Con = new OdbcConnection(LibConfig.ObtenerConnectionString());
 
-                Con.Open();
+				Con.Open();
 
-                return Con;
-            }
-            catch (Exception ex) { }
+				return Con;
+			}
+			catch (Exception ex) { }
 
-            return null;
-        }
+			return null;
+		}
 
-        public static void CambiarBaseDatos(string DB)
-        {
-            Con.ChangeDatabase(DB);
-        }
+		public static void CambiarBaseDatos(string DB)
+		{
+			Con.ChangeDatabase(DB);
+		}
 
-        public static OdbcConnection ObtenerConexion()
-        {
-            if (Con == null || Con.State != ConnectionState.Open)
-                return Conectar();
-            else
-                return Con;
-        }
+		public static OdbcConnection ObtenerConexion()
+		{
+			if (Con == null || Con.State != ConnectionState.Open)
+				return Conectar();
+			else
+				return Con;
+		}
 
-        #endregion
+		#endregion
 
-        #region Métodos de Ejecución
+		#region Transacción
+		static OdbcTransaction Tran;
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera sincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns int></returns>
-        public static int ExecuteNonQuery(string query)
-        {
-            try
-            {
-                OdbcCommand cmd;
+		static OdbcTransaction IniciarTransaccion()
+		{
+			if (Tran == null)
+			{
+				Tran = ObtenerConexion().BeginTransaction();
+			}
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+			return Tran;
+		}
 
-                return cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex) { }
+		static void Commit()
+		{
+			if (Tran != null)
+			{
+				Tran.Commit();
+				Tran.Dispose();
+				Tran = null;
+			}
 
-            return -1;
-        }
+		}
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera sincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns int></returns>
-        public static int ExecuteNonQueryId(string query)
-        {
-            try
-            {
-                query += " SELECT SCOPE_IDENTITY()";
+		static void Rollback()
+		{
+			if (Tran != null)
+			{
+				Tran.Rollback();
+				Tran.Dispose();
+				Tran = null;
+			}
 
-                OdbcCommand cmd;
+		}
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+		#endregion
 
-                return int.Parse(cmd.ExecuteScalar().ToString());
-            }
-            catch (Exception ex) { }
+		#region Métodos de Ejecución
 
-            return -1;
-        }
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera sincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		/// <returns int></returns>
+		public static int ExecuteNonQuery(string query)
+		{
+			int res = -1;
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera asincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        public static async Task<int> ExecuteNonQueryAsync(string query)
-        {
-            try
-            {
-                OdbcCommand cmd;
+			try
+			{
+				OdbcCommand cmd;
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+				cmd = new OdbcCommand(query, ObtenerConexion(), IniciarTransaccion());
 
-                return await cmd.ExecuteNonQueryAsync();
-            }
-            catch (Exception ex) { }
+				res = cmd.ExecuteNonQuery();
 
-            return -1;
-        }
+				Commit();
+			}
+			catch (Exception ex)
+			{
+				Rollback();
+			}
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias de retorno múltiple o tipo tabla como procedimientos almacenados o select con múltiples clumnas de manera sincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        public static DataTable ExecuteReader(string query)
-        {
-            DataTable tabla = new DataTable();
-            tabla.TableName = "Resultado";
+			return res;
+		}
 
-            try
-            {
-                OdbcCommand cmd;
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera sincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		/// <returns int></returns>
+		public static int ExecuteNonQueryId(string query)
+		{
+			int res = -1;
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+			try
+			{
+				query += " SELECT SCOPE_IDENTITY()";
 
-                OdbcDataReader reader = cmd.ExecuteReader();
+				OdbcCommand cmd;
 
-                tabla.Load(reader);
-            }
-            catch (Exception ex) { }
+				cmd = new OdbcCommand(query, ObtenerConexion(), IniciarTransaccion());
 
-            return tabla;
-        }
+				res = int.Parse(cmd.ExecuteScalar().ToString());
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias de retorno múltiple o tipo tabla como procedimientos almacenados, funciones de tipo tabla o select con múltiples clumnas de manera asincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        public static async Task<DataTable> ExecuteReaderAsync(string query)
-        {
-            DataTable tabla = new DataTable();
-            tabla.TableName = "Resultado";
+				Commit();
+			}
+			catch (Exception ex)
+			{
+				Rollback();
+			}
 
-            try
-            {
-                OdbcCommand cmd;
+			return res;
+		}
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias sin retorno como Insert, Update o Delete, esta se realizará de manera asincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		public static async Task<int> ExecuteNonQueryAsync(string query)
+		{
+			int res = -1;
 
-                DbDataReader reader = await cmd.ExecuteReaderAsync();
+			try
+			{
+				OdbcCommand cmd;
 
-                tabla.Load(reader);
-            }
-            catch (Exception ex) { }
+				cmd = new OdbcCommand(query, ObtenerConexion(), IniciarTransaccion());
 
-            return tabla;
-        }
+				res = await cmd.ExecuteNonQueryAsync();
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias de retorno simple como funciones escalares o select con solo una clumna de manera sincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        public static object ExecuteScalar(string query)
-        {
-            try
-            {
-                OdbcCommand cmd;
+				Commit();
+			}
+			catch (Exception ex)
+			{
+				Rollback();
+			}
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+			return res;
+		}
 
-                return cmd.ExecuteScalar();
-            }
-            catch (Exception ex) { }
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias de retorno múltiple o tipo tabla como procedimientos almacenados o select con múltiples clumnas de manera sincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		public static DataTable ExecuteReader(string query)
+		{
+			DataTable tabla = new DataTable();
+			tabla.TableName = "Resultado";
 
-            return null;
-        }
+			try
+			{
+				OdbcCommand cmd;
 
-        /// <summary>
-        /// Se puede utilizar para ejecutar sentencias de retorno simple como funciones escalares o select con solo una clumna de manera asincrónica
-        /// </summary>
-        /// <param name="query"></param>
-        public static async Task<object> ExecuteScalarAsync(string query)
-        {
-            try
-            {
-                OdbcCommand cmd;
+				cmd = new OdbcCommand(query, ObtenerConexion());
 
-                cmd = new OdbcCommand(query, ObtenerConexion());
+				OdbcDataReader reader = cmd.ExecuteReader();
 
-                return await cmd.ExecuteScalarAsync();
-            }
-            catch (Exception ex) { }
+				tabla.Load(reader);
+			}
+			catch (Exception ex) { }
 
-            return null;
-        }
+			return tabla;
+		}
 
-        #endregion
-    }
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias de retorno múltiple o tipo tabla como procedimientos almacenados, funciones de tipo tabla o select con múltiples clumnas de manera asincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		public static async Task<DataTable> ExecuteReaderAsync(string query)
+		{
+			DataTable tabla = new DataTable();
+			tabla.TableName = "Resultado";
+
+			try
+			{
+				OdbcCommand cmd;
+
+				cmd = new OdbcCommand(query, ObtenerConexion());
+
+				DbDataReader reader = await cmd.ExecuteReaderAsync();
+
+				tabla.Load(reader);
+			}
+			catch (Exception ex) { }
+
+			return tabla;
+		}
+
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias de retorno simple como funciones escalares o select con solo una clumna de manera sincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		public static object ExecuteScalar(string query)
+		{
+			object res = null;
+
+			try
+			{
+				OdbcCommand cmd;
+
+				cmd = new OdbcCommand(query, ObtenerConexion(), IniciarTransaccion());
+
+				res = cmd.ExecuteScalar();
+
+				Commit();
+			}
+			catch (Exception ex)
+			{
+				Rollback();
+			}
+
+			return res;
+		}
+
+		/// <summary>
+		/// Se puede utilizar para ejecutar sentencias de retorno simple como funciones escalares o select con solo una clumna de manera asincrónica
+		/// </summary>
+		/// <param name="query"></param>
+		public static async Task<object> ExecuteScalarAsync(string query)
+		{
+			object res = null;
+
+			try
+			{
+				OdbcCommand cmd;
+
+				cmd = new OdbcCommand(query, ObtenerConexion(), IniciarTransaccion());
+
+				res = await cmd.ExecuteScalarAsync();
+
+				Commit();
+			}
+			catch (Exception ex)
+			{
+				Rollback();
+			}
+
+			return res;
+		}
+
+		#endregion
+	}
 }

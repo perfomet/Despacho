@@ -1,4 +1,5 @@
-﻿using Datos.DB;
+﻿using Datos._librerias;
+using Datos.DB;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -53,100 +54,100 @@ namespace Despacho.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult Create(Datos.Modelo.CargaMasiva cargamasiva, List<Datos.Modelo.CargaMasivaDetalle> registros)
+		public JsonResult Create(Datos.Modelo.CargaMasiva cargaMasiva, List<Datos.Modelo.CargaMasivaDetalle> cargaMasivaDetalles)
 		{
 			Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 
-			cargamasiva.FechaHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-			cargamasiva.UsuarioId = usuario.UsuarioId;
+			cargaMasiva.FechaHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+			cargaMasiva.UsuarioId = usuario.UsuarioId;
 
-			int idcargamasiva = Datos.Datos.CargaMasiva.Crear(cargamasiva);
+			int cargaMasivaId = Datos.Datos.CargaMasiva.Crear(cargaMasiva);
 
-			registros.ForEach((registro) =>
+			if (cargaMasivaId <= 0) return Json(new { exito = false });
+
+			bool errorDetectado = false;
+
+			int solicitudId = 0;
+
+			cargaMasivaDetalles.ForEach((cargaMasivaDetalle) =>
 			{
-				registro.CargaMasivaId = idcargamasiva;
-				int detalleid = Datos.Datos.CargaMasivaDetalle.Crear(registro);
+				cargaMasivaDetalle.CargaMasivaId = cargaMasivaId;
+				int cargaMasivaDetalleId = Datos.Datos.CargaMasivaDetalle.Crear(cargaMasivaDetalle);
 
-				if (registro.Errores != null)
+				errorDetectado = errorDetectado || cargaMasivaDetalleId <= 0;
+
+				if (cargaMasivaDetalle.Errores != null)
 				{
-					registro.Errores.ForEach((error) =>
+					cargaMasivaDetalle.Errores.ForEach((error) =>
 					{
-						error.CargaMasivaDetalleId = detalleid;
+						error.CargaMasivaDetalleId = cargaMasivaDetalleId;
 					});
 
-					Datos.Datos.CargaMasivaDetalleError.Crear(registro.Errores);
+					bool creados = Datos.Datos.CargaMasivaDetalleError.Crear(cargaMasivaDetalle.Errores);
+
+					errorDetectado = errorDetectado || !creados;
 				}
-			});
 
-			List<Datos.Modelo.CargaMasivaDetalle> paraCrear = registros.Where(r => r.Acciones != null && r.Acciones.Any(a => a == 1)).ToList();
-
-			if (paraCrear != null && paraCrear.Count > 0)
-			{
-				paraCrear.ForEach((registro) =>
+				if (cargaMasivaDetalle.Acciones != null && cargaMasivaDetalle.Acciones.Contains(1)) // SI TIENE LA ACCIÓN CREAR SOLICITUD
 				{
-					Datos.Modelo.TipoSolicitud tipoSolicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(registro.TipoSolicitud);
-					Datos.Modelo.Region region = Datos.Datos.Region.ObtenerRegion(registro.RegionCliente);
-					Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(registro.ComunaCliente);
-					Datos.Modelo.Prioridad prioridad = Datos.Datos.Prioridad.ObtenerPrioridad(registro.Prioridad);
-					Datos.Modelo.UnidadNegocio unidadNegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(registro.UnidadNegocio);
-					Datos.Modelo.Gerencia gerencia = Datos.Datos.Gerencia.ObtenerGerencia(registro.Gerencia);
-					string rut = registro.RutCliente.Replace(".", "");
+					Datos.Modelo.TipoSolicitud tipoSolicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(cargaMasivaDetalle.TipoSolicitud);
+					Datos.Modelo.Region region = Datos.Datos.Region.ObtenerRegion(cargaMasivaDetalle.RegionCliente);
+					Datos.Modelo.Comuna comuna = Datos.Datos.Comuna.ObtenerComuna(cargaMasivaDetalle.ComunaCliente);
+					Datos.Modelo.Prioridad prioridad = Datos.Datos.Prioridad.ObtenerPrioridad(cargaMasivaDetalle.Prioridad);
+					Datos.Modelo.UnidadNegocio unidadNegocio = Datos.Datos.UnidadNegocio.ObtenerUnidadNegocio(cargaMasivaDetalle.UnidadNegocio);
+					Datos.Modelo.Gerencia gerencia = Datos.Datos.Gerencia.ObtenerGerencia(cargaMasivaDetalle.Gerencia);
+					string rut = cargaMasivaDetalle.RutCliente.Replace(".", "");
 
 					Datos.Modelo.Solicitud solicitud = new Datos.Modelo.Solicitud
 					{
-						NumeroSolicitud = int.Parse(registro.NumeroSolicitud),
+						NumeroSolicitud = int.Parse(cargaMasivaDetalle.NumeroSolicitud),
 						TipoSolicitudId = tipoSolicitud.Tiposolicitudid,
 						EstadoSolicitudId = 1,
-						FechaSolicitud = registro.FechaSolicitud,
-						FechaRecepcion = registro.FechaRecepcion,
-						NumeroCliente = registro.NumeroCliente,
-						NombreCliente = registro.NombreCliente,
-						CalleDireccionCliente = registro.CalleDireccionCliente,
-						NumeroDireccionCliente = int.Parse(registro.NumeroDireccionCliente),
+						FechaSolicitud = cargaMasivaDetalle.FechaSolicitud,
+						FechaRecepcion = cargaMasivaDetalle.FechaRecepcion,
+						NumeroCliente = cargaMasivaDetalle.NumeroCliente,
+						NombreCliente = cargaMasivaDetalle.NombreCliente,
+						CalleDireccionCliente = cargaMasivaDetalle.CalleDireccionCliente,
+						NumeroDireccionCliente = int.Parse(cargaMasivaDetalle.NumeroDireccionCliente),
 						RegionClienteId = region.RegionId,
 						ComunaClienteId = comuna.ComunaId,
-						NumeroTelefonoContacto = registro.NumeroTelefonoContacto,
-						NumeroTelefonoContactoAdicional = registro.NumeroTelefonoContactoAdicional,
+						NumeroTelefonoContacto = cargaMasivaDetalle.NumeroTelefonoContacto,
+						NumeroTelefonoContactoAdicional = cargaMasivaDetalle.NumeroTelefonoContactoAdicional,
 						RutCliente = rut.Split('-')[0],
 						VRutCliente = rut.IndexOf('-') > 0 ? rut.Split('-')[1] : "",
 						PrioridadId = prioridad.prioridadid,
 						UnidadNegocioId = unidadNegocio.UnidadNegocioId,
 						GerenciaId = gerencia.Gerenciaid,
-						ObservacionAof = registro.ObservacionAof,
+						ObservacionAof = cargaMasivaDetalle.ObservacionAof,
 						SolicitanteId = usuario.UsuarioId
 					};
 
-					int solicitudId = Datos.Datos.Solicitud.Crear(solicitud);
+					solicitudId = Datos.Datos.Solicitud.Crear(solicitud);
+				}
 
-					Datos.Modelo.Existencia existencia = Datos.Datos.Existencia.ObtenerExistencia(registro.NumeroPlaca);
+				errorDetectado = errorDetectado || solicitudId <= 0;
 
-					List<Datos.Modelo.EquipoSolicitado> solicitados = new List<Datos.Modelo.EquipoSolicitado> {
-						new Datos.Modelo.EquipoSolicitado
-						{
-							SolicitudDespachoId = solicitudId,
-							NumeroPlaca = registro.NumeroPlaca,
-							Modelo = existencia.CodArt
-						}
-					};
+				bool equipoAgregado = false;
 
-					registros.Where(r => r.Acciones != null && r.Acciones.Any(a => a == 2) && r.NumeroSolicitud == registro.NumeroSolicitud).ToList().ForEach((reg) =>
-									{
-										Datos.Modelo.Existencia e = Datos.Datos.Existencia.ObtenerExistencia(reg.NumeroPlaca);
+				if (cargaMasivaDetalle.Acciones != null && cargaMasivaDetalle.Acciones.Contains(2)) // SI TIENE LA ACCiÓN AGREGAR EQUIPO
+				{
+					Datos.Modelo.Existencia existencia = Datos.Datos.Existencia.ObtenerExistencia(cargaMasivaDetalle.NumeroPlaca);
 
-										solicitados.Add(new Datos.Modelo.EquipoSolicitado
-										{
-											SolicitudDespachoId = solicitudId,
-											NumeroPlaca = reg.NumeroPlaca,
-											Modelo = e.CodArt
+					equipoAgregado = Datos.Datos.EquipoSolicitado.Crear(new Datos.Modelo.EquipoSolicitado
+					{
+						SolicitudDespachoId = solicitudId,
+						NumeroPlaca = cargaMasivaDetalle.NumeroPlaca,
+						Modelo = existencia.CodArt,
+						EstadoEquipoId = 1
+					});
+				}
 
-										});
-									});
+				errorDetectado = errorDetectado || !equipoAgregado;
+			});
 
-					Datos.Datos.EquipoSolicitado.Crear(solicitados);
-				});
-			}
+			if (errorDetectado) Json(new { exito = false });
 
-			return Json(new { exito = idcargamasiva > 0 });
+			return Json(new { exito = true });
 		}
 
 		public ActionResult Edit(int id)
@@ -182,14 +183,13 @@ namespace Despacho.Controllers
 		public JsonResult ValidaNumerosSolicitudes(List<Datos.Modelo.CargaMasivaDetalle> detalles)
 		{
 			List<string> numerosCreados = new List<string>();
-			
+
 			detalles.ForEach((detalle) =>
 			{
 				numerosCreados.Add(detalle.NumeroSolicitud);
 			});
 			return Json(numerosCreados);
 		}
-
 
 		[HttpPost]
 		public JsonResult Validar(List<Datos.Modelo.CargaMasivaDetalle> detalles)
@@ -274,7 +274,7 @@ namespace Despacho.Controllers
 
 				//VALIDA PLACA
 
-				if (!Datos.Datos.Internos.ExisteContenido("MiLogistic", "Existencia", "Serie", detalle.NumeroPlaca, Datos.Datos.Internos.stexto))
+				if (!Datos.Datos.Internos.ExisteContenido(LibConfig.DbExistencias, LibConfig.TablaExistencias, "Serie", detalle.NumeroPlaca, Datos.Datos.Internos.stexto))
 				{
 					detalle.Errores.Add(Datos.Modelo.CargaMasivaDetalleError.tipoPlaca);
 				}

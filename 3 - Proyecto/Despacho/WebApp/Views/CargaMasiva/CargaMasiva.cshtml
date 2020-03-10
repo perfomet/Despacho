@@ -30,19 +30,24 @@
 				<div class="form-group m-form__group">
 					<div class="custom-file">
 						<input type="file" class="custom-file-input" lang="es-cl" id="archivoCarga" accept=".xls,.xlsx">
-						<label class="custom-file-label" for="archivocarga">Seleccione un archivo</label>
+						<label class="custom-file-label" for="archivoCarga">Seleccione un archivo</label>
 					</div>
 				</div>
-				<div class="form-group m-form__group">
-					<a class="pull-right btn btn-sm btn-success mb-3" href="../../Content/Archivos/Carga Masiva.xlsx" target="_blank">Descargar Archivo Ejemplo</a>
-				</div>
 			</div>
-			<div class="col-lg-6">
+			<div class="col-lg-3">
 				<button class="btn btn-sm btn-primary" id="btnProcesarRegistros" style="width: 100%; font-size: 1.4rem;">Procesar</button>
+			</div>
+			<div class="col-lg-3">
+				<a class="btn btn-sm btn-success" href="../../Content/Archivos/Carga Masiva.xlsx" target="_blank" style="width: 100%; font-size: 1.2rem;">Descargar Archivo Ejemplo</a>
 			</div>
 			<div class="col-lg-6" id="alertaProcesar" style="display:none;">
 				<div class="alert alert-warning">
-					<strong>¡Importante!</strong> Presione el botón <b>Procesar</b> para guardar la información.
+					<strong>¡Importante!</strong> Presione el botón <b>Procesar</b> para visualizar la información.
+				</div>
+			</div>
+			<div class="col-lg-6" id="alertaGuardar" style="display:none;">
+				<div class="alert alert-warning">
+					<strong>¡Importante!</strong> Presione el botón <b>Guardar</b> para guardar la información.
 				</div>
 			</div>
 		</div>
@@ -73,13 +78,13 @@
 					<div class="row">
 						<div class="col-4">
 							<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
-								<input name="resutadoRegistro" type="checkbox" value="1" checked> Malos
+								<input id="registrosMalos" type="checkbox" value="1"> Malos
 								<span></span>
 							</label>
 						</div>
 						<div class="col-4">
 							<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
-								<input name="resutadoRegistro" type="checkbox" value="2"> Buenos
+								<input id="registrosBuenos" type="checkbox" value="2"> Buenos
 								<span></span>
 							</label>
 						</div>

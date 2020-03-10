@@ -67,11 +67,7 @@ namespace Datos.Datos
 			string SQLSentence = INSERTSentence + VALUESSentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, solicitud.NumeroSolicitud, solicitud.TipoSolicitudId, solicitud.EstadoSolicitudId, solicitud.FechaSolicitud, solicitud.FechaRecepcion, solicitud.NumeroCliente, solicitud.NombreCliente, solicitud.CalleDireccionCliente, solicitud.NumeroDireccionCliente, solicitud.RegionClienteId, solicitud.ComunaClienteId, solicitud.NumeroTelefonoContacto, solicitud.NumeroTelefonoContactoAdicional, solicitud.RutCliente, solicitud.VRutCliente, solicitud.PrioridadId, solicitud.UnidadNegocioId, solicitud.GerenciaId, solicitud.ObservacionAof, solicitud.SolicitanteId);
-			DataBase.ExecuteNonQuery(builder.ToString());
-
-			int id = 0;
-			int.TryParse(DataBase.ExecuteScalar("SELECT SCOPE_IDENTITY()").ToString(), out id);
-			return id;
+			return DataBase.ExecuteNonQueryId(builder.ToString());
 		}
 
 		public static bool Modificar(Modelo.Solicitud solicitud)

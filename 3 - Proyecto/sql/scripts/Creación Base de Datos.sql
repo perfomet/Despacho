@@ -884,8 +884,7 @@ CREATE TABLE CargaMasivaDetalle (
 	Gerencia VARCHAR(100) NULL, -- Enlaza por texto a tabla Gerencia
 	ObservacionAof VARCHAR(500),
 	Prioridad VARCHAR(100) NULL, -- Enlaza por texto a tabla Prioridad
-	NumeroPlaca VARCHAR(20) NULL,
-	UNIQUE (NumeroSolicitud, NumeroPlaca)
+	NumeroPlaca VARCHAR(20) NULL
 )
 
 CREATE TABLE CargaMasivaDetalleError (

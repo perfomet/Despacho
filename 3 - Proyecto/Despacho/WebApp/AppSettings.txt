@@ -5,5 +5,5 @@
 	<add key="Password" value="tontera"/>
 
 	<add key="DBExistencias" value="MiLogistic"/>
-	<add key="TablaExistencias" value="Existencias"/>
+	<add key="TablaExistencias" value="Existencia"/>
 </appSettings>

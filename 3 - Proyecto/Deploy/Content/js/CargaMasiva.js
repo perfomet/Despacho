@@ -232,11 +232,24 @@ let CargaMasivaDetalle = function () {
         });
 
         $(document).on('click', '.page-link', function () {
-            $('.detalle-estados').tooltip();
+            $('.detalle-linea').popover();
         });
 
         $('#guardar-registros').click(function () {
             _Guardar();
+        });
+
+        $('#registrosMalos, #registrosBuenos').click(function () {
+            let mostrarBuenos = $('#registrosBuenos').is(':checked') && $('#registrosBuenos').val() == '2';
+            let mostrarMalos = $('#registrosMalos').is(':checked') && $('#registrosMalos').val() == '1';
+
+            tabla.originalDataSet = registros.filter((r) => {
+                return (mostrarMalos == true && r.Errores.length > 0) || (mostrarBuenos == true && r.Errores.length == 0);
+            });
+
+            tabla.load();
+
+            $('.detalle-linea').popover('enable');
         });
     };
 
@@ -271,8 +284,15 @@ let CargaMasivaDetalle = function () {
                 },
                 {
                     field: "estados", title: "Resultado", responsive: { visible: "lg" }, width: '240px', template: function (e) {
+                        let color = '';
+
+                        if (e.Errores.filter((err) => {
+                            return err.tipo == 'danger';
+                        }).length > 0) color = 'danger';
+                        else color = 'success';
+
                         let div = $('<div></div>');
-                        let boton = $('<button class="btn btn-sm btn-primary detalle-estados w-100" data-toggle="tooltip" data-placement="right" data-trigger="click" data-html="true" title="Tooltip on <b>right</b>"></button>');
+                        let boton = $('<button class="btn btn-' + color + ' w-100 detalle-linea" role="button" data-toggle="m-popover" data-trigger="focus" data-html="true" title="A" data-content=""></button>');
                         let Errors = e.Errores;
                         let Actions = e.Acciones;
 
@@ -306,7 +326,7 @@ let CargaMasivaDetalle = function () {
                             });
                         }
 
-                        boton.attr('title', tooltip.html());
+                        boton.attr('data-content', tooltip.html());
                         div.html(boton);
                         return div.html();
                     }
@@ -353,6 +373,8 @@ let CargaMasivaDetalle = function () {
                 }
             }
         });
+
+        $('.detalle-linea').popover();
     };
 
     let _ProcesarRegistros = function () {
@@ -377,10 +399,14 @@ let CargaMasivaDetalle = function () {
 
                 registros.forEach((registro) => {
                     //VALIDA NUMERO DE SOLICITUD
-
                     if (!registro.NumeroSolicitud) {
                         registro.Errores.push(Errores.faltaNumeroSolicitud);
+                    } else {
+                        if (isNaN(registro.NumeroSolicitud)) {
+                            registro.Errores.push(Errores.tipoNumeroSolicitud);
+                        }
                     }
+
 
                     // VALIDA TIPO DE SOLICITUD
                     if (!registro.TipoSolicitud) {
@@ -468,7 +494,7 @@ let CargaMasivaDetalle = function () {
                         registro.Errores.push(Errores.faltaPlaca);
                     }
 
-                    if (numeroSolicitudActual != registro.numeroSolicitud && registro.Errores.length == 0) {
+                    if (numeroSolicitudActual != registro.NumeroSolicitud && registro.Errores.length == 0) {
                         // SI ESTE NÚMERO DE SOLICITUD SE CREARÁ, SE VALIDA QUE NO SE REPITA PARA CREAR EN EL ARCHIVO
                         if (registros.filter((r) => {
                             return r.NumeroSolicitud == registro.NumeroSolicitud && (!r.Acciones || (r.Acciones && r.Acciones.indexOf(Acciones.crearSolicitud) >= 0));
@@ -477,7 +503,7 @@ let CargaMasivaDetalle = function () {
                         } else {
                             registro.Acciones.push(Acciones.crearSolicitud);
                         }
-                    } else if ((registro.Errores.indexOf(Errores.faltaPlaca) < 0) && registro.numeroSolicitud == numeroSolicitudActual) {
+                    } else if (registro.Errores.filter((e) => { return e.id == Errores.faltaPlaca.id || e.id == 31 || e.id == 33; }).length == 0 && registro.NumeroSolicitud == numeroSolicitudActual) {
                         registro.Acciones.push(Acciones.agregarPlaca);
                         registro.Errores = [];
                     }
@@ -485,33 +511,52 @@ let CargaMasivaDetalle = function () {
                     numeroSolicitudActual = registro.NumeroSolicitud;
                 });
 
-                console.log(registros);
-
                 tabla.originalDataSet = registros;
                 tabla.load();
 
-                $('.detalle-estados').tooltip();
+                $('.detalle-linea').popover('enable');
+
+                // ACTIVA O DESACTIVA CHECK Malos
+                if (registros.filter((r) => { return r.Errores.length > 0; }).length > 0) {
+                    $('#registrosMalos').attr('checked', 'checked');
+                } else {
+                    $('#registrosMalos').removeAttr('checked');
+                }
+
+                // ACTIVA O DESACTIVA CHECK Buenos
+                if (registros.filter((r) => { return r.Errores.length == 0; }).length > 0) {
+                    $('#registrosBuenos').attr('checked', 'checked');
+                } else {
+                    $('#registrosBuenos').removeAttr('checked');
+                }
 
                 $('#divTablaResultado').show();
             });
         } catch (ex) {
-            console.log(ex);
             alert('No se pudo procesar la información, verifique el archivo.');
         }
 
         $('#btnProcesarRegistros').removeClass('pulso-guardar');
+        $('#guardar-registros').addClass('pulso-guardar');
     };
 
     let _Guardar = function () {
+        $('#guardar-registros').removeClass('pulso-guardar');
+
         let cargaMasiva = {
             archivo: $('label[for="archivocarga"]').text()
         };
 
         $.post("/CargaMasiva/Create", {
             cargamasiva: cargaMasiva,
-            registros: registros
+            cargaMasivaDetalles: registros
         }, function (data) {
-            console.log(data);
+            if (data.exito == true) {
+                alert('Carga masiva realizada con éxito');
+                location.href = "/CargaMasiva/Index";
+            } else {
+                alert('No se pudo realizar la carga masiva');
+            }
         });
     };
 
