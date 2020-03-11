@@ -4,6 +4,13 @@
 	ViewBag.Pagina = 2;
 	ViewBag.Title = "Despacho - Carga Masiva";
 	ViewBag.TituloSeccion = "Nueva Carga Masiva";
+
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
+
+	if (usuario.PerfilId != 4)
+	{
+		Response.Redirect("/CargaMasiva/Index");
+	}
 }
 
 @section Less{

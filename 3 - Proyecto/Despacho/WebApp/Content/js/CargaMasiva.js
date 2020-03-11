@@ -31,38 +31,70 @@ let Acciones = {
 
 let CargaMasiva = function () {
     let cargasmasivas = [];
+    let tabla;
+    let tablaDetalle;
+    let seleccionado;
 
-    let InitCargaMasiva = function () {
-        InitElementos();
+    let _Init = function () {
+        _InitElementos();
     };
 
-    let InitElementos = function () {
+    let _InitElementos = function () {
 
         $('.m-select2').select2();
 
         if ($("#listacargasmasivas").length > 0) {
-            window.crearSelectorFecha("#filtro-fechacarga", moment().subtract(6, 'days'), moment());
+            window.crearSelectorFecha("#filtro-fecha-carga", moment().subtract(6, 'days'), moment());
 
             $.post("/CargaMasiva/Listar", { clienteId: 0 }, function (data) {
                 cargasmasivas = data;
-                console.log(cargasmasivas);
-                CargarLista();
+                _CargarLista();
+                _CargarListaDetalle();
             });
 
-            $('#filtro-filtrar').click(function () {
-                let picker = $('#filtro-fecha-solicitud').data('daterangepicker');
-                //Filtrar();
+            $(document).on('click', '#listacargasmasivas tbody tr', function () {
+                seleccionado = $('#listacargasmasivas tbody tr').index($(this));
+                let carga = tabla.originalDataSet[seleccionado];
+
+                $('#numeroCargaDetalle').html(carga.CargaMasivaId);
+                $('#archivoDetalle').html(carga.Archivo);
+                $('#fechaCargaDetalle').html(carga.FechaHora);
+                $('#usuarioDetalle').html(carga.Usuario.NombreCompleto);
+                $('#lineasBuenasDetalle').html(carga.Detalle.filter((d) => { return d.Errores.length == 0; }).length + ' Líneas');
+                $('#lineasMalasDetalle').html(carga.Detalle.filter((d) => { return d.Errores.length > 0; }).length + ' Líneas');
+
+                tablaDetalle.originalDataSet = carga.Detalle;
+                tablaDetalle.load();
+
+                $('#modalDetalle').modal('show');
             });
         }
+
+        $('#filtro-filtrar').click(function () {
+            _Filtrar();
+        });
+
+        $('#registrosMalos, #registrosBuenos').click(function () {
+            let mostrarBuenos = $('#registrosBuenos').is(':checked') && $('#registrosBuenos').val() == '2';
+            let mostrarMalos = $('#registrosMalos').is(':checked') && $('#registrosMalos').val() == '1';
+
+            tablaDetalle.originalDataSet = tabla.originalDataSet[seleccionado].Detalle.filter((detalle) => {
+                return (mostrarMalos == true && detalle.Errores.length > 0) || (mostrarBuenos == true && detalle.Errores.length == 0);
+            });
+
+            tablaDetalle.load();
+        });
     };
 
-    let CargarLista = function () {
-        let picker = $('#filtro-fechacarga').data('daterangepicker');
+    let _CargarLista = function () {
+        let picker = $('#filtro-fecha-carga').data('daterangepicker');
 
-        $('#listacargasmasivas').mDatatable({
+        tabla = $('#listacargasmasivas').mDatatable({
             data: {
                 type: "local",
-                source: cargasmasivas,
+                source: cargasmasivas.filter((c) => {
+                    return moment(c.FechaHora, 'DD/MM/YYYY HH:mm:ss').isBetween(picker.startDate, picker.endDate);
+                }),
                 pageSize: 10
             },
             layout: {
@@ -81,12 +113,14 @@ let CargaMasiva = function () {
                 { field: "Usuario.NombreCompleto", title: "Usuario", responsive: { visible: "lg" } },
                 {
                     field: "FechaHora",
-                    title: "Realizada",
+                    title: "Fecha/Hora",
                     responsive: { visible: "lg" },
                     type: "date",
                     format: "DD/MM/YYYY"
                 },
-                { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } }
+                { field: "Archivo", title: "Archivo", responsive: { visible: "lg" } },
+                { field: "Buenas", title: "L. Buenas", responsive: { visible: "lg" }, template: function (e, a, i) { return '<span class="m-badge m-badge--success m-badge--wide"><b>' + e.Detalle.filter((d) => { return d.Errores.length == 0; }).length + ' Líneas</b></span>'; } },
+                { field: "Malas", title: "L. Malas", responsive: { visible: "lg" }, template: function (e, a, i) { return '<span class="m-badge m-badge--danger m-badge--wide"><b>' + e.Detalle.filter((d) => { return d.Errores.length > 0; }).length + ' Líneas</b></span>'; } }
             ],
             translate: {
                 records: {
@@ -113,9 +147,133 @@ let CargaMasiva = function () {
         });
     };
 
+    let _CargarListaDetalle = function () {
+        tablaDetalle = $('#lista-carga-detalle').mDatatable({
+            data: {
+                type: "local",
+                source: [],
+                pageSize: 10
+            },
+            layout: {
+                theme: "default",
+                class: "",
+                scroll: false,
+                footer: false
+            },
+            sortable: true,
+            pagination: true,
+            search: {
+                input: $('#txtBuscarDetalle')
+            },
+            columns: [
+                {
+                    field: "acciones", title: " ", responsive: { visible: "lg" }, template: function (e) {
+                        let error = '<i class="fa fa-times px-3" style="color: #DC3C41;font-size: 2rem;"></i>';
+                        let correcto = '<i class="fa fa-check px-3" style="color: #34BFA3;font-size: 2rem;"></i>';
+
+                        return e.Errores.filter((err) => {
+                            return err.tipo == 'danger';
+                        }).length > 0 ? error : correcto;
+                    }
+                },
+                {
+                    field: "estados", title: "Resultado", responsive: { visible: "lg" }, width: '240px', template: function (e) {
+                        let color = '';
+
+                        if (e.Errores.filter((err) => {
+                            return err.tipo == 'danger';
+                        }).length > 0) color = 'danger';
+                        else color = 'success';
+
+                        let div = $('<div></div>');
+                        let boton = $('<button class="btn btn-' + color + ' w-100 detalle-linea" role="button" data-toggle="m-popover" data-trigger="focus" data-html="true" title="" data-content=""></button>');
+                        let Errors = e.Errores;
+                        let Actions = e.Acciones;
+
+                        let popover = $('<div></div>');
+
+                        if (Errors.length > 0) {
+                            if (Errors.length > 1) {
+                                boton.html('Se encontraron <b>' + Errors.length + '</b> errors <b>ver aquí</b>');
+                            } else {
+                                boton.html('Se encontró <b>' + Errors.length + '</b> error <b>ver aquí</b>');
+                            }
+
+                            Errors.forEach((e) => {
+                                popover.append('<li>' + e.title + '</li>');
+                            });
+                        } else {
+                            boton.html('Línea procesada correctamente');
+                        }
+
+                        boton.attr('data-content', popover.html());
+                        div.html(boton);
+                        return div.html();
+                    }
+                },
+                { field: "NumeroSolicitud", title: "Numero Solicitud", responsive: { visible: "lg" } },
+                { field: "TipoSolicitud", title: "Tipo Solicitud", responsive: { visible: "lg" } },
+                { field: "FechaSolicitud", title: "Fecha Solicitud", responsive: { visible: "lg" } },
+                { field: "FechaRecepcion", title: "Fecha Recepción", responsive: { visible: "lg" } },
+                { field: "NumeroCliente", title: "N° Cliente", responsive: { visible: "lg" } },
+                { field: "NombreCliente", title: "Nombre Cliente", responsive: { visible: "lg" } },
+                { field: "CalleDireccionCliente", title: "Calle Dirección", responsive: { visible: "lg" } },
+                { field: "NumeroDireccionCliente", title: "Número Dirección", responsive: { visible: "lg" } },
+                { field: "RegionCliente", title: "Región", responsive: { visible: "lg" } },
+                { field: "ComunaCliente", title: "Comuna", responsive: { visible: "lg" } },
+                { field: "NumeroTelefonoContacto", title: "Teléfono", responsive: { visible: "lg" } },
+                { field: "NumeroTelefonoContactoAdicional", title: "Teléfono Adicional", responsive: { visible: "lg" } },
+                { field: "RutCliente", title: "Rut Cliente", responsive: { visible: "lg" } },
+                { field: "UnidadNegocio", title: "Unidad Negocio", responsive: { visible: "lg" } },
+                { field: "Gerencia", title: "Gerencia", responsive: { visible: "lg" } },
+                { field: "ObservacionAof", title: "Observación", responsive: { visible: "lg" } },
+                { field: "Prioridad", title: "Prioridad", responsive: { visible: "lg" } },
+                { field: "NumeroPlaca", title: "Placa", responsive: { visible: "lg" }, template: function (e, a, i) { mApp.initPopover($('.detalle-linea')); return e.NumeroPlaca; } },
+            ],
+            translate: {
+                records: {
+                    processing: "Cargando...",
+                    noRecords: "No se encontraron registros"
+                },
+                toolbar: {
+                    pagination: {
+                        items: {
+                            default: {
+                                first: "Primero",
+                                prev: "Anterior",
+                                next: "Siguiente",
+                                last: "Último",
+                                more: "Más páginas",
+                                input: "Número de página",
+                                select: "Seleccionar tamaño de página"
+                            },
+                            info: "Viendo {{start}} - {{end}} de {{total}} registros"
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    let _Filtrar = function () {
+        let picker = $('#filtro-fecha-carga').data('daterangepicker');
+
+        let filtrado = cargasmasivas.filter((c) => {
+            let valido = true;
+            debugger;
+            if ($('#filtro-usuario').val() && c.UsuarioId) valido = valido && c.UsuarioId == $('#filtro-usuario').val();
+            if (picker) valido = valido && moment(c.FechaHora, 'DD/MM/YYYY HH:mm:ss').isBetween(picker.startDate, picker.endDate);
+
+            return valido;
+        });
+
+        tabla.originalDataSet = filtrado;
+        tabla.load();
+    };
+
     return {
         init: function () {
-            InitCargaMasiva();
+            _Init();
         }
     };
 }();
@@ -232,11 +390,11 @@ let CargaMasivaDetalle = function () {
         });
 
         $(document).on('click', '.page-link', function () {
-            $('.detalle-linea').popover();
+            mApp.initPopover($('.detalle-linea'));
         });
 
         $('#guardar-registros').click(function () {
-            _Guardar();
+            _Guardar(nombreArchivo);
         });
 
         $('#registrosMalos, #registrosBuenos').click(function () {
@@ -248,8 +406,6 @@ let CargaMasivaDetalle = function () {
             });
 
             tabla.load();
-
-            $('.detalle-linea').popover('enable');
         });
     };
 
@@ -292,11 +448,11 @@ let CargaMasivaDetalle = function () {
                         else color = 'success';
 
                         let div = $('<div></div>');
-                        let boton = $('<button class="btn btn-' + color + ' w-100 detalle-linea" role="button" data-toggle="m-popover" data-trigger="focus" data-html="true" title="A" data-content=""></button>');
+                        let boton = $('<button class="btn btn-' + color + ' w-100 detalle-linea" role="button" data-toggle="m-popover" data-trigger="focus" data-html="true" title="" data-content=""></button>');
                         let Errors = e.Errores;
                         let Actions = e.Acciones;
 
-                        let tooltip = $('<div></div>');
+                        let popover = $('<div></div>');
 
                         if (Errors.length > 0) {
                             if (Errors.length > 1) {
@@ -306,7 +462,7 @@ let CargaMasivaDetalle = function () {
                             }
 
                             Errors.forEach((e) => {
-                                tooltip.append('<li>' + e.title + '</li>');
+                                popover.append('<li>' + e.title + '</li>');
                             });
                         } else {
                             if (Actions.length > 1) {
@@ -317,16 +473,16 @@ let CargaMasivaDetalle = function () {
 
                             Actions.forEach((a) => {
                                 if (a == Acciones.crearSolicitud) {
-                                    tooltip.append('<li>Se creará la solicitud N° ' + e.NumeroSolicitud + '</li>');
+                                    popover.append('<li>Se creará la solicitud N° <b>' + e.NumeroSolicitud + '</b></li>');
                                 }
 
                                 if (a == Acciones.agregarPlaca) {
-                                    tooltip.append('<li>Se agregará la placa ' + e.Placa + ' a la solicitud ' + e.NumeroSolicitud + '</li>');
+                                    popover.append('<li>Se agregará la placa <b>' + e.NumeroPlaca + '</b> a la solicitud <b>' + e.NumeroSolicitud + '</b></li>');
                                 }
                             });
                         }
 
-                        boton.attr('data-content', tooltip.html());
+                        boton.attr('data-content', popover.html());
                         div.html(boton);
                         return div.html();
                     }
@@ -348,7 +504,7 @@ let CargaMasivaDetalle = function () {
                 { field: "Gerencia", title: "Gerencia", responsive: { visible: "lg" } },
                 { field: "ObservacionAof", title: "Observación", responsive: { visible: "lg" } },
                 { field: "Prioridad", title: "Prioridad", responsive: { visible: "lg" } },
-                { field: "NumeroPlaca", title: "Placa", responsive: { visible: "lg" } },
+                { field: "NumeroPlaca", title: "Placa", responsive: { visible: "lg" }, template: function (e, a, i) { mApp.initPopover($('.detalle-linea')); return e.NumeroPlaca; } },
             ],
             translate: {
                 records: {
@@ -374,7 +530,15 @@ let CargaMasivaDetalle = function () {
             }
         });
 
-        $('.detalle-linea').popover();
+        console.log(tabla);
+
+        $(tabla.table).on('load.dt', function () {
+            alert('Table load dt');
+        });
+
+        $(tabla.table).on('load', function () {
+            alert('Table load');
+        });
     };
 
     let _ProcesarRegistros = function () {
@@ -514,8 +678,6 @@ let CargaMasivaDetalle = function () {
                 tabla.originalDataSet = registros;
                 tabla.load();
 
-                $('.detalle-linea').popover('enable');
-
                 // ACTIVA O DESACTIVA CHECK Malos
                 if (registros.filter((r) => { return r.Errores.length > 0; }).length > 0) {
                     $('#registrosMalos').attr('checked', 'checked');
@@ -530,6 +692,8 @@ let CargaMasivaDetalle = function () {
                     $('#registrosBuenos').removeAttr('checked');
                 }
 
+                mApp.initPopover($('.detalle-linea'));
+
                 $('#divTablaResultado').show();
             });
         } catch (ex) {
@@ -540,11 +704,11 @@ let CargaMasivaDetalle = function () {
         $('#guardar-registros').addClass('pulso-guardar');
     };
 
-    let _Guardar = function () {
+    let _Guardar = function (nombreArchivo) {
         $('#guardar-registros').removeClass('pulso-guardar');
 
         let cargaMasiva = {
-            archivo: $('label[for="archivocarga"]').text()
+            archivo: nombreArchivo
         };
 
         $.post("/CargaMasiva/Create", {

@@ -7,14 +7,13 @@ namespace Datos.Datos
 {
 	public class CargaMasivaDetalle
 	{
-		public static List<Modelo.CargaMasivaDetalle> ObtenerCargasMasivasDetalle()
+		public static List<Modelo.CargaMasivaDetalle> ObtenerCargasMasivasDetalle(int cargaMasivaId)
 		{
-			string SELECTSentence = "SELECT CargaMasivaDetalleId, CargaMasivaId, NumeroSolicitud, TipoSolicitud, FechaSolicitud, FechaRecepcion, NumeroCliente, NombreCliente, CalleDireccionCliente, NumeroDireccionCliente, RegionCliente, ComunaCliente, NumeroTelefonoContacto, NumeroTelefonoContactoAdicional, RutCliente, UnidadNegocio, Gerencia, ObservacionAof, Prioridad, Placa";
+			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM CargaMasivaDetalle";
-			string JOINSentence = "";
-			string WHERESentence = "";
+			string WHERESentence = " WHERE CargaMasivaId = " + cargaMasivaId.ToString();
 			string ORDERSentence = ";";
-			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.CargaMasivaDetalle> cargasmasivasdetalle = new List<Modelo.CargaMasivaDetalle>();

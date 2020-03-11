@@ -7,16 +7,13 @@ namespace Datos.Datos
 {
 	public class CargaMasivaDetalleError
 	{
-
-
-		public static List<Modelo.CargaMasivaDetalleError> ObtenerErrores()
+		public static List<Modelo.CargaMasivaDetalleError> ObtenerErrores(int cargaMasivaDetalleId)
 		{
 			string SELECTSentence = "SELECT *";
 			string FROMSentence = " FROM CargaMasivaDetalleError";
-			string JOINSentence = "";
-			string WHERESentence = "";
+			string WHERESentence = " WHERE CargaMasivaDetalleId = " + cargaMasivaDetalleId.ToString();
 			string ORDERSentence = ";";
-			string SQLSentence = SELECTSentence + FROMSentence + JOINSentence + WHERESentence + ORDERSentence;
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence + ORDERSentence;
 
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.CargaMasivaDetalleError> errores = new List<Modelo.CargaMasivaDetalleError>();
@@ -80,4 +77,3 @@ namespace Datos.Datos
 		}
 	}
 }
-

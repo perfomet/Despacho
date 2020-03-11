@@ -14,11 +14,10 @@ namespace Datos.Modelo
 		public string NombreCompleto { get { return Nombres + " " + ApellidoPaterno + (ApellidoMaterno == null ? "" : " " + ApellidoMaterno); } }
 		public string Email { get; set; }
 		public int PerfilId { get; set; }
-		public string Perfilnombre { get; set; }
 		public int? ClienteId { get; set; }
 		public int? CargaMasivaId { get; set; }
-		public string Clientenombre { get; set; }
 		public bool EstaActivo { get; set; }
+
 		public Perfil Perfil
 		{
 			get { return Datos.Perfil.ObtenerPerfil(PerfilId); }
@@ -30,11 +29,7 @@ namespace Datos.Modelo
 			get { return Datos.Cliente.ObtenerCliente(ClienteId.GetValueOrDefault()); }
 			set { Cliente = value; }
 		}
-		/*public CargaMasiva CargaMasiva
-		{
-			get { return Datos.CargaMasiva.ObtenerCargaMasiva(CargaMasivaId.GetValueOrDefault()); }
-			set { CargaMasiva = value; }
-		}*/
+
 		public void FromDataRow(DataRow fila)
 		{
 			this.UsuarioId = int.Parse(fila[0].ToString());
@@ -45,12 +40,8 @@ namespace Datos.Modelo
 			this.ApellidoMaterno = fila[5].ToString();
 			this.Email = fila[6].ToString();
 			this.PerfilId = int.Parse(fila[7].ToString());
-			this.Perfilnombre=fila[8].ToString();
-			this.ClienteId = (fila[9].ToString() == "" ? 0 : int.Parse(fila[9].ToString()));
-			//if (fila[9] != null && !fila[9].ToString().Equals("")) this.ClienteId=int.Parse(fila[9].ToString());
-			this.Clientenombre = fila[10].ToString();
-			//if (fila[8] != null && !fila[8].ToString().Equals("")) this.ClienteId = int.Parse(fila[8].ToString());
-			this.EstaActivo = bool.Parse(fila[11].ToString());
+			this.ClienteId = (fila[8].ToString() == "" ? 0 : int.Parse(fila[8].ToString()));
+			this.EstaActivo = bool.Parse(fila[9].ToString());
 		}
 	}
 }

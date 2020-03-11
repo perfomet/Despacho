@@ -25,13 +25,8 @@ namespace Datos.Modelo
 		public string ObservacionAof { get; set; }
 		public string Prioridad { get; set; }
 		public string NumeroPlaca { get; set; }
-		public List<CargaMasivaDetalleError> Errores { get; set; }
+		public List<CargaMasivaDetalleError> Errores { get { return Datos.CargaMasivaDetalleError.ObtenerErrores(CargaMasivaDetalleId); } set { Errores = value; } }
 		public List<int> Acciones { get; set; }
-		public CargaMasiva CargaMasiva
-		{
-			get { return new CargaMasiva(); }
-		}
-
 
 		public void FromDataRow(DataRow fila)
 		{

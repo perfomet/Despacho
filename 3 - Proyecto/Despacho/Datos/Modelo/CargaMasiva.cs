@@ -19,7 +19,7 @@ namespace Datos.Modelo
 
 		public List<CargaMasivaDetalle> Detalle
 		{
-			get { return Datos.CargaMasivaDetalle.ObtenerCargasMasivasDetalle(); }
+			get { return Datos.CargaMasivaDetalle.ObtenerCargasMasivasDetalle(CargaMasivaId); }
 		}
 
 		public void FromDataRow(DataRow fila)

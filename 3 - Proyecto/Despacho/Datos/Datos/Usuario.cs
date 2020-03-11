@@ -7,11 +7,11 @@ namespace Datos.Datos
 {
 	public class Usuario
 	{
-		
+
 		public static List<Modelo.Usuario> ObtenerUsuarios()
 		{
-			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS Rol, Usuario.ClienteId, Cliente.Nombre AS Clientenombre, Usuario.EstaActivo";
-			string FROMSentence = " FROM Perfil INNER JOIN Usuario ON Perfil.PerfilId = Usuario.PerfilId LEFT OUTER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId";
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM Usuario";
 			string SQLSentence = SELECTSentence + FROMSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Usuario> usuarios = new List<Modelo.Usuario>();
@@ -27,12 +27,13 @@ namespace Datos.Datos
 
 			return usuarios;
 		}
+
 		public static Modelo.Usuario ObtenerUsuario(string username)
 		{
 			Modelo.Usuario usuario = new Modelo.Usuario();
-			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS Rol, Usuario.ClienteId, Cliente.Nombre AS Clientenombre, Usuario.EstaActivo";
-			string FROMSentence = " FROM Perfil INNER JOIN Usuario ON Perfil.PerfilId = Usuario.PerfilId LEFT OUTER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId";
-			string WHERESentence = " WHERE Usuario.Username = '" + username + "'";
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM Usuario";
+			string WHERESentence = " WHERE Username = '" + username + "'";
 			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 
@@ -44,6 +45,26 @@ namespace Datos.Datos
 
 			return usuario;
 		}
+
+		public static Modelo.Usuario ObtenerUsuario(int usuarioId)
+		{
+			Modelo.Usuario usuario = new Modelo.Usuario();
+
+			string SELECTSentence = "SELECT *";
+			string FROMSentence = " FROM Usuario";
+			string WHERESentence = " WHERE UsuarioId = " + usuarioId.ToString();
+			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
+			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
+
+			if (dataTable.Rows.Count > 0)
+			{
+				DataRow fila = dataTable.Rows[0];
+				usuario.FromDataRow(fila);
+			}
+
+			return usuario;
+		}
+
 		public static bool Crear(Modelo.Usuario usuario)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -54,6 +75,7 @@ namespace Datos.Datos
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
+
 		public static bool Modificar(Modelo.Usuario usuario)
 		{
 			StringBuilder builder = new StringBuilder();
@@ -65,56 +87,23 @@ namespace Datos.Datos
 
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
-		public static Modelo.Usuario ObtenerUsuario(int usuarioId)
-		{
-			Modelo.Usuario usuario = new Modelo.Usuario();
 
-			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS Rol, Usuario.ClienteId, Cliente.Nombre AS Clientenombre, Usuario.EstaActivo";
-			string FROMSentence = " FROM Perfil INNER JOIN Usuario ON Perfil.PerfilId = Usuario.PerfilId LEFT OUTER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId";
-			string WHERESentence = " WHERE Usuario.UsuarioId = " + usuarioId.ToString();
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
-
-			if (dataTable.Rows.Count > 0)
-			{
-				DataRow fila = dataTable.Rows[0];
-				usuario.FromDataRow(fila);
-			}
-
-			return usuario;
-		}
 		public static bool EstaActivo(int Id)
 		{
 			string UPDATESentence = "UPDATE Usuario";
-			string SETSentence = " SET Usuario.EstaActivo = CASE WHEN Usuario.EstaActivo = 1 THEN 0 ELSE 1 END";
-			string WHERESentence = " WHERE Usuario.UsuarioId = {0}";
+			string SETSentence = " SET EstaActivo = CASE WHEN EstaActivo = 1 THEN 0 ELSE 1 END";
+			string WHERESentence = " WHERE UsuarioId = {0}";
 			string SQLSentence = UPDATESentence + SETSentence + WHERESentence;
 			StringBuilder builder = new StringBuilder();
 			builder.AppendFormat(SQLSentence, Id);
 			return DataBase.ExecuteNonQuery(builder.ToString()) > 0;
 		}
-		public static Modelo.Usuario ObtenerCargaMasiva(int idcargamasiva)
-		{
-			Modelo.Usuario usuario = new Modelo.Usuario();
-			string SELECTSentence = "SELECT Usuario.*";
-			string FROMSentence = " FROM Usuario INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId";
-			string WHERESentence = " WHERE CargaMasiva.IdCargaMasiva = " + idcargamasiva.ToString();
-			string SQLSentence = SELECTSentence + FROMSentence + WHERESentence;
-			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 
-			if (dataTable.Rows.Count > 0)
-			{
-				DataRow fila = dataTable.Rows[0];
-				usuario.FromDataRow(fila);
-			}
-
-			return usuario;
-		}
 		public static List<Modelo.Usuario> ObtenerUsuariosCargaMasiva()
 		{
-			string SELECTSentence = "SELECT Usuario.UsuarioId, Usuario.Username, Usuario.Password, Usuario.Nombres, Usuario.ApellidoPaterno, Usuario.ApellidoMaterno, Usuario.Email, Usuario.PerfilId, Perfil.Descripcion AS TipoPerfil, Usuario.ClienteId, Cliente.Nombre AS ClienteNombre, Usuario.EstaActivo";
-			string FROMSentence = " FROM Usuario";
-			string INNERJOINSentence= " INNER JOIN CargaMasiva ON CargaMasiva.UsuarioId = Usuario.UsuarioId INNER JOIN Cliente ON Usuario.ClienteId = Cliente.ClienteId INNER JOIN Perfil ON Usuario.PerfilId = Perfil.PerfilId";
+			string SELECTSentence = "SELECT U.*";
+			string FROMSentence = " FROM Usuario U";
+			string INNERJOINSentence = " INNER JOIN CargaMasiva C ON C.UsuarioId = U.UsuarioId";
 			string SQLSentence = SELECTSentence + FROMSentence + INNERJOINSentence;
 			DataTable dataTable = DataBase.ExecuteReader(SQLSentence);
 			List<Modelo.Usuario> usuarios = new List<Modelo.Usuario>();

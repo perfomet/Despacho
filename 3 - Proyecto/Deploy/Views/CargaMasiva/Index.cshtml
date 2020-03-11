@@ -4,6 +4,7 @@
 	ViewBag.TituloSeccion = "Carga Masiva";
 	ViewBag.Pagina = 2;
 
+	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 	List<Datos.Modelo.Usuario> usuarios = Datos.Datos.Usuario.ObtenerUsuariosCargaMasiva();
 
 }
@@ -51,27 +52,23 @@
 				<div class="col-xl-6 m--margin-top-10">
 					<div class="form-group m-form__group row">
 						<label class="col-form-label col-lg-3 col-sm-12">Usuario</label>
-						<!--<input class="form-control m-select2" id="filtro-usuario" name="filtro-usuario" type="text">
-						-->
-						<select class="form-control col-lg-3 col-sm-12 m-select2" id="filtro-usuario" name="filtro-cliente">
-							<option value="" selected>Todos</option>
-							@foreach (Datos.Modelo.Usuario usuario in usuarios)
-							{
-								<option value="@usuario.UsuarioId">@usuario.Username</option>
-							}
-						</select>
+						<div class="col-lg-8 col-sm-12">
+							<select class="form-control m-select2" id="filtro-usuario" name="filtro-usuario">
+								<option value="" selected>Todos</option>
+								@foreach (Datos.Modelo.Usuario user in usuarios)
+								{
+									<option value="@user.UsuarioId">@user.NombreCompleto</option>
+								}
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-			<div class="row">
 				<div class="col-xl-6 m--margin-top-10">
 					<div class="form-group m-form__group row">
-						<label class="col-form-label col-lg-4 col-sm-12">Fecha Carga</label>
-						<div class="col-lg-7 col-sm-12">
-							<div class='input-group pull-right' id='filtro-fechacarga'>
-								<input type='text' class="form-control m-input" readonly placeholder="Seleccione la fecha de la carga" />
+						<label class="col-form-label col-lg-3 col-sm-12">Fecha Carga</label>
+						<div class="col-lg-9 col-sm-12">
+							<div class='input-group pull-right' id='filtro-fecha-carga'>
+								<input type='text' class="form-control m-input" readonly placeholder="Seleccione la fecha de inicio y fin" />
 								<div class="input-group-append">
 									<span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
 								</div>
@@ -79,20 +76,10 @@
 						</div>
 					</div>
 				</div>
-				<!--
-					<label class="col-form-label col-lg-3 col-sm-12">Fecha desde</label>
-					<input class="form-control col-lg-3 col-sm-12" id="filtro-fechadesde" name="filtro-fechadesde" type="date" value=date.now />
-					<label class="col-form-label col-lg-3 col-sm-12">Fecha hasta</label>
-					<input class="form-control col-lg-3 col-sm-12" id="filtro-fechahasta" name="filtro-fechahasta" type="date" value="today" />
-				-->
 			</div>
-
 		</div>
-
 	</div>
 </div>
-
-
 <div class="m-portlet m-portlet--mobile">
 	<div class="m-portlet__head">
 		<div class="m-portlet__head-caption w-100">
@@ -106,23 +93,117 @@
 							Listado
 						</h4>
 					</li>
-					<li class="m-portlet__nav-item w-100 d-flex" style="justify-content: flex-end;">
-						<a href="/CargaMasiva/CargaMasiva" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-							<span>
-								<i class="flaticon-add"></i>
-								<span>Crear Carga</span>
-							</span>
-						</a>
-					</li>
+					@if (usuario.PerfilId == 4)
+					{
+						<li class="m-portlet__nav-item w-100 d-flex" style="justify-content: flex-end;">
+							<a href="/CargaMasiva/CargaMasiva" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+								<span>
+									<i class="flaticon-add"></i>
+									<span>Crear Carga</span>
+								</span>
+							</a>
+						</li>
+					}
 				</ul>
 			</div>
 
 			<div class="m-separator m-separator--dashed d-xl-none"></div>
 		</div>
 	</div>
+	<div class="m-portlet__body">
+		<!--begin: Datatable -->
+		<div class="m_datatable" id="listacargasmasivas"></div>
+		<!--end: Datatable -->
+	</div>
 </div>
-<div class="m-portlet__body">
-	<!--begin: Datatable -->
-	<div class="m_datatable" id="listacargasmasivas"></div>
-	<!--end: Datatable -->
+<div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Detalle de Carga Masiva</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+						<div class="row">
+							<label class="col-3"><b>N° Carga Masiva:</b></label>
+							<div class="col-9">
+								<span id="numeroCargaDetalle"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<label class="col-3"><b>Archivo:</b></label>
+							<div class="col-9">
+								<span id="archivoDetalle"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<label class="col-3"><b>Fecha Carga:</b></label>
+							<div class="col-9">
+								<span id="fechaCargaDetalle"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<label class="col-3"><b>Usuario:</b></label>
+							<div class="col-9">
+								<span id="usuarioDetalle"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<label class="col-3"><b>Líneas Buenas:</b></label>
+							<div class="col-9">
+								<span class="m-badge m-badge--success m-badge--wide" id="lineasBuenasDetalle"></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row">
+							<label class="col-3"><b>Líneas Malas:</b></label>
+							<div class="col-9">
+								<span class="m-badge m-badge--danger m-badge--wide" id="lineasMalasDetalle"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="row">
+					<div class="col-6">
+						<div class="row">
+							<div class="col-4">
+								<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
+									<input id="registrosMalos" type="checkbox" value="1" checked> Malos
+									<span></span>
+								</label>
+							</div>
+							<div class="col-4">
+								<label class="m-checkbox m-checkbox--air m-checkbox--state-brand">
+									<input id="registrosBuenos" type="checkbox" value="2" checked> Buenos
+									<span></span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-group">
+							<div class="input-group">
+								<input class="form-control m-input" placeholder="Buscar" id="txtBuscarDetalle" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="m_datatable" id="lista-carga-detalle"></div>
+			</div>
+		</div>
+	</div>
 </div>
