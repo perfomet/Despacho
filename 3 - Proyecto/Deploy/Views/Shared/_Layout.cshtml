@@ -33,11 +33,10 @@
 	@Styles.Render("~/Content/css/fontawesome")
 	@Styles.Render("~/Content/css/metronic")
 
-	<link rel="stylesheet/less" type="text/css" href="~/Content/less/general.less" />
+	<link rel="stylesheet" type="text/css" href="~/Content/css/general.css" />
 
 	@RenderSection("Less", required: false)
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" data-env="production"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
 	<script>
 		WebFont.load(
@@ -47,7 +46,7 @@
 					sessionStorage.fonts = true;
 				}
 			});
-		var webroot = '@Request.Url.Scheme://@Request.Url.Authority';
+		var webroot = "@VirtualPathUtility.ToAbsolute("~/")";
 	</script>
 
 	@Scripts.Render("~/bundles/metronic")
