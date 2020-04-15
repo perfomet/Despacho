@@ -29,7 +29,7 @@
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/TipoSolicitud/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = webroot + "/TipoSolicitud/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

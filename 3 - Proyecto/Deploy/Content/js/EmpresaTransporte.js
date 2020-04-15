@@ -27,7 +27,7 @@
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/EmpresaTransporte/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = webroot + "/EmpresaTransporte/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

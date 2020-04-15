@@ -34,7 +34,7 @@
 
             $(document).on('click', '#lista-solicitudes tbody tr', function () {
                 let id = $(this).find('.solicitud-despacho-id').html();
-                location.href = "~/Solicitud/Solicitud/" + id;
+                location.href = webroot + "/Solicitud/Solicitud/" + id;
             });
         }
     };
@@ -246,7 +246,7 @@ let DetalleSolicitud = function () {
             equiposSolicitados: equiposSolicitados
         }, function (data) {
             if (data.exito) {
-                mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Solicitud/Index"; });
+                mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = webroot + "/Solicitud/Index"; });
             } else {
                 mensaje("Error", "No se pudo guardar la información", "error");
             }

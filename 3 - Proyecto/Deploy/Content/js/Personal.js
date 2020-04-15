@@ -47,7 +47,7 @@
 
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Personal/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = webroot + "/Personal/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

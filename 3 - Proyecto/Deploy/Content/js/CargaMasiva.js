@@ -717,7 +717,7 @@ let CargaMasivaDetalle = function () {
         }, function (data) {
             if (data.exito == true) {
                 alert('Carga masiva realizada con éxito');
-                location.href = "~/CargaMasiva/Index";
+                location.href = webroot + "/CargaMasiva/Index";
             } else {
                 alert('No se pudo realizar la carga masiva');
             }

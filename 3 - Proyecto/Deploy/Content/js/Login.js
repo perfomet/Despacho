@@ -2,7 +2,7 @@
     let usuario;
 
     let Init = function () {
-        if (logueado == "True") location.href = '~/Home/Index';
+        if (logueado == "True") location.href = webroot + '/Home/Index';
 
         $('#usuario').focus();
 
@@ -83,7 +83,7 @@
             if (data.exito == true) {
                 localStorage.setItem('usuario', btoa(JSON.stringify(data.usuario)));
 
-                location.href = '~/Home/Index';
+                location.href = webroot + '/Home/Index';
             } else {
                 alert('Clave incorrecta.');
             }

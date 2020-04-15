@@ -28,7 +28,7 @@
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Gerencia/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = webroot + "/Gerencia/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

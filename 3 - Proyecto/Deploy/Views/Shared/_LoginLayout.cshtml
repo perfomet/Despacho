@@ -26,10 +26,10 @@
 	@Scripts.Render("~/bundles/bootstrap")
 	@Scripts.Render("~/bundles/modernizr")
 	@Scripts.Render("~/bundles/general")
-	<script>
+<script>
 		var logueado = '@Session["logueado"]';
-		var webroot = '@Request.Url.Authority';
-	</script>
+		var webroot = '@Request.Url.Scheme://@Request.Url.Authority';
+</script>
 	@RenderSection("Scripts", required: false)
 </head>
 <body>

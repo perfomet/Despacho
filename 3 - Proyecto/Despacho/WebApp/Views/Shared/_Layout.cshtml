@@ -37,7 +37,7 @@
 
 	@RenderSection("Less", required: false)
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" data-env="development"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" data-env="production"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
 	<script>
 		WebFont.load(
@@ -47,7 +47,7 @@
 					sessionStorage.fonts = true;
 				}
 			});
-		var webroot = '@Request.Url.Authority';
+		var webroot = '@Request.Url.Scheme://@Request.Url.Authority';
 	</script>
 
 	@Scripts.Render("~/bundles/metronic")
