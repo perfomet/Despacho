@@ -1,13 +1,4 @@
-﻿#colores() {
-	primario: #085A87;
-	secundario: #0B6880;
-	claro: #17A680;
-	blanco: #FFFFFF;
-	gris-claro: #dedede;
-	intercalado: #17A6801C;
-}
-
-body {
+﻿body {
 }
 
 #m_aside_left .m-menu__item.m-menu__item--active > .m-menu__link {
