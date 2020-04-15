@@ -37,7 +37,7 @@
         });
       });
 
-      $.post("/EstadoEquipo/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/EstadoEquipo/" + (id > 0 ? "Edit" : "Create"), {
         estadoequipo: {
           Estadoequipoid: id,
           Descripcion: descripcion,
@@ -46,7 +46,7 @@
         bins: bins
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/EstadoEquipo/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/EstadoEquipo/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

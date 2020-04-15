@@ -2,7 +2,7 @@
     let usuario;
 
     let Init = function () {
-        if (logueado == "True") location.href = '/Home/Index';
+        if (logueado == "True") location.href = '~/Home/Index';
 
         $('#usuario').focus();
 
@@ -54,7 +54,7 @@
     let Continuar = function () {
         let user = $('#usuario').val();
 
-        $.post('/Login/ObtenerUsuario', { usuario: user }, function (data) {
+        $.post(webroot + '/Login/ObtenerUsuario', { usuario: user }, function (data) {
             if (data.Username == user) {
                 localStorage.setItem('usuario', btoa(JSON.stringify(data)));
 
@@ -79,11 +79,11 @@
         usuario = localStorage.getItem('usuario');
         if (usuario) usuario = JSON.parse(atob(usuario));
 
-        $.post('/Login/Ingresar', { usuario: usuario.Username, clave: $('#clave').val() }, function (data) {
+        $.post(webroot + '/Login/Ingresar', { usuario: usuario.Username, clave: $('#clave').val() }, function (data) {
             if (data.exito == true) {
                 localStorage.setItem('usuario', btoa(JSON.stringify(data.usuario)));
 
-                location.href = '/Home/Index';
+                location.href = '~/Home/Index';
             } else {
                 alert('Clave incorrecta.');
             }

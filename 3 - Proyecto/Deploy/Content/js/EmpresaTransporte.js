@@ -20,14 +20,14 @@
       let nombre = $('#nombre').val();
       let espropia = $('#espropia').val();
       
-      $.post("/EmpresaTransporte/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/EmpresaTransporte/" + (id > 0 ? "Edit" : "Create"), {
         EmpresaTransporteId: id,
         Nombre: nombre,
         EsPropia: espropia,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/EmpresaTransporte/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/EmpresaTransporte/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

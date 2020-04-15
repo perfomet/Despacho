@@ -14,7 +14,7 @@
 
             let perfil = $('#perfil-usuario').val();
 
-            $.post("/Solicitud/ObtenerSolicitudes", { solicitudId: 0 }, function (data) {
+            $.post(webroot + "/Solicitud/ObtenerSolicitudes", { solicitudId: 0 }, function (data) {
                 solicitudes = data.filter((s) => {
                     let cuenta = false;
 
@@ -34,7 +34,7 @@
 
             $(document).on('click', '#lista-solicitudes tbody tr', function () {
                 let id = $(this).find('.solicitud-despacho-id').html();
-                location.href = "/Solicitud/Solicitud/" + id;
+                location.href = "~/Solicitud/Solicitud/" + id;
             });
         }
     };
@@ -207,7 +207,7 @@ let DetalleSolicitud = function () {
 
         let equiposSolicitados = EquiposSolicitados.getEquipos();
 
-        $.post("/Solicitud/" + (solicitudId > 0 ? "Edit" : "Create"), {
+        $.post(webroot + "/Solicitud/" + (solicitudId > 0 ? "Edit" : "Create"), {
             solicitud: {
                 SolicitudDespachoId: solicitudId,
                 NumeroSolicitud: numeroSolicitud,
@@ -246,7 +246,7 @@ let DetalleSolicitud = function () {
             equiposSolicitados: equiposSolicitados
         }, function (data) {
             if (data.exito) {
-                mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Solicitud/Index"; });
+                mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Solicitud/Index"; });
             } else {
                 mensaje("Error", "No se pudo guardar la información", "error");
             }
@@ -254,7 +254,7 @@ let DetalleSolicitud = function () {
     };
 
     let _CargarListaComunas = function (regionId) {
-        $.post('/Solicitud/ObtenerComunas', { regionId: regionId }, function (comunas) {
+        $.post(webroot + '/Solicitud/ObtenerComunas', { regionId: regionId }, function (comunas) {
             $('#comunaClienteId').html('<option value="0" selected disabled>Seleccione una comuna</option>');
 
             if (comunas.length > 0) {
@@ -364,7 +364,7 @@ let EquiposSolicitados = function () {
 
     let _InitElementos = function () {
         if ($("#lista-equipos-solicitados").length > 0) {
-            $.post("/Solicitud/ObtenerEquiposSolicitados", { solicitudId: $('#solicitudId').val() }, function (data) {
+            $.post(webroot + "/Solicitud/ObtenerEquiposSolicitados", { solicitudId: $('#solicitudId').val() }, function (data) {
                 equipos = data;
                 _CargarLista();
             });
@@ -563,7 +563,7 @@ let PersonalAsignado = function () {
 
     let _InitElementos = function () {
         if ($("#lista-personal-asignado").length > 0) {
-            $.post("/Solicitud/ObtenerPersonalAsignado", { solicitudId: $('#solicitudId').val() }, function (data) {
+            $.post(webroot + "/Solicitud/ObtenerPersonalAsignado", { solicitudId: $('#solicitudId').val() }, function (data) {
                 personal = data;
                 _CargarLista();
             });

@@ -18,13 +18,13 @@
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
      
-      $.post("/Perfil/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/Perfil/" + (id > 0 ? "Edit" : "Create"), {
         Perfilid: id,
         Descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Perfil/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Perfil/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

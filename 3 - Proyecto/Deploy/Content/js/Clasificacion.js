@@ -22,14 +22,14 @@
             let cantidad = $('#cantidad').val();
             let unidadmedidaid = $('#unidadmedidaid').val();
 
-            $.post("/Clasificacion/" + (id > 0 ? "Edit" : "Create"), {
+            $.post(webroot + "/Clasificacion/" + (id > 0 ? "Edit" : "Create"), {
                 Clasificacionid: id,
                 Cantidad: cantidad,
                 Unidadmedidaid: unidadmedidaid,
                 EstaActivo: activo
             }, function (data) {
                 if (data.exito) {
-                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Clasificacion/Index"; });
+                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Clasificacion/Index"; });
                 } else {
                     mensaje("Error", "No se pudo guardar la información", "error");
                 }

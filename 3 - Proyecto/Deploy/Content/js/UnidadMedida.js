@@ -20,13 +20,13 @@
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
       
-      $.post("/UnidadMedida/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/UnidadMedida/" + (id > 0 ? "Edit" : "Create"), {
         UnidadMedidaId: id,
         Descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/UnidadMedida/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/UnidadMedida/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

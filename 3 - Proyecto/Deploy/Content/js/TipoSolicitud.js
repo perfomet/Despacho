@@ -22,14 +22,14 @@
       let descripcion = $('#descripcion').val();
       let observaciones = $('#observaciones').val();
       
-      $.post("/TipoSolicitud/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/TipoSolicitud/" + (id > 0 ? "Edit" : "Create"), {
         Tiposolicitudid: id,
         Descripcion: descripcion,
         Observaciones: observaciones,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/TipoSolicitud/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/TipoSolicitud/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }
