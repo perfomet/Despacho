@@ -27,7 +27,8 @@
 	@Scripts.Render("~/bundles/modernizr")
 	@Scripts.Render("~/bundles/general")
 	<script>
-        var logueado = '@Session["logueado"]';
+		var logueado = '@Session["logueado"]';
+		var webroot = '@Request.Url.Authority';
 	</script>
 	@RenderSection("Scripts", required: false)
 </head>

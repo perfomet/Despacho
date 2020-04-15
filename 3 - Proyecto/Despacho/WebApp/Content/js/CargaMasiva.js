@@ -46,7 +46,7 @@ let CargaMasiva = function () {
         if ($("#listacargasmasivas").length > 0) {
             window.crearSelectorFecha("#filtro-fecha-carga", moment().subtract(6, 'days'), moment());
 
-            $.post("/CargaMasiva/Listar", { clienteId: 0 }, function (data) {
+            $.post(webroot + "/CargaMasiva/Listar", { clienteId: 0 }, function (data) {
                 cargasmasivas = data;
                 _CargarLista();
                 _CargarListaDetalle();
@@ -558,7 +558,7 @@ let CargaMasivaDetalle = function () {
             });
 
             // VALIDACIÓN EN EL SERVIDOR
-            $.post('/CargaMasiva/Validar', { detalles: registros }, function (data) {
+            $.post(webroot + '/CargaMasiva/Validar', { detalles: registros }, function (data) {
                 registros = data;
 
                 registros.forEach((registro) => {
@@ -711,13 +711,13 @@ let CargaMasivaDetalle = function () {
             archivo: nombreArchivo
         };
 
-        $.post("/CargaMasiva/Create", {
+        $.post(webroot + "/CargaMasiva/Create", {
             cargamasiva: cargaMasiva,
             cargaMasivaDetalles: registros
         }, function (data) {
             if (data.exito == true) {
                 alert('Carga masiva realizada con éxito');
-                location.href = "/CargaMasiva/Index";
+                location.href = "~/CargaMasiva/Index";
             } else {
                 alert('No se pudo realizar la carga masiva');
             }

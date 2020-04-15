@@ -34,7 +34,7 @@
             let perfilid = $('#perfilid').val();
             let clienteid = $('#clienteid').val();
 
-            $.post("/Usuario/" + (id > 0 ? "Edit" : "Create"), {
+            $.post(webroot + "/Usuario/" + (id > 0 ? "Edit" : "Create"), {
                 UsuarioId: id,
                 Username: username,
                 Password: password,
@@ -47,7 +47,7 @@
                 EstaActivo: activo
             }, function (data) {
                 if (data.exito) {
-                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Usuario/Index"; });
+                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Usuario/Index"; });
                 } else {
                     mensaje("Error", "No se pudo guardar la información", "error");
                 }

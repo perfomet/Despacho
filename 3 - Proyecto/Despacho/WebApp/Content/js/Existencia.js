@@ -2,7 +2,7 @@
     let existencias = [];
 
     let _Init = function () {
-        $.post("/Existencia/Listar", { serie: "" }, function (data) {
+        $.post(webroot + "/Existencia/Listar", { serie: "" }, function (data) {
             existencias = data;
 
             _InitElementos();
@@ -84,7 +84,7 @@
     };
 
     let _CargarFiltroBins = function () {
-        $.post("/Existencia/ObtenerBins", { bodega: $('#filtro-bodega').val() }, function (bins) {
+        $.post(webroot + "/Existencia/ObtenerBins", { bodega: $('#filtro-bodega').val() }, function (bins) {
             $('#filtro-bin').html('<option value="0" selected>Todas</option>');
 
             if (bins.length > 0) {
@@ -132,7 +132,7 @@ let Bodega = function () {
     let existencias = [];
 
     let Init = function () {
-        $.post("/Existencia/Listar", { serie: "" }, function (data) {
+        $.post(webroot + "/Existencia/Listar", { serie: "" }, function (data) {
             existencias = data;
             existenciasAgrupadas = _AgruparExistencias(data);
 

@@ -34,7 +34,7 @@
       let activo = $('#activo').val();
 
 
-      $.post("/Personal/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/Personal/" + (id > 0 ? "Edit" : "Create"), {
         Personalid: id,
         Rut: rut,
         Dv: dv,
@@ -47,7 +47,7 @@
 
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Personal/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Personal/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

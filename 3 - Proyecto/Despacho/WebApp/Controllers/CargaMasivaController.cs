@@ -61,6 +61,7 @@ namespace Despacho.Controllers
 			cargaMasiva.FechaHora = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 			cargaMasiva.UsuarioId = usuario.UsuarioId;
 
+			// CREAMOS LA CARGA MASIVA
 			int cargaMasivaId = Datos.Datos.CargaMasiva.Crear(cargaMasiva);
 
 			if (cargaMasivaId <= 0) return Json(new { exito = false });
@@ -69,13 +70,16 @@ namespace Despacho.Controllers
 
 			int solicitudId = 0;
 
+			// RECORREMOS EL DETALLE DE LA CARGA MASIVA
 			cargaMasivaDetalles.ForEach((cargaMasivaDetalle) =>
 			{
+				// CREAMOS EL DETALLE DE LA CARGA MASIVA
 				cargaMasivaDetalle.CargaMasivaId = cargaMasivaId;
 				int cargaMasivaDetalleId = Datos.Datos.CargaMasivaDetalle.Crear(cargaMasivaDetalle);
 
 				errorDetectado = errorDetectado || cargaMasivaDetalleId <= 0;
 
+				// SI HAY ERRORES LOS GUARDAMOS EN LA BASE DE DATOS
 				if (cargaMasivaDetalle.Errores != null)
 				{
 					cargaMasivaDetalle.Errores.ForEach((error) =>
@@ -88,7 +92,8 @@ namespace Despacho.Controllers
 					errorDetectado = errorDetectado || !creados;
 				}
 
-				if (cargaMasivaDetalle.Acciones != null && cargaMasivaDetalle.Acciones.Contains(1)) // SI TIENE LA ACCIÓN CREAR SOLICITUD
+				// SI TIENE LA ACCIÓN CREAR SOLICITUD
+				if (cargaMasivaDetalle.Acciones != null && cargaMasivaDetalle.Acciones.Contains(1)) 
 				{
 					Datos.Modelo.TipoSolicitud tipoSolicitud = Datos.Datos.TipoSolicitud.ObtenerTipoSolicitud(cargaMasivaDetalle.TipoSolicitud);
 					Datos.Modelo.Region region = Datos.Datos.Region.ObtenerRegion(cargaMasivaDetalle.RegionCliente);
@@ -98,6 +103,7 @@ namespace Despacho.Controllers
 					Datos.Modelo.Gerencia gerencia = Datos.Datos.Gerencia.ObtenerGerencia(cargaMasivaDetalle.Gerencia);
 					string rut = cargaMasivaDetalle.RutCliente.Replace(".", "");
 
+					// SE GENERA EL OBJETO SOLICITUD
 					Datos.Modelo.Solicitud solicitud = new Datos.Modelo.Solicitud
 					{
 						NumeroSolicitud = int.Parse(cargaMasivaDetalle.NumeroSolicitud),
@@ -122,6 +128,7 @@ namespace Despacho.Controllers
 						SolicitanteId = usuario.UsuarioId
 					};
 
+					// SE CREA LA SOLICITUD
 					solicitudId = Datos.Datos.Solicitud.Crear(solicitud);
 				}
 
@@ -129,10 +136,13 @@ namespace Despacho.Controllers
 
 				bool equipoAgregado = false;
 
-				if (cargaMasivaDetalle.Acciones != null && cargaMasivaDetalle.Acciones.Contains(2)) // SI TIENE LA ACCiÓN AGREGAR EQUIPO
+				// SI TIENE LA ACCiÓN AGREGAR EQUIPO
+				if (cargaMasivaDetalle.Acciones != null && cargaMasivaDetalle.Acciones.Contains(2)) 
 				{
+					// OBTENEMOS EL PRODUCTO CON EL NÚMERO DE PLACA INDICADO
 					Datos.Modelo.Existencia existencia = Datos.Datos.Existencia.ObtenerExistencia(cargaMasivaDetalle.NumeroPlaca);
 
+					// AGREGAMOS EL EQUIPO A LA SOLICITUD CREADA
 					equipoAgregado = Datos.Datos.EquipoSolicitado.Crear(new Datos.Modelo.EquipoSolicitado
 					{
 						SolicitudDespachoId = solicitudId,

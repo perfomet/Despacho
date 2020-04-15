@@ -3,7 +3,7 @@
 
 	Datos.Modelo.Usuario usuario = Session["usuario"] as Datos.Modelo.Usuario;
 
-	if (usuario == null) { Response.Redirect("/Login/Login"); return; }
+	if (usuario == null) { Response.Redirect("~/Login/Login"); return; }
 
 	List<Datos.Modelo.Bodega> bodegas = Datos.Datos.Bodega.ObtenerBodegas(usuario.ClienteId != null ? usuario.ClienteId.Value : 0);
 	List<Datos.Modelo.Cliente> clientes = Datos.Datos.Cliente.ObtenerClientes();

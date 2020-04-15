@@ -21,14 +21,14 @@
       let descripcion = $('#descripcion').val();
       let empresatransporteid = $('#empresatransporteid').val();
 
-      $.post("/Camion/" + (id != "" ? "Edit" : "Create"), {
+      $.post(webroot + "/Camion/" + (id != "" ? "Edit" : "Create"), {
         Patente: id,
         Descripcion: descripcion,
         Empresatransporteid: empresatransporteid,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Camion/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Camion/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

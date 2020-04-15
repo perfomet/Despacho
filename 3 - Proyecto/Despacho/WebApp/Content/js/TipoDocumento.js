@@ -19,13 +19,13 @@
       let activo = $('#activo').val();
       let descripcion = $('#descripcion').val();
 
-      $.post("/TipoDocumento/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/TipoDocumento/" + (id > 0 ? "Edit" : "Create"), {
         Tipodocumentoid: id,
         Descripcion: descripcion,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/TipoDocumento/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/TipoDocumento/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

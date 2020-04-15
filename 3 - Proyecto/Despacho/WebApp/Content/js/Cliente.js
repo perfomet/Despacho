@@ -26,7 +26,7 @@
             let vrut = $('#vrut').val();
             let prefijo = $('#prefijo').val();
 
-            $.post("/Cliente/" + (id > 0 ? "Edit" : "Create"), {
+            $.post(webroot + "/Cliente/" + (id > 0 ? "Edit" : "Create"), {
                 ClienteId: id,
                 Codigo: codigo,
                 Nombre: nombre,
@@ -36,7 +36,7 @@
                 EstaActivo: activo
             }, function (data) {
                 if (data.exito) {
-                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/Cliente/Index"; });
+                    mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/Cliente/Index"; });
                 } else {
                     mensaje("Error", "No se pudo guardar la información", "error");
                 }

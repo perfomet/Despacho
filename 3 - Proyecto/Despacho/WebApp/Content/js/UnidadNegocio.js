@@ -23,14 +23,14 @@
       let cliente = $('#clienteid').val();
    
 
-      $.post("/UnidadNegocio/" + (id > 0 ? "Edit" : "Create"), {
+      $.post(webroot + "/UnidadNegocio/" + (id > 0 ? "Edit" : "Create"), {
         UnidadNegocioId: id,
         Descripcion: descripcion,
         ClienteId: cliente,
         EstaActivo: activo
       }, function (data) {
         if (data.exito) {
-          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "/UnidadNegocio/Index"; });
+          mensaje("Éxito", "Información guardada correctamente", "exito", function () { location.href = "~/UnidadNegocio/Index"; });
         } else {
           mensaje("Error", "No se pudo guardar la información", "error");
         }

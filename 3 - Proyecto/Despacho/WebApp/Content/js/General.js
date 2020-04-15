@@ -48,7 +48,7 @@
                     field: "Acciones", title: "Acciones", responsive: {visible: "lg"}, template: function (e, a, i) {
                         let div = $('<div></div>');
 
-                        let editar = $('<a href="/' + controlador + '/Edit/' + e[identificador] + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Editar"><i class="la la-edit"></i></a>');
+                        let editar = $('<a href="~/' + controlador + '/Edit/' + e[identificador] + '" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Editar"><i class="la la-edit"></i></a>');
                         let activarDesactivar = $('<a href="#" data-activo="' + e.EstaActivo + '" data-id="' + e[identificador] + '" class="activarDesactivar m-portlet__nav-link btn m-btn m-btn--hover-' + (e.EstaActivo == true ? "danger" : "success") + ' m-btn--icon m-btn--icon-only m-btn--pill" title="' + (e.EstaActivo == true ? "Desactivar" : "Activar") + '"><i class="la la-power-off"></i></a>');
 
                         if (edita) div.append(editar);
@@ -59,7 +59,7 @@
                 });
             }
 
-            $.post("/" + controlador + '/Listar', parametros, function (datos) {
+            $.post(webroot + "/" + controlador + '/Listar', parametros, function (datos) {
                 $(idTabla).mDatatable({
                     data: {
                         type: "local",
@@ -109,7 +109,7 @@
                 if (estaActivo == true) {
                     confirmar("Desactivar", "¿Está seguro que desea desactivarlo?", "Si", "No", function (result) {
                         if (result) {
-                            $.post('/' + controlador + '/EstaActivo', {id: id}, function (data) {
+                            $.post(webroot + '/' + controlador + '/EstaActivo', {id: id}, function (data) {
                                 if (data.exito) {
                                     mensaje("Éxito", "Desactivado correctamente", "exito", function () {
                                         location.reload();
@@ -121,7 +121,7 @@
                         }
                     });
                 } else {
-                    $.post('/' + controlador + '/EstaActivo', {id: id}, function (data) {
+                    $.post(webroot + '/' + controlador + '/EstaActivo', {id: id}, function (data) {
                         if (data.exito) {
                             mensaje("Éxito", "Activado correctamente", "exito", function () {
                                 location.reload();
